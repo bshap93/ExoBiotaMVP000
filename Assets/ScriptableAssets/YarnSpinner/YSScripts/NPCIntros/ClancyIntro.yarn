@@ -1,0 +1,127 @@
+﻿title: ClancyEntry
+---
+<<if !$fabricatorClancyGreeted>>
+    <<set $fabricatorClancyGreeted = true>>
+    <<jump ClancyIntro>>
+<<elseif $scanQuestGiven == false>>
+    <<jump ClancyReiterate>>
+<<elseif $scanQuestGiven == true>>
+    <<jump FollowUpOnScanQuest>>
+<<elseif $scanQuestOffered == true>>
+    <<jump AskAboutScanQuest>>
+<<else>>
+    <<jump ClancyGeneral>>
+<<endif>>
+===
+
+title: ClancyIntro
+---
+
+Clancy: How do you do? What brings you to this outpost?
+
+<<greet DialogueCommands FabricatorClancy>>
+<<play_greet_sound DialogueCommands FabricatorClancy>>
+-> I'm looking for someone. Someone who might have been a frequent visitor around here 4, 5 years ago.
+
+Clancy: If you have their PI marker, I can run it against our long term logs.
+<<smalltalk DialogueCommands FabricatorClancy>>
+-> Sure, here you go.. <Give Clancy Access>
+    <<jump IKnewHer001>>
+// -> I don't know...
+// <<jump End02>>
+// Unreachable
+
+===
+
+
+title: ClancyReiterate
+---
+Clancy: Still want me to take a look at that PI marker for you?
+<<smalltalk DialogueCommands FabricatorClancy>>
+-> Sure, here you go.. <Give Clancy Access>
+    <<jump IKnewHer001>>
+-> I don't know...
+<<jump End02>>
+===
+
+title: End02
+--- 
+-> End the Conversation
+===
+
+title: ClancyGeneral
+---
+Clancy: How can I help you?
+-> Nothing for now.
+===
+
+title: IKnewHer001
+---
+Clancy: Yes... I remember your sister. 
+Clancy: Ran that outpost to the west. 
+Clancy: Place had decent noodles and believable Earth beer.
+-> Do you know anything about her dissapearance?
+Clancy: No, I don't unfortunately. You might talk to Dr. Hypolita up at the tower.
+Clancy: Thing is, she doesn't really agree to meet with strangers. 
+Clancy: She does have this job that needs doing and I've been too busy.
+Clancy: Will you help us out? I'm sure she will talk to you if you do.
+<<smalltalk DialogueCommands FabricatorClancy>>
+Clancy: We need some samples taken from the life-forms in the mine across the canyon.
+Clancy: It's routine, but they always want me to go in. They study the organisms in the former mine.
+-> Sure, I'll go in and do those samplings. Sounds simple enough.
+    <<jump AcceptScanQuest>>
+===
+
+title: AskAboutScanQuest
+---
+Clancy: Change your mind on that sampling job in the mine?
+-> Yeah, I'll do it.
+    <<jump AcceptScanQuest>>
+-> I still don't know.
+    Clancy: I get it. No pressure.
+        <<jump End02>>
+===
+
+title: AcceptScanQuest
+---
+Clancy: Great, heres the sampling tool we use for these types of jobs.
+Clancy: It's easy to use. Just point at the clearly liquid filled structures.
+<<complete_objective DialogueCommands "TalkToClancy">>
+<<give_player_item DialogueCommands "BasicLiquidTool" 1>>
+Clancy: It's not dangerous if you're careful. I appreciate your help.
+<<add_objective DialogueCommands "GoToScienceMine">>
+// <<give_player_keyaccess DialogueCommands "ScienceMineDoorKey">>
+<<"mark_poi_as_having_new_content" DialogueCommands "d8d892a8-829f-4f24-a1c4-740cf2df7f6a">>
+
+<<set $scanQuestGiven = true>>
+<<jump End02>>
+===
+
+title: FollowUpOnScanQuest
+---
+Clancy: How is it going with those samples?
+-> I haven't gotten to it.
+    <<jump End02>>
+<<if $samplesTaken >= 10>>
+-> I got them.
+<<endif>>
+===
+
+title: ReturnedToClancy
+---
+Clancy: Well hello, I am glad you made it back safely.
+<<pleased DialogueCommands FabricatorClancy>>
+<<complete_objective DialogueCommands "ReturnToClancy">>
+Clancy: I'll take those samples off your hands. 
+<<give_liquid_samples DialogueCommands -1>>
+Clancy: I'm sure Dr. Hypolita will do all she can for you after your help.
+Clancy: I'll let her know to expect you.
+<<add_objective DialogueCommands "SpeakWithHypolita000">>
+<<activate_objective DialogueCommands "SpeakWithHypolita000">>
+
+=== 
+
+title: UndirectedGreeting
+---
+Clancy: Good day, friend.
+===

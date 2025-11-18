@@ -1,0 +1,222 @@
+using System.Collections.Generic;
+using Dirigible.Input;
+using Events;
+using FirstPersonPlayer.UI.LocationButtonBase.Test;
+using Helpers.Events;
+using Interfaces;
+using LevelConstruct.Interactable.ItemInteractables;
+using Manager.Global;
+using Manager.SceneManagers.Dock;
+using MoreMountains.Feedbacks;
+using Objectives;
+using Overview.NPC;
+using Overview.UI;
+using Sirenix.OdinInspector;
+using Structs;
+using UnityEngine;
+using Yarn.Unity;
+
+namespace Manager.DialogueScene
+{
+    public class DialogueManager : MonoBehaviour, IGameMetaService
+    {
+        const string MetaSaveKey = "DialogueMetaSave";
+        [SerializeField] Camera stageCamera; // drag StageCamera from DialogueOverlay
+        [SerializeField] Transform stageRoot; // drag StageRoot from DialogueOverlay
+        [SerializeField] CanvasGroup overlay; // fade & block clicks
+        [SerializeField] NPCUIIdentifierPanel npcUIIdentifierPanel; // for showing NPC name
+        public DialogueRunner dialogueRunner;
+
+#if UNITY_EDITOR
+        [ValueDropdown(nameof(GetAllRewiredActions))]
+#endif
+        public int dialogueActionId;
+
+        [SerializeField] bool autoSave;
+
+        [SerializeField] MMFeedbacks startInFirstPersonDialogueFeedbacks;
+
+        [SerializeField] VarProbeYSES3 varProbeYSES3; // For testing purposes, remove later
+
+        // Referenced here to give a central place to access the variable storage
+        public VariableStorageBehaviour variableStorage;
+
+        [SerializeField] YarnInitScriptSet[] initScriptSets;
+        GameObject _currentModel;
+
+        bool _dirty;
+
+        public bool IsDialogueActive => dialogueRunner.IsDialogueRunning;
+
+        public static DialogueManager Instance { get; private set; }
+
+
+        void Awake()
+        {
+            if (Instance == null)
+                Instance = this;
+            else
+                Destroy(gameObject);
+        }
+
+        void Start()
+        {
+            // init static classes
+            FirstPersonStaticDialogueHelpers.Initialize(startInFirstPersonDialogueFeedbacks, dialogueActionId);
+        }
+
+        public void Reset()
+        {
+            DialogueStartNodeManager.Instance.Reset();
+            DialogueVariableManager.Instance.Reset();
+            RunInitScripts();
+
+            Debug.Log("DialogueManager: Reset called. All dialogue data cleared.");
+            _dirty = true;
+            ConditionalSave();
+        }
+
+        public void Save()
+        {
+            DialogueStartNodeManager.Instance.Save();
+            DialogueVariableManager.Instance.Save();
+            _dirty = false;
+        }
+
+        public void Load()
+        {
+            DialogueStartNodeManager.Instance.Load();
+            DialogueVariableManager.Instance.Load();
+            _dirty = false;
+
+            if (!DialogueVariableManager.Instance.HasSavedVariables()) RunInitScripts();
+        }
+
+        public void ConditionalSave()
+        {
+            if (autoSave && _dirty) Save();
+        }
+
+        public void RunInitScripts()
+        {
+            foreach (var scriptSet in initScriptSets)
+            {
+                if (scriptSet == null || scriptSet.yarnProject == null)
+                    continue;
+
+                dialogueRunner.SetProject(scriptSet.yarnProject);
+                foreach (var nodeName in scriptSet.nodesToRun)
+                    if (!string.IsNullOrEmpty(nodeName))
+                    {
+                        Debug.Log($"Running Yarn init node: {nodeName}");
+                        dialogueRunner.StartDialogue(nodeName);
+                    }
+            }
+        }
+
+        public string GetSaveFilePath()
+        {
+            return SaveManager.Instance.GetGlobalSaveFilePath(GlobalManagerType.DialogueSave);
+        }
+
+
+        void Close()
+        {
+            if (_currentModel) Destroy(_currentModel);
+            MyUIEvent.Trigger(UIType.Dialogue, UIActionType.Close);
+
+            dialogueRunner.Stop();
+            overlay.blocksRaycasts = false;
+            overlay.interactable = false;
+
+            ControlsHelpEvent.Trigger(ControlHelpEventType.Hide, 0);
+
+            overlay.alpha = 0;
+        }
+
+        public async void Open(NpcDefinition def, Transform camAnchor = null, bool autoClose = true,
+            string startNodeOverride = null)
+        {
+            // 1) put NPC in the stage
+            _currentModel = Instantiate(def.characterPrefab, stageRoot);
+            _currentModel.transform.localPosition = Vector3.zero;
+            _currentModel.transform.localRotation = Quaternion.identity;
+            npcUIIdentifierPanel.SetInfo(def);
+
+            // 2) aim the stage‑camera if a custom anchor was supplied
+            // if (camAnchor != null)
+            //     stageCamera.transform.SetPositionAndRotation(camAnchor.position,
+            //         camAnchor.rotation);
+
+            // 3) push dialogue
+            dialogueRunner.SetProject(def.yarnProject);
+
+            var startNodeStr = startNodeOverride ?? def.startNode;
+            var startNodeToUse = DialogueStartNodeManager.Instance.GetStartNode(def.npcId, startNodeStr);
+            DialogueEvent.Trigger(DialogueEventType.DialogueStarted, def.npcId, startNodeToUse);
+            dialogueRunner.StartDialogue(startNodeToUse);
+
+            // 4) show overlay
+            overlay.alpha = 1;
+            overlay.blocksRaycasts = true;
+            overlay.interactable = true;
+
+            // MyUIEvent.Trigger(UIType.Dialogue, UIActionType.Open);
+
+            // 5) WAIT here until all Yarn nodes (and any option UIs) finish
+            await dialogueRunner.DialogueTask; // ‑‑ this replaces WaitForDialogueToFinish()
+
+            if (GameStateManager.Instance.CurrentMode == GameMode.FirstPerson)
+            {
+                if (autoClose) // only close if caller asked for it
+                    Close();
+            }
+            else
+            {
+                TriggerRetreatFromLocationEvent();
+
+                varProbeYSES3.TryGet();
+
+                if (autoClose) // only close if caller asked for it
+                    Close();
+            }
+        }
+
+        void TriggerRetreatFromLocationEvent()
+        {
+            if (DockManager.Instance == null)
+            {
+                Debug.LogWarning("DockManager instance is not initialized.");
+                return;
+            }
+
+            var locationType = DockManager.Instance.currentLocationType;
+            var locationId = DockManager.Instance.currentLocationId;
+            var cameraTrasform = DockManager.Instance.currentDockInteractable.overviewCameraTarget;
+
+
+            OverviewLocationEvent.Trigger(
+                locationType,
+                LocationActionType.RetreatFrom,
+                locationId,
+                cameraTrasform
+            );
+        }
+
+        public static string[] GetAllNpcIdOptions()
+        {
+            return new[]
+            {
+                "FabricatorClancy", "ScientistHypolita", "ShadyCoreTrafficker", "None", "ScienceShopRobot",
+                "VitalSystems"
+            };
+        }
+
+#if UNITY_EDITOR
+        public IEnumerable<ValueDropdownItem<int>> GetAllRewiredActions()
+        {
+            return AllRewiredActions.GetAllRewiredActions();
+        }
+#endif
+    }
+}

@@ -1,0 +1,30 @@
+title: DiscussingSheolLife
+---
+Geneticist: What would you like to know more about?
+-> Tell me more about the life form that produces the cores.
+-> Did you happen to ever see my sister, Clara Frankl, during your time here?
+    <<jump AskAboutSisterToGeneticist>>
+===
+
+title: AskAboutSisterToGeneticist
+---
+Geneticist: Yes I recall my time as neighbor to Clara and her outpost. We were not on good terms.
+Geneticist: We fought often. She and that pit stop of hers did nothing but aid in the genocide.
+-> Genocide? That's a strong word. I've certainly heard the 'gold rush' years called that, but aren't the life forms incapable of suffering
+    or any other sensation to our knowledge?
+Geneticist: You're wrong to assume that. And I hope you're not implying I don't know the difference between deforestation and genocide.
+Geneticist: The Coreols Magni are cessile animal analogues. We still know far less about their biology than you seem to think.
+-> What makes you think they are conscious?
+Geneticist: They have no brain analogues. Only the Cores. 
+Geneticist: We both know that the cores are amplifiers for strong AI entities and that they don't do this by emulating any known version of 
+    hardware acceleration. 
+Geneticist: The cores appear inert but only because we are looking for neurons. We know that the organisms that bear these structures have 
+    intelligently assembled a variety of other Sheol organisms with certain 'skills'. 
+-> Yes, I've heard that they associate in these modular meta creatures.
+Geneticist: Yes, and those creatures can only form with the core bearing life form itself.
+-> But surely this could happen without consciousness.
+Geneticist: It's not for me to say. We are only familiar with human consciousness. But these organisms have memories,
+    and they are inarguably flexible. They can fit into such varied configurations of symbiotic life. There has to be 
+    logic. I believe that they feel the horror and the pain when these 'prospectors' take what suits them, and damn the rest when it 
+    inevitably withers and dies without the core.
+===

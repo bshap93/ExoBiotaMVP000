@@ -1,0 +1,19 @@
+title: PlayerTurnedPowerInHideout
+---
+<<complete_objective DialogueCommands "ContactTrader003">>
+ShadyCoreTrafficker: Good work, friend. 
+ShadyCoreTrafficker: Take as long as you need in there to harvest your produce.
+ShadyCoreTrafficker: I'll be here with your reward.
+===
+
+title: PlayerReturnedAfterRTGQuest
+---
+<<complete_objective DialogueCommands "TalkToCoreSalesman02">>
+ShadyCoreTrafficker: Thank you, my brother.
+ShadyCoreTrafficker: It'll be nice to have the old hideout back to full power.
+ShadyCoreTrafficker: Your reward, of course... hmm, let's see here...
+ShadyCoreTrafficker: Ah! Yes, take this axe. It might help you survive out here.
+<<give_player_item DialogueCommands "BasicAxe01" 1>>
+<<add_objective DialogueCommands "FinishPlaytest">>
+ShadyCoreTrafficker: And I hope you do. Can't say that for most of the idiots out here.
+===

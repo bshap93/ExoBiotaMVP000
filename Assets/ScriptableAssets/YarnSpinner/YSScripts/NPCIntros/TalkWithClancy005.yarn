@@ -1,0 +1,23 @@
+title: GaveCoresClancyTalk
+---
+Clancy: Well, Hypolita seems pleased. I hope you got some useful information.
+<<jump ClancyDirectToMine>>
+===
+
+title: DidNotGiveCoresClancyTalk
+---
+Clancy: Well, Hypolita does not seem pleased. I get it. You need the money.
+Clancy: Might as well make your way to the Core trafficker to the Southwest and sell them.
+<<jump ClancyDirectToMine>>
+===
+
+title: ClancyDirectToMine
+---
+-> She mentioned a mine director called Mobius.
+Clancy: Yeah, I heard of the guy.
+Clancy: Not like the scientists here, I hear his leadership methods can be... rough.
+-> I'd like to look around here a bit more.
+Clancy: You could head to the Choked Cavern Mines to the Southwest.
+<<complete_objective DialogueCommands "TalkWithClancy05" >>
+Clancy: It should be pretty full of things to find. Well, farewell.
+===

@@ -1,0 +1,28 @@
+title: RobotShopkeeperStandardGreeting
+---
+CommissaryBot: Welcome to Science Outpost 427 Commissary.
+CommissaryBot: Do you wish to buy, sell, or make another query?
+-> Let's take a look at what you have in stock.
+    <<jump RobotShopkeeperBuy>>
+-> I'd like to sell some things.
+    <<jump RobotShopkeeperSell>>
+// -> I wanted to ask you something else.
+===
+
+title: RobotShopkeeperBuy
+---
+CommissaryBot: Certainly, trusted patron.
+<<start_shopping_buy DialogueCommands "ScienceShopRobot">>
+-> I'm done, thanks.
+CommissaryBot: Good day.
+<<stop_shopping_buy DialogueCommands "ScienceShopRobot">>
+===
+
+title: RobotShopkeeperSell
+---
+CommissaryBot: Happily, trusted patron.
+<<start_shopping_sell DialogueCommands "ScienceShopRobot">>
+-> I'm done, thanks.
+CommissaryBot: Good day.
+<<stop_shopping_sell DialogueCommands "ScienceShopRobot">>
+===

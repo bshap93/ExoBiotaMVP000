@@ -1,0 +1,15 @@
+﻿title: ScienceDock001Init
+---
+<<declare $fabricatorClancyGreeted = false>>
+<<declare $scanQuestGiven = false>>
+<<declare $scanQuestOffered = false>>
+<<declare $samplesTaken = 0>>
+
+<<declare $hypolitaWillTalk = false>>
+
+<<declare $traffickerGaveJob001 = false>>
+
+<<declare $numberOfCores = 0>>
+
+<<declare $geneticistHypolitaGreeted = false>>
+===

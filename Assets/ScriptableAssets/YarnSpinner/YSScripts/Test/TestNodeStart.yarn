@@ -1,0 +1,13 @@
+﻿title: TestNodeStart
+---
+<<declare $met = false>>
+<<declare $gold = 0>>
+<<declare $name = "">>
+
+<<set $gold = 3>>
+<<set $met = true>>
+<<set $name = "Ben">>
+
+Narrator: Ben met and got 3 gold.
+-> Nice
+===

@@ -1,0 +1,12 @@
+title: ContaminationMaxedOutExplainer
+---
+<<halt_in_game_time DialogueCommands VitalSystems>>
+VitalSystems: You are at max contamination.
+<<resume_in_game_time DialogueCommands VitalSystems>>
+===
+
+
+title: VitalSystemsIntro
+---
+VitalSystems: This is a placeholder.
+===

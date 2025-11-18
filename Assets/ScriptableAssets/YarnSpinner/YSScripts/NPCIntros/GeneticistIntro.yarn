@@ -1,0 +1,146 @@
+﻿title: GeneticistEntry
+---
+<<if !$hypolitaWillTalk>>
+    <<jump HypolitaDismissal>>
+<<endif>>
+<<if !$geneticistHypolitaGreeted>>
+    <<set $geneticistHypolitaGreeted = true>>
+    <<jump GeneticistIntro>>
+<<endif>>
+===
+
+title: GeneticistGeneral
+--- 
+Geneticist: How can I help you?
+-> Nothing for now...
+===
+
+title: GeneticistIntro
+---
+<<once>>
+    Geneticist: Hello stanger. I saw your Dirigible float by my viewport. We don't get many tourists. 
+    Geneticist: What brings you all the way out here to the very periphery of civilization?
+<<else>>
+    Geneticist: Hello again, Stanger please don't make a habit of wasting my time. What do you want?
+    -> Am I still a stranger? We've talked before.
+    -> Sorry to bother you, I'll leave you alone.
+        <<jump End01>>
+<<endonce>>
+
+-> Well, I had a family member pass with property not far from here.
+-> I thought I'd get out into the wilderness and try my hand at prospecting.
+Geneticist: Well, I'm sorry to hear that, Mr. Well, sit, please. How can I help you?
+-> Well, my sister, the relation I spoke of, I thought to ask here at the closest outpost. Did you ever meet her?
+Geneticist: 
+===
+
+title: FabrikatorIntro
+---
+<<declare $sawTheMine = false>>
+<<declare $hasPassedOut = false>>
+Fabrikator: What can I do for you, sir?
+<<if $sawTheMine>>
+-> I saw the mine across the valley. What do you know about it?
+<<endif>>
+-> I'm just passing through. Nothing for now, thanks.
+    <<jump End01>>
+===
+
+title: FabrikatorMine
+---d
+Fabrikator: Yeah, man. That's a pretty tame one. Not bad for a beginner.
+Fabrikator: Me, I've gotten old and I stay pretty busy here helping the scientists.
+-> Yeah, I think I'll tackle that mine. I'd like to investigate the locations around here.
+-> Hmm. I don't know...
+Fabrikator: Well, in that case, why don't you borrow my old ultrabonded pickaxe.
+Fabrikator: I don't use it, but it's light and indestructable. It's great for the ore down there.
+-> And you just trust everyone who comes through here?
+-> Yeah, thanks, I'll take you up on that! 
+Fabrikator: Ok, man. Don't get yourself into too much danger. 
+Fabrikator: Search and Rescue bot service gets expensive here on the periphery.
+Fabrikator: Even more so further East of here into the mountains and plains due south.
+<<if $hasPassedOut>>
+Fabrikator: You've got a free bailout, though. Not a bad deal!
+<<else>>
+Fabrikator: You already used that bailout, man? I don't know if you're cut out for this.
+<<endif>>
+-> Ok, I appreciate your loaning me a pickaxe. Thank you.
+Fabrikator: Take care...
+<<jump End01>>
+===
+
+title: End01
+--- 
+-> End the Conversation
+===
+
+title: HypolitaDismissal
+---
+Hypolita: I am busy. Go see Clancy if you want something.
+===
+
+title: HypolitaWillConverse
+---
+Hypolita: Ah, hello. Clancy tells me you've been useful.
+<<complete_objective DialogueCommands "SpeakWithHypolita000">>
+Hypolita: Says you have some questions about the outpost? 
+Hypolita: Well, I have manned this research post since its construction 10 years ago.
+-> Ask about Sister
+Hypolita: Yes, I knew your sister. She would supply us on contracts from time to time.
+Hypolita: A psychologist from the Prime settlement, I recall?
+-> That's right.
+-> How did you know her?
+    Hypolita: She had a strong scientific curiosity and we crossed paths living and working
+    Hypolita: in this valley. She had questions about the Cores and what I thought the Rush 
+    Hypolita: was doing to the ecosystem in this region. I shared my findings and she shared her views.
+Hypolita: Well, I remember those months. I saw her a few times. She was planning a trip to the east.
+-> What is in the east?
+Hypolita: Not much in the way of civilization. A couple of mines. 
+Hypolita: Boundless wilderness. So much that has been seen only from orbit.
+Hypolita: I suspect she met some unknown fate in the east.
+-> Is there anything else you remember about her trip to the east?
+Hypolita: She mentioned a man named Fulmen who would accompany her. 
+Hypolita: A guide of sorts. A man who was here long before the boomtowns of the Rush years.
+-> Thank you, doctor. I will consider what you've said.
+Hypolita: Clancy mentioned you harvested some cores for us? Much obliged.
+<<add_objective DialogueCommands "ReturnCoresToHypolita">>
+<<activate_objective DialogueCommands "ReturnCoresToHypolita">>
+Hypolita: I will take them now. As you know, they are illegal outside of research use.
+-> Yes, doctor, here they are.
+    <<jump GaveHypolitaCores>>
+-> Actually, I think I'll hold on to them.
+    <<jump DontGiveHypolitaCores>>
+===
+
+title: GaveHypolitaCores
+---
+<<remove_player_item DialogueCommands "BasicInnerCoreStandard">>
+<<remove_player_item DialogueCommands "BasicInnerCoreStandard">>
+<<complete_objective DialogueCommands "ReturnCoresToHypolita">>
+<<add_objective DialogueCommands "TalkWithClancy05">>
+<<activate_objective DialogueCommands "TalkWithClancy05">>
+<<add_objective DialogueCommands "VisitCoreTrader">>
+<<activate_objective DialogueCommands "VisitCoreTrader">>
+Hypolita: Thank you, sir. Here are the coordinates of the mining camps I mentioned.
+===
+
+title: DontGiveHypolitaCores
+---
+Hypolita: You mean to sell them... I don't have to tell you it's illegal, I'm sure you know.
+Hypolita: You've helped me with these samples so I'll not report you... 
+// <<sigh DialogueCommands>>
+Hypolita: The whole planet disregarded people like me, with me during the RUSH 8 years ago.
+Hypolita: I had been here years before then, mind you, studying the alien life on this planet.
+Hypolita: It's human nature I suppose, but then some would call me traitor to my species.
+-> So why did you stay?
+Hypolita: You don't think I'm all the way out here by choice, do you? I'm an old environmentalist.
+Hypolita: So I'll ask you again, you're sure you want to try and sell them? The market isn't what it was during the RUSH...
+-> You're right. I will leave them with you after all.
+    <<jump GaveHypolitaCores>>
+-> I'm sorry but yes, doctor. I'm running out of money as it is.
+    // <<adopt_hostile_pose DialogueCommands>>
+    <<make_objective_inactive DialogueCommands "ReturnCoresToHypolita">>
+    <<add_objective DialogueCommands "TalkWithClancy05">>
+
+Hypolita: I see... In that case, I would like to get back to my work. I'm dissappointed but not surprised.
+===

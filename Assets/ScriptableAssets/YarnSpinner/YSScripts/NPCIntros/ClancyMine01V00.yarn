@@ -1,0 +1,86 @@
+
+title: ClancyMine01V00
+---
+<<if !($samplesTaken > 9)>>
+    <<jump ClancyMine01V00Reiterate>>
+<<endif>>
+===
+
+title: ClancyMine01V00FurtherInstruction
+---
+Clancy: See those spherical fleshy objects in the center of the cavern?
+Clancy: They should be easy to pull free and stow in your rack pack.
+<<complete_objective DialogueCommands "ContactClancy004">>
+
+<<add_objective DialogueCommands "GetTwoCores">>
+Clancy: I'll leave you to it.
+===
+
+title: ClancyMine01V00Reiterate
+---
+<<complete_objective DialogueCommands "ContactClancy002">>
+Clancy: Should be a good number of organisms to sample in this particular cavern.
+Clancy: Need any help? <Help>
+-> Yes, please.
+   <<jump SamplingHelp>> 
+-> No, I got this.
+===
+
+title: SamplingHelp
+---
+Clancy: Just equip your Liquid Sampler tool I gave you.
+Clancy: Point it at a Kidney Stalk and hold down the trigger.
+<<show_controls DialogueCommands 54>>
+-> Ok I'll give it a try.
+=== 
+
+title: ClancyInstructsOnHarvesting
+---
+Clancy: Ok, good. Now apply first the Catalyst, then the Solvent.
+===
+
+title: ClancyMine01V02
+---
+Clancy: Ok, good. You made it. This is the little cranny where I do on-site harvesting.
+Clancy: It's actually been a while but I leave the necessary chemicals in there.
+<<complete_objective DialogueCommands "SpeakToClancy03">>
+-> Sure, I'll gather them. 
+
+===
+
+title: ClancyInstructsToHeadUpToCranny
+---
+Clancy: Head up the ladder to my little workspace. I'll instruct you from the Comms console there.
+===
+
+title: ClancyIsWaitingForYouToDoSomething
+---
+Clancy: Everything all right?
+===
+
+title: ClancyTellsYouToPlaceCores00
+---
+Clancy: Ok, now place the cores on the table. You'll equip the catalyst first and douse the Core in it.
+Clancy: It'll change color and you'll know the solvent can be applied. 
+Clancy: That'll dissolve the outer fleshy stuff and leave the Kernel.
+===
+title: FinishingUpCoreQuest
+---
+Clancy: Ok, pick them up and make your way back up the mine.
+-> Right, I'll get back to my airship.
+-> Aren't these illegal?
+    Clancy: Only if you sell them. These are for research.
+===
+
+
+title: ClancyTellsToGetJarsReagent
+---
+Clancy: Ok, this is the little nook where I do on-site harvesting.
+Clancy: I keep the necessary chemicals down here, on the table there.
+Clancy: Go and get 'em.
+===
+
+title: ClancyTellsToPlaceCoresTable
+---
+Clancy: Ok, place your Rhizomic cores on the table. Use Q to release them.
+===

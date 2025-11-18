@@ -1,0 +1,102 @@
+title: CoresTraffickerEntry
+---
+<<if $numberOfCores > 0>>
+    <<jump CoresTraffickerIntro>>
+<<else>>
+    <<jump TraffickerDismissal>>
+<<endif>>
+===
+
+title: TraffickerDismissal
+---
+ShadyTrafficker: Hello, hello. Well, come on in. 
+ShadyCoreTrafficker: Do you have any Harvested Cores to sell to me? I'll buy any you have.
+<<complete_objective DialogueCommands "VisitCoreTrader">>
+-> No I haven't got any.
+    <<if !$traffickerGaveJob001>>
+        ShadyTrafficker: Alright. Come see me if you get some. You wouldn't be looking for work?
+            -> No.
+            -> Yes.
+                <<jump OfferJobInChokedCaverns>>
+    <<else>>
+        ShadyTrafficker: Alright. Come see me if you get some.
+    <<endif>>
+-> Yes, I have some to sell.
+    <<start_shopping_sell_illegal DialogueCommands "ShadyCoreTrafficker">>
+    -> Alright, I'm done.
+    <<stop_shopping_sell DialogueCommands "ShadyCoreTrafficker">>
+    ShadyTrafficker: See ya round.
+<<if !$traffickerGaveJob001>>
+-> Actually, I'm looking for work..
+    <<jump OfferJobInChokedCaverns>>
+<<endif>>
+===
+
+title: OfferJobInChokedCaverns
+---
+ShadyCoreTrafficker: Sure, sure. I do have something.
+ShadyCoreTrafficker: I have a facility in the abandoned mine real close to here.
+ShadyCoreTrafficker: I need someone to replace the RTG that keeps the place running.
+ShadyCoreTrafficker: And I happen to know that down there are two valuable core groves.
+ShadyCoreTrafficker: Get them and harvest them in my facility.
+ShadyCoreTrafficker: Come back here. I'll reward you nicely for the Cores you find and the favor.
+-> I will think about it.
+    ShadyCoreTrafficker: I'll be here if you change your mind.
+-> Yes, count me in. 
+    ShadyCoreTrafficker: Excellent. 
+    <<add_objective DialogueCommands "VisitChokedCavernMine">>
+    <<activate_objective DialogueCommands "VisitChokedCavernMine">>
+    <<add_objective DialogueCommands "InstallNewRTGInGenerator">>
+    <<activate_objective DialogueCommands "InstallNewRTGInGenerator">>
+    <<give_player_item DialogueCommands "RTGNuclearBattery" 1>>
+    <<set $traffickerGaveJob001 = true>>
+    -> Ok, I'll be off.
+        ShadyCoreTrafficker: Yeah, ok friend.
+    -> Anything I should know?
+        <<jump QuestionAboutChokedCaverns>>
+
+===
+
+title: QuestionAboutChokedCaverns
+---
+ShadyCoreTrafficker: Yeah, it's pretty contaminated these days.
+ShadyCoreTrafficker: But not to worry! My facility has a decontamination tank.
+ShadyCoreTrafficker: Move fast and don't hang around, you'll be fine.
+-> Thanks...
+===
+
+title: CoresTraffickerIntro
+---
+<<declare $trafficker_rep = 0>>
+ShadyTrafficker: Hey, fella, how's the Minnas been treatin' you? I take it you know why you're here, talkin' to me, ya?
+-> I know you traffic in illegal core harvests. I've come to shut you down for good.
+    <<set $trafficker_rep = $trafficker_rep - 2>>
+    <<jump PlayerThreatensTrafficker>>
+-> Yeah, you deal in illegal alien Sheol AI cores? How do I know I can trust you?
+    <<jump PlayerQuestionsTraffickerTrust>>
+-> Yeah I'm here to get down to business.
+ShadyTrafficker: You don't say... 
+    <<scoffs>>
+    <<initiate_trade>>
+===
+
+title: PlayerThreatensTrafficker
+
+---
+ShadyTrafficker: Is that so? Have you got some mercenary outfit behind you I'm not seeing?
+ShadyTrafficker: You think I've survived doing what I do because some nobody sided with the Reds?
+ShadyTrafficker: Don't make me laugh. You're either here to sell or you can fuck right off. 
+-> Ok, yeah. Let's get this over with...
+    // <<initiate_trade>>
+===
+
+title: PlayerQuestionsTraffickerTrust
+---
+ShadyTrafficker: You can't... I won't even pretend otherwise. I'll give you cash for your cores. 
+ShadyTrafficker: The fuck did you expect, man? Think we were gonna be friends? Go talk to Clancy in that case.
+ShadyTrafficker: So, you gonna keep wasting my time or you gonna sell me your cores?
+-> Yeah, let's trade.
+    <<initiate_trade>>
+-> Nevermind... I'll just be going.
+// End of dialogue
+===
