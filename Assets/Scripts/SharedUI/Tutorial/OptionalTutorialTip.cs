@@ -1,5 +1,6 @@
 using Helpers.Events;
 using Helpers.Events.Tutorial;
+using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
 using Rewired;
 using TMPro;
@@ -15,6 +16,7 @@ namespace SharedUI.Tutorial
         [SerializeField] Image buttonKeyImage;
         [SerializeField] float holdDuration = 1f;
         [SerializeField] int universalInteractId = 99; // IGUIToggleId from DefaultInput
+        [SerializeField] MMFeedbacks showFeedbacks;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
 
@@ -127,7 +129,10 @@ namespace SharedUI.Tutorial
             canvasGroup.alpha = 1f;
             canvasGroup.blocksRaycasts = true;
             canvasGroup.interactable = true;
+            
+            showFeedbacks?.PlayFeedbacks();
             ResetHold();
+            
         }
 
         void Hide()

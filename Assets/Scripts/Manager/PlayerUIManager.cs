@@ -19,6 +19,8 @@ namespace Manager
         public bool iGUIsOpen;
 
         public bool modalIsOpen;
+        
+        public bool gatedUIIsOpen;
 
 
         void Awake()
@@ -65,6 +67,11 @@ namespace Manager
                         iGUIsOpen = true;
                     else if (eventType.uiType == UIType.ModalBoxChoice)
                         modalIsOpen = true;
+                    else if (eventType.uiType == UIType.HarvestableInteractChoice || 
+                             eventType.uiType == UIType.BreakableInteractChoice || 
+                             eventType.uiType == UIType.MachineInteractChoice || 
+                             eventType.uiType == UIType.WaitWhileInteracting)
+                        gatedUIIsOpen = true;
 
                     break;
                 case UIActionType.Close:
@@ -72,6 +79,11 @@ namespace Manager
                         iGUIsOpen = false;
                     else if (eventType.uiType == UIType.ModalBoxChoice)
                         modalIsOpen = false;
+                    else if (eventType.uiType == UIType.HarvestableInteractChoice || 
+                             eventType.uiType == UIType.BreakableInteractChoice || 
+                             eventType.uiType == UIType.MachineInteractChoice || 
+                             eventType.uiType == UIType.WaitWhileInteracting)
+                        gatedUIIsOpen = false;
 
                     if (!iGUIsOpen && !modalIsOpen)
                         uiIsOpen = false;

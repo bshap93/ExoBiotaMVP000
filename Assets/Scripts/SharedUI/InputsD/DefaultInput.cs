@@ -68,10 +68,21 @@ namespace SharedUI.InputsD
 
                 if (TutorialManager.Instance != null && TutorialManager.Instance.IsOpen) return;
                 // Use PlayerUIManager’s truth
-                var nowOpen = !(PlayerUIManager.Instance?.uiIsOpen ?? false);
-                MyUIEvent.Trigger(
-                    UIType.InGameUI, nowOpen ? UIActionType.Open : UIActionType.Close
-                );
+                var iGUIOpen = (PlayerUIManager.Instance?.uiIsOpen ?? false);
+                var gatedOpen = (PlayerUIManager.Instance?.gatedUIIsOpen ?? false);
+                var modalOpen = (PlayerUIManager.Instance?.modalIsOpen ?? false);
+                if (iGUIOpen && !gatedOpen && !modalOpen)
+                {
+                    MyUIEvent.Trigger(
+                        UIType.InGameUI,  UIActionType.Close
+                    );
+                    return;
+                }
+                var canOpen = !gatedOpen && !modalOpen;
+                if (canOpen)
+                    MyUIEvent.Trigger(
+                        UIType.InGameUI,  UIActionType.Open
+                    );
             }
         }
     }
