@@ -7814,7 +7814,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4164105562386613570, guid: 1b129520f9b80c34bbfaa260c14c8481, type: 3}
       propertyPath: m_PixelsPerUnitMultiplier
-      value: 17.52
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 5474200087505327298, guid: 1b129520f9b80c34bbfaa260c14c8481, type: 3}
       propertyPath: m_Pivot.x
@@ -7850,15 +7850,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5474200087505327298, guid: 1b129520f9b80c34bbfaa260c14c8481, type: 3}
       propertyPath: m_LocalScale.x
-      value: 3.7574584
+      value: 4.0009418
       objectReference: {fileID: 0}
     - target: {fileID: 5474200087505327298, guid: 1b129520f9b80c34bbfaa260c14c8481, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.7685933
+      value: 2.9479983
       objectReference: {fileID: 0}
     - target: {fileID: 5474200087505327298, guid: 1b129520f9b80c34bbfaa260c14c8481, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2.9229546
+      value: 3.1123621
       objectReference: {fileID: 0}
     - target: {fileID: 5474200087505327298, guid: 1b129520f9b80c34bbfaa260c14c8481, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7956,7 +7956,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3844255373444504690, guid: fb2ca97e1ead8134aa35675750499d51, type: 3}
       propertyPath: m_PixelsPerUnitMultiplier
-      value: 11.76
+      value: 15.54
       objectReference: {fileID: 0}
     - target: {fileID: 6186464240585728906, guid: fb2ca97e1ead8134aa35675750499d51, type: 3}
       propertyPath: m_Name
