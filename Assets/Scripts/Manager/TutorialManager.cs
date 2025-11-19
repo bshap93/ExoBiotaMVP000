@@ -9,17 +9,15 @@ using UnityEngine;
 
 namespace Manager
 {
-    public class TutorialManager : MonoBehaviour, ICoreGameService, MMEventListener<MainTutorialBitEvent>,
-        MMEventListener<ControlSequenceTutorialBitEvent>
+    public class TutorialManager : MonoBehaviour, ICoreGameService, MMEventListener<MainTutorialBitEvent>
     {
         [SerializeField] bool autoSave; // checkpoint-only by default
 
         [SerializeField] AudioSource uiButtonAudioSource;
-        readonly HashSet<string> _controlPromptSequencesCompleted = new();
         readonly HashSet<string> _tutorialBitsCompleted = new();
+        HashSet<string> _colliderTutorialTriggersCleared = new();
 
         List<AudioSource> _audioSources = new();
-        Dictionary<string, ControlPromptSequence> _controlPromptSequencesById;
 
         bool _dirty;
 
@@ -57,20 +55,18 @@ namespace Manager
         void OnEnable()
         {
             this.MMEventStartListening<MainTutorialBitEvent>();
-            this.MMEventStartListening<ControlSequenceTutorialBitEvent>();
         }
 
         void OnDisable()
         {
             this.MMEventStopListening<MainTutorialBitEvent>();
-            this.MMEventStopListening<ControlSequenceTutorialBitEvent>();
         }
         public void Save()
         {
             _savePath = GetSaveFilePath();
 
             ES3.Save("TutorialBitsCompleted", _tutorialBitsCompleted, _savePath);
-            ES3.Save("ControlPromptSequencesCompleted", _controlPromptSequencesCompleted, _savePath);
+            ES3.Save("ColliderTutorialTriggersCleared", _colliderTutorialTriggersCleared, _savePath);
             _dirty = false;
         }
         public void Load()
@@ -85,15 +81,14 @@ namespace Manager
                 foreach (var id in set)
                     _tutorialBitsCompleted.Add(id);
             }
-
-            _controlPromptSequencesCompleted.Clear();
-
-            if (ES3.KeyExists("ControlPromptSequencesCompleted", _savePath))
+            
+            if (ES3.KeyExists("ColliderTutorialTriggersCleared", _savePath))
             {
-                var set = ES3.Load<HashSet<string>>("ControlPromptSequencesCompleted", _savePath);
+                var set = ES3.Load<HashSet<string>>("ColliderTutorialTriggersCleared", _savePath);
                 foreach (var id in set)
-                    _controlPromptSequencesCompleted.Add(id);
+                    _colliderTutorialTriggersCleared.Add(id);
             }
+
 
 
             _dirty = false;
@@ -101,7 +96,7 @@ namespace Manager
         public void Reset()
         {
             _tutorialBitsCompleted.Clear();
-            _controlPromptSequencesCompleted.Clear();
+            _colliderTutorialTriggersCleared.Clear();
             _dirty = true;
             ConditionalSave();
         }
@@ -131,10 +126,7 @@ namespace Manager
         {
             return ES3.FileExists(_savePath ?? GetSaveFilePath());
         }
-        public void OnMMEvent(ControlSequenceTutorialBitEvent eventType)
-        {
-            throw new NotImplementedException();
-        }
+
         public void OnMMEvent(MainTutorialBitEvent bitEventType)
         {
             if (!_tutorialsEnabled) return;

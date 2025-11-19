@@ -7,10 +7,11 @@ using Rewired;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Utilities.Interface;
 
 namespace SharedUI.Tutorial
 {
-    public class ColliderTutorialTrigger : MonoBehaviour
+    public class ColliderTutorialTrigger : MonoBehaviour, IRequiresUniqueID
     {
         public enum TutorialType
         {
@@ -30,6 +31,8 @@ namespace SharedUI.Tutorial
         MainTutBitWindowArgs tutorialBit;
         [SerializeField] TriggerType triggerType = TriggerType.OnEnter;
         [SerializeField] TutorialType tutorialType;
+        
+        public string uniqueID;
 
         public string prePromptTextOverride;
         public string postPromptTextOverride;
@@ -53,7 +56,14 @@ namespace SharedUI.Tutorial
             if (canBeBooped && _isPlayerInTrigger)
             {
                 var isButtonPressed = _player.GetButton(ActionId);
-                if (isButtonPressed) ControlsHelpEvent.Trigger(ControlHelpEventType.ShowUseThenHide, ActionId);
+                if (isButtonPressed)
+                {
+                    ControlsHelpEvent.Trigger(ControlHelpEventType.ShowUseThenHide, ActionId);
+                    canBeBooped = false;
+                    MainTutorialBitEvent.Trigger(tutorialBit.mainTutID, 
+                        MainTutorialBitEventType.ClearTutorialColliderTrigger,tutorialBit.tutBitName);
+                }
+                
             }
         }
 
@@ -149,6 +159,16 @@ namespace SharedUI.Tutorial
             OnEnter,
             OnExit,
             Both
+        }
+
+        public string UniqueID => uniqueID;
+        public void SetUniqueID()
+        {
+            uniqueID = System.Guid.NewGuid().ToString();
+        }
+        public bool IsUniqueIDEmpty()
+        {
+            return string.IsNullOrEmpty(uniqueID);
         }
     }
 }

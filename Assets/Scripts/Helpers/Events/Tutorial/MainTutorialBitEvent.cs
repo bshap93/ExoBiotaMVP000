@@ -7,7 +7,8 @@ namespace Helpers.Events.Tutorial
         ShowMainTutBit,
         FinishTutBit,
         ShowOptionalTutorialBit,
-        HideOptionalTutorialBit
+        HideOptionalTutorialBit,
+        ClearTutorialColliderTrigger
     }
 
     public struct MainTutorialBitEvent
