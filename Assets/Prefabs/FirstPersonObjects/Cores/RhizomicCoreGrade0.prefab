@@ -2047,7 +2047,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uniqueID: 
   actionId: 43
-  actionText: For Options, or F to Pickup
+  actionText: For Options (or F to Pickup)
   quantity: 1
   onItemPicked:
     m_PersistentCalls:
@@ -2064,8 +2064,8 @@ MonoBehaviour:
     ShortBlurb: A vaunted 'Core' of Sheol', that alien fruit which contains the key
       to superintelligent AI.
     FullDescription: 
-    IdentificationMode: 0
-    UnknownIcon: {fileID: 0}
+    IdentificationMode: 3
+    UnknownIcon: {fileID: 21300448, guid: 99cbc473450af4147999e9e68398877b, type: 3}
     UnknownShortBlurb: 
     UnkonwnName: Unknown Item
   onPickFeedbacks: {fileID: 1291187103501579518}
@@ -2110,7 +2110,7 @@ MonoBehaviour:
   hideWhenVisited: 0
   isVisited: 0
   visitedText: 
-  playAudioClipWhenVisited: 1
+  playAudioClipWhenVisited: 0
   visitedAudioClipOverride: {fileID: 0}
   radius: 0
   iconScale: 1
@@ -2213,9 +2213,9 @@ MonoBehaviour:
       m_Calls: []
   revealPolicy: 0
   examinationPolicy: 1
-  canBeAreaScannedType: 1
+  canBeAreaScannedType: 2
   compassProPOI: {fileID: 7237622243675244738}
-  locationObject: {fileID: -4038893289790566941, guid: 8b39446f6099d944b8282c10cc7b3055, type: 2}
+  locationObject: {fileID: -6104182998175089887, guid: 8b39446f6099d944b8282c10cc7b3055, type: 2}
 --- !u!1 &8176414425186754440
 GameObject:
   m_ObjectHideFlags: 0

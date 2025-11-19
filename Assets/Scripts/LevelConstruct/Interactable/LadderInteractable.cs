@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Dirigible.Input;
-using Events;
 using FirstPersonPlayer;
 using FirstPersonPlayer.Interface;
 using Helpers.Events;
@@ -24,6 +23,7 @@ namespace LevelConstruct.Interactable
         public int actionId;
 
         [SerializeField] float triggerCooldown = 6f;
+        [SerializeField] bool askOnTrigger = true;
         CharacterActor _characterActor;
         bool _initialized;
         float _lastTriggerTime;
@@ -32,6 +32,9 @@ namespace LevelConstruct.Interactable
 
         void OnTriggerEnter(Collider other)
         {
+            if (!askOnTrigger)
+                return;
+
             if (Time.time - _lastTriggerTime < triggerCooldown)
                 return;
 
