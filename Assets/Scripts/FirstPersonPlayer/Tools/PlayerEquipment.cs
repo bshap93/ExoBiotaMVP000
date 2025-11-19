@@ -9,6 +9,7 @@ using FirstPersonPlayer.UI;
 using Helpers.AnimancerHelper;
 using Helpers.ScriptableObjects.Animation;
 using Inventory;
+using MoreMountains.Feedbacks;
 using MoreMountains.InventoryEngine;
 using MoreMountains.Tools;
 using SharedUI;
@@ -346,6 +347,13 @@ namespace FirstPersonPlayer.Tools
 
         public void UnequipTool()
         {
+            MMFeedbacks fb = null;
+            if (CurrentRuntimeTool != null)
+            {
+                fb = CurrentRuntimeTool.GetUnequipFeedbacks();
+                if (fb != null) fb.PlayFeedbacks();
+            }
+
             if (CurrentRuntimeTool is MonoBehaviour mb)
             {
                 CurrentRuntimeTool.Unequip();
@@ -369,6 +377,7 @@ namespace FirstPersonPlayer.Tools
 
                 animancerRightArmController.currentToolAnimationSet = null;
             }
+
 
             CurrentToolSo = null;
             _nextUseTime = 0f;

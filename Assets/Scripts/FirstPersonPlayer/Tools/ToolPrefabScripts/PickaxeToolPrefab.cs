@@ -18,7 +18,6 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
     {
         [Header("Mining Settings")] public float miningCooldown = 1f;
 
-        public float diggerUsingRange = 5f;
         public int hardnessCanBreak = 1;
         public float highlighingRange;
 
@@ -35,6 +34,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         [Header("Allowed Textures")] public int[] allowedTerrainTextureIndices;
 
         [SerializeField] MMFeedbacks equippedFeedbacks;
+        [SerializeField] MMFeedbacks unequippedFeedbacks;
+
+
+        [SerializeField] GameObject unequippedEffectPrefab;
         [SerializeField] bool showHighlights = true;
 
         [Header("Layer Settings")] [SerializeField]
@@ -157,6 +160,11 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         {
             return equippedFeedbacks;
         }
+        public override MMFeedbacks GetUnequipFeedbacks()
+        {
+            return unequippedFeedbacks;
+        }
+
 
         bool IsOnAllowedLayer(GameObject obj)
         {

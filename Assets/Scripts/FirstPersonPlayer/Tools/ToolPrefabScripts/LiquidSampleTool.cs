@@ -38,6 +38,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         GameObject mainGunObject;
 
         [SerializeField] MMFeedbacks equippedFeedbacks;
+        [SerializeField] MMFeedbacks unequippedFeedbacks;
 
 
         [Header("Feedbacks")] [SerializeField] MMFeedbacks startSamplingFeedbacks;
@@ -120,6 +121,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
                 _currentTarget = node;
                 _timer = 0f;
+                StartCoroutine(
+                    DelayedSamplingCompleteFeedbacks(
+                        _animController.currentToolAnimationSet.beginUseAnimation.length));
+
                 BioSampleEvent.Trigger(
                     sampleUniqueId, BioSampleEventType.StartCollection, node.bioOrganismType,
                     sampleDuration);
@@ -245,6 +250,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         {
             return detectableType;
         }
+        public MMFeedbacks GetUnequipFeedbacks()
+        {
+            return unequippedFeedbacks;
+        }
 
         // IToolAnimationControl implementation
         public void OnEquipped()
@@ -261,12 +270,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             // Play begin -> during sequence when starting to sample
             if (_animController != null && _animController.currentToolAnimationSet != null &&
                 _animController.currentToolAnimationSet.beginUseAnimation != null)
-            {
                 _animController.PlayToolUseSequence();
-                StartCoroutine(
-                    DelayedSamplingCompleteFeedbacks(
-                        _animController.currentToolAnimationSet.beginUseAnimation.length));
-            }
         }
 
 
@@ -284,10 +288,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             yield return new WaitForSeconds(delay);
             samplerPenetrationFeedbacks?.PlayFeedbacks();
             startSamplingFeedbacks?.PlayFeedbacks();
-            if (_currentTarget != null)
-            {
-                _currentTarget.MakeJiggle();
-            }
+            if (_currentTarget != null) _currentTarget.MakeJiggle();
         }
 
         void UpdateVisibleOrganisms()

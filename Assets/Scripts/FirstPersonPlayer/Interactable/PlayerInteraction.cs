@@ -115,7 +115,7 @@ namespace FirstPersonPlayer.Interactable
                 PerformPickablePick();
 
 
-            if (rewiredInput.pickUpProp)
+            if (rewiredInput.dropPropOrHold)
             {
                 _holdingItem = propPickup != null && propPickup.IsHoldingItem();
                 if (_holdingItem)

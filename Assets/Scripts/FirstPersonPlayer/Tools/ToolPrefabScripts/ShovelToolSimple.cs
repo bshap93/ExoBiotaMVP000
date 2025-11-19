@@ -14,12 +14,11 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
     public class ShovelToolSimple : MonoBehaviour, IRuntimeTool
 
     {
-        [Header("Digging")] [SerializeField] private LayerMask diggableMask = ~0;
+        [Header("Digging")] [SerializeField] LayerMask diggableMask = ~0;
 
-        [SerializeField] private Sprite defaultReticleForTool;
+        [SerializeField] Sprite defaultReticleForTool;
 
-        [SerializeField] private CanBeAreaScannedType detectableType = CanBeAreaScannedType.BasicScanner;
-
+        [SerializeField] CanBeAreaScannedType detectableType = CanBeAreaScannedType.BasicScanner;
 
 
         [Tooltip("Allowed texture indices on terrain this shovel can dig")]
@@ -31,15 +30,17 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         [Header("Material Settings")] public Material currentMaterial;
 
         [Header("Shovel Models")] [SerializeField]
-        private GameObject shovelObject;
+        GameObject shovelObject;
 
-        [SerializeField] private GameObject shovelGripObject;
-        [SerializeField] private GameObject shovelMidObject;
+        [SerializeField] GameObject shovelGripObject;
+        [SerializeField] GameObject shovelMidObject;
 
-        [SerializeField] private MMFeedbacks equippedFeedbacks;
+        [Header("Equip Feedbacks")] [SerializeField]
+        MMFeedbacks equippedFeedbacks;
+        [SerializeField] MMFeedbacks unequippedFeedbacks;
 
-
-        [Header("Dig Settings")] public float diggerUsingRange = 5f;
+        [Header("Tool Settings")] [Header("Dig Settings")]
+        public float diggerUsingRange = 5f;
         [Header("Effect Settings")] public float minEffectRadius = 0.3f;
         public float maxEffectRadius = 1.2f;
         public float minEffectOpacity = 5f;
@@ -63,6 +64,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             terrainLayerDetector = owner.terrainLayerDetector;
             if (TerrainManager.Instance != null)
                 currentTerrainBehavior = TerrainManager.Instance.currentTerrainController?.terrainBehavior;
+
             digger = TerrainManager.Instance?.currentDiggerMasterRuntime;
         }
 
@@ -93,12 +95,15 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         public MMFeedbacks GetEquipFeedbacks()
         {
             return equippedFeedbacks;
-
         }
 
         public CanBeAreaScannedType GetDetectableType()
         {
             return detectableType;
+        }
+        public MMFeedbacks GetUnequipFeedbacks()
+        {
+            return unequippedFeedbacks;
         }
 
         public bool CanInteractWithTextureIndex(int index)
@@ -108,6 +113,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             foreach (var allowed in allowedTerrainTextureIndices)
                 if (index == allowed)
                     return true;
+
             return false;
         }
 
@@ -134,7 +140,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         {
             if (Time.time < lastDigTime + miningCooldown) return;
 
-            if (!Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward,
+            if (!Physics.Raycast(
+                    mainCamera.transform.position, mainCamera.transform.forward,
                     out var hit, diggerUsingRange, diggableMask))
                 return;
 
@@ -149,8 +156,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             // Effects
             if (debrisEffectPrefab)
             {
-                var fx = Instantiate(debrisEffectPrefab, hit.point + hit.normal * 0.1f,
+                var fx = Instantiate(
+                    debrisEffectPrefab, hit.point + hit.normal * 0.1f,
                     Quaternion.LookRotation(-mainCamera.transform.forward));
+
                 Destroy(fx, 2f);
             }
 
@@ -158,7 +167,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         }
 
         /* --------- Helpers --------- */
-        private void DigChunk(RaycastHit hit)
+        void DigChunk(RaycastHit hit)
         {
             if (digger == null) return;
             var digPos = hit.point + mainCamera.transform.forward * 0.3f;
@@ -174,7 +183,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             );
         }
 
-        private void DigTerrain(RaycastHit hit)
+        void DigTerrain(RaycastHit hit)
         {
             if (digger == null || terrainLayerDetector == null) return;
 
@@ -196,7 +205,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             );
         }
 
-        private int ResolveFinalTextureIndex(int detectedTextureIndex)
+        int ResolveFinalTextureIndex(int detectedTextureIndex)
         {
             // ✅ For now, just return the detected texture
             // (later you could add depth or override logic here)

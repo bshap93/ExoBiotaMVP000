@@ -1,3 +1,4 @@
+using System;
 using FirstPersonPlayer.Tools.Interface;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
 using Helpers.Events;
@@ -100,6 +101,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         public CanBeAreaScannedType GetDetectableType()
         {
             return CanBeAreaScannedType.NotDetectableByScan;
+        }
+        public MMFeedbacks GetUnequipFeedbacks()
+        {
+            throw new NotImplementedException();
         }
 
         public int GetCurrentTextureIndex()

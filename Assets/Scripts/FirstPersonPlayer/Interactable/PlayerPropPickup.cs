@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Dirigible.Input;
-using Events;
 using FirstPersonPlayer.Tools;
 using Gameplay.Events;
 using Helpers.Events;
@@ -56,7 +55,7 @@ namespace FirstPersonPlayer.Interactable
         void Update()
         {
             // Fire1 (left mouse) → pick / drop.  Replace with Rewired action if you use Rewired
-            if (rewired.pickUpProp)
+            if (rewired.dropPropOrHold)
                 if (heldRb == null)
                     TryPickUp();
                 else

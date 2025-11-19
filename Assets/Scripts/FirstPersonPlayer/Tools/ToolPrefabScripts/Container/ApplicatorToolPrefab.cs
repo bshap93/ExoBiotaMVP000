@@ -49,6 +49,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Container
         {
             return detectableType;
         }
+        public abstract MMFeedbacks GetUnequipFeedbacks();
 
 
         public abstract void PerformToolAction();

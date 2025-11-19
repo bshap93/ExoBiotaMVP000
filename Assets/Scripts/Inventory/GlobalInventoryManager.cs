@@ -1,17 +1,19 @@
 using System;
 using System.Collections.Generic;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
+using Helpers.Events.Inventory;
 using Helpers.Interfaces;
 using Inventory.ScriptableObjects;
 using Manager;
 using MoreMountains.InventoryEngine;
+using MoreMountains.Tools;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 namespace Inventory
 {
-    public class GlobalInventoryManager : MonoBehaviour, ICoreGameService
+    public class GlobalInventoryManager : MonoBehaviour, ICoreGameService, MMEventListener<GlobalInventoryEvent>
     {
         public enum EquippableType
         {
@@ -117,6 +119,16 @@ namespace Inventory
             _savePath = GetSaveFilePath();
         }
 
+        void OnEnable()
+        {
+            this.MMEventStartListening();
+        }
+
+        void OnDisable()
+        {
+            this.MMEventStopListening();
+        }
+
 
         public void Save()
         {
@@ -173,6 +185,14 @@ namespace Inventory
         public bool HasSavedData()
         {
             return ES3.FileExists(GetSaveFilePath());
+        }
+
+        public void OnMMEvent(GlobalInventoryEvent eventType)
+        {
+            if (eventType.EventType == GlobalInventoryEventType.UnequipRightHandTool)
+                MMInventoryEvent.Trigger(
+                    MMInventoryEventType.UnEquipRequest, null, equipmentInventory.name, equipmentInventory.Content[0],
+                    0, 0, equipmentInventory.PlayerID);
         }
         void LoadWeightValues()
         {

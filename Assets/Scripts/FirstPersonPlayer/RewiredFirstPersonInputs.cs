@@ -1,7 +1,9 @@
 using Helpers.Events;
+using Helpers.Events.Inventory;
 using Manager;
 using Rewired;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace FirstPersonPlayer
 {
@@ -24,13 +26,15 @@ namespace FirstPersonPlayer
             Sprint,
             SprintStart,
             SprintStop,
-            PickUpProp,
+            DropPropOrHold,
             Pause,
             LeftHandToggle,
             PickablePick
         }
 
         [Header("Character Input Values")] public Vector2 move;
+
+        [SerializeField] float dropPropOrHoldHeldDuration = 1f;
 
 
         public Vector2 look;
@@ -48,10 +52,13 @@ namespace FirstPersonPlayer
         public bool interactHeld;
         public bool crouch;
         public bool useEquipped;
-        public bool pickUpProp;
+        [FormerlySerializedAs("pickUpProp")] public bool dropPropOrHold;
         public bool pause;
         public bool leftHandToggle;
         public bool pickablePick;
+
+        float _currentHoldTimeDropPropOrHold;
+        bool _isHoldingDropPropOrHold;
 
         Player _rewiredPlayer;
 
@@ -99,11 +106,35 @@ namespace FirstPersonPlayer
             interact = _rewiredPlayer.GetButtonDown("Interact");
             interactHeld = _rewiredPlayer.GetButton("Interact");
             crouch = _rewiredPlayer.GetButton("Crouch");
-            pickUpProp = _rewiredPlayer.GetButtonDown("PickUpProp");
+            dropPropOrHold = _rewiredPlayer.GetButton("DropPropOrHold");
             useEquipped = _rewiredPlayer.GetButton("UseEquipped");
             leftHandToggle = _rewiredPlayer.GetButtonDown("LeftHandToggle");
             pickablePick = _rewiredPlayer.GetButtonDown("PickablePick");
             scrollBetweenTools = _rewiredPlayer.GetAxisDelta("ScrollTools");
+
+            if (dropPropOrHold)
+            {
+                if (!_isHoldingDropPropOrHold)
+                {
+                    _isHoldingDropPropOrHold = true;
+                    _currentHoldTimeDropPropOrHold = 0f;
+                }
+
+                _currentHoldTimeDropPropOrHold += Time.deltaTime;
+
+                if (_currentHoldTimeDropPropOrHold >= dropPropOrHoldHeldDuration)
+                    // Held long enough to count as a "hold"
+                    // You can trigger any events or actions for a hold here
+                    GlobalInventoryEvent.Trigger(
+                        GlobalInventoryEventType.UnequipRightHandTool);
+            }
+            else
+            {
+                if (_isHoldingDropPropOrHold)
+                    ResetHoldDropPropOrHold();
+
+                _isHoldingDropPropOrHold = false;
+            }
 
             if (sprintStart)
                 StaminaAffectorEvent.Trigger(
@@ -114,6 +145,12 @@ namespace FirstPersonPlayer
                 StaminaAffectorEvent.Trigger(
                     StaminaAffectorEventType.StaminaDrainActivityStopped, 0f);
         }
+
+        void ResetHoldDropPropOrHold()
+        {
+            _currentHoldTimeDropPropOrHold = 0f;
+        }
+
 
         public bool GetButtonInput(InputActions input)
         {
@@ -142,8 +179,8 @@ namespace FirstPersonPlayer
                     return interactHeld;
                 case InputActions.JumpHeld:
                     return jumpHeld;
-                case InputActions.PickUpProp:
-                    return pickUpProp;
+                case InputActions.DropPropOrHold:
+                    return dropPropOrHold;
 
 
                 case InputActions.Pause:

@@ -84,6 +84,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         }
 
         public abstract MMFeedbacks GetEquipFeedbacks();
+        public abstract MMFeedbacks GetUnequipFeedbacks();
         public CanBeAreaScannedType GetDetectableType()
         {
             return detectableType;

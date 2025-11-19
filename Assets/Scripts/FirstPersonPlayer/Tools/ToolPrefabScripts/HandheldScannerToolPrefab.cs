@@ -38,6 +38,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         [SerializeField] bool includeDisabledPOIs = true;
 
         [SerializeField] MMFeedbacks equippedFeedbacks;
+        [SerializeField] MMFeedbacks unequippedFeedbacks;
 
         [FormerlySerializedAs("ScannerItemObject")] [SerializeField]
         RightHandEquippableTool rightHandEquippableTool;
@@ -197,6 +198,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         public CanBeAreaScannedType GetDetectableType()
         {
             return detectableType;
+        }
+        public MMFeedbacks GetUnequipFeedbacks()
+        {
+            return unequippedFeedbacks;
         }
 
         bool CanScannerExamineItem(InventoryItem item)

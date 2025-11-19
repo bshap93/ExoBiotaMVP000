@@ -27,6 +27,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
 
         [SerializeField] MMFeedbacks equipFeedbacks;
+        [SerializeField] MMFeedbacks unequippedFeedbacks;
 
         protected float LastSwingTime = -999f;
 
@@ -85,6 +86,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         {
             return equipFeedbacks;
         }
+        public override MMFeedbacks GetUnequipFeedbacks()
+        {
+            return unequippedFeedbacks;
+        }
 
 
         public override void ApplyHit()
@@ -112,24 +117,6 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                     PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
                     staminaCostPerConnectingSwing);
             }
-
-            // // Fallback: tag-gated one-shot destroy (for simple blockers)
-            // if (CanInteractWithObject(go))
-            // {
-            //     SpawnFx(hit.point, hit.normal);
-            //     swingFeedback?.PlayFeedbacks(hit.point);
-            //     hitFeedback?.PlayFeedbacks(hit.point);
-            //
-            //     // Try to be graceful: disable collider and renderer first
-            //     var col = go.GetComponent<Collider>();
-            //     if (col) col.enabled = false;
-            //
-            //     var rend = go.GetComponentInChildren<Renderer>();
-            //     if (rend) rend.enabled = false;
-            //
-            //     // Allow attached scripts (if any) to clean up on Destroy
-            //     Destroy(go, 0.05f);
-            // }
         }
 
 
@@ -148,67 +135,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 AnimController.PlayToolUseOneShot();
                 StartCoroutine(ApplyHitAfterDelay(defaultHitDelay));
             }
-
-            // if (!mainCamera) mainCamera = Camera.main;
-            // if (!mainCamera) return;
-            //
-            // if (!Physics.Raycast(
-            //         mainCamera.transform.position, mainCamera.transform.forward,
-            //         out var hit, reach, hitMask, QueryTriggerInteraction.Ignore))
-            //     return;
-            //
-            // var go = hit.collider.gameObject;
-            //
-            // // First priority: dedicated component
-            // if (go.TryGetComponent<HatchetBreakable>(out var breakable))
-            // {
-            //     AnimController.PlayToolUseOneShot();
-            //     // hardness/HP handled inside component
-            //     breakable.ApplyHit(hatchetPower, hit.point, hit.normal);
-            //
-            //
-            //     SpawnFx(hit.point, hit.normal);
-            //     swingFeedback?.PlayFeedbacks(hit.point);
-            //     hitFeedback?.PlayFeedbacks(hit.point);
-            //     return;
-            // }
-            //
-            // // Fallback: tag-gated one-shot destroy (for simple blockers)
-            // if (CanInteractWithObject(go))
-            // {
-            //     SpawnFx(hit.point, hit.normal);
-            //     swingFeedback?.PlayFeedbacks(hit.point);
-            //     hitFeedback?.PlayFeedbacks(hit.point);
-            //
-            //     // Try to be graceful: disable collider and renderer first
-            //     var col = go.GetComponent<Collider>();
-            //     if (col) col.enabled = false;
-            //
-            //     var rend = go.GetComponentInChildren<Renderer>();
-            //     if (rend) rend.enabled = false;
-            //
-            //     // Allow attached scripts (if any) to clean up on Destroy
-            //     Destroy(go, 0.05f);
-            // }
         }
 
-        // void SpawnFx(Vector3 pos, Vector3 normal)
-        // {
-        //     if (impactVfx)
-        //     {
-        //         var fx = Instantiate(impactVfx, pos + normal * 0.05f, Quaternion.LookRotation(normal));
-        //         Destroy(fx, 2f);
-        //     }
-        //
-        //     if (debrisEffectPrefab)
-        //     {
-        //         var debris = Instantiate(
-        //             debrisEffectPrefab, pos + normal * 0.05f,
-        //             Quaternion.LookRotation(-mainCamera.transform.forward));
-        //
-        //         Destroy(debris, 2f);
-        //     }
-        // }
 
         // Kept to mirror Pickaxe signature – not used by hatchet
         public int GetCurrentTextureIndex()

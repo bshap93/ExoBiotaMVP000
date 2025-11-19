@@ -19,12 +19,12 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Disposable
         [SerializeField] float reach = 2.5f; // max raycast distance
         [SerializeField] int numberOfUses = 1; // disposable: default 1 use
 
-
-        [Header("Feedbacks")] [SerializeField] MMFeedbacks startApplyFeedbacks;
+        [Header("Feedbacks")] [Header("Feedbacks")] [SerializeField]
+        MMFeedbacks startApplyFeedbacks;
         [SerializeField] MMFeedbacks completeApplyFeedbacks;
 
         [SerializeField] MMFeedbacks equippedFeedbacks;
-
+        [SerializeField] MMFeedbacks unequippedFeedbacks;
 
         [SerializeField] LiquidContainerSObject liquidContainerSObject;
         [SerializeField] LayerMask hitMask = ~0; // filter if desired
@@ -76,6 +76,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Disposable
             return equippedFeedbacks;
         }
 
+        public override MMFeedbacks GetUnequipFeedbacks()
+        {
+            return unequippedFeedbacks;
+        }
         public override void PerformToolAction()
         {
             if (MainCamera == null) return;

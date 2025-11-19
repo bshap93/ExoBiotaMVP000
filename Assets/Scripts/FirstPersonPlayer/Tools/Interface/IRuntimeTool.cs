@@ -25,9 +25,10 @@ namespace FirstPersonPlayer.Tools.Interface
 
         MMFeedbacks GetEquipFeedbacks();
 
-        CanBeAreaScannedType GetDetectableType() ;
+        CanBeAreaScannedType GetDetectableType();
 
 
         //MMFeedbacks GetUseToolFeedbacks();
+        MMFeedbacks GetUnequipFeedbacks();
     }
 }
