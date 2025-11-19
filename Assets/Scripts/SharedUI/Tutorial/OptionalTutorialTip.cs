@@ -17,6 +17,8 @@ namespace SharedUI.Tutorial
         [SerializeField] float holdDuration = 1f;
         [SerializeField] int universalInteractId = 99; // IGUIToggleId from DefaultInput
         [SerializeField] MMFeedbacks showFeedbacks;
+        [SerializeField] Color fillColorNormal;
+        [SerializeField] Color fillColorHolding;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
 
@@ -35,7 +37,11 @@ namespace SharedUI.Tutorial
             _player = ReInput.players.GetPlayer(0);
 
             // Initialize button image fill (starts full)
-            if (buttonKeyImage != null) buttonKeyImage.fillAmount = 1f;
+            if (buttonKeyImage != null)
+            {
+                buttonKeyImage.fillAmount = 1f;
+                buttonKeyImage.color = fillColorNormal;
+            }
         }
 
 
@@ -62,6 +68,7 @@ namespace SharedUI.Tutorial
                 fillProgress = Mathf.Clamp01(fillProgress);
 
                 if (buttonKeyImage != null) buttonKeyImage.fillAmount = fillProgress;
+                buttonKeyImage.color = fillColorHolding;
 
                 // Check if hold duration reached
                 if (_currentHoldTime >= holdDuration)
@@ -109,7 +116,11 @@ namespace SharedUI.Tutorial
         void ResetHold()
         {
             _currentHoldTime = 0f;
-            if (buttonKeyImage != null) buttonKeyImage.fillAmount = 1f;
+            if (buttonKeyImage != null)
+            {
+                buttonKeyImage.fillAmount = 1f;
+                buttonKeyImage.color = fillColorNormal;
+            }
         }
 
         void ShowTutorial()
@@ -129,10 +140,9 @@ namespace SharedUI.Tutorial
             canvasGroup.alpha = 1f;
             canvasGroup.blocksRaycasts = true;
             canvasGroup.interactable = true;
-            
+
             showFeedbacks?.PlayFeedbacks();
             ResetHold();
-            
         }
 
         void Hide()

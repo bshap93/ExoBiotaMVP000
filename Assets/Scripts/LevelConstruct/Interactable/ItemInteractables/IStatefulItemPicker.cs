@@ -14,5 +14,9 @@ namespace LevelConstruct.Interactable.ItemInteractables
         public bool IsItemPickerGated();
 
         public GatedInteractionType GetGatedInteractionType();
+
+        public void PlayLoopedFeedbacks();
+
+        public void StopLoopedFeedbacks();
     }
 }

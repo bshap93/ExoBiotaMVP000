@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using creepycat.scifikitvol4;
 using CustomAssets.Scripts;
+using DG.Tweening;
 using FirstPersonPlayer.ScriptableObjects;
 using Helpers.Events;
 using Helpers.Events.Machine;
@@ -11,7 +12,6 @@ using MoreMountains.Tools;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Utilities.Interface;
-using Uween;
 
 namespace FirstPersonPlayer.Interactable.Stateful
 {
@@ -169,11 +169,17 @@ namespace FirstPersonPlayer.Interactable.Stateful
 
             frontalBarrier.SetActive(true);
 
-            //Debug.Log("Button Elevator Clicked");
-            TweenXYZ.Add(
-                    elevatorScriptObject.transform.gameObject, travelTime * floorsToTravel,
-                    destinationPoint.transform.localPosition)
-                .EaseInOutSine();
+            // //Debug.Log("Button Elevator Clicked");
+            // TweenXYZ.Add(
+            //         elevatorScriptObject.transform.gameObject, travelTime * floorsToTravel,
+            //         destinationPoint.transform.localPosition)
+            //     .EaseInOutSine();
+            DOTween.Kill(elevatorScriptObject.transform); // prevent overlapping tweens
+
+            elevatorScriptObject.transform
+                .DOLocalMove(destinationPoint.localPosition, travelTime * floorsToTravel)
+                .SetEase(Ease.InOutSine)
+                .SetUpdate(false); // same behavior as normal TweenXYZ (affected by timeScale)
 
             movetimer.SetNewDuration(travelTime * floorsToTravel);
 
@@ -207,10 +213,16 @@ namespace FirstPersonPlayer.Interactable.Stateful
             frontalBarrier.SetActive(true);
 
             //Debug.Log("Button Elevator Clicked");
-            TweenXYZ.Add(
-                    elevatorScriptObject.transform.gameObject, travelTime * floorsToTravel,
-                    destinationPoint.transform.localPosition)
-                .EaseInOutCubic();
+            // TweenXYZ.Add(
+            //         elevatorScriptObject.transform.gameObject, travelTime * floorsToTravel,
+            //         destinationPoint.transform.localPosition)
+            //     .EaseInOutCubic();
+            DOTween.Kill(elevatorScriptObject.transform); // prevent overlapping tweens
+
+            elevatorScriptObject.transform
+                .DOLocalMove(destinationPoint.localPosition, travelTime * floorsToTravel)
+                .SetEase(Ease.InOutSine)
+                .SetUpdate(false); // same behavior as normal TweenXYZ (affected by timeScale)
 
             movetimer.SetNewDuration(travelTime * floorsToTravel);
 

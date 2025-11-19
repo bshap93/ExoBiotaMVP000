@@ -92,6 +92,8 @@ namespace LevelConstruct.Interactable.ItemInteractables.ItemPicker
 
         // [FormerlySerializedAs("preferredInventory")] [SerializeField]
         string _preferredInventoryName;
+
+        IStatefulItemPicker _statefulPicker;
         List<string> _toolsFound;
 
         HighlightTrigger _trigger;
@@ -108,6 +110,7 @@ namespace LevelConstruct.Interactable.ItemInteractables.ItemPicker
         void Awake()
         {
             _trigger = GetComponent<HighlightTrigger>();
+            _statefulPicker = GetComponent<IStatefulItemPicker>();
         }
 
         void Reset()
@@ -140,20 +143,20 @@ namespace LevelConstruct.Interactable.ItemInteractables.ItemPicker
         {
             this.MMEventStartListening();
             if (_trigger == null) return;
-            _trigger.OnObjectHighlightStart += OnHoverStart; // return false to cancel hover highlight
-            _trigger.OnObjectHighlightStay +=
-                OnHoverStay; // called while highlighted; return false to force unhighlight
-
-            _trigger.OnObjectHighlightEnd += OnHoverEnd;
+            // _trigger.OnObjectHighlightStart += OnHoverStart; // return false to cancel hover highlight
+            // _trigger.OnObjectHighlightStay +=
+            //     OnHoverStay; // called while highlighted; return false to force unhighlight
+            //
+            // _trigger.OnObjectHighlightEnd += OnHoverEnd;
         }
 
         void OnDisable()
         {
             this.MMEventStopListening();
             if (_trigger == null) return;
-            _trigger.OnObjectHighlightStart -= OnHoverStart;
-            _trigger.OnObjectHighlightStay -= OnHoverStay;
-            _trigger.OnObjectHighlightEnd -= OnHoverEnd;
+            // _trigger.OnObjectHighlightStart -= OnHoverStart;
+            // _trigger.OnObjectHighlightStay -= OnHoverStay;
+            // _trigger.OnObjectHighlightEnd -= OnHoverEnd;
         }
 
         void OnDestroy()
@@ -297,9 +300,11 @@ namespace LevelConstruct.Interactable.ItemInteractables.ItemPicker
 
         public void OnInteractionStart()
         {
+            _statefulPicker.PlayLoopedFeedbacks();
         }
         public void OnInteractionEnd(string param)
         {
+            _statefulPicker.StopLoopedFeedbacks();
         }
 
 

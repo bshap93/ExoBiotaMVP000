@@ -52,7 +52,8 @@ namespace Helpers.Events
         InfectionContracted_Lung01,
         InfectionContracted_Heart01,
         InfectionContracted_Brain01,
-        InfectionContracted_Eyes01
+        InfectionContracted_Eyes01,
+        TooFarFromDirigible
     }
 
     [Serializable]

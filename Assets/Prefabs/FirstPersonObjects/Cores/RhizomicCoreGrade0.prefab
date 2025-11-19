@@ -384,10 +384,10 @@ MonoBehaviour:
         Persistent: 0
         DoNotPlayIfClipAlreadyPlaying: 0
         StopSoundOnFeedbackStop: 0
-        Fade: 0
-        FadeInitialVolume: 0
-        FadeDuration: 1
-        FadeTween:
+        FadeIn: 0
+        FadeInInitialVolume: 0
+        FadeInDuration: 1
+        FadeInTween:
           MMTweenDefinitionType: 0
           MMTweenCurve: 9
           Curve:
@@ -416,6 +416,39 @@ MonoBehaviour:
             m_RotationOrder: 4
           Initialized: 0
           ConditionPropertyName: Fade
+          EnumConditionPropertyName: 
+          EnumConditions: 0000000000000000000000000000000000000000000000000000000000000000
+        FadeOutOnStop: 0
+        FadeOutDuration: 1
+        FadeOutTween:
+          MMTweenDefinitionType: 0
+          MMTweenCurve: 9
+          Curve:
+            serializedVersion: 2
+            m_Curve:
+            - serializedVersion: 3
+              time: 0
+              value: 0
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 1
+              value: 1
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          Initialized: 0
+          ConditionPropertyName: FadeOutOnStop
           EnumConditionPropertyName: 
           EnumConditions: 0000000000000000000000000000000000000000000000000000000000000000
         SoloSingleTrack: 0
@@ -909,10 +942,10 @@ MonoBehaviour:
         Persistent: 0
         DoNotPlayIfClipAlreadyPlaying: 0
         StopSoundOnFeedbackStop: 0
-        Fade: 0
-        FadeInitialVolume: 0
-        FadeDuration: 1
-        FadeTween:
+        FadeIn: 0
+        FadeInInitialVolume: 0
+        FadeInDuration: 1
+        FadeInTween:
           MMTweenDefinitionType: 0
           MMTweenCurve: 9
           Curve:
@@ -941,6 +974,39 @@ MonoBehaviour:
             m_RotationOrder: 4
           Initialized: 0
           ConditionPropertyName: Fade
+          EnumConditionPropertyName: 
+          EnumConditions: 0000000000000000000000000000000000000000000000000000000000000000
+        FadeOutOnStop: 0
+        FadeOutDuration: 1
+        FadeOutTween:
+          MMTweenDefinitionType: 0
+          MMTweenCurve: 9
+          Curve:
+            serializedVersion: 2
+            m_Curve:
+            - serializedVersion: 3
+              time: 0
+              value: 0
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 1
+              value: 1
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          Initialized: 0
+          ConditionPropertyName: FadeOutOnStop
           EnumConditionPropertyName: 
           EnumConditions: 0000000000000000000000000000000000000000000000000000000000000000
         SoloSingleTrack: 0
@@ -1096,7 +1162,7 @@ MonoBehaviour:
         ApplyScale: 0
         ForceSimulationSpeed: 0
         ForcedSimulationSpeed: {x: 0.1, y: 1}
---- !u!1 &5729673731372341254
+--- !u!1 &5000250111953006178
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1104,37 +1170,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5025763856503050603}
-  - component: {fileID: 193332107416865377}
-  m_Layer: 0
-  m_Name: LoopedFB
+  - component: {fileID: 7037323708854112181}
+  - component: {fileID: 9108768166072274358}
+  m_Layer: 8
+  m_Name: LoopedFb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5025763856503050603
+--- !u!4 &7037323708854112181
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5729673731372341254}
+  m_GameObject: {fileID: 5000250111953006178}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.0000002980232, y: 0.31602678, z: 0}
-  m_LocalScale: {x: 2.4999998, y: 2.4999998, z: 2.5000005}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5128463364039133443}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &193332107416865377
+--- !u!114 &9108768166072274358
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5729673731372341254}
+  m_GameObject: {fileID: 5000250111953006178}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6da43522623d4704e979466dc7650b65, type: 3}
@@ -1155,7 +1221,7 @@ MonoBehaviour:
   RandomizeDuration: 0
   RandomDurationMultiplier: {x: 0.5, y: 1.5}
   DisplayFullDurationDetails: 0
-  PlayerTimescaleMode: 1
+  PlayerTimescaleMode: 0
   OnlyPlayIfWithinRange: 0
   RangeCenter: {fileID: 0}
   RangeDistance: 5
@@ -1231,7 +1297,7 @@ MonoBehaviour:
   DebugActive: 0
   InScriptDrivenPause: 0
   FeedbacksList:
-  - rid: 1878854984183316950
+  - rid: 1616504639524700638
   KeepPlayModeChanges: 0
   PerformanceMode: 0
   RestoreInitialValuesOnDisable: 0
@@ -1240,11 +1306,11 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 1878854984183316950
+    - rid: 1616504639524700638
       type: {class: MMF_MMSoundManagerSound, ns: MoreMountains.Feedbacks, asm: MoreMountains.Tools}
       data:
         Active: 1
-        UniqueID: 1641186249
+        UniqueID: -390052791
         Label: MMSoundManager Sound
         OriginalLabel: MMSoundManager Sound
         ChannelMode: 0
@@ -1259,8 +1325,8 @@ MonoBehaviour:
           CooldownDuration: 0
           InterruptsOnStop: 1
           NumberOfRepeats: 0
-          RepeatForever: 0
-          DelayBetweenRepeats: 1
+          RepeatForever: 1
+          DelayBetweenRepeats: 0
           PlayCount: 0
           LimitPlayCount: 0
           MaxPlayCount: 3
@@ -1312,10 +1378,10 @@ MonoBehaviour:
         RemapRangeFalloff: {x: 0, y: 1}
         AutomaticShakerSetupButton:
           ButtonText: Automatic Shaker Setup
-        Owner: {fileID: 193332107416865377}
+        Owner: {fileID: 9108768166072274358}
         DebugActive: 0
         Source: 0
-        Sfx: {fileID: 0}
+        Sfx: {fileID: 8300000, guid: 1be9566a562fa4c20bff588f9fd868dd, type: 3}
         AudioResourceToPlay: {fileID: 0}
         RandomSfx: []
         SequentialOrder: 0
@@ -1335,10 +1401,10 @@ MonoBehaviour:
         Persistent: 0
         DoNotPlayIfClipAlreadyPlaying: 1
         StopSoundOnFeedbackStop: 1
-        Fade: 0
-        FadeInitialVolume: 0
-        FadeDuration: 1
-        FadeTween:
+        FadeIn: 0
+        FadeInInitialVolume: 0
+        FadeInDuration: 1
+        FadeInTween:
           MMTweenDefinitionType: 0
           MMTweenCurve: 9
           Curve:
@@ -1366,7 +1432,40 @@ MonoBehaviour:
             m_PostInfinity: 2
             m_RotationOrder: 4
           Initialized: 0
-          ConditionPropertyName: Fade
+          ConditionPropertyName: FadeIn
+          EnumConditionPropertyName: 
+          EnumConditions: 0000000000000000000000000000000000000000000000000000000000000000
+        FadeOutOnStop: 0
+        FadeOutDuration: 1
+        FadeOutTween:
+          MMTweenDefinitionType: 0
+          MMTweenCurve: 9
+          Curve:
+            serializedVersion: 2
+            m_Curve:
+            - serializedVersion: 3
+              time: 0
+              value: 0
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 1
+              value: 1
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          Initialized: 0
+          ConditionPropertyName: FadeOutOnStop
           EnumConditionPropertyName: 
           EnumConditions: 0000000000000000000000000000000000000000000000000000000000000000
         SoloSingleTrack: 0
@@ -1470,8 +1569,8 @@ Transform:
   - {fileID: 800352065838467713}
   - {fileID: 5077709475924849523}
   - {fileID: 275481091080248360}
-  - {fileID: 5025763856503050603}
   - {fileID: 2913576349111766491}
+  - {fileID: 7037323708854112181}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2797450051520392659
@@ -1914,6 +2013,8 @@ MonoBehaviour:
   objectiveProgressOnSolvent: {fileID: 539440499729682284, guid: 2dbfb6c449091d04d8eddcc24055c10f, type: 2}
   catalystAppliedFeedback: {fileID: 9021943715795716558}
   solventAppliedFeedback: {fileID: 8552902630907348053}
+  loopedInteractionFeedbacks: {fileID: 9108768166072274358}
+  startInteractionFeedbacks: {fileID: 0}
   coreMeshRenderer: {fileID: 955907503469043765}
   harvestableState: 0
   DefaultState: 0
@@ -2107,6 +2208,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b53fa13f4caf470b99adb31cfaabb261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onScanHit:
+    m_PersistentCalls:
+      m_Calls: []
   revealPolicy: 0
   examinationPolicy: 1
   canBeAreaScannedType: 1
@@ -2351,10 +2455,10 @@ MonoBehaviour:
         Persistent: 0
         DoNotPlayIfClipAlreadyPlaying: 0
         StopSoundOnFeedbackStop: 0
-        Fade: 0
-        FadeInitialVolume: 0
-        FadeDuration: 1
-        FadeTween:
+        FadeIn: 0
+        FadeInInitialVolume: 0
+        FadeInDuration: 1
+        FadeInTween:
           MMTweenDefinitionType: 0
           MMTweenCurve: 9
           Curve:
@@ -2383,6 +2487,39 @@ MonoBehaviour:
             m_RotationOrder: 4
           Initialized: 0
           ConditionPropertyName: Fade
+          EnumConditionPropertyName: 
+          EnumConditions: 0000000000000000000000000000000000000000000000000000000000000000
+        FadeOutOnStop: 0
+        FadeOutDuration: 1
+        FadeOutTween:
+          MMTweenDefinitionType: 0
+          MMTweenCurve: 9
+          Curve:
+            serializedVersion: 2
+            m_Curve:
+            - serializedVersion: 3
+              time: 0
+              value: 0
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 1
+              value: 1
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          Initialized: 0
+          ConditionPropertyName: FadeOutOnStop
           EnumConditionPropertyName: 
           EnumConditions: 0000000000000000000000000000000000000000000000000000000000000000
         SoloSingleTrack: 0

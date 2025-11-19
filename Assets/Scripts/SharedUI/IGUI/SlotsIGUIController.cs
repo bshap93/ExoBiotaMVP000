@@ -1,8 +1,11 @@
+using Helpers.Events;
 using Inventory;
+using Manager.Global;
 using Michsky.MUIP;
 using MoreMountains.Feedbacks;
 using MoreMountains.InventoryEngine;
 using MoreMountains.Tools;
+using Structs;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Utilities.Static;
@@ -225,6 +228,18 @@ namespace SharedUI.IGUI
 
         void OnSlotsTypeChanged(int arg0)
         {
+            var currentMode = GameStateManager.Instance.CurrentMode;
+            if (currentMode == GameMode.FirstPerson && arg0 == 1)
+            {
+                ShowPlayerSlots();
+                AlertEvent.Trigger(
+                    AlertReason.TooFarFromDirigible,
+                    "You cannot access the Dirigible slots while not in Dirigible.",
+                    "Not In Dirigible");
+
+                return;
+            }
+
             switch (arg0)
             {
                 case FirstPersonSlotsTypeIndex:

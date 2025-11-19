@@ -37,7 +37,7 @@ namespace CustomAssets.Scripts
         [SerializeField] string associatedObjectiveID;
 
         [SerializeField] bool overrideInteractionRange;
-        [SerializeField] float interactionRange = 2f;
+        // [SerializeField] float interactionRange = 2f;
         [SerializeField] HighlightEffect highlightEffect;
         [SerializeField] MMFeedbacks buttonPressFeedback;
 

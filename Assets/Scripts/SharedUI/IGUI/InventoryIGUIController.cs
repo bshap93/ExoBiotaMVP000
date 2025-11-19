@@ -1,3 +1,4 @@
+using Helpers.Events;
 using Inventory;
 using Manager.Global;
 using Michsky.MUIP;
@@ -91,6 +92,11 @@ namespace SharedUI.IGUI
             {
                 // Can't switch to Dirigible inventory in FP mode
                 SetInventoryTypeDropdown(FPPlayerInventoryTypeIndex);
+                AlertEvent.Trigger(
+                    AlertReason.TooFarFromDirigible,
+                    "You cannot access the Dirigible slots while not in Dirigible.",
+                    "Not In Dirigible");
+
                 return;
             }
 

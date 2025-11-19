@@ -134,6 +134,14 @@ namespace LevelConstruct.Interactable.ItemInteractables
         {
             return gatedInteractionType;
         }
+        public void PlayLoopedFeedbacks()
+        {
+            loopedInteractionFeedbacks?.PlayFeedbacks();
+        }
+        public void StopLoopedFeedbacks()
+        {
+            loopedInteractionFeedbacks?.StopFeedbacks();
+        }
 
         public bool CanBePicked()
         {
@@ -151,6 +159,13 @@ namespace LevelConstruct.Interactable.ItemInteractables
                 if (_itemPicker == null)
                     Debug.LogError("ItemPicker.ItemPicker: ItemPicker not found");
             }
+
+            if (eventType.EventType == GatedInteractionEventType.StartInteraction)
+                // Play feedback
+                PlayLoopedFeedbacks();
+            else if (eventType.EventType == GatedInteractionEventType.CompleteInteraction)
+                // Stop looped feedbacks
+                StopLoopedFeedbacks();
 
 
             // Only process events for THIS specific item
