@@ -1,5 +1,7 @@
 using System;
 using Events;
+using Helpers.Events.Triggering;
+using Manager;
 using Objectives.ScriptableObjects;
 using UnityEngine;
 
@@ -15,14 +17,28 @@ namespace Objectives
             Both
         }
 
+        public bool setNotTriggerableOnExit;
+        public bool setNotTriggerableOnEnter;
+
         [SerializeField] ObjectiveObject objective;
 
-        [SerializeField] TriggerType triggerType = TriggerType.OnEnter;
+        public string uniqueID;
+
+        // [SerializeField] TriggerType triggerType = TriggerType.OnEnter;
         [SerializeField] ObjectiveAction[] actions;
+
+        TriggerColliderManager _triggerColliderManager;
+
+        void Start()
+        {
+            _triggerColliderManager = TriggerColliderManager.Instance;
+            if (_triggerColliderManager == null)
+                Debug.LogWarning("ColliderObjectiveTrigger: No Collider Manager found.", this);
+        }
 
         void OnTriggerEnter(Collider other)
         {
-            if (triggerType != TriggerType.OnEnter) return;
+            // if (triggerType != TriggerType.OnEnter) return;
             if (!other.CompareTag("Player") && !other.CompareTag("FirstPersonPlayer"))
                 return;
 
@@ -32,7 +48,13 @@ namespace Objectives
                 return;
             }
 
+            if (!_triggerColliderManager.IsObjectiveColliderTriggerable(uniqueID)) return;
+
             var objectiveId = objective.objectiveId;
+
+            if (setNotTriggerableOnEnter)
+                TriggerColliderEvent.Trigger(
+                    uniqueID, TriggerColliderEventType.SetTriggerable, false, TriggerColliderType.Objective);
 
             foreach (var action in actions)
                 switch (action)
@@ -54,7 +76,13 @@ namespace Objectives
 
         void OnTriggerExit(Collider other)
         {
-            if (triggerType != TriggerType.OnExit) return;
+            // if (triggerType != TriggerType.OnExit) return;
+            if (!other.CompareTag("Player") && !other.CompareTag("FirstPersonPlayer"))
+                return;
+
+            if (setNotTriggerableOnExit)
+                TriggerColliderEvent.Trigger(
+                    uniqueID, TriggerColliderEventType.SetTriggerable, false, TriggerColliderType.Objective);
         }
 
         enum ObjectiveAction

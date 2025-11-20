@@ -32,16 +32,11 @@ namespace Manager
             if (eventType.EventType == TriggerColliderEventType.SetTriggerable)
             {
                 if (eventType.ColliderType == TriggerColliderType.Spontaneous)
-                {
                     SetSpontaneousColliderTriggerable(eventType.ColliderID, eventType.IsTriggerable);
-                }
                 else if (eventType.ColliderType == TriggerColliderType.Tutorial)
-                {
                     SetTutorialColliderTriggerable(eventType.ColliderID, eventType.IsTriggerable);
-                }
                 else if (eventType.ColliderType == TriggerColliderType.Objective)
-                {
-                }
+                    SetObjectiveColliderTriggerable(eventType.ColliderID, eventType.IsTriggerable);
             }
         }
         public override string GetSaveFilePath()

@@ -45,9 +45,11 @@ namespace SharedUI.Tutorial
 
         public bool canBeBooped;
         public bool objectiveToBecomeActive = true;
+        public bool setNotTriggerableOnExit;
 
         bool _isActionButtonPressed;
         bool _isPlayerInTrigger;
+
 
         Player _player;
         TriggerColliderManager _triggerColliderManager;
@@ -167,11 +169,21 @@ namespace SharedUI.Tutorial
                     if (OfferOptionalTutorialBit)
                         MainTutorialBitEvent.Trigger(
                             tutorialBit.mainTutID, MainTutorialBitEventType.HideOptionalTutorialBit);
+
+                    if (setNotTriggerableOnExit)
+                        TriggerColliderEvent.Trigger(
+                            uniqueID, TriggerColliderEventType.SetTriggerable, false, TriggerColliderType.Tutorial);
                 }
             }
             else
             {
-                if (other.CompareTag("FirstPersonPlayer") || other.CompareTag("Player")) _isPlayerInTrigger = false;
+                if (other.CompareTag("FirstPersonPlayer") || other.CompareTag("Player"))
+                {
+                    _isPlayerInTrigger = false;
+                    if (setNotTriggerableOnExit)
+                        TriggerColliderEvent.Trigger(
+                            uniqueID, TriggerColliderEventType.SetTriggerable, false, TriggerColliderType.Tutorial);
+                }
             }
         }
 
