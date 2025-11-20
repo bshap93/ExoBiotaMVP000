@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Events;
 using Helpers.Events;
+using Helpers.Events.Triggering;
 using Helpers.Events.Tutorial;
 using Helpers.ScriptableObjects.Tutorial;
 using Manager;
@@ -49,15 +50,24 @@ namespace SharedUI.Tutorial
         bool _isPlayerInTrigger;
 
         Player _player;
+        TriggerColliderManager _triggerColliderManager;
 
         void Start()
         {
             _player = ReInput.players.GetPlayer(0);
+
+            _triggerColliderManager = TriggerColliderManager.Instance;
+            if (_triggerColliderManager == null)
+                Debug.LogWarning("ColliderTutorialTrigger: No TriggerColliderManager found in scene.", this);
         }
 
         void Update()
         {
             if (_player == null) return;
+
+            if (_triggerColliderManager)
+                if (!_triggerColliderManager.IsTutorialColliderTriggerable(uniqueID))
+                    return;
 
             if (canBeBooped && _isPlayerInTrigger)
             {
@@ -66,6 +76,9 @@ namespace SharedUI.Tutorial
                 {
                     ControlsHelpEvent.Trigger(ControlHelpEventType.ShowUseThenHide, ActionId);
                     canBeBooped = false;
+                    TriggerColliderEvent.Trigger(
+                        uniqueID, TriggerColliderEventType.SetTriggerable, false, TriggerColliderType.Tutorial);
+
                     if (tutorialBit != null)
                         MainTutorialBitEvent.Trigger(
                             tutorialBit.mainTutID,
@@ -90,6 +103,10 @@ namespace SharedUI.Tutorial
         {
             if (TutorialManager.Instance == null) return;
             if (!TutorialManager.Instance.AreTutorialsEnabled()) return;
+            if (_triggerColliderManager)
+                if (!_triggerColliderManager.IsTutorialColliderTriggerable(uniqueID))
+                    return;
+
             if (tutorialType == TutorialType.MainTutorialBit)
             {
                 if (other.CompareTag("FirstPersonPlayer") || other.CompareTag("Player"))

@@ -11,8 +11,9 @@ namespace Helpers.ScriptableObjects.Gated
         {
             var toolsFoundEfficiencies = new List<float>();
             for (var i = 0; i < requiredToolIDs.Count; i++)
-                if (appropriateToolsFound.Contains(requiredToolIDs[i]))
-                    toolsFoundEfficiencies.Add(requiredToolEfficiency[i]);
+                if (appropriateToolsFound != null)
+                    if (appropriateToolsFound.Contains(requiredToolIDs[i]))
+                        toolsFoundEfficiencies.Add(requiredToolEfficiency[i]);
 
             if (!requireTools || appropriateToolsFound.Count == 0 || toolsFoundEfficiencies.Count == 0)
                 return null;

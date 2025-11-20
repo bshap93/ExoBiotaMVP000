@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Helpers.Events;
 using Manager.DialogueScene;
 using Sirenix.OdinInspector;
 using UnityEditor;
@@ -11,6 +12,13 @@ namespace Objectives.ScriptableObjects
         order = 1)]
     public class ObjectiveObject : ScriptableObject
     {
+        public enum TriggersOnObjectiveLifecycleEvent
+        {
+            OnAdd,
+            OnActivate,
+            OnComplete
+        }
+
         [Header("Objective ID")] public ObjectiveType objectiveType;
 
         [SerializeField] SubjectLocationObject associatedLocation;
@@ -43,6 +51,15 @@ namespace Objectives.ScriptableObjects
 
         public ObjectiveCategoryType catalogContext;
         public ObjectiveProgressType objectiveProgressType = ObjectiveProgressType.None;
+
+        [Header("Spontaneous Event Triggering")] [ToggleLeft] [LabelText("Triggers Spontaneous Event?")]
+        public bool triggersSpontaneousEvent;
+        [ShowIf(nameof(triggersSpontaneousEvent))]
+        public TriggersOnObjectiveLifecycleEvent triggersOnEvent;
+        [ShowIf(nameof(triggersSpontaneousEvent))]
+        public string spontaneousEventUniqueId;
+        [ShowIf(nameof(triggersSpontaneousEvent))]
+        public SpontaneousTriggerEventType spontaneousEventType;
 
         public string GetPOIUniqueId()
         {

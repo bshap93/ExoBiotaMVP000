@@ -20,7 +20,7 @@ title: ClancyIntro
 Clancy: How do you do? What brings you to this outpost?
 
 <<greet DialogueCommands FabricatorClancy>>
-<<play_greet_sound DialogueCommands FabricatorClancy>>
+// <<play_greet_sound DialogueCommands FabricatorClancy>>
 -> I'm looking for someone. Someone who might have been a frequent visitor around here 4, 5 years ago.
 
 Clancy: If you have their PI marker, I can run it against our long term logs.

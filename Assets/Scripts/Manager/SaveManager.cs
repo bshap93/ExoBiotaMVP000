@@ -57,7 +57,8 @@ namespace Manager
         CurrencySave,
         InGameTimeSave,
         MachineStateSave,
-        InfectionManagerSave
+        InfectionManagerSave,
+        TriggerColliderSave
     }
 
     public enum LocalManagerType
@@ -180,6 +181,7 @@ namespace Manager
             InGameTimeManager.Instance.Load();
             MachineStateManager.Instance.Load();
             InfectionManager.Instance.Load();
+            TriggerColliderManager.Instance.Load();
 
             if (!_config.DisabledGlobalManagers.Contains(GlobalManagerType.TutorialSave))
                 TutorialManager.Instance?.Load();
@@ -221,6 +223,7 @@ namespace Manager
             InGameTimeManager.Instance.Save();
             MachineStateManager.Instance.Save();
             InfectionManager.Instance.Save();
+            TriggerColliderManager.Instance.Save();
 
             if (!_config.DisabledGlobalManagers.Contains(GlobalManagerType.TutorialSave))
                 TutorialManager.Instance?.Save();
@@ -256,6 +259,7 @@ namespace Manager
             InGameTimeManager.Instance.Reset();
             MachineStateManager.Instance.Reset();
             InfectionManager.Instance.Reset();
+            TriggerColliderManager.Instance.Reset();
 
 
             if (!_config.DisabledGlobalManagers.Contains(GlobalManagerType.TutorialSave))
@@ -334,6 +338,8 @@ namespace Manager
                     return "MachineStateSave.es3";
                 case GlobalManagerType.InfectionManagerSave:
                     return "InfectionManagerSave.es3";
+                case GlobalManagerType.TriggerColliderSave:
+                    return "TriggerColliderSave.es3";
                 default:
 
                     Debug.LogError($"Unknown manager type: {globalManagerType}");

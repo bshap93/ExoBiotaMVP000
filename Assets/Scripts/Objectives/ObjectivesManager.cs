@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Domains.Player.Scripts;
 using Events;
+using Helpers.Events;
 using Helpers.Events.ManagerEvents;
 using Helpers.Interfaces;
 using Manager;
@@ -473,6 +474,12 @@ namespace Objectives
                 GamePOIEvent.Trigger(poiId, GamePOIEventType.MarkPOIAsTrackedByObjective, sceneName, obj.objectiveId);
             }
 
+            if (obj.triggersSpontaneousEvent &&
+                obj.triggersOnEvent == ObjectiveObject.TriggersOnObjectiveLifecycleEvent.OnActivate)
+                SpontaneousTriggerEvent.Trigger(
+                    obj.spontaneousEventUniqueId,
+                    obj.spontaneousEventType);
+
 
             MarkDirty();
             ConditionalSave();
@@ -529,6 +536,12 @@ namespace Objectives
             {
                 _inactiveObjectives.Add(objectiveId);
             }
+
+            // if (obj.triggersSpontaneousEvent &&
+            //     obj.triggersOnEvent == ObjectiveObject.TriggersOnObjectiveLifecycleEvent.OnComplete)
+            //     SpontaneousTriggerEvent.Trigger(
+            //         obj.spontaneousEventUniqueId,
+            //         obj.spontaneousEventType);
 
             MarkDirty();
             ConditionalSave();
@@ -593,6 +606,12 @@ namespace Objectives
                 ObjectiveEvent.Trigger(obj.activateUponCompletion.objectiveId, ObjectiveEventType.ObjectiveAdded);
                 ObjectiveEvent.Trigger(obj.activateUponCompletion.objectiveId, ObjectiveEventType.ObjectiveActivated);
             }
+
+            if (obj.triggersSpontaneousEvent &&
+                obj.triggersOnEvent == ObjectiveObject.TriggersOnObjectiveLifecycleEvent.OnComplete)
+                SpontaneousTriggerEvent.Trigger(
+                    obj.spontaneousEventUniqueId,
+                    obj.spontaneousEventType);
 
             MarkDirty();
             ConditionalSave();

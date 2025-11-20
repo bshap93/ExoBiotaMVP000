@@ -13,6 +13,7 @@ Clancy: They should be easy to pull free and stow in your rack pack.
 <<complete_objective DialogueCommands "ContactClancy004">>
 
 <<add_objective DialogueCommands "GetTwoCores">>
+<<activate_objective DialogueCommands "GetTwoCores">>
 Clancy: I'll leave you to it.
 ===
 
