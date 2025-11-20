@@ -53,7 +53,7 @@ namespace Dirigible.Interactable
         [FormerlySerializedAs("overviewCameraAnchor")]
         public Transform overviewCameraTarget; // assign OverviewCameraAnchor child
 
-        public ObjectiveObject linkedObjective; // optional, assign in Inspector
+        // public ObjectiveObject linkedObjective; // optional, assign in Inspector
 
         [SerializeField] float slideTime = 0.75f;
 
@@ -283,6 +283,8 @@ namespace Dirigible.Interactable
                 yield break;
             }
 
+            CompleteObjectiveOnInteract();
+
 
             ControlsHelpEvent.Trigger(ControlHelpEventType.ShowUseThenHide, actionId);
 
@@ -355,9 +357,9 @@ namespace Dirigible.Interactable
 
             var sceneName = gameObject.scene.name;
 
-            ObjectiveEvent.Trigger(
-                linkedObjective?.objectiveId, ObjectiveEventType.ObjectiveCompleted
-            );
+            // ObjectiveEvent.Trigger(
+            //     linkedObjective?.objectiveId, ObjectiveEventType.ObjectiveCompleted
+            // );
 
             foreach (var poiWrapper in overworldSettlementPOIList)
             {

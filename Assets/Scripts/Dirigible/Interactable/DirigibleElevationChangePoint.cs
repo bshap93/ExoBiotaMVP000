@@ -11,12 +11,12 @@ namespace Dirigible.Interactable
     public class DirigibleElevationChangePoint : MonoBehaviour, IDirigibleInteractable
     {
         [SerializeField] LayerMask dirigibleLayers; // set to your Dirigible layer in Inspector
-        readonly HashSet<Collider> _dirigibleOverlaps = new();
-        float _ignoreUntil;
 #if UNITY_EDITOR
         [FormerlySerializedAs("ActionId")] [ValueDropdown(nameof(GetAllRewiredActions))]
 #endif
         public int actionId;
+        readonly HashSet<Collider> _dirigibleOverlaps = new();
+        float _ignoreUntil;
 
         public void OnTriggerEnter(Collider other)
         {
@@ -52,6 +52,9 @@ namespace Dirigible.Interactable
         {
         }
         public void OnUnfocus()
+        {
+        }
+        public void CompleteObjectiveOnInteract()
         {
         }
 #if UNITY_EDITOR
