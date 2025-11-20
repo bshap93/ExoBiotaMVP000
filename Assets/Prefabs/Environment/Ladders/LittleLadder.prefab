@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6519002796969434812
 Transform:
   m_ObjectHideFlags: 0
@@ -73,6 +73,7 @@ MonoBehaviour:
   actionTitle: Ladder Descend
   actionId: 43
   triggerCooldown: 6
+  askOnTrigger: 0
 --- !u!114 &1549766759691957876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,7 +123,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2733365269441407726}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000009596399, y: 0.99906284, z: -0.000000019636207, w: 0.043284204}
+  m_LocalRotation: {x: -0, y: -0.99906266, z: 0, w: -0.043288097}
   m_LocalPosition: {x: 3.306, y: -3.323, z: 0.153}
   m_LocalScale: {x: 0.89983, y: 0.89983, z: 0.89983}
   m_ConstrainProportionsScale: 0
@@ -530,9 +531,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3502674207435325904}
-  - component: {fileID: 661377012302526781}
   - component: {fileID: 1724666919507241408}
   - component: {fileID: 1271804233821464430}
+  - component: {fileID: 3951737579899183855}
   m_Layer: 8
   m_Name: BottomTrigger
   m_TagString: Untagged
@@ -556,27 +557,6 @@ Transform:
   - {fileID: 2415066833708557940}
   m_Father: {fileID: 8216107724759376768}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &661377012302526781
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5597909865354495175}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.97
-  m_Center: {x: -0.1636798, y: 0.07, z: -0.00000011920932}
 --- !u!114 &1724666919507241408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -594,6 +574,7 @@ MonoBehaviour:
   actionTitle: Ladder Climb
   actionId: 43
   triggerCooldown: 6
+  askOnTrigger: 0
 --- !u!114 &1271804233821464430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -613,6 +594,29 @@ MonoBehaviour:
   teleportTarget: {fileID: 2415066833708557940}
   upDirectionReferenceMode: 1
   verticalAlignmentReference: {fileID: 0}
+--- !u!136 &3951737579899183855
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5597909865354495175}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.86
+  m_Height: 4.19
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.58, z: 0}
 --- !u!1 &6506946733922285464
 GameObject:
   m_ObjectHideFlags: 0
@@ -969,10 +973,10 @@ MonoBehaviour:
         Persistent: 0
         DoNotPlayIfClipAlreadyPlaying: 0
         StopSoundOnFeedbackStop: 0
-        Fade: 0
-        FadeInitialVolume: 0
-        FadeDuration: 1
-        FadeTween:
+        FadeIn: 0
+        FadeInInitialVolume: 0
+        FadeInDuration: 1
+        FadeInTween:
           MMTweenDefinitionType: 0
           MMTweenCurve: 9
           Curve:
@@ -1001,6 +1005,39 @@ MonoBehaviour:
             m_RotationOrder: 4
           Initialized: 0
           ConditionPropertyName: Fade
+          EnumConditionPropertyName: 
+          EnumConditions: 0000000000000000000000000000000000000000000000000000000000000000
+        FadeOutOnStop: 0
+        FadeOutDuration: 1
+        FadeOutTween:
+          MMTweenDefinitionType: 0
+          MMTweenCurve: 9
+          Curve:
+            serializedVersion: 2
+            m_Curve:
+            - serializedVersion: 3
+              time: 0
+              value: 0
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 1
+              value: 1
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          Initialized: 0
+          ConditionPropertyName: FadeOutOnStop
           EnumConditionPropertyName: 
           EnumConditions: 0000000000000000000000000000000000000000000000000000000000000000
         SoloSingleTrack: 0

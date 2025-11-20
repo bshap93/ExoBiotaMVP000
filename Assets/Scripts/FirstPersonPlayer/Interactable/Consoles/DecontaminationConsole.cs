@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Helpers.Events;
 using Helpers.Events.Status;
@@ -35,10 +36,10 @@ namespace FirstPersonPlayer.Interactable.Consoles
             {
                 case ActionConsoleState.Broken:
                 case ActionConsoleState.LacksPower:
-                    SetConsoleToInactiveState();
+                    SetConsoleToLacksPowerState();
                     break;
                 case ActionConsoleState.PoweredOn:
-                    SetConsoleToActiveState();
+                    SetConsoleToPoweredOnState();
                     break;
             }
         }
@@ -116,19 +117,23 @@ namespace FirstPersonPlayer.Interactable.Consoles
         {
             return "Decontaminate";
         }
-        public override void SetConsoleToInactiveState()
+        public override void SetConsoleToLacksPowerState()
         {
             if (screenForConsole != null)
                 screenForConsole.SetActive(false);
 
             currentConsoleState = ActionConsoleState.LacksPower;
         }
-        public override void SetConsoleToActiveState()
+        public override void SetConsoleToPoweredOnState()
         {
             if (screenForConsole != null)
                 screenForConsole.SetActive(true);
 
             currentConsoleState = ActionConsoleState.PoweredOn;
+        }
+        public override void SetConsoleToHailPlayerState()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Events;
 using FirstPersonPlayer.Interface;
@@ -5,6 +6,7 @@ using Helpers.Events;
 using Helpers.Events.Dialog;
 using LevelConstruct.Highlighting;
 using MoreMountains.Feedbacks;
+using MoreMountains.Tools;
 using Objectives;
 using Objectives.ScriptableObjects;
 using Sirenix.OdinInspector;
@@ -17,7 +19,7 @@ namespace LevelConstruct.Interactable.ItemInteractables
     [RequireComponent(typeof(MeshCollider))]
     [RequireComponent(typeof(HighlightEffectController))]
     [DisallowMultipleComponent]
-    public class CommsConsole : ActionConsole, IInteractable
+    public class CommsConsole : ActionConsole, IInteractable, MMEventListener<SpontaneousTriggerEvent>
     {
         [SerializeField] string defaultNPCId;
         [FormerlySerializedAs("startNodeOverride")] [SerializeField]
@@ -34,10 +36,25 @@ namespace LevelConstruct.Interactable.ItemInteractables
 
         [Header("Conditional Dialogue Nodes")] [SerializeField]
         DialogueCondition[] dialogueConditions;
+        [SerializeField] MMFeedbacks hailinPlayerFeedback;
+
+        ActionConsoleState _priorConsoleState;
 
         void Start()
         {
             StartCoroutine(InitializeAfterMachineStateManager());
+        }
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            this.MMEventStartListening();
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            this.MMEventStopListening();
         }
 
         public override void Interact()
@@ -75,13 +92,39 @@ namespace LevelConstruct.Interactable.ItemInteractables
 
             MyUIEvent.Trigger(UIType.Any, UIActionType.Open);
             ControlsHelpEvent.Trigger(ControlHelpEventType.Hide, actionId);
-            // ControlsHelpEvent.Trigger(
-            //     ControlHelpEventType.Show, continuteActionId, additionalInfoText: " to Continue",
-            //     additionalInstruction: "Instruction");
+
+            if (currentConsoleState == ActionConsoleState.HailingPlayer)
+            {
+                if (_priorConsoleState == ActionConsoleState.PoweredOn)
+                    SetConsoleToPoweredOnState();
+                else if (_priorConsoleState == ActionConsoleState.LacksPower)
+                    throw new Exception(
+                        "CommsConsole: Console cannot be in HailingPlayer state if prior state was LacksPower");
+            }
         }
 
         public override void OnInteractionStart()
         {
+        }
+        public void OnMMEvent(SpontaneousTriggerEvent eventType)
+        {
+            if (eventType.UniqueID == uniqueID)
+            {
+                if (eventType.EventType == SpontaneousTriggerEventType.Triggered)
+                {
+                    if (currentConsoleState == ActionConsoleState.PoweredOn)
+                        SetConsoleToHailPlayerState();
+                }
+                else if (eventType.EventType == SpontaneousTriggerEventType.Silenced)
+                {
+                    if (currentConsoleState == ActionConsoleState.HailingPlayer)
+                    {
+                        if (_priorConsoleState == ActionConsoleState.PoweredOn)
+                            SetConsoleToPoweredOnState();
+                        else if (_priorConsoleState == ActionConsoleState.LacksPower) SetConsoleToLacksPowerState();
+                    }
+                }
+            }
         }
 
         public override void OnInteractionEnd()
@@ -97,10 +140,10 @@ namespace LevelConstruct.Interactable.ItemInteractables
                 case ActionConsoleState.Broken:
                 case ActionConsoleState.LacksPower:
                 case ActionConsoleState.None:
-                    SetConsoleToInactiveState();
+                    SetConsoleToLacksPowerState();
                     break;
                 case ActionConsoleState.PoweredOn:
-                    SetConsoleToActiveState();
+                    SetConsoleToPoweredOnState();
                     break;
             }
         }
@@ -128,19 +171,38 @@ namespace LevelConstruct.Interactable.ItemInteractables
         {
             return $"{currentConsoleState}";
         }
-        public override void SetConsoleToInactiveState()
+        public override void SetConsoleToLacksPowerState()
         {
             if (rotatingLight != null)
                 rotatingLight.SetActive(false);
 
+            _priorConsoleState = currentConsoleState;
+
             currentConsoleState = ActionConsoleState.LacksPower;
+
+            hailinPlayerFeedback?.StopFeedbacks();
         }
-        public override void SetConsoleToActiveState()
+        public override void SetConsoleToPoweredOnState()
+        {
+            if (rotatingLight != null)
+                rotatingLight.SetActive(false);
+
+            _priorConsoleState = currentConsoleState;
+
+            currentConsoleState = ActionConsoleState.PoweredOn;
+
+            hailinPlayerFeedback?.StopFeedbacks();
+        }
+        public override void SetConsoleToHailPlayerState()
         {
             if (rotatingLight != null)
                 rotatingLight.SetActive(true);
 
-            currentConsoleState = ActionConsoleState.PoweredOn;
+            _priorConsoleState = currentConsoleState;
+
+            currentConsoleState = ActionConsoleState.HailingPlayer;
+
+            hailinPlayerFeedback?.PlayFeedbacks();
         }
     }
 }

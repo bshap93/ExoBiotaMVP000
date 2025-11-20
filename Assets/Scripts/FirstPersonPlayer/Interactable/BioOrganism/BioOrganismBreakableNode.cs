@@ -15,6 +15,7 @@ using MoreMountains.Feedbacks;
 using MoreMountains.InventoryEngine;
 using MoreMountains.Tools;
 using SharedUI.Interface;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -28,6 +29,11 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
         GatedBreakableInteractionDetails gatedBreakableInteractionDetails;
 
         [SerializeField] HatchetBreakable hatchetBreakable;
+
+#if UNITY_EDITOR
+        [ValueDropdown(nameof(GetAllRewiredActions))]
+#endif
+        public int breakActionId;
 
         [SerializeField] MMFeedbacks loopedInteractionFeedbacks;
         [SerializeField] MMFeedbacks startInteractionFeedbacks;
@@ -171,11 +177,11 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
                 return;
             }
 
-            
+
             // Equip best tool
             EquipBestTool(gatedBreakableInteractionDetails, _toolsFound);
-            // GatedBreakableInteractionEvent.Trigger(
-            //     GatedInteractionEventType.TriggerGateUI, gatedBreakableInteractionDetails, uniqueID, _toolsFound);
+
+            OnHoverStart(gameObject);
         }
 
         public void OnInteractionStart()
@@ -281,8 +287,7 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
                 OnInteractionEnd(eventType.SubjectUniqueID);
             }
         }
-        
-        
+
 
         void EquipBestTool(GatedBreakableInteractionDetails details, List<string> toolsFound)
         {
@@ -329,12 +334,40 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
             BillboardEvent.Trigger(data, BillboardEventType.Show);
             if (actionId != 0)
                 if (ExaminationManager.Instance != null)
-                    ControlsHelpEvent.Trigger(
-                        ControlHelpEventType.Show, actionId,
-                        string.IsNullOrEmpty(actionText) ? null : actionText,
-                        ExaminationManager.Instance.iconRepository.axeIcon);
+                {
+                    if (IsPlayerAlreadyEquippedWithBestTool(gatedBreakableInteractionDetails, _toolsFound))
+                        ControlsHelpEvent.Trigger(
+                            ControlHelpEventType.Show, breakActionId,
+                            string.IsNullOrEmpty(actionText) ? null : actionText,
+                            ExaminationManager.Instance.iconRepository.axeIcon);
+                    else
+                        ControlsHelpEvent.Trigger(
+                            ControlHelpEventType.Show, actionId, additionalInfoText:
+                            string.IsNullOrEmpty(actionText) ? null : actionText);
+                }
 
             return true;
+        }
+
+        bool IsPlayerAlreadyEquippedWithBestTool(GatedBreakableInteractionDetails details, List<string> toolsFound)
+        {
+            if (toolsFound == null)
+            {
+                _toolsFound = HasToolForInteractionInInventory();
+                if (_toolsFound.Count == 0) return false;
+            }
+
+            var toolID = details.GetMostEfficientRequiredToolID(toolsFound);
+
+            var equipmentInventory =
+                GlobalInventoryManager.Instance.equipmentInventory;
+
+            if (equipmentInventory == null) throw new Exception("Equipment inventory is null");
+
+            var equippedTool = equipmentInventory.Content.FirstOrDefault(s => s != null && s.ItemID == toolID);
+            if (equippedTool != null) return equippedTool.ItemID == toolID;
+
+            return false;
         }
 
 

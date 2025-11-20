@@ -12,9 +12,10 @@ using UnityEngine;
 namespace Manager.SceneManagers
 {
     public class MachineStateManager : MonoBehaviour, ICoreGameService,
-        MMEventListener<MachineStateEvent>, MMEventListener<ElevatorStateEvent>
+        MMEventListener<MachineStateEvent>, MMEventListener<ElevatorStateEvent>, MMEventListener<ActionConsoleEvent>
     {
         public bool autoSave;
+        Dictionary<string, bool> _actionConsoleShouldHailPlayer = new(StringComparer.Ordinal);
         Dictionary<string, ActionConsole.ActionConsoleState> _consoleStates = new(StringComparer.Ordinal);
 
         bool _dirty;
@@ -49,18 +50,21 @@ namespace Manager.SceneManagers
         {
             this.MMEventStartListening<MachineStateEvent>();
             this.MMEventStartListening<ElevatorStateEvent>();
+            this.MMEventStartListening<ActionConsoleEvent>();
         }
 
         void OnDisable()
         {
             this.MMEventStopListening<MachineStateEvent>();
             this.MMEventStopListening<ElevatorStateEvent>();
+            this.MMEventStopListening<ActionConsoleEvent>();
         }
         public void Save()
         {
             var path = GetSaveFilePath();
             ES3.Save("MachineStates", _machineStates, path);
             ES3.Save("ConsoleStates", _consoleStates, path);
+            ES3.Save("ActionConsoleHasHailedPlayer", _actionConsoleShouldHailPlayer, path);
             ES3.Save("ElevatorStates", _elevatorStates, path);
             _dirty = false;
         }
@@ -76,6 +80,10 @@ namespace Manager.SceneManagers
             if (ES3.KeyExists("ElevatorStates", path))
                 _elevatorStates = ES3.Load<Dictionary<string, StatefulElevator.ElevatorState>>("ElevatorStates", path);
 
+            if (ES3.KeyExists("ActionConsoleHasHailedPlayer", path))
+                _actionConsoleShouldHailPlayer =
+                    ES3.Load<Dictionary<string, bool>>("ActionConsoleHasHailedPlayer", path);
+
             _dirty = false;
         }
         public void Reset()
@@ -83,6 +91,7 @@ namespace Manager.SceneManagers
             _machineStates.Clear();
             _consoleStates.Clear();
             _elevatorStates.Clear();
+            _actionConsoleShouldHailPlayer.Clear();
             _dirty = true;
             ConditionalSave();
         }
@@ -105,6 +114,14 @@ namespace Manager.SceneManagers
         public bool HasSavedData()
         {
             return ES3.FileExists(_savePath ?? GetSaveFilePath());
+        }
+        public void OnMMEvent(ActionConsoleEvent eventType)
+        {
+            if (eventType.EventType == ActionConsoleEventType.RequestActionConsoleHailsPlayer)
+                if (_actionConsoleShouldHailPlayer[eventType.UniqueID])
+                    SpontaneousTriggerEvent.Trigger(
+                        eventType.UniqueID,
+                        SpontaneousTriggerEventType.Triggered);
         }
         public void OnMMEvent(ElevatorStateEvent eventType)
         {
@@ -137,6 +154,19 @@ namespace Manager.SceneManagers
         {
             _consoleStates.TryGetValue(uniqueID, out var state);
             return state;
+        }
+
+        public void SetIfActionConsoleShouldHailPlayer(string uniqueID, bool shouldHail)
+        {
+            _actionConsoleShouldHailPlayer[uniqueID] = shouldHail;
+            MarkDirty();
+            ConditionalSave();
+        }
+
+        public bool GetActionConsoleShouldHailPlayer(string uniqueID)
+        {
+            _actionConsoleShouldHailPlayer.TryGetValue(uniqueID, out var shouldHail);
+            return shouldHail;
         }
     }
 }

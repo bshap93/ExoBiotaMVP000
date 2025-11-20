@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using FirstPersonPlayer.Interface;
 using Helpers.Events;
 using LevelConstruct.Highlighting;
@@ -99,10 +100,10 @@ namespace LevelConstruct.Interactable.ItemInteractables
             {
                 case ActionConsoleState.Broken:
                 case ActionConsoleState.LacksPower:
-                    SetConsoleToInactiveState();
+                    SetConsoleToLacksPowerState();
                     break;
                 case ActionConsoleState.PoweredOn:
-                    SetConsoleToActiveState();
+                    SetConsoleToPoweredOnState();
                     break;
             }
         }
@@ -128,19 +129,23 @@ namespace LevelConstruct.Interactable.ItemInteractables
         {
             return "Save Game";
         }
-        public override void SetConsoleToInactiveState()
+        public override void SetConsoleToLacksPowerState()
         {
             if (pointLight != null)
                 pointLight.enabled = false;
 
             currentConsoleState = ActionConsoleState.LacksPower;
         }
-        public override void SetConsoleToActiveState()
+        public override void SetConsoleToPoweredOnState()
         {
             if (pointLight != null)
                 pointLight.enabled = true;
 
             currentConsoleState = ActionConsoleState.PoweredOn;
+        }
+        public override void SetConsoleToHailPlayerState()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Helpers.Events;
 using Helpers.Events.Domains.Player.Events;
 using HighlightPlus;
 using MoreMountains.Feedbacks;
@@ -35,13 +36,12 @@ namespace FirstPersonPlayer.Interactable
         [Tooltip("If provided, we will trigger DestructableEvent.Destroyed with this ID when broken.")]
         public string uniqueIdForPersistence;
 
+        [SerializeField] RayfireRigid _rf;
+
         HighlightEffect _highlight; // cache HighlightEffect if present
 
         int _hitCount;
         bool _isBroken; // Prevent multiple breaks
-
-
-        RayfireRigid _rf;
 
         void Awake()
         {
@@ -135,6 +135,8 @@ namespace FirstPersonPlayer.Interactable
                 foreach (var r in root.GetComponentsInChildren<Renderer>(true)) r.enabled = false;
                 enabled = false;
             }
+
+            ControlsHelpEvent.Trigger(ControlHelpEventType.ShowUseThenHide, 54);
         }
 
         public void BreakInstantly()

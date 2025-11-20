@@ -61,7 +61,7 @@ namespace FirstPersonPlayer.Interactable.Gated
             rotatingLightTurnMove.enabled = false;
             powerOnDecal.SetActive(false);
             foreach (var dependentLight in allLightsDependentOnGenerator) dependentLight.SetActive(false);
-            foreach (var console in allConsolesDependentOnGenerator) console.SetConsoleToInactiveState();
+            foreach (var console in allConsolesDependentOnGenerator) console.SetConsoleToLacksPowerState();
             localGeneratorRunningFeedbacks?.StopFeedbacks();
         }
 
@@ -71,7 +71,7 @@ namespace FirstPersonPlayer.Interactable.Gated
             rotatingLightTurnMove.enabled = true;
             powerOnDecal.SetActive(true);
             foreach (var dependentLight in allLightsDependentOnGenerator) dependentLight.SetActive(true);
-            foreach (var console in allConsolesDependentOnGenerator) console.SetConsoleToActiveState();
+            foreach (var console in allConsolesDependentOnGenerator) console.SetConsoleToPoweredOnState();
             localGeneratorRunningFeedbacks?.PlayFeedbacks();
         }
     }

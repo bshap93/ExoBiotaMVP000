@@ -1,3 +1,4 @@
+using System;
 using Events;
 using Objectives.ScriptableObjects;
 using UnityEngine;
@@ -6,6 +7,14 @@ namespace Objectives
 {
     public class ColliderObjectiveTrigger : MonoBehaviour
     {
+        [Serializable]
+        public enum TriggerType
+        {
+            OnEnter,
+            OnExit,
+            Both
+        }
+
         [SerializeField] ObjectiveObject objective;
 
         [SerializeField] TriggerType triggerType = TriggerType.OnEnter;
@@ -14,6 +23,9 @@ namespace Objectives
         void OnTriggerEnter(Collider other)
         {
             if (triggerType != TriggerType.OnEnter) return;
+            if (!other.CompareTag("Player") && !other.CompareTag("FirstPersonPlayer"))
+                return;
+
             if (objective == null)
             {
                 Debug.LogWarning("ColliderObjectiveTrigger: No objective assigned.", this);
@@ -43,12 +55,6 @@ namespace Objectives
         void OnTriggerExit(Collider other)
         {
             if (triggerType != TriggerType.OnExit) return;
-        }
-
-        enum TriggerType
-        {
-            OnEnter,
-            OnExit
         }
 
         enum ObjectiveAction

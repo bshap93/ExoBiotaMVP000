@@ -25,7 +25,8 @@ namespace LevelConstruct.Interactable.ItemInteractables
             None,
             PoweredOn,
             Broken,
-            LacksPower
+            LacksPower,
+            HailingPlayer
         }
 
         public ConsoleType consoleType;
@@ -207,7 +208,8 @@ namespace LevelConstruct.Interactable.ItemInteractables
 #endif
 
         protected abstract string GetActionText(bool recognizableOnSight);
-        public abstract void SetConsoleToInactiveState();
-        public abstract void SetConsoleToActiveState();
+        public abstract void SetConsoleToLacksPowerState();
+        public abstract void SetConsoleToPoweredOnState();
+        public abstract void SetConsoleToHailPlayerState();
     }
 }
