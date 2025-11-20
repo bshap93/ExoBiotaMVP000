@@ -41,6 +41,7 @@ namespace Dirigible.Interactable
         MMEventListener<ModeLoadEvent>
     {
         [SerializeField] Transform dockAnchor; // assign DockAnchor child
+        [SerializeField] ObjectiveObject objectiveToCompleteOnInteract;
 
 #if UNITY_EDITOR
         [FormerlySerializedAs("ActionId")] [ValueDropdown(nameof(GetAllRewiredActions))]
@@ -136,6 +137,13 @@ namespace Dirigible.Interactable
         public void OnUnfocus()
         {
             /* un‑highlight */
+        }
+        public void CompleteObjectiveOnInteract()
+        {
+            if (objectiveToCompleteOnInteract != null)
+                ObjectiveEvent.Trigger(
+                    objectiveToCompleteOnInteract.objectiveId, ObjectiveEventType.ObjectiveCompleted
+                );
         }
 
         public void OnInteractionStart()

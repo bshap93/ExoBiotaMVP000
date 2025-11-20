@@ -12,5 +12,6 @@
         void OnFocus();
 
         void OnUnfocus();
+        void CompleteObjectiveOnInteract();
     }
 }

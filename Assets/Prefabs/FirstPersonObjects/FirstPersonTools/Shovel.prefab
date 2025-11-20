@@ -86,6 +86,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1537
   defaultReticleForTool: {fileID: 21300000, guid: 402fa1c7b1e5e8f4db9c3b8602b629ff, type: 3}
+  detectableType: 0
   allowedTerrainTextureIndices: 010000000400000006000000
   diggingFeedbacks: {fileID: 0}
   debrisEffectPrefab: {fileID: 0}
@@ -94,6 +95,7 @@ MonoBehaviour:
   shovelGripObject: {fileID: 3349924394854971462}
   shovelMidObject: {fileID: 5429294050144407480}
   equippedFeedbacks: {fileID: 0}
+  unequippedFeedbacks: {fileID: 0}
   diggerUsingRange: 5
   minEffectRadius: 0.3
   maxEffectRadius: 1.2

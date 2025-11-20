@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Events;
 using Helpers.Events;
 using Helpers.Events.Tutorial;
 using Helpers.ScriptableObjects.Tutorial;
 using Manager;
+using Objectives.ScriptableObjects;
 using Rewired;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -26,18 +29,21 @@ namespace SharedUI.Tutorial
 
         public bool OfferOptionalTutorialBit;
 
+        [SerializeField] ObjectiveObject objectiveToStartOnBoop;
+
 
         [FormerlySerializedAs("tutorialBitID")] [SerializeField]
         MainTutBitWindowArgs tutorialBit;
         [SerializeField] TriggerType triggerType = TriggerType.OnEnter;
         [SerializeField] TutorialType tutorialType;
-        
+
         public string uniqueID;
 
         public string prePromptTextOverride;
         public string postPromptTextOverride;
 
         public bool canBeBooped;
+        public bool objectiveToBecomeActive = true;
 
         bool _isActionButtonPressed;
         bool _isPlayerInTrigger;
@@ -60,10 +66,23 @@ namespace SharedUI.Tutorial
                 {
                     ControlsHelpEvent.Trigger(ControlHelpEventType.ShowUseThenHide, ActionId);
                     canBeBooped = false;
-                    MainTutorialBitEvent.Trigger(tutorialBit.mainTutID, 
-                        MainTutorialBitEventType.ClearTutorialColliderTrigger,tutorialBit.tutBitName);
+                    if (tutorialBit != null)
+                        MainTutorialBitEvent.Trigger(
+                            tutorialBit.mainTutID,
+                            MainTutorialBitEventType.ClearTutorialColliderTrigger, tutorialBit.tutBitName);
+
+                    if (objectiveToStartOnBoop != null)
+                    {
+                        ObjectiveEvent.Trigger(
+                            objectiveToStartOnBoop.objectiveId,
+                            ObjectiveEventType.ObjectiveAdded);
+
+                        if (objectiveToBecomeActive)
+                            ObjectiveEvent.Trigger(
+                                objectiveToStartOnBoop.objectiveId,
+                                ObjectiveEventType.ObjectiveActivated);
+                    }
                 }
-                
             }
         }
 
@@ -139,6 +158,16 @@ namespace SharedUI.Tutorial
             }
         }
 
+        public string UniqueID => uniqueID;
+        public void SetUniqueID()
+        {
+            uniqueID = Guid.NewGuid().ToString();
+        }
+        public bool IsUniqueIDEmpty()
+        {
+            return string.IsNullOrEmpty(uniqueID);
+        }
+
 #if UNITY_EDITOR
         // This will be called from the parent ScriptableObject
         IEnumerable<ValueDropdownItem<int>> GetAllRewiredActions()
@@ -159,16 +188,6 @@ namespace SharedUI.Tutorial
             OnEnter,
             OnExit,
             Both
-        }
-
-        public string UniqueID => uniqueID;
-        public void SetUniqueID()
-        {
-            uniqueID = System.Guid.NewGuid().ToString();
-        }
-        public bool IsUniqueIDEmpty()
-        {
-            return string.IsNullOrEmpty(uniqueID);
         }
     }
 }
