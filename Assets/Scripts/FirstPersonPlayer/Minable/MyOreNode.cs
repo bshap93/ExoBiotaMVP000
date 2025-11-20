@@ -77,6 +77,12 @@ namespace FirstPersonPlayer.Minable
         public int actionId;
         public string actionText;
 
+
+#if UNITY_EDITOR
+        [ValueDropdown(nameof(GetAllRewiredActions))]
+#endif
+        public int breakActionId;
+
         [Header("Examination Settings")]
 
 #if ODIN_INSPECTOR
@@ -262,10 +268,16 @@ namespace FirstPersonPlayer.Minable
             BillboardEvent.Trigger(_data, BillboardEventType.Show);
             if (actionId != 0)
                 if (ExaminationManager.Instance != null)
-                    ControlsHelpEvent.Trigger(
-                        ControlHelpEventType.Show, actionId, additionalInfoText:
-                        string.IsNullOrEmpty(actionText) ? DefaultActionText : actionText
-                    );
+                {
+                    if (IsPlayerAlreadyEquippedWithBestTool(gatedBreakableInteractionDetails, _toolsFound))
+                        ControlsHelpEvent.Trigger(
+                            ControlHelpEventType.Show, breakActionId, additionalInfoText:
+                            string.IsNullOrEmpty(actionText) ? DefaultActionText : actionText);
+                    else
+                        ControlsHelpEvent.Trigger(
+                            ControlHelpEventType.Show, actionId, additionalInfoText:
+                            string.IsNullOrEmpty(actionText) ? DefaultActionText : actionText);
+                }
 
             return true;
         }
@@ -308,9 +320,13 @@ namespace FirstPersonPlayer.Minable
                 return;
             }
 
+            ControlsHelpEvent.Trigger(ControlHelpEventType.ShowUseThenHide, actionId);
+
             // GatedBreakableInteractionEvent.Trigger(
             //     GatedInteractionEventType.TriggerGateUI, gatedBreakableInteractionDetails, uniqueID, _toolsFound);
             EquipBestTool(gatedBreakableInteractionDetails, _toolsFound);
+
+            OnHoverStart(gameObject);
         }
         public void OnInteractionStart()
         {
@@ -426,6 +442,27 @@ namespace FirstPersonPlayer.Minable
                 OnInteractionStart();
             else if (eventType.EventType == GatedInteractionEventType.CompleteInteraction)
                 OnInteractionEnd(eventType.SubjectUniqueID);
+        }
+
+        bool IsPlayerAlreadyEquippedWithBestTool(GatedBreakableInteractionDetails details, List<string> toolsFound)
+        {
+            if (toolsFound == null)
+            {
+                _toolsFound = HasToolForBreakInInventory();
+                if (_toolsFound.Count == 0) return false;
+            }
+
+            var toolID = details.GetMostEfficientRequiredToolID(toolsFound);
+
+            var equipmentInventory =
+                GlobalInventoryManager.Instance.equipmentInventory;
+
+            if (equipmentInventory == null) throw new Exception("Equipment inventory is null");
+
+            var equippedTool = equipmentInventory.Content.FirstOrDefault(s => s != null && s.ItemID == toolID);
+            if (equippedTool != null) return equippedTool.ItemID == toolID;
+
+            return false;
         }
 
         void EquipBestTool(GatedBreakableInteractionDetails details, List<string> toolsFound)

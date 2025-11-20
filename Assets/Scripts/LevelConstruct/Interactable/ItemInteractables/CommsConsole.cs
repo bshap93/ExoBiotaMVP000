@@ -75,9 +75,9 @@ namespace LevelConstruct.Interactable.ItemInteractables
 
             MyUIEvent.Trigger(UIType.Any, UIActionType.Open);
             ControlsHelpEvent.Trigger(ControlHelpEventType.Hide, actionId);
-            ControlsHelpEvent.Trigger(
-                ControlHelpEventType.Show, continuteActionId, additionalInfoText: " to Continue",
-                additionalInstruction: "Instruction");
+            // ControlsHelpEvent.Trigger(
+            //     ControlHelpEventType.Show, continuteActionId, additionalInfoText: " to Continue",
+            //     additionalInstruction: "Instruction");
         }
 
         public override void OnInteractionStart()

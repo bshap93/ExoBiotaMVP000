@@ -90,29 +90,6 @@ namespace LevelConstruct.Interactable.ItemInteractables
         {
         }
 
-        // public bool OnHoverStart(GameObject go)
-        // {
-        //     data = new SceneObjectData
-        //     (
-        //         GetName(),
-        //         GetIcon(),
-        //         ShortBlurb(),
-        //         GetActionIcon(),
-        //         GetActionText()
-        //     );
-        //
-        //     BillboardEvent.Trigger(data, BillboardEventType.Show);
-        //     return true;
-        // }
-        public string UniqueID => uniqueId;
-        public void SetUniqueID()
-        {
-            uniqueId = GetInstanceID().ToString();
-        }
-        public bool IsUniqueIDEmpty()
-        {
-            return string.IsNullOrEmpty(uniqueId);
-        }
 
         protected override IEnumerator InitializeAfterMachineStateManager()
         {
