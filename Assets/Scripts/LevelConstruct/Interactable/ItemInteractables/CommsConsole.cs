@@ -4,6 +4,7 @@ using Events;
 using FirstPersonPlayer.Interface;
 using Helpers.Events;
 using Helpers.Events.Dialog;
+using Helpers.Events.Tutorial;
 using LevelConstruct.Highlighting;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
@@ -105,6 +106,7 @@ namespace LevelConstruct.Interactable.ItemInteractables
 
         public override void OnInteractionStart()
         {
+            MainTutorialBitEvent.Trigger(null, MainTutorialBitEventType.HideOptionalTutorialBit);
         }
         public void OnMMEvent(SpontaneousTriggerEvent eventType)
         {

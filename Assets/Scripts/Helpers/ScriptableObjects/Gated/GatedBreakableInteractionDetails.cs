@@ -15,20 +15,29 @@ namespace Helpers.ScriptableObjects.Gated
                     if (appropriateToolsFound.Contains(requiredToolIDs[i]))
                         toolsFoundEfficiencies.Add(requiredToolEfficiency[i]);
 
-            if (!requireTools || appropriateToolsFound.Count == 0 || toolsFoundEfficiencies.Count == 0)
+            if (appropriateToolsFound != null &&
+                (!requireTools || appropriateToolsFound.Count == 0 || toolsFoundEfficiencies.Count == 0))
                 return null;
 
             var bestIndex = 0;
-            var highestEfficiency = toolsFoundEfficiencies[0];
 
-            for (var i = 1; i < toolsFoundEfficiencies.Count; i++)
-                if (toolsFoundEfficiencies[i] > highestEfficiency)
-                {
-                    highestEfficiency = toolsFoundEfficiencies[i];
-                    bestIndex = i;
-                }
+            if (toolsFoundEfficiencies.Count > 0)
+            {
+                var highestEfficiency = toolsFoundEfficiencies[0];
 
-            return appropriateToolsFound[bestIndex];
+                for (var i = 1; i < toolsFoundEfficiencies.Count; i++)
+                    if (toolsFoundEfficiencies[i] > highestEfficiency)
+                    {
+                        highestEfficiency = toolsFoundEfficiencies[i];
+                        bestIndex = i;
+                    }
+
+                if (appropriateToolsFound != null)
+                    return appropriateToolsFound[bestIndex];
+            }
+
+
+            return null;
         }
     }
 }
