@@ -29,7 +29,7 @@ Clancy: Need any help? <Help>
 
 title: SamplingHelp
 ---
-Clancy: Just equip your Liquid Sampler tool I gave you.
+Clancy: Just equip the Liquid Sampler tool there on the table in front of you.
 Clancy: Point it at a Kidney Stalk and hold down the trigger.
 <<show_controls DialogueCommands 54>>
 -> Ok I'll give it a try.

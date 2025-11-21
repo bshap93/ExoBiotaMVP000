@@ -12,11 +12,11 @@ namespace Manager.SceneManagers.Global.Dock
     /// Attaclh to the Core scene (lives across modes)
     public class DockGreetingTrigger : MonoBehaviour, MMEventListener<DockingEvent>
     {
-        [SerializeField] private DialogueManager dialogueManager;
-        [SerializeField] private NpcDatabase npcDatabase;
+        [SerializeField] DialogueManager dialogueManager;
+        [SerializeField] NpcDatabase npcDatabase;
 
         [ValueDropdown("GetNpcGreeterIdOptions")] [SerializeField]
-        private string npcGreeterId;
+        string npcGreeterId;
 
         [FormerlySerializedAs("DockId")] [ValueDropdown("GetDockIdOptions")]
         public string dockId;
@@ -44,25 +44,26 @@ namespace Manager.SceneManagers.Global.Dock
             if (storage.TryGetValue<bool>(varKey, out var greeted) && greeted)
                 return;
 
-            OverviewLocationEvent.Trigger(LocationType.Any,
+            OverviewLocationEvent.Trigger(
+                LocationType.Any,
                 LocationActionType.BeApproached, null, null);
 
             // 3. open the dialogue
             if (npcDatabase.TryGet(npcGreeterId, out var def))
-                dialogueManager.Open(def, autoClose: true);
+                dialogueManager.OpenNPCDialogue(def, autoClose: true);
         }
 
-        private static string[] GetNpcGreeterIdOptions()
+        static string[] GetNpcGreeterIdOptions()
         {
             return DialogueManager.GetAllNpcIdOptions();
         }
 
-        private static string[] GetDockIdOptions()
+        static string[] GetDockIdOptions()
         {
             return DockManager.GetDockIdOptions();
         }
 
-        private static string BuildGreetingFlag(string npcId)
+        static string BuildGreetingFlag(string npcId)
         {
             // UpperCamelName  -> lowerCamelGreeted
             if (string.IsNullOrEmpty(npcId))

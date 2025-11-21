@@ -14,6 +14,8 @@ using Overview.UI;
 using Sirenix.OdinInspector;
 using Structs;
 using UnityEngine;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 using Yarn.Unity;
 
 namespace Manager.DialogueScene
@@ -33,6 +35,10 @@ namespace Manager.DialogueScene
         public int dialogueActionId;
 
         [SerializeField] bool autoSave;
+
+        [SerializeField] RawImage avatarImage;
+        [FormerlySerializedAs("interfaceBackground")] [SerializeField]
+        GameObject nonNPCInterface;
 
         [SerializeField] MMFeedbacks startInFirstPersonDialogueFeedbacks;
 
@@ -134,9 +140,12 @@ namespace Manager.DialogueScene
             overlay.alpha = 0;
         }
 
-        public async void Open(NpcDefinition def, Transform camAnchor = null, bool autoClose = true,
+        public async void OpenNPCDialogue(NpcDefinition def, Transform camAnchor = null, bool autoClose = true,
             string startNodeOverride = null)
         {
+            // Use RawImage with Avatar
+            avatarImage.gameObject.SetActive(true);
+            nonNPCInterface.SetActive(false);
             // 1) put NPC in the stage
             _currentModel = Instantiate(def.characterPrefab, stageRoot);
             _currentModel.transform.localPosition = Vector3.zero;
@@ -180,6 +189,12 @@ namespace Manager.DialogueScene
                 if (autoClose) // only close if caller asked for it
                     Close();
             }
+        }
+
+        public void TriggerInfoSequence()
+        {
+            avatarImage.gameObject.SetActive(false);
+            nonNPCInterface.SetActive(true);
         }
 
         void TriggerRetreatFromLocationEvent()

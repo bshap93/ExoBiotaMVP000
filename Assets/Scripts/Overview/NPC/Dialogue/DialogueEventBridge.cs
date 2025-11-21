@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using Events;
-using Helpers.Events;
 using Helpers.Events.Dialog;
 using Manager.DialogueScene;
 using Manager.SceneManagers.Dock;
@@ -40,9 +38,9 @@ namespace Overview.NPC.Dialogue
             }
 
             if (!e.StartNodeOverride.IsNullOrWhitespace())
-                dialogueManager.Open(def, startNodeOverride: e.StartNodeOverride, autoClose: true);
+                dialogueManager.OpenNPCDialogue(def, startNodeOverride: e.StartNodeOverride, autoClose: true);
             else
-                dialogueManager.Open(def);
+                dialogueManager.OpenNPCDialogue(def);
         }
 
         public void OnMMEvent(OverviewLocationEvent e)
@@ -77,7 +75,7 @@ namespace Overview.NPC.Dialogue
             }
 
 
-            dialogueManager.Open(
+            dialogueManager.OpenNPCDialogue(
                 def, null, true,
                 string.IsNullOrEmpty(startNode) ? null : startNode);
         }

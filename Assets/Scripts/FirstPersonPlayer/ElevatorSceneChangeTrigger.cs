@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using Helpers.Events;
 using Manager;
 using Sirenix.OdinInspector;
-using Structs;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 namespace FirstPersonPlayer
 {
@@ -17,25 +17,21 @@ namespace FirstPersonPlayer
         [ValueDropdown(nameof(GetSpawnPoints))] [SerializeField]
         string spawnPointId;
 
+        [FormerlySerializedAs("BridgeName")] public string bridgeName;
+
 
         void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("FirstPersonPlayer"))
             {
                 SaveDataEvent.Trigger();
-                var spawnInfo = new SpawnInfo
-                {
-                    SceneName = sceneToLoad,
-                    SpawnPointId = spawnPointId,
-                    Mode = GameMode.FirstPerson
-                };
 
                 // SpawnEvent.Trigger(
                 //     SpawnEventType.ToCaverns, spawnInfo.SceneName, GameMode.FirstPerson,
                 //     spawnInfo.SpawnPointId
                 // );
 
-                SceneManager.LoadScene("BridgeDownChokedCavern");
+                SceneManager.LoadScene(bridgeName);
             }
         }
 

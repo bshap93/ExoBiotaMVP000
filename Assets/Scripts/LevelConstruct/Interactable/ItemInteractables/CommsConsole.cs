@@ -77,22 +77,31 @@ namespace LevelConstruct.Interactable.ItemInteractables
             foreach (var objId in completesObjectives)
                 ObjectiveEvent.Trigger(objId, ObjectiveEventType.ObjectiveCompleted);
 
-            var nodeToUse = GetAppropriateStartNode();
-            if (nodeToUse.IsNullOrWhitespace())
-                FirstPersonDialogueEvent.Trigger(
-                    FirstPersonDialogueEventType.StartDialogue, defaultNPCId, defaultStartNode);
-            else
-                FirstPersonDialogueEvent.Trigger(FirstPersonDialogueEventType.StartDialogue, defaultNPCId, nodeToUse);
+            if (currentConsoleState == ActionConsoleState.HailingPlayer)
+            {
+                var nodeToUse = GetAppropriateStartNode();
+                if (nodeToUse.IsNullOrWhitespace())
+                    FirstPersonDialogueEvent.Trigger(
+                        FirstPersonDialogueEventType.StartDialogue, defaultNPCId, defaultStartNode);
+                else
+                    FirstPersonDialogueEvent.Trigger(
+                        FirstPersonDialogueEventType.StartDialogue, defaultNPCId, nodeToUse);
 
 
-            if (completesObjectives.Length > 0)
-                foreach (var objId in completesObjectives)
-                    ObjectiveEvent.Trigger(objId, ObjectiveEventType.ObjectiveCompleted);
+                if (completesObjectives.Length > 0)
+                    foreach (var objId in completesObjectives)
+                        ObjectiveEvent.Trigger(objId, ObjectiveEventType.ObjectiveCompleted);
 
-            startDialogueFeedback?.PlayFeedbacks();
+                startDialogueFeedback?.PlayFeedbacks();
 
-            MyUIEvent.Trigger(UIType.Any, UIActionType.Open);
-            ControlsHelpEvent.Trigger(ControlHelpEventType.Hide, actionId);
+                MyUIEvent.Trigger(UIType.Any, UIActionType.Open);
+                ControlsHelpEvent.Trigger(ControlHelpEventType.Hide, actionId);
+            }
+            else if (currentConsoleState == ActionConsoleState.PoweredOn)
+            {
+                InitiateOtherFunctions();
+            }
+
 
             if (currentConsoleState == ActionConsoleState.HailingPlayer)
             {
@@ -127,6 +136,10 @@ namespace LevelConstruct.Interactable.ItemInteractables
                     }
                 }
             }
+        }
+
+        public void InitiateOtherFunctions()
+        {
         }
 
         public override void OnInteractionEnd()
