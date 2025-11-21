@@ -6,6 +6,7 @@ using Helpers.Events.Triggering;
 using Helpers.Events.Tutorial;
 using Helpers.ScriptableObjects.Tutorial;
 using Manager;
+using MoreMountains.Feedbacks;
 using Objectives.ScriptableObjects;
 using Rewired;
 using Sirenix.OdinInspector;
@@ -32,6 +33,8 @@ namespace SharedUI.Tutorial
 
         [SerializeField] ObjectiveObject objectiveToStartOnBoop;
 
+        [SerializeField] MMFeedbacks newControlPromptFeedbacks;
+
 
         [FormerlySerializedAs("tutorialBitID")] [SerializeField]
         MainTutBitWindowArgs tutorialBit;
@@ -46,8 +49,10 @@ namespace SharedUI.Tutorial
         public bool canBeBooped;
         public bool objectiveToBecomeActive = true;
         public bool setNotTriggerableOnExit;
-
+        public bool startDisabled;
         bool _isActionButtonPressed;
+
+        bool _isDisabled;
         bool _isPlayerInTrigger;
 
 
@@ -61,11 +66,15 @@ namespace SharedUI.Tutorial
             _triggerColliderManager = TriggerColliderManager.Instance;
             if (_triggerColliderManager == null)
                 Debug.LogWarning("ColliderTutorialTrigger: No TriggerColliderManager found in scene.", this);
+
+            _isDisabled = startDisabled;
         }
 
         void Update()
         {
             if (_player == null) return;
+
+            if (_isDisabled) return;
 
             if (_triggerColliderManager)
                 if (!_triggerColliderManager.IsTutorialColliderTriggerable(uniqueID))
@@ -105,6 +114,7 @@ namespace SharedUI.Tutorial
         {
             if (TutorialManager.Instance == null) return;
             if (!TutorialManager.Instance.AreTutorialsEnabled()) return;
+            if (_isDisabled) return;
             if (_triggerColliderManager)
                 if (!_triggerColliderManager.IsTutorialColliderTriggerable(uniqueID))
                     return;
@@ -151,6 +161,8 @@ namespace SharedUI.Tutorial
                         MainTutorialBitEvent.Trigger(
                             tutorialBit.mainTutID, MainTutorialBitEventType.ShowOptionalTutorialBit,
                             tutorialBit.tutBitName);
+                    else
+                        newControlPromptFeedbacks?.PlayFeedbacks();
                 }
             }
             else

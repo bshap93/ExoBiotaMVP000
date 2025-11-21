@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Helpers.Events;
 using Manager;
 using Sirenix.OdinInspector;
 using Structs;
@@ -21,6 +22,7 @@ namespace FirstPersonPlayer
         {
             if (other.CompareTag("FirstPersonPlayer"))
             {
+                SaveDataEvent.Trigger();
                 var spawnInfo = new SpawnInfo
                 {
                     SceneName = sceneToLoad,
@@ -33,7 +35,7 @@ namespace FirstPersonPlayer
                 //     spawnInfo.SpawnPointId
                 // );
 
-                SceneManager.LoadScene("Bridge");
+                SceneManager.LoadScene("BridgeDownChokedCavern");
             }
         }
 

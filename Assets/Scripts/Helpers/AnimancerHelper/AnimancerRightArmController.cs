@@ -160,33 +160,47 @@ namespace Helpers.AnimancerHelper
         {
             if (currentToolAnimationSet == null) return;
 
-            // If there's no begin animation, just play during
-            if (currentToolAnimationSet.beginUseAnimation == null)
+            var layer = animancerComponent.Layers[1];
+
+            // BEGIN animation
+            var clip = currentToolAnimationSet.beginUseAnimation;
+            if (clip == null)
             {
                 PlayToolDuringUse();
                 return;
             }
 
-            // Play begin animation
-            var beginState = animancerComponent.Play(
-                currentToolAnimationSet.beginUseAnimation,
-                defaultTransitionDuration
-                // 0.5f
-            );
+            var state = layer.Play(clip, defaultTransitionDuration);
+            layer.Weight = 1f;
 
-            // When begin finishes, play the looping "during" animation
-            beginState.Events(this).OnEnd = () => { PlayToolDuringUse(); };
+            SetActionState(state);
+            state.Events(this).Clear();
+
+            state.Events(this).OnEnd = () => { PlayToolDuringUse(); };
         }
         /// <summary>
         ///     Play the looping "during use" animation
         /// </summary>
         void PlayToolDuringUse()
         {
-            if (currentToolAnimationSet?.duringUseAnimationLoopable != null)
-                _currentActionState = animancerComponent.Play(
-                    currentToolAnimationSet.duringUseAnimationLoopable,
-                    defaultTransitionDuration
-                );
+            if (currentToolAnimationSet?.duringUseAnimationLoopable == null)
+                return;
+
+            var layer = animancerComponent.Layers[1];
+            var state = layer.Play(
+                currentToolAnimationSet.duringUseAnimationLoopable,
+                defaultTransitionDuration
+            );
+
+            layer.Weight = 1f;
+            SetActionState(state);
+            state.Events(this).Clear();
+
+            state.Events(this).OnEnd = () =>
+            {
+                // Looping clip → keep at end until EndToolUse is called
+                state.Time = state.Length; // freeze
+            };
         }
 
         /// <summary>
@@ -194,23 +208,28 @@ namespace Helpers.AnimancerHelper
         /// </summary>
         public void EndToolUse(Action onComplete = null)
         {
-            if (currentToolAnimationSet?.endUseAnimation == null)
+            var clip = currentToolAnimationSet?.endUseAnimation;
+            var layer = animancerComponent.Layers[1];
+
+            if (clip == null)
             {
-                // No end animation, just return to locomotion
+                layer.Weight = 0f;
+                ClearActionState();
                 ReturnToLocomotion();
                 onComplete?.Invoke();
                 return;
             }
 
-            // Play end animation
-            var endState = animancerComponent.Play(
-                currentToolAnimationSet.endUseAnimation,
-                defaultTransitionDuration
-            );
+            var state = layer.Play(clip, defaultTransitionDuration);
+            layer.Weight = 1f;
 
-            // When end finishes, return to locomotion
-            endState.Events(this).OnEnd = () =>
+            SetActionState(state);
+            state.Events(this).Clear();
+
+            state.Events(this).OnEnd = () =>
             {
+                layer.Weight = 0f;
+                ClearActionState();
                 ReturnToLocomotion();
                 onComplete?.Invoke();
             };

@@ -268,7 +268,6 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         }
         public void OnUseStarted()
         {
-            // var layer = _animController.animancerComponent.Layers[1]; 
             // Play begin -> during sequence when starting to sample
             if (_animController != null && _animController.currentToolAnimationSet != null &&
                 _animController.currentToolAnimationSet.beginUseAnimation != null)
