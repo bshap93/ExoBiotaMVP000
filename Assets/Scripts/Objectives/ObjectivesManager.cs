@@ -478,7 +478,18 @@ namespace Objectives
                 obj.triggersOnEvent == ObjectiveObject.TriggersOnObjectiveLifecycleEvent.OnActivate)
                 SpontaneousTriggerEvent.Trigger(
                     obj.spontaneousEventUniqueId,
-                    obj.spontaneousEventType);
+                    obj.spontaneousEventType, obj.spontaneousEventIntParameter, obj.spontaneousEventStringParameter);
+
+            if (obj.objectiveProgressType == ObjectiveProgressType.DoThingNTimes)
+            {
+                var progress = _objectiveProgress[objectiveId];
+                
+                if (progress.currentProgress >= obj.targetProgress) 
+                {
+                    CompleteObjective(objectiveId);
+                }
+
+            }
 
 
             MarkDirty();
@@ -611,7 +622,7 @@ namespace Objectives
                 obj.triggersOnEvent == ObjectiveObject.TriggersOnObjectiveLifecycleEvent.OnComplete)
                 SpontaneousTriggerEvent.Trigger(
                     obj.spontaneousEventUniqueId,
-                    obj.spontaneousEventType);
+                    obj.spontaneousEventType, obj.spontaneousEventIntParameter, obj.spontaneousEventStringParameter);
 
             MarkDirty();
             ConditionalSave();
