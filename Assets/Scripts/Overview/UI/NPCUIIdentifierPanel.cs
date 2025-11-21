@@ -1,4 +1,3 @@
-using Overview.NPC;
 using TMPro;
 using UnityEngine;
 
@@ -9,15 +8,15 @@ namespace Overview.UI
         [SerializeField] TMP_Text npcNameText;
 
 
-        public void SetInfo(NpcDefinition def)
+        public void SetInfo(string name)
         {
-            if (def.characterName == null)
+            if (name == null)
             {
                 Debug.LogError("NPC Definition characterName is null.");
                 return;
             }
 
-            npcNameText.text = def.characterName;
+            npcNameText.text = name;
         }
     }
 }

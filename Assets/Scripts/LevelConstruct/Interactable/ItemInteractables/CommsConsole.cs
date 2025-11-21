@@ -23,6 +23,7 @@ namespace LevelConstruct.Interactable.ItemInteractables
     public class CommsConsole : ActionConsole, IInteractable, MMEventListener<SpontaneousTriggerEvent>
     {
         [SerializeField] string defaultNPCId;
+        [SerializeField] string consoleAutomatedNPCId;
         [FormerlySerializedAs("startNodeOverride")] [SerializeField]
         string defaultStartNode;
         [FormerlySerializedAs("associatedObjectiveIds")] [SerializeField]
@@ -140,6 +141,11 @@ namespace LevelConstruct.Interactable.ItemInteractables
 
         public void InitiateOtherFunctions()
         {
+            SpecialDialogueEvent.Trigger(
+                SpecialDialogueEventType.RequestSpecialDialogue,
+                consoleAutomatedNPCId,
+                SpecialDialogueType.MockConsoleDataWindow
+            );
         }
 
         public override void OnInteractionEnd()

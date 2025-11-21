@@ -29,7 +29,7 @@ namespace Overview.NPC
         public AudioClip clip; // NPC-specific sound
     }
 
-    [CreateAssetMenu(fileName = "NpcDefinition", menuName = "Scriptable Objects/NPC/NpcDefinition", order = 1)]
+    [CreateAssetMenu(fileName = "NpcDefinition", menuName = "Scriptable Objects/Character/NpcDefinition", order = 1)]
     public class NpcDefinition : ScriptableObject
     {
         public string characterName;

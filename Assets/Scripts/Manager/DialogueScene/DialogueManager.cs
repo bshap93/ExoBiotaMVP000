@@ -1,13 +1,16 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Dirigible.Input;
 using Events;
 using FirstPersonPlayer.UI.LocationButtonBase.Test;
 using Helpers.Events;
+using Helpers.Events.Dialog;
 using Interfaces;
 using LevelConstruct.Interactable.ItemInteractables;
 using Manager.Global;
 using Manager.SceneManagers.Dock;
 using MoreMountains.Feedbacks;
+using MoreMountains.Tools;
 using Objectives;
 using Overview.NPC;
 using Overview.UI;
@@ -20,7 +23,7 @@ using Yarn.Unity;
 
 namespace Manager.DialogueScene
 {
-    public class DialogueManager : MonoBehaviour, IGameMetaService
+    public class DialogueManager : MonoBehaviour, IGameMetaService, MMEventListener<SpecialDialogueEvent>
     {
         const string MetaSaveKey = "DialogueMetaSave";
         [SerializeField] Camera stageCamera; // drag StageCamera from DialogueOverlay
@@ -71,6 +74,16 @@ namespace Manager.DialogueScene
             FirstPersonStaticDialogueHelpers.Initialize(startInFirstPersonDialogueFeedbacks, dialogueActionId);
         }
 
+        void OnEnable()
+        {
+            this.MMEventStartListening();
+        }
+
+        void OnDisable()
+        {
+            this.MMEventStopListening();
+        }
+
         public void Reset()
         {
             DialogueStartNodeManager.Instance.Reset();
@@ -96,6 +109,18 @@ namespace Manager.DialogueScene
             _dirty = false;
 
             if (!DialogueVariableManager.Instance.HasSavedVariables()) RunInitScripts();
+        }
+        public void OnMMEvent(SpecialDialogueEvent eventType)
+        {
+            if (eventType.EventType == SpecialDialogueEventType.RequestSpecialDialogue)
+            {
+                if (eventType.SpecialDialogueType == SpecialDialogueType.MockConsoleDataWindow)
+                    // TriggerInfoSequence();
+                    Debug.Log("SpecialDialogueEvent: RequestSpecialDialogue for MockConsoleDataWindow received.");
+                else
+                    Debug.LogWarning(
+                        $"SpecialDialogueEvent: Unknown SpecialDialogueType {eventType.SpecialDialogueType} received.");
+            }
         }
 
         public void ConditionalSave()
@@ -150,7 +175,7 @@ namespace Manager.DialogueScene
             _currentModel = Instantiate(def.characterPrefab, stageRoot);
             _currentModel.transform.localPosition = Vector3.zero;
             _currentModel.transform.localRotation = Quaternion.identity;
-            npcUIIdentifierPanel.SetInfo(def);
+            npcUIIdentifierPanel.SetInfo(def.characterName);
 
             // 2) aim the stage‑camera if a custom anchor was supplied
             // if (camAnchor != null)
@@ -191,10 +216,44 @@ namespace Manager.DialogueScene
             }
         }
 
-        public void TriggerInfoSequence()
+        public async Task TriggerInfoSequence(NpcDefinition def, Transform camAnchor = null, bool autoClose = true,
+            string startNodeOverride = null)
         {
             avatarImage.gameObject.SetActive(false);
             nonNPCInterface.SetActive(true);
+
+            // _currentModel = Instantiate(def.characterPrefab, stageRoot);
+            _currentModel.transform.localPosition = Vector3.zero;
+            _currentModel.transform.localRotation = Quaternion.identity;
+            npcUIIdentifierPanel.SetInfo(def.characterName);
+
+            dialogueRunner.SetProject(def.yarnProject);
+
+            var startNodeStr = startNodeOverride ?? def.startNode;
+            var startNodeToUse = DialogueStartNodeManager.Instance.GetStartNode(def.npcId, startNodeStr);
+            DialogueEvent.Trigger(DialogueEventType.DialogueStarted, def.npcId, startNodeToUse);
+            dialogueRunner.StartDialogue(startNodeToUse);
+
+            overlay.alpha = 1;
+            overlay.blocksRaycasts = true;
+            overlay.interactable = true;
+
+            await dialogueRunner.DialogueTask; // ‑‑ this replaces WaitForDialogueToFinish()
+
+            if (GameStateManager.Instance.CurrentMode == GameMode.FirstPerson)
+            {
+                if (autoClose) // only close if caller asked for it
+                    Close();
+            }
+            else
+            {
+                TriggerRetreatFromLocationEvent();
+
+                varProbeYSES3.TryGet();
+
+                if (autoClose) // only close if caller asked for it
+                    Close();
+            }
         }
 
         void TriggerRetreatFromLocationEvent()
@@ -223,7 +282,9 @@ namespace Manager.DialogueScene
             return new[]
             {
                 "FabricatorClancy", "ScientistHypolita", "ShadyCoreTrafficker", "None", "ScienceShopRobot",
-                "VitalSystems"
+                "VitalSystems",
+                // Consoles
+                "Mine01GrottoSanctumConsole", "Mine01GrottoNookConsole"
             };
         }
 

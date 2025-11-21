@@ -5160,7 +5160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 107a70f1c08d47c48dce725bfb2c6de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionDistance: 1.75
+  interactionDistance: 2
   interactableLayer:
     serializedVersion: 2
     m_Bits: 1792
@@ -5195,6 +5195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   move: {x: 0, y: 0}
+  dropPropOrHoldHeldDuration: 1
   look: {x: 0, y: 0}
   scrollBetweenTools: 0
   jump: 0
@@ -5207,7 +5208,7 @@ MonoBehaviour:
   interactHeld: 0
   crouch: 0
   useEquipped: 0
-  pickUpProp: 1
+  dropPropOrHold: 1
   pause: 0
   leftHandToggle: 0
   pickablePick: 0

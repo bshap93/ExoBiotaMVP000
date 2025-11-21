@@ -84,10 +84,10 @@ Clancy: Change your mind on that sampling job in the mine?
 
 title: AcceptScanQuest
 ---
-Clancy: Great, heres the sampling tool we use for these types of jobs.
-Clancy: It's easy to use. Just point at the clearly liquid filled structures.
+Clancy: Great, there's a sampling tool you can use in the mine.
+Clancy: It's next to a Comms console in the cavern where you'll want to sample.
+Clancy: It's easy enough to use. Just jab into the organisms with the needle end.
 <<complete_objective DialogueCommands "TalkToClancy">>
-<<give_player_item DialogueCommands "BasicLiquidTool" 1>>
 Clancy: It's not dangerous if you're careful. I appreciate your help.
 <<add_objective DialogueCommands "GoToScienceMine">>
 // <<give_player_keyaccess DialogueCommands "ScienceMineDoorKey">>

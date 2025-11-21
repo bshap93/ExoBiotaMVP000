@@ -239,10 +239,10 @@ MonoBehaviour:
         Persistent: 0
         DoNotPlayIfClipAlreadyPlaying: 0
         StopSoundOnFeedbackStop: 0
-        Fade: 0
-        FadeInitialVolume: 0
-        FadeDuration: 1
-        FadeTween:
+        FadeIn: 0
+        FadeInInitialVolume: 0
+        FadeInDuration: 1
+        FadeInTween:
           MMTweenDefinitionType: 0
           MMTweenCurve: 9
           Curve:
@@ -271,6 +271,39 @@ MonoBehaviour:
             m_RotationOrder: 4
           Initialized: 0
           ConditionPropertyName: Fade
+          EnumConditionPropertyName: 
+          EnumConditions: 0000000000000000000000000000000000000000000000000000000000000000
+        FadeOutOnStop: 0
+        FadeOutDuration: 1
+        FadeOutTween:
+          MMTweenDefinitionType: 0
+          MMTweenCurve: 9
+          Curve:
+            serializedVersion: 2
+            m_Curve:
+            - serializedVersion: 3
+              time: 0
+              value: 0
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 1
+              value: 1
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          Initialized: 0
+          ConditionPropertyName: FadeOutOnStop
           EnumConditionPropertyName: 
           EnumConditions: 0000000000000000000000000000000000000000000000000000000000000000
         SoloSingleTrack: 0
@@ -347,7 +380,7 @@ GameObject:
   - component: {fileID: 8425715041330262823}
   - component: {fileID: 2137311080758979808}
   m_Layer: 8
-  m_Name: Axe_01_Pickup
+  m_Name: Axe_02_Pickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -361,14 +394,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4239224177064474150}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.70710576, y: -0, z: -0, w: 0.70710784}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.495, y: 1.495, z: 1.495}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6998658521800637749}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &6896062785490582663
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -376,7 +409,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4239224177064474150}
-  m_Mesh: {fileID: 1853827350423519691, guid: 9dfbe757542ecfc42aa27c030de03513, type: 3}
+  m_Mesh: {fileID: 1853827350423519691, guid: 462e11b512d33c44990e62ee264da4de, type: 3}
 --- !u!23 &5612738835447037756
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -443,7 +476,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 1853827350423519691, guid: 9dfbe757542ecfc42aa27c030de03513, type: 3}
+  m_Mesh: {fileID: 1853827350423519691, guid: 462e11b512d33c44990e62ee264da4de, type: 3}
 --- !u!114 &5451719058320587127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -745,13 +778,13 @@ MonoBehaviour:
   examinableObjectData:
     ActionIcon: {fileID: 0}
     ActionText: Pick Item
-    Icon: {fileID: 21300000, guid: 8ebdab30a3812d545aac3c328deafe50, type: 3}
+    Icon: {fileID: 21300000, guid: 0b7890ccc7b945144b08763cb723c994, type: 3}
     Id: 
     Name: Basic Hatchet
     ShortBlurb: A medium sized hatchet perfect for clearing a path in untamed wilderness.
     FullDescription: 
     IdentificationMode: 0
-    UnknownIcon: {fileID: 21300448, guid: 99cbc473450af4147999e9e68398877b, type: 3}
+    UnknownIcon: {fileID: 0}
     UnknownShortBlurb: 
     UnkonwnName: Unknown Item
   onPickFeedbacks: {fileID: 0}
