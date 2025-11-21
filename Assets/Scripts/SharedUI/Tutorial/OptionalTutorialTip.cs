@@ -111,6 +111,11 @@ namespace SharedUI.Tutorial
                 Hide();
                 _tutorialShown = false;
             }
+            else if (eventType.BitEventType == MainTutorialBitEventType.FinishTutBit)
+            {
+                Hide();
+                _tutorialShown = false;
+            }
         }
 
         void ResetHold()
