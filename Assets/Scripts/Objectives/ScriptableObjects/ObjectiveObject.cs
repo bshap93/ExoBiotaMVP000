@@ -57,6 +57,10 @@ namespace Objectives.ScriptableObjects
         [ShowIf(nameof(triggersSpontaneousEvent))]
         public TriggersOnObjectiveLifecycleEvent triggersOnEvent;
         [ShowIf(nameof(triggersSpontaneousEvent))]
+        public int spontaneousEventIntParameter;
+        [ShowIf(nameof(triggersSpontaneousEvent))]
+        public string spontaneousEventStringParameter;
+        [ShowIf(nameof(triggersSpontaneousEvent))]
         public string spontaneousEventUniqueId;
         [ShowIf(nameof(triggersSpontaneousEvent))]
         public SpontaneousTriggerEventType spontaneousEventType;

@@ -10,9 +10,11 @@ using UnityEngine.UI;
 namespace SharedUI
 {
     public class ControlsPrompt : MonoBehaviour, MMEventListener<ControlsHelpEvent>,
-        MMEventListener<MainTutorialBitEvent>
+        MMEventListener<MainTutorialBitEvent>, MMEventListener<SpontaneousTriggerEvent>
     {
         [SerializeField] ControlsPromptSchemeSet defaultKeyboardSchemeSet;
+
+        [SerializeField] string uniqueId;
 
         [SerializeField] Image promptImage;
         [SerializeField] TMP_Text promptText;
@@ -41,12 +43,14 @@ namespace SharedUI
         {
             this.MMEventStartListening<ControlsHelpEvent>();
             this.MMEventStartListening<MainTutorialBitEvent>();
+            this.MMEventStartListening<SpontaneousTriggerEvent>();
         }
 
         void OnDisable()
         {
             this.MMEventStopListening<ControlsHelpEvent>();
             this.MMEventStopListening<MainTutorialBitEvent>();
+            this.MMEventStopListening<SpontaneousTriggerEvent>();
         }
 
         public void OnMMEvent(ControlsHelpEvent eventType)
@@ -153,6 +157,17 @@ namespace SharedUI
         public void OnMMEvent(MainTutorialBitEvent bitEventType)
         {
             if (bitEventType.BitEventType == MainTutorialBitEventType.ShowMainTutBit) Hide();
+        }
+        public void OnMMEvent(SpontaneousTriggerEvent eventType)
+        {
+            if (eventType.IntParameter == -1) return;
+            if (eventType.UniqueID == uniqueId)
+            {
+                if (eventType.StringParameter != null) additionInfoText.text = eventType.StringParameter;
+
+                if (eventType.EventType == SpontaneousTriggerEventType.Triggered)
+                    Show();
+            }
         }
 
         IEnumerator ShowUseThenHide()

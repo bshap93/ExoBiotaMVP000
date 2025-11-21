@@ -129,7 +129,7 @@ namespace LevelConstruct.Interactable.ItemInteractables.ItemPicker
         void Start()
         {
             // Wait for the PickableManager to finish loading before checking if this item is picked
-            StartCoroutine(InitializeAfterPickableManager());
+            // StartCoroutine(InitializeAfterPickableManager());
             TargetInventory = GameObject.FindWithTag("PlayerCarryInventory")
                 ?.GetComponent<MoreMountains.InventoryEngine.Inventory>();
 
@@ -143,20 +143,12 @@ namespace LevelConstruct.Interactable.ItemInteractables.ItemPicker
         {
             this.MMEventStartListening();
             if (_trigger == null) return;
-            // _trigger.OnObjectHighlightStart += OnHoverStart; // return false to cancel hover highlight
-            // _trigger.OnObjectHighlightStay +=
-            //     OnHoverStay; // called while highlighted; return false to force unhighlight
-            //
-            // _trigger.OnObjectHighlightEnd += OnHoverEnd;
         }
 
         void OnDisable()
         {
             this.MMEventStopListening();
             if (_trigger == null) return;
-            // _trigger.OnObjectHighlightStart -= OnHoverStart;
-            // _trigger.OnObjectHighlightStay -= OnHoverStay;
-            // _trigger.OnObjectHighlightEnd -= OnHoverEnd;
         }
 
         void OnDestroy()
@@ -403,7 +395,13 @@ namespace LevelConstruct.Interactable.ItemInteractables.ItemPicker
         }
         public void OnMMEvent(LoadedManagerEvent eventType)
         {
-            if (eventType.ManagerType == ManagerType.All) Initialize();
+            if (eventType.ManagerType != ManagerType.All)
+                return;
+
+            _pickableManager = PickableManager.Instance;
+
+            if (_pickableManager != null && _pickableManager.IsItemPicked(uniqueID))
+                Destroy(gameObject);
         }
 
         public void OnInteractionEnd()

@@ -409,7 +409,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4220634266218532760}
-  m_Mesh: {fileID: -6765525505130649956, guid: 9d14bf5eefdd3a04f9dde25ef8428629, type: 3}
+  m_Mesh: {fileID: -6765525505130649956, guid: a40a7e007efccbb4085d09bc95f7646e, type: 3}
 --- !u!23 &3314271250275869678
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -649,7 +649,7 @@ MonoBehaviour:
   seeThroughTextureUVSpace: 0
   seeThroughTextureScale: 1
   seeThroughChildrenSortingMode: 0
-  rmsCount: 1
+  rmsCount: 2
   hitFxInitialIntensity: 1
   hitFxMode: 0
   hitFxFadeOutDuration: 0.25
