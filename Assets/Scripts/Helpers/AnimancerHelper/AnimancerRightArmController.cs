@@ -22,11 +22,25 @@ namespace Helpers.AnimancerHelper
         // Track current states
         AnimancerState _currentLocomotionState;
 
+        void LateUpdate()
+        {
+            // Smoothly fade out the tool/action animation layer when not in use
+            var toolLayer = animancerComponent.Layers[1];
+
+            if (!IsPlayingAction())
+                toolLayer.Weight = Mathf.MoveTowards(
+                    toolLayer.Weight,
+                    0f,
+                    Time.deltaTime * 8f // fade speed (adjust as needed)
+                );
+        }
+
         void OnValidate()
         {
             // Auto-find AnimancerComponent if not assigned
             if (animancerComponent == null) animancerComponent = GetComponent<AnimancerComponent>();
         }
+
 
         /// <summary>
         ///     Call this whenever the tool/animation set changes

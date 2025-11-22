@@ -450,6 +450,7 @@ namespace FirstPersonPlayer.InputHandling
             // Calculate if we're moving
             var isMoving = CharacterActor.PlanarVelocity.magnitude > 0.1f;
 
+
             // Check if we're running (based on your existing wantToRun logic)
             var isRunning = wantToRun && isMoving;
 

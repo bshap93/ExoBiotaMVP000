@@ -2611,6 +2611,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DirigiblePhysicalObject
       objectReference: {fileID: 0}
+    - target: {fileID: 8685759702027823983, guid: 78f77ec2ac4c58543be50836c4ff6a24, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c36f445bfb8cd79469553dd9c8c2daa5, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
