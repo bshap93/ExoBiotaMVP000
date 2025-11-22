@@ -117,10 +117,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: DirigibleGroup
       objectReference: {fileID: 0}
-    - target: {fileID: 1334376237712011107, guid: 562df3de4bc176c42870dce85571ade8, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -358.4
-      objectReference: {fileID: 0}
     - target: {fileID: 4427114564333580651, guid: 562df3de4bc176c42870dce85571ade8, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -269,7 +265,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 303932375424590816, guid: ae00fbba69acb794f848909f5124c09e, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 106.54
+      value: 106.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 303932375424590816, guid: ae00fbba69acb794f848909f5124c09e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 4.265536
       objectReference: {fileID: 0}
     - target: {fileID: 303932375424590816, guid: ae00fbba69acb794f848909f5124c09e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -823,7 +823,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5253199127193357851, guid: 72e8c11581956414fa39ec13a2de6dc6, type: 3}
       propertyPath: m_Value
-      value: 1.0000021
+      value: 1.0000055
       objectReference: {fileID: 0}
     - target: {fileID: 5417156032565735935, guid: 72e8c11581956414fa39ec13a2de6dc6, type: 3}
       propertyPath: m_SizeDelta.y
@@ -831,7 +831,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5417156032565735935, guid: 72e8c11581956414fa39ec13a2de6dc6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000052452087
+      value: -0.00009679794
+      objectReference: {fileID: 0}
+    - target: {fileID: 5577791055318918710, guid: 72e8c11581956414fa39ec13a2de6dc6, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 789
       objectReference: {fileID: 0}
     - target: {fileID: 6944106361194170352, guid: 72e8c11581956414fa39ec13a2de6dc6, type: 3}
       propertyPath: infectionHUD

@@ -9,6 +9,7 @@ using Helpers.Events;
 using Helpers.Events.Machine;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Utilities.Interface;
@@ -74,6 +75,13 @@ namespace FirstPersonPlayer.Interactable.Stateful
         // [Tooltip("Should the elevator start at the top position (EndPoint) when the scene loads?")]
         // public bool startAtBottom;
         public int startAtIndex;
+
+        [Header("Scene Change Settings")] [ToggleLeft] [LabelText("Elevator Leads to Scene Change?")]
+        public bool doesElevatorLeadToSceneChange;
+        [ShowIf(nameof(doesElevatorLeadToSceneChange))]
+        public int floorWhichGoingToTriggersSceneChange;
+        [ShowIf(nameof(doesElevatorLeadToSceneChange))]
+        public string sceneNameToDisplayInModal;
 
         readonly EasyTimer movetimer = new();
 
@@ -195,6 +203,10 @@ namespace FirstPersonPlayer.Interactable.Stateful
 
         void ElevatorGoUp(int indexOfDestination)
         {
+            if (indexOfDestination == floorWhichGoingToTriggersSceneChange)
+                Debug.Log(
+                    "Trigger ask about scene change modal... commence regular elevator travel if yes, if Cancel, do nothing.");
+
             if (!currentState.accessibleFloors.Contains(indexOfDestination))
             {
                 AlertEvent.Trigger(
@@ -273,7 +285,21 @@ namespace FirstPersonPlayer.Interactable.Stateful
                 case ButtonClickAnim.ElevatorButtonType.ElevatorGoUp:
                     if (!IsAtTop())
                     {
-                        ElevatorGoUp(currentState.currentFloor - 1);
+                        var sceneNameToDisplayInModalLocal = string.IsNullOrEmpty(sceneNameToDisplayInModal)
+                            ? "Above Area"
+                            : sceneNameToDisplayInModal;
+
+                        var indexOfDestination = currentState.currentFloor - 1;
+                        if (doesElevatorLeadToSceneChange && indexOfDestination == floorWhichGoingToTriggersSceneChange)
+                            AlertEvent.Trigger(
+                                AlertReason.ElevatorSceneChangePermission,
+                                "Do you want to go up to " + sceneNameToDisplayInModalLocal + "?",
+                                "Elevator Scene Change", AlertType.ChoiceModal, 0f,
+                                onConfirm: () => { ElevatorGoUp(indexOfDestination); }, onCancel: () => { });
+
+                        else
+                            ElevatorGoUp(indexOfDestination);
+
                         Debug.Log("IsAtTop false");
                     }
                     else
@@ -287,8 +313,28 @@ namespace FirstPersonPlayer.Interactable.Stateful
                 case ButtonClickAnim.ElevatorButtonType.ElevatorGoDown:
                     if (!IsAtBottom())
                     {
-                        ElevatorGoDown(currentState.currentFloor + 1);
-                        Debug.Log("IsAtTop true");
+                        var sceneNameToDisplayInModalLocal = string.IsNullOrEmpty(sceneNameToDisplayInModal)
+                            ? "Below Area"
+                            : sceneNameToDisplayInModal;
+
+                        var spriteToDisplay = elevatorTypeInfo.floorSprites != null &&
+                                              elevatorTypeInfo.floorSprites.Length >
+                                              floorWhichGoingToTriggersSceneChange
+                            ? elevatorTypeInfo.floorSprites[floorWhichGoingToTriggersSceneChange]
+                            : elevatorTypeInfo.defaultFloorSprite;
+
+                        var indexOfDestination = currentState.currentFloor + 1;
+                        if (doesElevatorLeadToSceneChange && indexOfDestination == floorWhichGoingToTriggersSceneChange)
+                            AlertEvent.Trigger(
+                                AlertReason.ElevatorSceneChangePermission,
+                                "Do you want to down go to " + sceneNameToDisplayInModalLocal + "?" +
+                                $"\n Your game will be saved and you'll enter {sceneNameToDisplayInModalLocal}.",
+                                "Elevator Scene Change", AlertType.ChoiceModal, 0f,
+                                onConfirm: () => { ElevatorGoDown(indexOfDestination); }, onCancel: () => { },
+                                alertIcon: spriteToDisplay);
+
+                        else
+                            ElevatorGoDown(indexOfDestination);
                     }
                     else
                     {
@@ -304,103 +350,6 @@ namespace FirstPersonPlayer.Interactable.Stateful
 
                     break;
             }
-            // if (!moveswitch)
-            // {
-            //     if (playerInput == null) return;
-            //
-            //     if (playerInput.interact)
-            //         // Get the gameobject clicked
-            //         if (Camera.main != null)
-            //         {
-            //             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            //             RaycastHit hit;
-            //
-            //             // If something clicked
-            //             if (Physics.Raycast(ray, out hit, Mathf.Infinity, buttonLayerMask))
-            //             {
-            //                 var button = hit.transform.GetComponent<ButtonClickAnim>();
-            //                 if (button == null)
-            //                 {
-            //                     Debug.LogError("ButtonClickAnim component not found on the clicked object.");
-            //                     return;
-            //                 }
-            //
-            //                 var buttonType = button.buttonType;
-            //
-            //                 switch (buttonType)
-            //                 {
-            //                     case ButtonClickAnim.ElevatorButtonType.CallToTop:
-            //                         if (!IsAtTop())
-            //                         {
-            //                             ElevatorGoUp(0);
-            //                             Debug.Log("IsAtTop false");
-            //                         }
-            //                         else
-            //                         {
-            //                             AlertEvent.Trigger(
-            //                                 AlertReason.ElevatorIssue, "Elevator is already at the top.",
-            //                                 "Elevator Issue");
-            //                         }
-            //
-            //                         break;
-            //                     case ButtonClickAnim.ElevatorButtonType.CallToBottom:
-            //                         if (!IsAtBottom())
-            //                         {
-            //                             ElevatorGoDown(elevatorTypeInfo.numberOfFloors - 1);
-            //                             Debug.Log("IsAtTop true");
-            //                         }
-            //                         else
-            //                         {
-            //                             AlertEvent.Trigger(
-            //                                 AlertReason.ElevatorIssue, "Elevator is already at the bottom.",
-            //                                 "Elevator Issue");
-            //                         }
-            //
-            //                         break;
-            //                     case ButtonClickAnim.ElevatorButtonType.ElevatorGoUp:
-            //                         if (!IsAtTop())
-            //                         {
-            //                             ElevatorGoUp(currentState.currentFloor - 1);
-            //                             Debug.Log("IsAtTop false");
-            //                         }
-            //                         else
-            //                         {
-            //                             AlertEvent.Trigger(
-            //                                 AlertReason.ElevatorIssue, "Elevator is already at the top.",
-            //                                 "Elevator Issue");
-            //                         }
-            //
-            //                         break;
-            //                     case ButtonClickAnim.ElevatorButtonType.ElevatorGoDown:
-            //                         if (!IsAtBottom())
-            //                         {
-            //                             ElevatorGoDown(currentState.currentFloor + 1);
-            //                             Debug.Log("IsAtTop true");
-            //                         }
-            //                         else
-            //                         {
-            //                             AlertEvent.Trigger(
-            //                                 AlertReason.ElevatorIssue, "Elevator is already at the bottom.",
-            //                                 "Elevator Issue");
-            //                         }
-            //
-            //                         break;
-            //                     default:
-            //                         AlertEvent.Trigger(
-            //                             AlertReason.ElevatorIssue, "Unknown elevator button type.", "Elevator Issue");
-            //
-            //                         break;
-            //                 }
-            //             }
-            //         }
-            // }
-            // else
-            // {
-            //     // Only play elevator sound if game is not paused
-            //     if (!PauseManager.Instance.IsPaused())
-            //     {
-            //     }
-            // }
         }
         void Initialize()
         {

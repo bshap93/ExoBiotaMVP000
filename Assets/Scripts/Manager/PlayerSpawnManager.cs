@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Events;
 using Helpers.Events;
 using Helpers.Interfaces;
 using MoreMountains.Tools;
@@ -228,6 +227,7 @@ namespace Manager
                 "TestMine03Spawn",
                 //  Three Jane Mine,
                 "ThreeJaneMineDoorSpawn", "DebugThreeJaneMineSpawn", "Hangar3JMineSpawn",
+                "AshpoolMineBackElevatorL01",
                 // Choked Caverns
                 "ChokedCavernsDebugSpawn", "ElevatorStopChokedCaves"
             };

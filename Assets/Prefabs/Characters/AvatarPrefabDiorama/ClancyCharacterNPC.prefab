@@ -1297,10 +1297,10 @@ MonoBehaviour:
         Persistent: 0
         DoNotPlayIfClipAlreadyPlaying: 0
         StopSoundOnFeedbackStop: 0
-        Fade: 0
-        FadeInitialVolume: 0
-        FadeDuration: 1
-        FadeTween:
+        FadeIn: 0
+        FadeInInitialVolume: 0
+        FadeInDuration: 1
+        FadeInTween:
           MMTweenDefinitionType: 0
           MMTweenCurve: 9
           Curve:
@@ -1329,6 +1329,39 @@ MonoBehaviour:
             m_RotationOrder: 4
           Initialized: 0
           ConditionPropertyName: Fade
+          EnumConditionPropertyName: 
+          EnumConditions: 0000000000000000000000000000000000000000000000000000000000000000
+        FadeOutOnStop: 0
+        FadeOutDuration: 1
+        FadeOutTween:
+          MMTweenDefinitionType: 0
+          MMTweenCurve: 9
+          Curve:
+            serializedVersion: 2
+            m_Curve:
+            - serializedVersion: 3
+              time: 0
+              value: 0
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 1
+              value: 1
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          Initialized: 0
+          ConditionPropertyName: FadeOutOnStop
           EnumConditionPropertyName: 
           EnumConditions: 0000000000000000000000000000000000000000000000000000000000000000
         SoloSingleTrack: 0
@@ -2474,8 +2507,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 2
-  m_Color: {r: 0.2783019, g: 0.74576545, b: 1, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 0.93333334, g: 0.9490196, b: 0.7294118, a: 1}
+  m_Intensity: 6.01
   m_Range: 1
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -5128,8 +5161,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 2
-  m_Color: {r: 0.2783019, g: 0.74576545, b: 1, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 0.93333334, g: 0.9490196, b: 0.7294118, a: 1}
+  m_Intensity: 6.01
   m_Range: 1
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -14638,8 +14671,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 2
-  m_Color: {r: 0.5896226, g: 0.79655623, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Color: {r: 0.93333334, g: 0.9490196, b: 0.7294118, a: 1}
+  m_Intensity: 6.01
   m_Range: 4
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -20303,8 +20336,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 2
-  m_Color: {r: 0.5896226, g: 0.79655623, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Color: {r: 0.93333334, g: 0.9490196, b: 0.7294118, a: 1}
+  m_Intensity: 6.01
   m_Range: 4
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -24288,6 +24321,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4781164655703610028, guid: 9c4d6050f9f340844b278369065ee154, type: 3}
+      propertyPath: m_Color.b
+      value: 0.7294118
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781164655703610028, guid: 9c4d6050f9f340844b278369065ee154, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9490196
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781164655703610028, guid: 9c4d6050f9f340844b278369065ee154, type: 3}
+      propertyPath: m_Color.r
+      value: 0.93333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781164655703610028, guid: 9c4d6050f9f340844b278369065ee154, type: 3}
+      propertyPath: m_Intensity
+      value: 6.01
+      objectReference: {fileID: 0}
     - target: {fileID: 4920084318713541289, guid: 9c4d6050f9f340844b278369065ee154, type: 3}
       propertyPath: 'm_Materials.Array.data[2]'
       value: 
@@ -24304,6 +24353,54 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 6ca3ec6140e988142b21d130296e8c19, type: 2}
+    - target: {fileID: 9074228294839900617, guid: 9c4d6050f9f340844b278369065ee154, type: 3}
+      propertyPath: m_Color.b
+      value: 0.7294118
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074228294839900617, guid: 9c4d6050f9f340844b278369065ee154, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9490196
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074228294839900617, guid: 9c4d6050f9f340844b278369065ee154, type: 3}
+      propertyPath: m_Color.r
+      value: 0.93333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074228294839900617, guid: 9c4d6050f9f340844b278369065ee154, type: 3}
+      propertyPath: m_Intensity
+      value: 6.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074228295276988564, guid: 9c4d6050f9f340844b278369065ee154, type: 3}
+      propertyPath: m_Color.b
+      value: 0.7294118
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074228295276988564, guid: 9c4d6050f9f340844b278369065ee154, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9490196
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074228295276988564, guid: 9c4d6050f9f340844b278369065ee154, type: 3}
+      propertyPath: m_Color.r
+      value: 0.93333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074228295276988564, guid: 9c4d6050f9f340844b278369065ee154, type: 3}
+      propertyPath: m_Intensity
+      value: 6.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074228296027511564, guid: 9c4d6050f9f340844b278369065ee154, type: 3}
+      propertyPath: m_Color.b
+      value: 0.7294118
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074228296027511564, guid: 9c4d6050f9f340844b278369065ee154, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9490196
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074228296027511564, guid: 9c4d6050f9f340844b278369065ee154, type: 3}
+      propertyPath: m_Color.r
+      value: 0.93333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074228296027511564, guid: 9c4d6050f9f340844b278369065ee154, type: 3}
+      propertyPath: m_Intensity
+      value: 6.01
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 8993826505177560069, guid: 9c4d6050f9f340844b278369065ee154, type: 3}

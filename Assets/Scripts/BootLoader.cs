@@ -17,6 +17,7 @@ public class BootLoader : MonoBehaviour
     [SerializeField] bool playWithTutorialOn;
     [SerializeField] bool playWithDevToolsOn;
     [SerializeField] bool restartFromBeginning;
+    [SerializeField] bool isBridge;
 
     [SerializeField] [InlineProperty] [HideLabel]
     SpawnInfoEditor overrideSpawnInfo;
@@ -92,6 +93,7 @@ public class BootLoader : MonoBehaviour
 
 
         // 5) tidy up – Boot scene no longer needed
-        SceneManager.UnloadSceneAsync("Boot");
+        if (!isBridge)
+            SceneManager.UnloadSceneAsync("Boot");
     }
 }

@@ -17,5 +17,9 @@ namespace FirstPersonPlayer.ScriptableObjects
         public float travelTime;
 
         public int[] initiallyAccessibleFloors;
+
+        public Sprite[] floorSprites;
+
+        public Sprite defaultFloorSprite;
     }
 }

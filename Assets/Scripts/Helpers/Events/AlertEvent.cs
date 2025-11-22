@@ -53,7 +53,8 @@ namespace Helpers.Events
         InfectionContracted_Heart01,
         InfectionContracted_Brain01,
         InfectionContracted_Eyes01,
-        TooFarFromDirigible
+        TooFarFromDirigible,
+        ElevatorSceneChangePermission
     }
 
     [Serializable]

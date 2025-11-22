@@ -263,8 +263,8 @@ MonoBehaviour:
   targetFXCenter: {fileID: 2614327318964596947}
   targetFXRotationSpeed: 50
   targetFXInitialScale: 1
-  targetFXEndScale: 1.5
-  targetFXScaleToRenderBounds: 0
+  targetFXEndScale: 0.5
+  targetFXScaleToRenderBounds: 1
   targetFXUseEnclosingBounds: 0
   targetFXAlignToGround: 0
   targetFXOffset: {x: 0, y: 0, z: 0}
