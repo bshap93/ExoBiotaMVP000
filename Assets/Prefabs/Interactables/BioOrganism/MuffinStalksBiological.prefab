@@ -240,10 +240,10 @@ MonoBehaviour:
         Persistent: 0
         DoNotPlayIfClipAlreadyPlaying: 0
         StopSoundOnFeedbackStop: 0
-        Fade: 0
-        FadeInitialVolume: 0
-        FadeDuration: 1
-        FadeTween:
+        FadeIn: 0
+        FadeInInitialVolume: 0
+        FadeInDuration: 1
+        FadeInTween:
           MMTweenDefinitionType: 0
           MMTweenCurve: 9
           Curve:
@@ -272,6 +272,39 @@ MonoBehaviour:
             m_RotationOrder: 4
           Initialized: 0
           ConditionPropertyName: Fade
+          EnumConditionPropertyName: 
+          EnumConditions: 0000000000000000000000000000000000000000000000000000000000000000
+        FadeOutOnStop: 0
+        FadeOutDuration: 1
+        FadeOutTween:
+          MMTweenDefinitionType: 0
+          MMTweenCurve: 9
+          Curve:
+            serializedVersion: 2
+            m_Curve:
+            - serializedVersion: 3
+              time: 0
+              value: 0
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 1
+              value: 1
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          Initialized: 0
+          ConditionPropertyName: FadeOutOnStop
           EnumConditionPropertyName: 
           EnumConditions: 0000000000000000000000000000000000000000000000000000000000000000
         SoloSingleTrack: 0
@@ -659,7 +692,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 888380afc233049ce9e618f9f36c8ba8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profile: {fileID: 11400000, guid: ea30bdd1015f9014d8499019053804b6, type: 2}
+  profile: {fileID: 11400000, guid: d0e24d0eaeb428c4a9d084e86278210b, type: 2}
   profileSync: 0
   camerasLayerMask:
     serializedVersion: 2
@@ -739,7 +772,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   outlineGradientInLocalSpace: 0
-  outlineWidth: 0.67
+  outlineWidth: 0.69
   outlineBlurPasses: 2
   outlineQuality: 1
   outlineEdgeMode: 0
@@ -752,7 +785,7 @@ MonoBehaviour:
   outlineIndependent: 0
   outlineContourStyle: 0
   outlineMaskMode: 0
-  glow: 0.17
+  glow: 0
   glowWidth: 0.5
   glowQuality: 1
   glowBlurMethod: 0
@@ -769,16 +802,16 @@ MonoBehaviour:
   glowPasses:
   - offset: 4
     alpha: 0.1
-    color: {r: 1, g: 0.43137255, b: 0.3882353, a: 1}
+    color: {r: 0.1882353, g: 0.8, b: 0.6784314, a: 1}
   - offset: 3
     alpha: 0.2
-    color: {r: 1, g: 0.43137255, b: 0.3882353, a: 1}
+    color: {r: 0.1882353, g: 0.8, b: 0.6784314, a: 1}
   - offset: 2
     alpha: 0.3
-    color: {r: 1, g: 0.43137255, b: 0.3882353, a: 1}
+    color: {r: 0.1882353, g: 0.8, b: 0.6784314, a: 1}
   - offset: 1
     alpha: 0.4
-    color: {r: 1, g: 0.43137255, b: 0.3882353, a: 1}
+    color: {r: 0.1882353, g: 0.8, b: 0.6784314, a: 1}
   glowMaskMode: 0
   innerGlow: 0.05
   innerGlowWidth: 1
@@ -786,26 +819,26 @@ MonoBehaviour:
   innerGlowBlendMode: 0
   innerGlowVisibility: 0
   targetFX: 0
-  targetFXTexture: {fileID: 2800000, guid: 3984e554775903648ba26ae7d99d57ce, type: 3}
-  targetFXColor: {r: 1, g: 1, b: 1, a: 1}
+  targetFXTexture: {fileID: 2800000, guid: d3f9f79929c708d45b0cc96aa9af8fdd, type: 3}
+  targetFXColor: {r: 0.93333334, g: 0.9490196, b: 0.7294118, a: 1}
   targetFXCenter: {fileID: 0}
-  targetFXRotationSpeed: 0
+  targetFXRotationSpeed: 50
   targetFXInitialScale: 1
-  targetFXEndScale: 1
+  targetFXEndScale: 1.5
   targetFXScaleToRenderBounds: 0
   targetFXUseEnclosingBounds: 0
   targetFXAlignToGround: 0
-  targetFXOffset: {x: 0, y: 0.5, z: 0}
+  targetFXOffset: {x: 0, y: 0, z: 0}
   targetFXFadePower: 32
   targetFXGroundMaxDistance: 15
   targetFXGroundLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
   targetFXTransitionDuration: 0.5
-  targetFXStayDuration: 5
-  targetFXVisibility: 1
+  targetFXStayDuration: 1.5
+  targetFXVisibility: 0
   iconFX: 0
-  iconFXMesh: {fileID: 4300000, guid: 9bad58a629f5c4546bb9d148b6c43b7e, type: 3}
+  iconFXMesh: {fileID: 0}
   iconFXLightColor: {r: 1, g: 1, b: 1, a: 1}
   iconFXDarkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   iconFXCenter: {fileID: 0}
@@ -823,7 +856,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   seeThroughOccluderThreshold: 0.4
-  seeThroughOccluderMaskAccurate: 0
+  seeThroughOccluderMaskAccurate: 1
   seeThroughOccluderCheckInterval: 1
   seeThroughOccluderCheckIndividualObjects: 0
   seeThroughDepthOffset: 0
@@ -939,6 +972,9 @@ MonoBehaviour:
         m_CallState: 2
   timesAllowedToSample: 1
   disableWhenDepleted: []
+  actionTextIfNotToolEquipped: Equip
+  actionIdIfNotToolEquipped: 0
+  jiggleFeedbacks: {fileID: 0}
 --- !u!114 &4991215561106520891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -985,7 +1021,7 @@ MonoBehaviour:
   iconScale: 1
   iconScaleIsFixed: 0
   iconShowDistance: 1
-  iconNonVisited: {fileID: 0}
+  iconNonVisited: {fileID: 21300000, guid: 46ddb90550a338d449d1768a86b61c60, type: 3}
   iconVisited: {fileID: 0}
   tintColor: {r: 1, g: 1, b: 1, a: 1}
   showOnScreenIndicator: 0
@@ -1077,7 +1113,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b53fa13f4caf470b99adb31cfaabb261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  locationAnchor: {fileID: 0}
+  onScanHit:
+    m_PersistentCalls:
+      m_Calls: []
   revealPolicy: 0
   examinationPolicy: 0
   canBeAreaScannedType: 1

@@ -1139,13 +1139,13 @@ MonoBehaviour:
   innerGlowColor: {r: 1, g: 1, b: 1, a: 1}
   innerGlowBlendMode: 0
   innerGlowVisibility: 0
-  targetFX: 0
+  targetFX: 1
   targetFXTexture: {fileID: 2800000, guid: 3984e554775903648ba26ae7d99d57ce, type: 3}
   targetFXColor: {r: 1, g: 1, b: 1, a: 1}
   targetFXCenter: {fileID: 7058087694974003262}
   targetFXRotationSpeed: 0
   targetFXInitialScale: 1
-  targetFXEndScale: 1
+  targetFXEndScale: 1.5
   targetFXScaleToRenderBounds: 0
   targetFXUseEnclosingBounds: 0
   targetFXAlignToGround: 0
@@ -1372,6 +1372,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b53fa13f4caf470b99adb31cfaabb261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onScanHit:
+    m_PersistentCalls:
+      m_Calls: []
   revealPolicy: 0
   examinationPolicy: 0
   canBeAreaScannedType: 1
