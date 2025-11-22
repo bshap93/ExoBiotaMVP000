@@ -1246,7 +1246,7 @@ MonoBehaviour:
   disableWhenDepleted: []
   actionTextIfNotToolEquipped: Equip
   actionIdIfNotToolEquipped: 43
-  jiggleFeedbacks: {fileID: 0}
+  jiggleFeedbacks: {fileID: 6620821376916037633}
 --- !u!114 &7566030807974135018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1419,7 +1419,7 @@ MonoBehaviour:
   ForwardDirection: 1
   TimescaleMode: 0
   Mode: 0
-  TargetTransform: {fileID: 0}
+  TargetTransform: {fileID: 7058087694974003262}
   TargetRectTransform: {fileID: 0}
   ShakeSpeed: 20
   ShakeRange: 0.5

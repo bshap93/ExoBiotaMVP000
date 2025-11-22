@@ -19,7 +19,7 @@ namespace Helpers.Events
         public int IntParameter;
         public string StringParameter;
 
-        public static void Trigger(string uniqueID, SpontaneousTriggerEventType eventType, int intParameter = -1,
+        public static void Trigger(string uniqueID, SpontaneousTriggerEventType eventType, int intParameter = 0,
             string stringParameter = null)
         {
             _e.UniqueID = uniqueID;

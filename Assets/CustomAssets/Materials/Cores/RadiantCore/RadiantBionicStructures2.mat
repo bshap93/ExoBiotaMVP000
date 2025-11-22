@@ -111,7 +111,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _EmissionMultiplayer: 0.04
+    - _EmissionMultiplayer: 30.96
     - _EmissionSwitch: 0
     - _EnvironmentReflections: 1
     - _GlossMapScale: 1
@@ -142,8 +142,8 @@ Material:
     - _TransShadow: 0.9
     - _TransStrength: 19.4
     - _Translucency: 1
-    - _TranslucencyV: 0.005
-    - _TransmisionValue: -0.36
+    - _TranslucencyV: -0.21
+    - _TransmisionValue: 1.69
     - _TransmissionShadow: 0.5
     - _UVSec: 0
     - _ZWrite: 1
