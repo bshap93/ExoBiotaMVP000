@@ -7,6 +7,7 @@ using Helpers.Events.Tutorial;
 using Helpers.ScriptableObjects.Tutorial;
 using Manager;
 using MoreMountains.Feedbacks;
+using MoreMountains.Tools;
 using Objectives.ScriptableObjects;
 using Rewired;
 using Sirenix.OdinInspector;
@@ -16,7 +17,7 @@ using Utilities.Interface;
 
 namespace SharedUI.Tutorial
 {
-    public class ColliderTutorialTrigger : MonoBehaviour, IRequiresUniqueID
+    public class ColliderTutorialTrigger : MonoBehaviour, IRequiresUniqueID, MMEventListener<SpontaneousTriggerEvent>
     {
         public enum TutorialType
         {
@@ -108,6 +109,16 @@ namespace SharedUI.Tutorial
                     }
                 }
             }
+        }
+
+        void OnEnable()
+        {
+            this.MMEventStartListening();
+        }
+
+        void OnDisable()
+        {
+            this.MMEventStopListening();
         }
 
         void OnTriggerEnter(Collider other)
@@ -207,6 +218,17 @@ namespace SharedUI.Tutorial
         public bool IsUniqueIDEmpty()
         {
             return string.IsNullOrEmpty(uniqueID);
+        }
+
+        public void OnMMEvent(SpontaneousTriggerEvent eventType)
+        {
+            if (eventType.UniqueID == UniqueID)
+                if (eventType.EventType == SpontaneousTriggerEventType.Triggered)
+                {
+                    _isDisabled = false;
+                    TriggerColliderEvent.Trigger(
+                        uniqueID, TriggerColliderEventType.SetTriggerable, true, TriggerColliderType.Tutorial);
+                }
         }
 
 #if UNITY_EDITOR

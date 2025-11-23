@@ -103,8 +103,8 @@ Hypolita: She mentioned a man named Fulmen who would accompany her.
 Hypolita: A guide of sorts. A man who was here long before the boomtowns of the Rush years.
 -> Thank you, doctor. I will consider what you've said.
 Hypolita: Clancy mentioned you harvested some cores for us? Much obliged.
-<<add_objective DialogueCommands "ReturnCoresToHypolita">>
-<<activate_objective DialogueCommands "ReturnCoresToHypolita">>
+// <<add_objective DialogueCommands "ReturnCoresToHypolita">>
+// <<activate_objective DialogueCommands "ReturnCoresToHypolita">>
 Hypolita: I will take them now. As you know, they are illegal outside of research use.
 -> Yes, doctor, here they are.
     <<jump GaveHypolitaCores>>
@@ -116,7 +116,7 @@ title: GaveHypolitaCores
 ---
 <<remove_player_item DialogueCommands "BasicInnerCoreStandard">>
 <<remove_player_item DialogueCommands "BasicInnerCoreStandard">>
-<<complete_objective DialogueCommands "ReturnCoresToHypolita">>
+// <<complete_objective DialogueCommands "ReturnCoresToHypolita">>
 <<add_objective DialogueCommands "TalkWithClancy05">>
 <<activate_objective DialogueCommands "TalkWithClancy05">>
 <<add_objective DialogueCommands "VisitCoreTrader">>
@@ -133,6 +133,7 @@ Hypolita: The whole planet disregarded people like me, with me during the RUSH 8
 Hypolita: I had been here years before then, mind you, studying the alien life on this planet.
 Hypolita: It's human nature I suppose, but then some would call me traitor to my species.
 -> I should go...
+    // <<complete_objective target objectiveId DialogueCommands "ReturnCoresToHypolita">>
     <<jump End01>>
 -> So why did you stay?
 Hypolita: You don't think I'm all the way out here by choice, do you? I'm an old environmentalist.
