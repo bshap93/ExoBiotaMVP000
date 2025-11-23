@@ -78,7 +78,8 @@ namespace LevelConstruct.Interactable.ItemInteractables
             foreach (var objId in completesObjectives)
                 ObjectiveEvent.Trigger(objId, ObjectiveEventType.ObjectiveCompleted);
 
-            if (currentConsoleState == ActionConsoleState.HailingPlayer)
+            if (currentConsoleState == ActionConsoleState.HailingPlayer ||
+                currentConsoleState == ActionConsoleState.PoweredOn)
             {
                 var nodeToUse = GetAppropriateStartNode();
                 if (nodeToUse.IsNullOrWhitespace())
@@ -97,10 +98,6 @@ namespace LevelConstruct.Interactable.ItemInteractables
 
                 MyUIEvent.Trigger(UIType.Any, UIActionType.Open);
                 ControlsHelpEvent.Trigger(ControlHelpEventType.Hide, actionId);
-            }
-            else if (currentConsoleState == ActionConsoleState.PoweredOn)
-            {
-                InitiateOtherFunctions();
             }
 
 

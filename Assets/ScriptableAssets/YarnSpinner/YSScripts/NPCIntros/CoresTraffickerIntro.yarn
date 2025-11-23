@@ -44,8 +44,8 @@ ShadyCoreTrafficker: Come back here. I'll reward you nicely for the Cores you fi
     ShadyCoreTrafficker: I'll be here if you change your mind.
 -> Yes, count me in. 
     ShadyCoreTrafficker: Excellent. 
-    <<add_objective DialogueCommands "VisitChokedCavernMine">>
-    <<activate_objective DialogueCommands "VisitChokedCavernMine">>
+    <<add_objective DialogueCommands "VisitAshpoolMine">>
+    <<activate_objective DialogueCommands "VisitAshpoolMine">>
     <<add_objective DialogueCommands "InstallNewRTGInGenerator">>
     <<activate_objective DialogueCommands "InstallNewRTGInGenerator">>
     <<give_player_item DialogueCommands "RTGNuclearBattery" 1>>
