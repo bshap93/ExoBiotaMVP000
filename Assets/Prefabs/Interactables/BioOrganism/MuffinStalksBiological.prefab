@@ -858,7 +858,7 @@ GameObject:
   m_TagString: LiquidFilledBiostructure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 1
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &2748839042437222524
 Transform:
@@ -1246,7 +1246,7 @@ MonoBehaviour:
   disableWhenDepleted: []
   actionTextIfNotToolEquipped: Equip
   actionIdIfNotToolEquipped: 0
-  jiggleFeedbacks: {fileID: 0}
+  jiggleFeedbacks: {fileID: 7125081576643535944}
 --- !u!114 &4991215561106520891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1272,7 +1272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78ba861a214074aa4bdac708dcacc9fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  id: -1757525078
   priority: 0
   visibility: 2
   ignoreAreaOfInterest: 0
@@ -1392,7 +1392,7 @@ MonoBehaviour:
   examinationPolicy: 0
   canBeAreaScannedType: 1
   compassProPOI: {fileID: 4522678549797751314}
-  locationObject: {fileID: 0}
+  locationObject: {fileID: -6104182998175089887, guid: 8b39446f6099d944b8282c10cc7b3055, type: 2}
 --- !u!114 &1349992885899753282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1411,7 +1411,7 @@ MonoBehaviour:
   ShakeDuration: 0.5
   PlayOnAwake: 0
   PermanentShake: 0
-  Interruptible: 1
+  Interruptible: 0
   AlwaysResetTargetValuesAfterShake: 0
   OnlyUseShakerValues: 0
   CooldownBetweenShakes: 0

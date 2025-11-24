@@ -50,7 +50,7 @@ MonoBehaviour:
   sdfQuality: 1
   maximumFrameCostMilliseconds: 0.88
   maximumStepCount: 64
-  maximumDensity: 0.61
+  maximumDensity: 5.87
   minimumVisibility: 0.172
   noiseTexture: {fileID: 11700000, guid: 373c8120693a0ae4980eae7e55f1c680, type: 2}
   erosionScale: 1
@@ -142,7 +142,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0.75, y: 0.75, z: 0.75}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1540306271888018297
 GameObject:
@@ -194,7 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdaa70120a2245cba6f4776438cd2c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueID: 
+  uniqueID: a18dfc38-85c4-4145-b9ce-490d4cec01b4
   bioOrganismType: {fileID: 11400000, guid: 7a3997b125ea4b3449d97fed52122b48, type: 2}
   actionId: 86
   actionText: Sample Gas Released
@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78ba861a214074aa4bdac708dcacc9fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: -1941076215
+  id: 1871359327
   priority: 0
   visibility: 2
   ignoreAreaOfInterest: 0
@@ -331,11 +331,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b53fa13f4caf470b99adb31cfaabb261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onScanHit:
+    m_PersistentCalls:
+      m_Calls: []
   revealPolicy: 0
   examinationPolicy: 0
   canBeAreaScannedType: 0
   compassProPOI: {fileID: 2672074347551166969}
-  locationObject: {fileID: 0}
+  locationObject: {fileID: -5896508538379107366, guid: 8b39446f6099d944b8282c10cc7b3055, type: 2}
 --- !u!136 &3936397419195403500
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -714,7 +717,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0986de822ecb4835bfb249feaeb7996f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetID: 
+  targetID: 20c8fd3c-9c6d-454f-8f30-c9f6f776c442
   seeThroughDuration: 5
   onScanned:
     m_PersistentCalls:
@@ -959,10 +962,10 @@ MonoBehaviour:
         Persistent: 0
         DoNotPlayIfClipAlreadyPlaying: 0
         StopSoundOnFeedbackStop: 0
-        Fade: 0
-        FadeInitialVolume: 0
-        FadeDuration: 1
-        FadeTween:
+        FadeIn: 0
+        FadeInInitialVolume: 0
+        FadeInDuration: 1
+        FadeInTween:
           MMTweenDefinitionType: 0
           MMTweenCurve: 9
           Curve:
@@ -991,6 +994,39 @@ MonoBehaviour:
             m_RotationOrder: 4
           Initialized: 0
           ConditionPropertyName: Fade
+          EnumConditionPropertyName: 
+          EnumConditions: 0000000000000000000000000000000000000000000000000000000000000000
+        FadeOutOnStop: 0
+        FadeOutDuration: 1
+        FadeOutTween:
+          MMTweenDefinitionType: 0
+          MMTweenCurve: 9
+          Curve:
+            serializedVersion: 2
+            m_Curve:
+            - serializedVersion: 3
+              time: 0
+              value: 0
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 1
+              value: 1
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          Initialized: 0
+          ConditionPropertyName: FadeOutOnStop
           EnumConditionPropertyName: 
           EnumConditions: 0000000000000000000000000000000000000000000000000000000000000000
         SoloSingleTrack: 0
