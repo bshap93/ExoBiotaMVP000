@@ -73,6 +73,16 @@ namespace FirstPersonPlayer.InputHandling
 
         [SerializeField] public float jetPackSpeedMultiplier = 1.22f;
 
+        [Header("Landing Feedbacks")] [SerializeField]
+        protected MMFeedbacks softLandingFeedbacks;
+        [SerializeField] protected MMFeedbacks hardLandingFeedbacks;
+        [SerializeField] protected MMFeedbacks heavyLandingFeedbacks;
+
+        [SerializeField] protected MMFeedbacks waterLandingFeedbacks;
+
+        [SerializeField] protected MMFeedbacks jumpStartFeedbacks;
+
+
         // Add these new fields for fall damage
         [Header("Fall Damage")] [SerializeField]
         protected bool enableFallDamage = true;
@@ -603,6 +613,16 @@ namespace FirstPersonPlayer.InputHandling
         // New method to handle fall damage
         protected virtual void HandleFallDamage()
         {
+            var percentHardnessOfLanding = Mathf.InverseLerp(
+                minimumFallDamageSpeed, minimumFallDamageSpeed + 20f, maxFallSpeed);
+
+            if (percentHardnessOfLanding < 0.25f)
+                softLandingFeedbacks?.PlayFeedbacks();
+            else if (percentHardnessOfLanding < 0.75f)
+                hardLandingFeedbacks?.PlayFeedbacks();
+            else
+                heavyLandingFeedbacks?.PlayFeedbacks();
+
             if (!enableFallDamage)
                 return;
 
@@ -996,6 +1016,8 @@ namespace FirstPersonPlayer.InputHandling
                     OnNotGroundedJumpPerformed?.Invoke(notGroundedJumpsLeft);
 
                 OnJumpPerformed?.Invoke();
+
+                jumpStartFeedbacks?.PlayFeedbacks();
 
                 // Define the jump direction ---------------------------------------------------
                 jumpDirection = SetJumpDirection();

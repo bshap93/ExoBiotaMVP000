@@ -335,7 +335,7 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
             if (actionId != 0)
                 if (ExaminationManager.Instance != null)
                 {
-                    if (IsPlayerAlreadyEquippedWithBestTool(gatedBreakableInteractionDetails, _toolsFound))
+                    if (IsPlayerAlreadyEquippedWithSuitableTool(gatedBreakableInteractionDetails, _toolsFound))
                         ControlsHelpEvent.Trigger(
                             ControlHelpEventType.Show, breakActionId,
                             string.IsNullOrEmpty(actionText) ? null : actionText,
@@ -347,6 +347,30 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
                 }
 
             return true;
+        }
+
+        bool IsPlayerAlreadyEquippedWithSuitableTool(GatedBreakableInteractionDetails details, List<string> toolsFound)
+        {
+            if (toolsFound == null)
+            {
+                _toolsFound = HasToolForInteractionInInventory();
+                if (_toolsFound.Count == 0) return false;
+            }
+
+            var toolIDs = details.requiredToolIDs;
+
+            var equipmentInventory =
+                GlobalInventoryManager.Instance.equipmentInventory;
+
+            if (equipmentInventory == null) throw new Exception("Equipment inventory is null");
+
+            foreach (var toolID in toolIDs)
+            {
+                var equippedTool = equipmentInventory.Content.FirstOrDefault(s => s != null && s.ItemID == toolID);
+                if (equippedTool != null) return true;
+            }
+
+            return false;
         }
 
         bool IsPlayerAlreadyEquippedWithBestTool(GatedBreakableInteractionDetails details, List<string> toolsFound)
