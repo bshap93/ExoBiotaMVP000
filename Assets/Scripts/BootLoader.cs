@@ -58,9 +58,13 @@ public class BootLoader : MonoBehaviour
         SaveManager.Instance.ApplyConfig(config);
         if (config.ForceReset)
             // actually perform the reset now so spawn selection sees a "fresh" state
+        {
             SaveManager.Instance.ResetGameSave(); // wipes managers/saves:contentReference[oaicite:5]{index=5}
+            SaveManager.Instance.SaveAll();
+        }
         // SaveManager.Instance.SaveAll(); // persist the clean state:contentReference[oaicite:6]{index=6}
         // --- now decide where to spawn ---
+
 
         SpawnInfo info;
 

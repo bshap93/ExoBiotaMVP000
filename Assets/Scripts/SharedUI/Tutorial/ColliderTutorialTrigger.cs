@@ -124,7 +124,7 @@ namespace SharedUI.Tutorial
         void OnTriggerEnter(Collider other)
         {
             if (TutorialManager.Instance == null) return;
-            if (!TutorialManager.Instance.AreTutorialsEnabled()) return;
+            // if (!TutorialManager.Instance.AreTutorialsEnabled()) return;
             if (_isDisabled) return;
             if (_triggerColliderManager)
                 if (!_triggerColliderManager.IsTutorialColliderTriggerable(uniqueID))

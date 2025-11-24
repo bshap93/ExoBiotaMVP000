@@ -15,9 +15,9 @@ namespace Manager
 
         [SerializeField] AudioSource uiButtonAudioSource;
         readonly HashSet<string> _tutorialBitsCompleted = new();
-        HashSet<string> _colliderTutorialTriggersCleared = new();
 
         List<AudioSource> _audioSources = new();
+        readonly HashSet<string> _colliderTutorialTriggersCleared = new();
 
         bool _dirty;
 
@@ -54,12 +54,12 @@ namespace Manager
 
         void OnEnable()
         {
-            this.MMEventStartListening<MainTutorialBitEvent>();
+            this.MMEventStartListening();
         }
 
         void OnDisable()
         {
-            this.MMEventStopListening<MainTutorialBitEvent>();
+            this.MMEventStopListening();
         }
         public void Save()
         {
@@ -81,14 +81,13 @@ namespace Manager
                 foreach (var id in set)
                     _tutorialBitsCompleted.Add(id);
             }
-            
+
             if (ES3.KeyExists("ColliderTutorialTriggersCleared", _savePath))
             {
                 var set = ES3.Load<HashSet<string>>("ColliderTutorialTriggersCleared", _savePath);
                 foreach (var id in set)
                     _colliderTutorialTriggersCleared.Add(id);
             }
-
 
 
             _dirty = false;
@@ -129,7 +128,7 @@ namespace Manager
 
         public void OnMMEvent(MainTutorialBitEvent bitEventType)
         {
-            if (!_tutorialsEnabled) return;
+            // if (!_tutorialsEnabled) return;
             // Check if IGUI is open
             if (PlayerUIManager.Instance.iGUIsOpen &&
                 bitEventType.BitEventType == MainTutorialBitEventType.FinishTutBit)
