@@ -22,7 +22,8 @@ namespace Helpers.Events
         WaitWhileInteracting,
         GlobalSettingsPanel,
         MachineInteractChoice,
-        RestTimeSetAmount
+        RestTimeSetAmount,
+        InfoLogTablet
     }
 
     public enum UIActionType

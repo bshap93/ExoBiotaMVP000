@@ -8,7 +8,6 @@ using Helpers.Events;
 using Manager;
 using Manager.SceneManagers;
 using MoreMountains.InventoryEngine;
-using Plugins.HighlightPlus.Runtime.Scripts;
 using SharedUI.Interface;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -43,11 +42,11 @@ namespace LevelConstruct.Interactable.ItemInteractables
         protected ActionConsoleState currentConsoleState = ActionConsoleState.None;
 
         protected SceneObjectData Data;
-        protected HighlightTrigger Trigger;
+        // protected HighlightTrigger Trigger;
 
         protected virtual void Awake()
         {
-            Trigger = GetComponent<HighlightTrigger>();
+            // Trigger = GetComponent<HighlightTrigger>();
         }
 
 

@@ -4,7 +4,6 @@ using FirstPersonPlayer.Interface;
 using Helpers.Events;
 using LevelConstruct.Highlighting;
 using Manager;
-using Plugins.HighlightPlus.Runtime.Scripts;
 using SceneScripts.Spawn;
 using Structs;
 using UnityEngine;
@@ -25,8 +24,8 @@ namespace LevelConstruct.Interactable.ItemInteractables
 
         void Start()
         {
-            Trigger = GetComponent<HighlightTrigger>();
-            if (Trigger == null) Debug.LogError("[SaveConsole] No HighlightTrigger found in scene.");
+            // Trigger = GetComponent<HighlightTrigger>();
+            // if (Trigger == null) Debug.LogError("[SaveConsole] No HighlightTrigger found in scene.");
         }
 
         public override void Interact()
