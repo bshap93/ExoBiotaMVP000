@@ -51,6 +51,8 @@ namespace Manager.DialogueScene
         public VariableStorageBehaviour variableStorage;
 
         [SerializeField] YarnInitScriptSet[] initScriptSets;
+
+        public CanvasGroup avatarUIElement;
         GameObject _currentModel;
 
         bool _dirty;
@@ -194,6 +196,19 @@ namespace Manager.DialogueScene
             overlay.alpha = 1;
             overlay.blocksRaycasts = true;
             overlay.interactable = true;
+
+            if (!def.hasAvatarDiorama)
+            {
+                avatarUIElement.alpha = 0;
+                avatarUIElement.blocksRaycasts = false;
+                avatarUIElement.interactable = false;
+            }
+            else
+            {
+                avatarUIElement.alpha = 1;
+                avatarUIElement.blocksRaycasts = true;
+                avatarUIElement.interactable = true;
+            }
 
             // MyUIEvent.Trigger(UIType.Dialogue, UIActionType.Open);
 

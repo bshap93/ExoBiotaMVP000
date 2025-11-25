@@ -54,6 +54,8 @@ namespace Overview.NPC
         [FormerlySerializedAs("NativeLanguage")]
         public DialogueLanguage nativeLanguage;
 
+        public bool hasAvatarDiorama = true;
+
         static string[] GetNpcIdOptions()
         {
             return DialogueManager.GetAllNpcIdOptions();
