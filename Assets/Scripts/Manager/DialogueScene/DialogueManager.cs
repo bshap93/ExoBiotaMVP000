@@ -284,7 +284,9 @@ namespace Manager.DialogueScene
                 "FabricatorClancy", "ScientistHypolita", "ShadyCoreTrafficker", "None", "ScienceShopRobot",
                 "VitalSystems",
                 // Consoles
-                "Mine01GrottoSanctumConsole", "Mine01GrottoNookConsole"
+                "Mine01GrottoSanctumConsole", "Mine01GrottoNookConsole",
+                // Aliens
+                "Sheollite001"
             };
         }
 

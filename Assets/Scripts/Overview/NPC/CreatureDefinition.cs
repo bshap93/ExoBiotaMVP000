@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Overview.NPC
 {
     [CreateAssetMenu(
-        fileName = "CreatureDefinition", menuName = "Scriptable Objects/NPC/CreatureDefinition", order = 1)]
+        fileName = "CreatureDefinition", menuName = "Scriptable Objects/Character/CreatureDefinition", order = 1)]
     public class CreatureDefinition : ScriptableObject
     {
         public string creatureId;

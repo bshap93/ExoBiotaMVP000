@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace Overview.NPC
 {
-    [CreateAssetMenu(fileName = "NpcDatabase", menuName = "Scriptable Objects/NPC/NpcDatabase", order = 1)]
+    [CreateAssetMenu(fileName = "NpcDatabase", menuName = "Scriptable Objects/Character/NpcDatabase", order = 1)]
     public class NpcDatabase : ScriptableObject
     {
         public NpcDefinition[] npcDefinitions;
-        private Dictionary<string, NpcDefinition> _map; // npcId → definition
+        Dictionary<string, NpcDefinition> _map; // npcId → definition
 
-        private void OnEnable()
+        void OnEnable()
         {
             _map = npcDefinitions.ToDictionary(n => n.npcId, n => n);
         }
