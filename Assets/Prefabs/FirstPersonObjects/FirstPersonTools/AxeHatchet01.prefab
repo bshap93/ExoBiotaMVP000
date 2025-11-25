@@ -1002,9 +1002,11 @@ MonoBehaviour:
   swing02HitDelay: 0.5
   swing03HitDelay: 0.22
   defaultHitDelay: 0.4
-  impactVfx: {fileID: 0}
+  connectingImpactVfx: {fileID: 0}
+  ineffectualImpactVfx: {fileID: 0}
   swingFeedback: {fileID: 0}
-  debrisEffectPrefab: {fileID: 0}
+  connectingDebrisEffectPrefab: {fileID: 0}
+  ineffectualDebrisEffectPrefab: {fileID: 0}
   hitFeedback: {fileID: 0}
   mainCamera: {fileID: 0}
   reach: 3.25
@@ -1018,7 +1020,7 @@ MonoBehaviour:
   hatchetPower: 1
   defaultReticleForTool: {fileID: 21300000, guid: 85b809804a98b954dbc107053cc51dfb, type: 3}
   equipFeedbacks: {fileID: 2658347934427604760}
-  unequippedFeedbacks: {fileID: 0}
+  unequippedFeedbacks: {fileID: 5031370039458286709}
 --- !u!114 &4098584162942740169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1026,7 +1028,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4239224177064474150}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 134fde2b8c784c53af6d30c69b098d1a, type: 3}
   m_Name: 

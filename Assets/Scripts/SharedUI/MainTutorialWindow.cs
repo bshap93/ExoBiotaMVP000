@@ -1,7 +1,6 @@
 using Helpers.Events;
 using Helpers.Events.Tutorial;
 using Helpers.ScriptableObjects.Tutorial;
-using Manager;
 using Michsky.MUIP;
 using MoreMountains.Tools;
 using TMPro;
@@ -53,7 +52,7 @@ namespace SharedUI
         {
             if (bitEventType.BitEventType == MainTutorialBitEventType.ShowMainTutBit)
             {
-                if (!TutorialManager.Instance.AreTutorialsEnabled()) return;
+                // if (!TutorialManager.Instance.AreTutorialsEnabled()) return;
                 _mainFieldsObject = Resources.Load<MainTutBitWindowArgs>($"MainTutBits/{bitEventType.MainTutID}");
 
                 Open(_mainFieldsObject);

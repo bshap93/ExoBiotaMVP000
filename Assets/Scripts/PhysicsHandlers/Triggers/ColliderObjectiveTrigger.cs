@@ -48,7 +48,8 @@ namespace Objectives
                 return;
             }
 
-            if (!_triggerColliderManager.IsObjectiveColliderTriggerable(uniqueID)) return;
+            if (_triggerColliderManager != null &&
+                !_triggerColliderManager.IsObjectiveColliderTriggerable(uniqueID)) return;
 
             var objectiveId = objective.objectiveId;
 

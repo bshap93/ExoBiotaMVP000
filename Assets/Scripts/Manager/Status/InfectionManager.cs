@@ -242,8 +242,6 @@ namespace Manager.Status
 
 
             NormalizeRemainingProbabilities();
-
-            Debug.Log("Reconstructed infection probabilities from saved data.");
         }
 
         void InitializeProbabilities()
@@ -327,13 +325,9 @@ namespace Manager.Status
             foreach (var site in infectionSites) totalCurrentProbability += site.currentProbability;
 
             if (totalCurrentProbability > 0f)
-            {
                 foreach (var site in infectionSites)
                     if (site.currentProbability > 0f)
                         site.currentProbability = site.currentProbability / totalCurrentProbability;
-
-                Debug.Log("Normalized infection probabilities.");
-            }
         }
 
         public OngoingInfection CreateNewInfection(InfectionObject infectionObject)

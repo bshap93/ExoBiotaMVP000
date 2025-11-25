@@ -226,11 +226,7 @@ namespace Objectives
                 if (eventType.type == ObjectiveEventType.ObjectiveMadeInactive)
                     SetObjectiveInactive(eventType.objectiveId);
 
-                if (eventType.type == ObjectiveEventType.ObjectiveAdded)
-                {
-                    Debug.Log($"Objective {eventType.objectiveId} has been added.");
-                    AddObjective(eventType.objectiveId, false);
-                }
+                if (eventType.type == ObjectiveEventType.ObjectiveAdded) AddObjective(eventType.objectiveId, false);
 
                 if (eventType.type == ObjectiveEventType.ObjectiveDeactivated)
                     SetObjectiveInactive(eventType.objectiveId);
@@ -483,12 +479,8 @@ namespace Objectives
             if (obj.objectiveProgressType == ObjectiveProgressType.DoThingNTimes)
             {
                 var progress = _objectiveProgress[objectiveId];
-                
-                if (progress.currentProgress >= obj.targetProgress) 
-                {
-                    CompleteObjective(objectiveId);
-                }
 
+                if (progress.currentProgress >= obj.targetProgress) CompleteObjective(objectiveId);
             }
 
 
@@ -539,14 +531,9 @@ namespace Objectives
                 };
 
             if (shouldBeActive && !_inactiveObjectives.Contains(objectiveId))
-            {
                 _activeObjectives.Add(objectiveId);
-                Debug.Log($"Objective {objectiveId} has been added and is now active.");
-            }
             else
-            {
                 _inactiveObjectives.Add(objectiveId);
-            }
 
             // if (obj.triggersSpontaneousEvent &&
             //     obj.triggersOnEvent == ObjectiveObject.TriggersOnObjectiveLifecycleEvent.OnComplete)

@@ -1,4 +1,5 @@
 using FirstPersonPlayer.Interactable;
+using FirstPersonPlayer.Minable;
 using FirstPersonPlayer.Tools.Interface;
 using Helpers.Events;
 using Helpers.Events.Status;
@@ -110,12 +111,18 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 // hardness/HP handled inside component
                 breakable.ApplyHit(hatchetPower, hit.point, hit.normal);
 
-                SpawnFx(hit.point, hit.normal);
+                SpawnFxForConnectingHit(hit.point, hit.normal);
                 swingFeedback?.PlayFeedbacks(hit.point);
                 hitFeedback?.PlayFeedbacks(hit.point);
                 PlayerStatsEvent.Trigger(
                     PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
                     staminaCostPerConnectingSwing);
+            }
+            else if (go.TryGetComponent<MyOreNode>(out var oreNode))
+            {
+                // No apply here – ore nodes are for pickaxe only
+
+                SpawnFxForIneffectualHit(hit.point, hit.normal);
             }
         }
 

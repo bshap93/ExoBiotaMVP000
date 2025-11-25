@@ -220,7 +220,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                     PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
                     staminaCostPerConnectingSwing);
 
-                SpawnFx(hit.point, hit.normal);
+                SpawnFxForConnectingHit(hit.point, hit.normal);
                 swingFeedback?.PlayFeedbacks(hit.point);
                 hitFeedback?.PlayFeedbacks(hit.point);
                 return;
@@ -281,10 +281,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         /* --------- Helpers --------- */
         void SpawnEffects(Vector3 pos, Vector3 normal)
         {
-            if (debrisEffectPrefab != null)
+            if (connectingDebrisEffectPrefab != null)
             {
                 var fx = Instantiate(
-                    debrisEffectPrefab, pos + normal * 0.1f,
+                    connectingDebrisEffectPrefab, pos + normal * 0.1f,
                     Quaternion.LookRotation(-mainCamera.transform.forward));
 
                 Destroy(fx, 2f);

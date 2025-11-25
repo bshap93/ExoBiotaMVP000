@@ -219,7 +219,7 @@ namespace Manager
             PickableLocationManager.Instance.Save();
             PlayerStatusEffectManager.Instance.Save();
             StatefulPickableManager.Instance.Save();
-            GlobalSettingsManager.Instance.Save();
+            // GlobalSettingsManager.Instance.Save();
             InGameTimeManager.Instance.Save();
             MachineStateManager.Instance.Save();
             InfectionManager.Instance.Save();

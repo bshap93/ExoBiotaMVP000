@@ -6,6 +6,7 @@ using Helpers.Events.ManagerEvents;
 using Helpers.ScriptableObjects.Animation;
 using MoreMountains.Feedbacks;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 {
@@ -36,11 +37,15 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         public float defaultHitDelay = 0.2f;
 
 
-        [Header("FX")] public GameObject impactVfx;
+        [FormerlySerializedAs("impactVfx")] [Header("FX")]
+        public GameObject connectingImpactVfx;
+        public GameObject ineffectualImpactVfx;
 
         public MMFeedbacks swingFeedback;
 
-        public GameObject debrisEffectPrefab;
+        [FormerlySerializedAs("debrisEffectPrefab")]
+        public GameObject connectingDebrisEffectPrefab;
+        public GameObject ineffectualDebrisEffectPrefab;
         public MMFeedbacks hitFeedback;
 
         [Header("References")] public Camera mainCamera;
@@ -90,18 +95,37 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             return detectableType;
         }
 
-        protected void SpawnFx(Vector3 pos, Vector3 normal)
+        protected void SpawnFxForConnectingHit(Vector3 pos, Vector3 normal)
         {
-            if (impactVfx)
+            if (connectingImpactVfx)
             {
-                var fx = Instantiate(impactVfx, pos + normal * 0.05f, Quaternion.LookRotation(normal));
+                var fx = Instantiate(connectingImpactVfx, pos + normal * 0.05f, Quaternion.LookRotation(normal));
                 Destroy(fx, 2f);
             }
 
-            if (debrisEffectPrefab)
+            if (connectingDebrisEffectPrefab)
             {
                 var debris = Instantiate(
-                    debrisEffectPrefab, pos + normal * 0.05f,
+                    connectingDebrisEffectPrefab, pos + normal * 0.05f,
+                    Quaternion.LookRotation(-mainCamera.transform.forward));
+
+                Destroy(debris, 2f);
+            }
+        }
+
+        protected void SpawnFxForIneffectualHit(Vector3 pos, Vector3 normal)
+        {
+            // Could use a different VFX prefab for ineffectual hits
+            if (ineffectualImpactVfx)
+            {
+                var fx = Instantiate(connectingImpactVfx, pos + normal * 0.05f, Quaternion.LookRotation(normal));
+                Destroy(fx, 2f);
+            }
+
+            if (ineffectualDebrisEffectPrefab)
+            {
+                var debris = Instantiate(
+                    ineffectualDebrisEffectPrefab, pos + normal * 0.05f,
                     Quaternion.LookRotation(-mainCamera.transform.forward));
 
                 Destroy(debris, 2f);
