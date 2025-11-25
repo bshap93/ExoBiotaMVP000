@@ -2046,8 +2046,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uniqueID: 
-  actionId: 43
-  actionText: For Options (or F to Pickup)
+  actionId: 97
+  actionText: To Pickup (E for Harvesting)
   quantity: 1
   onItemPicked:
     m_PersistentCalls:

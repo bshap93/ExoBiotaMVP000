@@ -1,5 +1,6 @@
 ﻿using Events;
 using Helpers.Events;
+using Helpers.Events.UI;
 using Manager;
 using Objectives.ScriptableObjects;
 using Overview.OverviewMode.ScriptableObjectDefinitions;
@@ -23,6 +24,7 @@ namespace FirstPersonPlayer.Interactable.Doors
                 "Exit the mine and return to the dirigible?", "Use Door", AlertType.ChoiceModal, 0f,
                 onConfirm: () =>
                 {
+                    SceneTransitionUIEvent.Trigger(SceneTransitionUIEventType.Show);
                     var spawnInfo = dockDefinition.spawnInfo.ToSpawnInfo();
 
                     SpawnEvent.Trigger(

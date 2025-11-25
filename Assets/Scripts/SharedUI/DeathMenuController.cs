@@ -4,26 +4,29 @@ using Michsky.MUIP;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class DeathMenuController : MonoBehaviour
+namespace SharedUI
 {
-    [SerializeField] private ButtonManager respawnButton;
-    [SerializeField] private ButtonManager quitButton;
-
-    [FormerlySerializedAs("_bootLoader")] [SerializeField]
-    private BootLoader bootLoader;
-
-
-    private void Awake()
+    public class DeathMenuController : MonoBehaviour
     {
-        // unlock cursor
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        [SerializeField] private ButtonManager respawnButton;
+        [SerializeField] private ButtonManager quitButton;
 
-        bootLoader = FindFirstObjectByType<BootLoader>();
-    }
+        [FormerlySerializedAs("_bootLoader")] [SerializeField]
+        private BootLoader bootLoader;
 
-    public void OnRespawnButtonPressed()
-    {
-        _ = bootLoader.ConductBootLoad();
+
+        private void Awake()
+        {
+            // unlock cursor
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            bootLoader = FindFirstObjectByType<BootLoader>();
+        }
+
+        public void OnRespawnButtonPressed()
+        {
+            _ = bootLoader.ConductBootLoad();
+        }
     }
 }

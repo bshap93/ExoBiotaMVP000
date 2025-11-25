@@ -4,6 +4,7 @@ using Helpers.Events;
 using Helpers.Events.Status;
 using Helpers.Interfaces;
 using MoreMountains.Tools;
+using SharedUI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

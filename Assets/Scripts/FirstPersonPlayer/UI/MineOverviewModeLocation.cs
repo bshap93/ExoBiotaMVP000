@@ -1,7 +1,7 @@
 using System;
-using Events;
 using FirstPersonPlayer.UI.LocationButtonBase;
 using Helpers.Events;
+using Helpers.Events.UI;
 using Structs;
 using UnityEngine;
 
@@ -12,7 +12,7 @@ namespace FirstPersonPlayer.UI
         public string spawnPointId;
 
         public string sceneName;
-        
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
 
         public void Initialize(string spawnPointIdVar, string sceneNameVar, object mineName)
@@ -20,7 +20,6 @@ namespace FirstPersonPlayer.UI
             spawnPointId = spawnPointIdVar;
             sceneName = sceneNameVar;
             locationText.text = mineName.ToString();
-            
         }
 
         public override void Interact()
@@ -32,6 +31,9 @@ namespace FirstPersonPlayer.UI
             }
 
             if (!RequireAccessPass()) return;
+
+
+            SceneTransitionUIEvent.Trigger(SceneTransitionUIEventType.Show);
 
             SpawnEvent.Trigger(SpawnEventType.ToMine, sceneName, GameMode.FirstPerson, spawnPointId);
         }

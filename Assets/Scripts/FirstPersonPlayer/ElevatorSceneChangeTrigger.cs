@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using Helpers.Events;
+using Helpers.Events.UI;
 using Manager;
 using Sirenix.OdinInspector;
-using Structs;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
@@ -25,6 +25,7 @@ namespace FirstPersonPlayer
         {
             if (other.CompareTag("FirstPersonPlayer"))
             {
+                SceneTransitionUIEvent.Trigger(SceneTransitionUIEventType.Show);
                 SaveDataEvent.Trigger();
 
                 // SpawnEvent.Trigger(
