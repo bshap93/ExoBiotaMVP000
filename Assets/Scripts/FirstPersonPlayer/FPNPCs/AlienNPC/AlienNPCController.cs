@@ -5,11 +5,12 @@ using Helpers.Events.Dialog;
 using Lightbug.Utilities;
 using Manager.DialogueScene;
 using MoreMountains.Feedbacks;
+using Overview.NPC;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace FirstPersonPlayer.FPNPCs
+namespace FirstPersonPlayer.FPNPCs.AlienNPC
 {
     public enum AlienNPCState
     {
@@ -29,6 +30,7 @@ namespace FirstPersonPlayer.FPNPCs
         [SerializeField] MMFeedbacks startDialogueFeedback;
         [SerializeField] AlienNPCState initialState = AlienNPCState.Hailable;
         [SerializeField] bool isInteractable = true;
+        [SerializeField] NpcDefinition npcDefinition;
         protected AlienNPCState CurrentState;
         void Start()
         {

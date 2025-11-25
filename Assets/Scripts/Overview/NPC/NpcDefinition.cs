@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using FirstPersonPlayer.FPNPCs.ScriptableObject;
 using Manager.DialogueScene;
 using Manager.SceneManagers.Dock;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Yarn.Unity;
 
 namespace Overview.NPC
@@ -48,6 +50,9 @@ namespace Overview.NPC
         [FoldoutGroup("Sounds")] public List<SoundEntry> sounds = new();
 
         public AnimationClip idleClip;
+
+        [FormerlySerializedAs("NativeLanguage")]
+        public DialogueLanguage nativeLanguage;
 
         static string[] GetNpcIdOptions()
         {

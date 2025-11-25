@@ -3106,6 +3106,7 @@ GameObject:
   - component: {fileID: 279803283339394746}
   - component: {fileID: 2024397384878661303}
   - component: {fileID: 3630283722626017367}
+  - component: {fileID: 3025540381511846257}
   m_Layer: 0
   m_Name: Sheolite001Model
   m_TagString: Untagged
@@ -3167,6 +3168,24 @@ MonoBehaviour:
   _Animator: {fileID: 2024397384878661303}
   _Transitions: {fileID: 0}
   _ActionOnDisable: 0
+--- !u!114 &3025540381511846257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8209060552605933272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce810206fcde415a99a96831ca374fb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alienIdleAnimations:
+  - {fileID: -5533903024747340832, guid: b019526abd9c43c4c8e1ed457c56a468, type: 3}
+  - {fileID: 1245882690682072010, guid: 33e2dad3bd2c199439689f2fc3588aea, type: 3}
+  - {fileID: -3548273549459496330, guid: 512e2ee199d510c4588b28b6f95446da, type: 3}
+  - {fileID: -7095233583796928237, guid: 285edbde9b4b2ee4399d714d24439210, type: 3}
+  animancerComponent: {fileID: 3630283722626017367}
 --- !u!1 &8228446542673884500
 GameObject:
   m_ObjectHideFlags: 0
@@ -3540,12 +3559,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d587ea0930b47baa39930eebdd6823e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animancerComponent: {fileID: 0}
+  animancerComponent: {fileID: 3630283722626017367}
   npcId: Sheollite001
-  defaultStartNode: 
+  defaultStartNode: IncomprehensibleGreeting
   startDialogueFeedback: {fileID: 5156653486714241807}
   initialState: 0
   isInteractable: 1
+  npcDefinition: {fileID: 11400000, guid: 67f109c8dc806c142851122430904afe, type: 2}
 --- !u!1 &9155866176797218975
 GameObject:
   m_ObjectHideFlags: 0

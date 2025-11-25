@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace FirstPersonPlayer.FPNPCs
+namespace FirstPersonPlayer.FPNPCs.AlienNPC
 {
     public class AlienNPCInteractTrigger : MonoBehaviour
     {

@@ -286,7 +286,7 @@ namespace Manager.DialogueScene
                 // Consoles
                 "Mine01GrottoSanctumConsole", "Mine01GrottoNookConsole",
                 // Aliens
-                "Sheollite001"
+                "Sheolite001"
             };
         }
 
