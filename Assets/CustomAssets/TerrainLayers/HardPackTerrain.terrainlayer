@@ -7,8 +7,8 @@ TerrainLayer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: HardPackTerrain
-  m_DiffuseTexture: {fileID: 2800000, guid: d207ef1c595d98d4aa06baafdd2dbce6, type: 3}
-  m_NormalMapTexture: {fileID: 2800000, guid: 5b4adf30a9e293f42a5f299e1095d672, type: 3}
+  m_DiffuseTexture: {fileID: 2800000, guid: 6e66741bc6d86c94a84bb3eef14028fd, type: 3}
+  m_NormalMapTexture: {fileID: 2800000, guid: e9aa952ddcaa08849ab6169ca8706f02, type: 3}
   m_MaskMapTexture: {fileID: 0}
   m_TileSize: {x: 2, y: 2}
   m_TileOffset: {x: 0, y: 0}
