@@ -42,11 +42,11 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Disposable
 
         public override void Initialize(PlayerEquipment owner)
         {
-            if (liquidContainerSObject == null)
-                liquidContainerSObject = owner.CurrentToolSo as LiquidContainerSObject;
-
-            if (liquidContainerSObject != null)
-                liquidType = liquidContainerSObject.containedLiquidType;
+            // if (liquidContainerSObject == null)
+            //     liquidContainerSObject = owner.CurrentToolSo as LiquidContainerSObject;
+            //
+            // if (liquidContainerSObject != null)
+            //     liquidType = liquidContainerSObject.containedLiquidType;
         }
 
 

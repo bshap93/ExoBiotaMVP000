@@ -728,7 +728,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 18.5, y: 0.000015258789}
+  m_AnchoredPosition: {x: 18.5, y: 0.000076293945}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &9021752651456075633
@@ -1457,6 +1457,7 @@ MonoBehaviour:
   listItems:
   - {fileID: 3985722671729753802}
   infectionManager: {fileID: 0}
+  infectionHUD: {fileID: 0}
 --- !u!1 &6802914105518673181
 GameObject:
   m_ObjectHideFlags: 0

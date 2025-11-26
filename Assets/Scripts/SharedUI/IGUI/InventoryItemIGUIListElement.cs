@@ -1,5 +1,4 @@
 using System;
-using Events;
 using FirstPersonPlayer.Interactable;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
 using Helpers.Events;
@@ -129,6 +128,7 @@ namespace SharedUI.IGUI
                 useButton.onClick.AddListener(UseConsumable);
             else useButton.gameObject.SetActive(false);
 
+            if (_item.isQuestItem) placeButton.gameObject.SetActive(false);
 
             SetPlaceButtonActiveIf();
         }
@@ -249,8 +249,8 @@ namespace SharedUI.IGUI
 
             if (propsItemHold.heldRb == null)
             {
-                if (propsItemHold.AreBothHandsOccupied())
-                    UnequipViaMM();
+                // if (propsItemHold.AreBothHandsOccupied())
+                //     UnequipViaMM();
                 // PlayerInteraction.Instance.RightHandEquipment.UnequipTool();
 
                 var playerInventory = GlobalInventoryManager.Instance.playerInventory;

@@ -6,7 +6,7 @@ namespace FirstPersonPlayer.Tools.ItemObjectTypes.CompositeObjects
 {
     [Serializable]
     [CreateAssetMenu(fileName = "LiquidContainer", menuName = "Scriptable Objects/Items/LiquidContainer", order = 2)]
-    public class LiquidContainerSObject : RightHandEquippableTool
+    public class LiquidContainerSObject : MyBaseItem
     {
         [FormerlySerializedAs("ContainedLiquidType")]
         public LiquidType containedLiquidType;
