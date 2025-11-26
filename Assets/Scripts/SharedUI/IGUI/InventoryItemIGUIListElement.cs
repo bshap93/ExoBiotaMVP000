@@ -128,13 +128,15 @@ namespace SharedUI.IGUI
                 useButton.onClick.AddListener(UseConsumable);
             else useButton.gameObject.SetActive(false);
 
-            if (_item.isQuestItem) placeButton.gameObject.SetActive(false);
+            // if (_item.isQuestItem) placeButton.gameObject.SetActive(false);
 
             SetPlaceButtonActiveIf();
         }
         void SetPlaceButtonActiveIf()
         {
-            if (GameStateManager.Instance.CurrentMode == GameMode.FirstPerson)
+            if (GameStateManager.Instance.CurrentMode == GameMode.FirstPerson &&
+                _item != null &&
+                !_item.isQuestItem)
             {
                 placeButton.onClick.AddListener(PlaceItem);
                 placeButton.gameObject.SetActive(true);
