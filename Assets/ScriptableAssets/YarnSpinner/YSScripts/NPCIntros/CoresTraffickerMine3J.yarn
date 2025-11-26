@@ -18,5 +18,5 @@ Fulmen: Your reward, of course... hmm, let's see here...
 <<add_objective DialogueCommands "FinishPlaytest">>
 <<give_player_item DialogueCommands "AshpoolMineKey" 1>>
 Fulmen: This key should help you get into locked areas of Ashpool mine.
-<<jump FulmenOfferingToBuy>>
+<<jump FulmenOfferingToBuy002>>
 ===

@@ -1,9 +1,9 @@
-﻿using Events;
-using Helpers.Events;
+﻿using Helpers.Events;
 using Helpers.Events.Gated;
 using Helpers.ScriptableObjects.Gated;
 using Manager;
 using Michsky.MUIP;
+using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
 using TMPro;
 using UnityEngine;
@@ -22,6 +22,8 @@ namespace SharedUI.Interact
         [SerializeField] public TMP_Text staminaAmtToBeRestoredText;
         [FormerlySerializedAs("_currentDockId")]
         public string currentDockId;
+        [SerializeField] MMFeedbacks restFeedbacks;
+        [SerializeField] MMFeedbacks awakenFeedbacks;
         CanvasGroup _canvasGroup;
 
         int _currentRestTimeMinutes;
@@ -76,12 +78,16 @@ namespace SharedUI.Interact
             GatedRestEvent.Trigger(
                 GatedInteractionEventType.StartInteraction, currentRestDetails, _currentRestTimeMinutes, currentDockId);
 
+            restFeedbacks?.PlayFeedbacks();
+
             StartCoroutine(
                 waitOverlay.SimulateProgress(
                     currentRestDetails.realWorldWaitDuration, () =>
                     {
                         waitOverlay.Hide();
                         MyUIEvent.Trigger(UIType.RestTimeSetAmount, UIActionType.Close);
+
+                        awakenFeedbacks?.PlayFeedbacks();
 
                         GatedRestEvent.Trigger(
                             GatedInteractionEventType.CompleteInteraction, currentRestDetails, _currentRestTimeMinutes,

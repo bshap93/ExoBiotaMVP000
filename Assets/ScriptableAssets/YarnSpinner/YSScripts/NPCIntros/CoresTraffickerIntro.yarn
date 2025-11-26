@@ -46,6 +46,20 @@ Fulmen: Do you have any Harvested Cores to sell to me? I'll buy any you have.
 <<endif>>
 ===
 
+title: FulmenOfferingToBuy002
+---
+Fulmen: Do you have any Harvested Cores to sell to me? I'll buy any you have.
+-> No I haven't got any.
+    Fulmen: Alright. Come see me if you get some.
+    <<jump End02>>
+
+-> Yes, I have some to sell.
+    <<start_shopping_sell_illegal DialogueCommands "ShadyCoreTrafficker">>
+    -> Alright, I'm done.
+    <<stop_shopping_sell DialogueCommands "ShadyCoreTrafficker">>
+    Fulmen: See ya round.
+===
+
 title: FulmenWantsFavorBeforeTalk
 ---
 Fulmen: Yes, that is old history but I see you are concerned.
