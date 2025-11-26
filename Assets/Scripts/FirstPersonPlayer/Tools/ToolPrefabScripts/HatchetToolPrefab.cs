@@ -1,3 +1,4 @@
+using Feedbacks.Interface;
 using FirstPersonPlayer.Interactable;
 using FirstPersonPlayer.Minable;
 using FirstPersonPlayer.Tools.Interface;
@@ -119,6 +120,11 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
                 SpawnFxForIneffectualHit(hit.point, hit.normal);
                 hitRockFeedbacks?.PlayFeedbacks();
+            }
+            else if (go.TryGetComponent<IFleshyObject>(out var fleshyObject))
+            {
+                hitFleshyFeedbacks?.PlayFeedbacks();
+                fleshyObject.MakeJiggle();
             }
         }
 

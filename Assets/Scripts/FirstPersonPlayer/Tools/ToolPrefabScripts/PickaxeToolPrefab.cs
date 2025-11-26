@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Digger.Modules.Runtime.Sources;
 using Domains.Gameplay.Mining.Scripts;
+using Feedbacks.Interface;
 using FirstPersonPlayer.Interactable;
 using FirstPersonPlayer.Tools.Interface;
 using Helpers.Events;
@@ -233,12 +234,21 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                         PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
                         staminaCostPerConnectingSwing);
                 }
+
+            if (go.TryGetComponent<IFleshyObject>(out var fleshyObject))
+            {
+                hitFleshyFeedbacks?.PlayFeedbacks();
+                fleshyObject.MakeJiggle();
+            }
         }
         public override void PerformToolAction()
         {
             // Check cooldown first
             if (Time.time < LastSwingTime + miningCooldown) return;
 
+            LastSwingTime = Time.time; // ← Move this up here
+
+            PlaySwingSequence();
             // IMMEDIATELY raycast to capture target
             _hasValidHit = Physics.Raycast(
                 mainCamera.transform.position,
@@ -256,8 +266,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 if (!CanInteractWithObject(targetGo)) return; // Not valid - don't waste swing
             }
 
-            LastSwingTime = Time.time;
-            PlaySwingSequence();
+            // LastSwingTime = Time.time;
+
 
             // if (Time.time < LastSwingTime + miningCooldown) return;
 

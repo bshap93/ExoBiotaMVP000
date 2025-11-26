@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Animancer;
-using Events;
+using Feedbacks.Interface;
 using FirstPersonPlayer.Interface;
 using FirstPersonPlayer.ScriptableObjects;
 using Helpers.Events;
@@ -18,7 +18,7 @@ using UnityEditor;
 
 namespace FirstPersonPlayer.Interactable.BioOrganism
 {
-    public class BioOrganismSampleNode : BioOrganismBase, IInteractable
+    public class BioOrganismSampleNode : BioOrganismBase, IInteractable, IFleshyObject
     {
 #if ODIN_INSPECTOR && UNITY_EDITOR
         [InlineButton(nameof(SyncSampleFromType), "Sync Sample From Type")]
@@ -39,9 +39,9 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
 #endif
         public int actionIdIfNotToolEquipped;
 
-        ObjectiveHelper _objectiveHelper;
-
         [SerializeField] MMFeedbacks jiggleFeedbacks;
+
+        ObjectiveHelper _objectiveHelper;
 
         string SceneKey => gameObject.scene.name;
 

@@ -51,6 +51,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         public MMFeedbacks unequippedFeedbacks;
 
         public MMFeedbacks hitRockFeedbacks;
+        public MMFeedbacks hitFleshyFeedbacks;
 
         [Header("References")] public Camera mainCamera;
 
