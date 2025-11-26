@@ -109,6 +109,7 @@ Hypolita: He should know more than I and be able to give some specifics before y
 <<activate_objective DialogueCommands "TalkWithClancy05">>
 <<add_objective DialogueCommands "VisitCoreTrader">>
 <<activate_objective DialogueCommands "VisitCoreTrader">>
+<<set $talkedToHypolita= true>>
 // // <<add_objective DialogueCommands "ReturnCoresToHypolita">>
 // // <<activate_objective DialogueCommands "ReturnCoresToHypolita">>
 // Hypolita: I will take them now. As you know, they are illegal outside of research use.

@@ -6,6 +6,7 @@
 <<declare $samplesTaken = 0>>
 
 <<declare $hypolitaWillTalk = false>>
+<<declare $talkedToHypolita = false>>
 
 <<declare $traffickerGaveJob001 = false>>
 <<declare $completedRTGQuestForFulmen = false>>

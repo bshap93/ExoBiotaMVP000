@@ -56,10 +56,28 @@ Fulmen: I'd ask a favor and in return, I'd gladly tell you what I know.
 
 title: TalkToFulmenAboutSister
 ---
-Fulmen: Wow, it's been years, but I'd like to help. 
-Fulmen: Yes I was a guide back then. It was profitable and I knew the areas
-Fulmen: outside the colony cities' limits as well as anyone.
-Fulmen: Your sis, she'd been out here a while, unlike my normal clientele.
+Fulmen: Yes I was a guide of sorts back then.
+Fulmen: Your sister, she'd been operating in the area a while, but knew little of the east.
+Fulmen: She needed a guide who knew the caverns and mines in the areas east of here. 
+Fulmen: She had very particular wishes and approached me for my discretion. I don't report my trips to the
+Fulmen: planetary intelligence, never have, which is why I was sometimes sought by people hiding something.
+Fulmen: She required absolute discretion and that I leave without her.
+Fulmen: For a price, I could do the same for you.
+-> Thanks, but I don't need a guide. I'm going to look around here a bit more. 
+    (Playtest Doesn't Include Going where Fulmen Says to go)
+    <<jump PlayerDemandsLocationOfDropoff>>
+// -> How much?
+//     <<jump PlayerAsksFulmenToGuide>>
+
+===
+title: PlayerDemandsLocationOfDropoff
+---
+Fulmen: Ok, not a problem.
+===
+
+title: PlayerAsksFulmenToGuide
+---
+Computer: End Playtest.
 ===
 
 title: OfferJobInChokedCaverns

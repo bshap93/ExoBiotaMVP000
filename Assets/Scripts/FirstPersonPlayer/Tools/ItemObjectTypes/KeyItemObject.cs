@@ -1,9 +1,19 @@
-﻿using InventoryEngine.InventoryEngine.InventoryEngine.Scripts.Items;
+﻿using UnityEngine;
 
 namespace FirstPersonPlayer.Tools.ItemObjectTypes
 {
-    public class KeyItemObject : MyBaseItem 
+    public enum KeyItemType
     {
-        public string keyId;
+        None
+    }
+
+    [CreateAssetMenu(
+        fileName = "KeyItemObject",
+        menuName = "Scriptable Objects/Items/KeyItemObject",
+        order = 0)]
+    public class KeyItemObject : MyBaseItem
+    {
+        public KeyItemType keyItemType = KeyItemType.None;
+        public string KeyID => ItemID;
     }
 }

@@ -15,13 +15,7 @@ namespace Utilities.Static
             ResetDataEvent.Trigger();
         }
 
-#if UNITY_EDITOR
-        [MenuItem("Debug/Clear All Save Data")]
-#endif
-        public static void ClearAllMetadata()
-        {
-            // ResetDataEvent.Trigger();
-        }
+
 #if UNITY_EDITOR
 
         [MenuItem("Debug/Save All Data")]
