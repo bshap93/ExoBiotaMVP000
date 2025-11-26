@@ -126,6 +126,15 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 hitFleshyFeedbacks?.PlayFeedbacks();
                 fleshyObject.MakeJiggle();
             }
+            else if (go.CompareTag("DiggerChunk") || go.CompareTag("MainSceneTerrain"))
+            {
+                SpawnFxForIneffectualHit(hit.point, hit.normal);
+                hitRockFeedbacks?.PlayFeedbacks();
+            }
+            else if (go.CompareTag("MiscRigidOrganism"))
+            {
+                hitRigidOrganismFeedbacks?.PlayFeedbacks();
+            }
         }
 
 

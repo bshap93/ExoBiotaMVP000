@@ -159,7 +159,7 @@ GameObject:
   - component: {fileID: 3936397419195403500}
   m_Layer: 21
   m_Name: PipeStalkVentV00
-  m_TagString: Untagged
+  m_TagString: MiscRigidOrganism
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -379,7 +379,7 @@ GameObject:
   - component: {fileID: 1064279981665509241}
   m_Layer: 0
   m_Name: BiomassSmall_1_G1
-  m_TagString: Untagged
+  m_TagString: MiscRigidOrganism
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 1

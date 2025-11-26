@@ -240,6 +240,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 hitFleshyFeedbacks?.PlayFeedbacks();
                 fleshyObject.MakeJiggle();
             }
+            else if (go.CompareTag("MiscRigidOrganism"))
+            {
+                hitRigidOrganismFeedbacks?.PlayFeedbacks();
+            }
         }
         public override void PerformToolAction()
         {
