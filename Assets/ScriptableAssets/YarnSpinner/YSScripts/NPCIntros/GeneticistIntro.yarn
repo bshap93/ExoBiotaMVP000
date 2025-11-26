@@ -99,17 +99,23 @@ Hypolita: Not much in the way of civilization. A couple of mines.
 Hypolita: Boundless wilderness. So much that has been seen only from orbit.
 Hypolita: I suspect she met some unknown fate in the east.
 -> Is there anything else you remember about her trip to the east?
-Hypolita: She mentioned a man named Fulmen who would accompany her. 
-Hypolita: A guide of sorts. A man who was here long before the boomtowns of the Rush years.
+Hypolita: She mentioned the man Fulmen who would accompany her.
+Hypolita: He lives in this canyon. He returned from whatever enterprise they undertook.
+Hypolita: During the RUSH years, he would hire himself out as a guide for fortune seekers.
 -> Thank you, doctor. I will consider what you've said.
-Hypolita: Clancy mentioned you harvested some cores for us? Much obliged.
-// <<add_objective DialogueCommands "ReturnCoresToHypolita">>
-// <<activate_objective DialogueCommands "ReturnCoresToHypolita">>
-Hypolita: I will take them now. As you know, they are illegal outside of research use.
--> Yes, doctor, here they are.
-    <<jump GaveHypolitaCores>>
--> Actually, I think I'll hold on to them.
-    <<jump DontGiveHypolitaCores>>
+Hypolita: Thank you for taking those samples. I'd talk to Fulmen before leaving the valley.
+Hypolita: He should know more than I and be able to give some specifics before you go east.
+<<add_objective DialogueCommands "TalkWithClancy05">>
+<<activate_objective DialogueCommands "TalkWithClancy05">>
+<<add_objective DialogueCommands "VisitCoreTrader">>
+<<activate_objective DialogueCommands "VisitCoreTrader">>
+// // <<add_objective DialogueCommands "ReturnCoresToHypolita">>
+// // <<activate_objective DialogueCommands "ReturnCoresToHypolita">>
+// Hypolita: I will take them now. As you know, they are illegal outside of research use.
+// -> Yes, doctor, here they are.
+//     <<jump GaveHypolitaCores>>
+// -> Actually, I think I'll hold on to them.
+//     <<jump DontGiveHypolitaCores>>
 ===
 
 title: GaveHypolitaCores
@@ -117,10 +123,7 @@ title: GaveHypolitaCores
 <<remove_player_item DialogueCommands "BasicInnerCoreStandard">>
 <<remove_player_item DialogueCommands "BasicInnerCoreStandard">>
 // <<complete_objective DialogueCommands "ReturnCoresToHypolita">>
-<<add_objective DialogueCommands "TalkWithClancy05">>
-<<activate_objective DialogueCommands "TalkWithClancy05">>
-<<add_objective DialogueCommands "VisitCoreTrader">>
-<<activate_objective DialogueCommands "VisitCoreTrader">>
+
 Hypolita: Thank you, sir. Here are the coordinates of the mining camps I mentioned.
 ===
 

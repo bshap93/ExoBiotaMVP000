@@ -8,6 +8,8 @@
 <<declare $hypolitaWillTalk = false>>
 
 <<declare $traffickerGaveJob001 = false>>
+<<declare $completedRTGQuestForFulmen = false>>
+<<declare $fulmenDiscussedSister = false>>
 
 <<declare $numberOfCores = 0>>
 

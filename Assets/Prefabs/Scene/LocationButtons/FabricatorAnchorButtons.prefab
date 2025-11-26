@@ -1620,7 +1620,7 @@ MonoBehaviour:
   - conditionName: 
     objectiveId: TalkWithClancy05
     requiredStatus: 1
-    startNode: DidNotGiveCoresClancyTalk
+    startNode: GaveCoresClancyTalk
   - conditionName: 
     objectiveId: TalkWithClancy05
     requiredStatus: 0

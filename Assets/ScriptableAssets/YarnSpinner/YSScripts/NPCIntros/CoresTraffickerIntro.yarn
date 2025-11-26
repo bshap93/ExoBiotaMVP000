@@ -9,41 +9,71 @@ title: CoresTraffickerEntry
 
 title: TraffickerDismissal
 ---
-ShadyTrafficker: Hello, hello. Well, come on in. 
-ShadyCoreTrafficker: Do you have any Harvested Cores to sell to me? I'll buy any you have.
+Fulmen: Hello, hello. Well, come on in. I'm Fulmen.
+<<jump FulmenOfferingToBuy>>
+===
+
+title: FulmenOfferingToBuy
+---
+Fulmen: Do you have any Harvested Cores to sell to me? I'll buy any you have.
 <<complete_objective DialogueCommands "VisitCoreTrader">>
 -> No I haven't got any.
     <<if !$traffickerGaveJob001>>
-        ShadyTrafficker: Alright. Come see me if you get some. You wouldn't be looking for work?
+        Fulmen: Alright. Come see me if you get some. You wouldn't be looking for work?
             -> No.
             -> Yes.
                 <<jump OfferJobInChokedCaverns>>
     <<else>>
-        ShadyTrafficker: Alright. Come see me if you get some.
+        Fulmen: Alright. Come see me if you get some.
     <<endif>>
 -> Yes, I have some to sell.
     <<start_shopping_sell_illegal DialogueCommands "ShadyCoreTrafficker">>
     -> Alright, I'm done.
     <<stop_shopping_sell DialogueCommands "ShadyCoreTrafficker">>
-    ShadyTrafficker: See ya round.
+    Fulmen: See ya round.
+<<if !$fulmenDiscussedSister>>
+-> I'm here to talk about my sister. (Show picture) 
+    The scientist from Science Outpost 427 said you were her guide?
+    <<if $completedRTGQuestForFulmen>>
+        <<jump TalkToFulmenAboutSister>>
+    <<else>>
+        <<jump FulmenWantsFavorBeforeTalk>>
+    <<endif>>
+<<endif>>
 <<if !$traffickerGaveJob001>>
 -> Actually, I'm looking for work..
     <<jump OfferJobInChokedCaverns>>
 <<endif>>
 ===
 
+title: FulmenWantsFavorBeforeTalk
+---
+Fulmen: Yes, that is old history but I see you are concerned.
+Fulmen: I'd like to help, but I'm not the charitable type, exactly.
+Fulmen: I'd ask a favor and in return, I'd gladly tell you what I know.
+<<jump OfferJobInChokedCaverns>>
+===
+
+title: TalkToFulmenAboutSister
+---
+Fulmen: Wow, it's been years, but I'd like to help. 
+Fulmen: Yes I was a guide back then. It was profitable and I knew the areas
+Fulmen: outside the colony cities' limits as well as anyone.
+Fulmen: Your sis, she'd been out here a while, unlike my normal clientele.
+===
+
 title: OfferJobInChokedCaverns
 ---
-ShadyCoreTrafficker: Sure, sure. I do have something.
-ShadyCoreTrafficker: I have a facility in the abandoned mine real close to here.
-ShadyCoreTrafficker: I need someone to replace the RTG that keeps the place running.
-ShadyCoreTrafficker: And I happen to know that down there are two valuable core groves.
-ShadyCoreTrafficker: Get them and harvest them in my facility.
-ShadyCoreTrafficker: Come back here. I'll reward you nicely for the Cores you find and the favor.
+Fulmen: Sure, sure. I do have something.
+Fulmen: I have a facility in the abandoned mine real close to here.
+Fulmen: I need someone to replace the RTG that keeps the place running.
+Fulmen: And I happen to know that down there are two valuable core groves.
+Fulmen: Get them and harvest them in my facility.
+Fulmen: Come back here. I'll reward you nicely for the Cores you find and the favor.
 -> I will think about it.
-    ShadyCoreTrafficker: I'll be here if you change your mind.
+    Fulmen: I'll be here if you change your mind.
 -> Yes, count me in. 
-    ShadyCoreTrafficker: Excellent. 
+    Fulmen: Excellent. 
     <<add_objective DialogueCommands "VisitAshpoolMine">>
     <<activate_objective DialogueCommands "VisitAshpoolMine">>
     <<add_objective DialogueCommands "InstallNewRTGInGenerator">>
@@ -51,7 +81,7 @@ ShadyCoreTrafficker: Come back here. I'll reward you nicely for the Cores you fi
     <<give_player_item DialogueCommands "RTGNuclearBattery" 1>>
     <<set $traffickerGaveJob001 = true>>
     -> Ok, I'll be off.
-        ShadyCoreTrafficker: Yeah, ok friend.
+        Fulmen: Yeah, ok friend.
     -> Anything I should know?
         <<jump QuestionAboutChokedCaverns>>
 
@@ -59,23 +89,23 @@ ShadyCoreTrafficker: Come back here. I'll reward you nicely for the Cores you fi
 
 title: QuestionAboutChokedCaverns
 ---
-ShadyCoreTrafficker: Yeah, it's pretty contaminated these days.
-ShadyCoreTrafficker: But not to worry! My facility has a decontamination tank.
-ShadyCoreTrafficker: Move fast and don't hang around, you'll be fine.
+Fulmen: Yeah, it's pretty contaminated these days.
+Fulmen: But not to worry! My facility has a decontamination tank.
+Fulmen: Move fast and don't hang around, you'll be fine.
 -> Thanks...
 ===
 
 title: CoresTraffickerIntro
 ---
 <<declare $trafficker_rep = 0>>
-ShadyTrafficker: Hey, fella, how's the Minnas been treatin' you? I take it you know why you're here, talkin' to me, ya?
+Fulmen: Hey, fella, how's the Minnas been treatin' you? I take it you know why you're here, talkin' to me, ya?
 -> I know you traffic in illegal core harvests. I've come to shut you down for good.
     <<set $trafficker_rep = $trafficker_rep - 2>>
     <<jump PlayerThreatensTrafficker>>
 -> Yeah, you deal in illegal alien Sheol AI cores? How do I know I can trust you?
     <<jump PlayerQuestionsTraffickerTrust>>
 -> Yeah I'm here to get down to business.
-ShadyTrafficker: You don't say... 
+Fulmen: You don't say... 
     <<scoffs>>
     <<initiate_trade>>
 ===
@@ -83,18 +113,18 @@ ShadyTrafficker: You don't say...
 title: PlayerThreatensTrafficker
 
 ---
-ShadyTrafficker: Is that so? Have you got some mercenary outfit behind you I'm not seeing?
-ShadyTrafficker: You think I've survived doing what I do because some nobody sided with the Reds?
-ShadyTrafficker: Don't make me laugh. You're either here to sell or you can fuck right off. 
+Fulmen: Is that so? Have you got some mercenary outfit behind you I'm not seeing?
+Fulmen: You think I've survived doing what I do because some nobody sided with the Reds?
+Fulmen: Don't make me laugh. You're either here to sell or you can fuck right off. 
 -> Ok, yeah. Let's get this over with...
     // <<initiate_trade>>
 ===
 
 title: PlayerQuestionsTraffickerTrust
 ---
-ShadyTrafficker: You can't... I won't even pretend otherwise. I'll give you cash for your cores. 
-ShadyTrafficker: The fuck did you expect, man? Think we were gonna be friends? Go talk to Clancy in that case.
-ShadyTrafficker: So, you gonna keep wasting my time or you gonna sell me your cores?
+Fulmen: You can't... I won't even pretend otherwise. I'll give you cash for your cores. 
+Fulmen: The fuck did you expect, man? Think we were gonna be friends? Go talk to Clancy in that case.
+Fulmen: So, you gonna keep wasting my time or you gonna sell me your cores?
 -> Yeah, let's trade.
     <<initiate_trade>>
 -> Nevermind... I'll just be going.
