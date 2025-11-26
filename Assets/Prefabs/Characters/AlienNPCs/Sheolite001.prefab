@@ -1724,7 +1724,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8256393401834607780}
   - component: {fileID: 2949184101717702373}
-  - component: {fileID: 9083282170047035475}
   m_Layer: 0
   m_Name: Sheolite001InteractTrigger
   m_TagString: Untagged
@@ -1768,19 +1767,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 4.65
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &9083282170047035475
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4134994678044725681}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 396080fc9351a5c449c7353a74682901, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  alienNPCController: {fileID: 209451414844788972}
 --- !u!1 &4136344061278638043
 GameObject:
   m_ObjectHideFlags: 0

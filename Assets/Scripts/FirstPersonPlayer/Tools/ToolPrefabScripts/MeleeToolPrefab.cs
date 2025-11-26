@@ -28,7 +28,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         public float swing01HitDelay = 0.2f;
 
         [Tooltip("Delay in seconds before hit is applied for Swing 02 animation.")]
-        public float swing02HitDelay = 0.25f;
+        public float swing02HitDelay = 0.55f;
 
         [Tooltip("Delay in seconds before hit is applied for Swing 03 animation (if used).")]
         public float swing03HitDelay = 0.22f;
@@ -41,12 +41,16 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         public GameObject connectingImpactVfx;
         public GameObject ineffectualImpactVfx;
 
-        public MMFeedbacks swingFeedback;
 
         [FormerlySerializedAs("debrisEffectPrefab")]
         public GameObject connectingDebrisEffectPrefab;
         public GameObject ineffectualDebrisEffectPrefab;
-        public MMFeedbacks hitFeedback;
+
+
+        public MMFeedbacks equipFeedbacks;
+        public MMFeedbacks unequippedFeedbacks;
+
+        public MMFeedbacks hitRockFeedbacks;
 
         [Header("References")] public Camera mainCamera;
 

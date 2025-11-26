@@ -221,8 +221,6 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                     staminaCostPerConnectingSwing);
 
                 SpawnFxForConnectingHit(hit.point, hit.normal);
-                swingFeedback?.PlayFeedbacks(hit.point);
-                hitFeedback?.PlayFeedbacks(hit.point);
                 return;
             }
 

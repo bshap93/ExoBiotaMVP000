@@ -27,10 +27,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         [SerializeField] Sprite defaultReticleForTool;
 
 
-        [SerializeField] MMFeedbacks equipFeedbacks;
-        [SerializeField] MMFeedbacks unequippedFeedbacks;
-
-        protected float LastSwingTime = -999f;
+        [SerializeField] protected float LastSwingTime = -999f;
 
         public override void Use()
         {
@@ -112,8 +109,6 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 breakable.ApplyHit(hatchetPower, hit.point, hit.normal);
 
                 SpawnFxForConnectingHit(hit.point, hit.normal);
-                swingFeedback?.PlayFeedbacks(hit.point);
-                hitFeedback?.PlayFeedbacks(hit.point);
                 PlayerStatsEvent.Trigger(
                     PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
                     staminaCostPerConnectingSwing);
@@ -123,6 +118,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 // No apply here – ore nodes are for pickaxe only
 
                 SpawnFxForIneffectualHit(hit.point, hit.normal);
+                hitRockFeedbacks?.PlayFeedbacks();
             }
         }
 
