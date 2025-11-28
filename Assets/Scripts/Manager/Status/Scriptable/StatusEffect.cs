@@ -20,6 +20,11 @@ namespace Manager.Status.Scriptable
     [CreateAssetMenu(fileName = "StatusEffect", menuName = "Scriptable Objects/Character/StatusEffect", order = 1)]
     public class StatusEffect : ScriptableObject
     {
+        public enum StatusEffectKind
+        {
+            MinorInfections,
+            None
+        }
         [FormerlySerializedAs("EffectID")] public string effectID;
         [FormerlySerializedAs("EffectName")] public string effectName;
         [FormerlySerializedAs("Description")] [TextArea(1, 4)]

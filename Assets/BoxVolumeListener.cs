@@ -1,11 +1,13 @@
 using Helpers.Events;
 using Helpers.Events.Status;
+using Lightbug.CharacterControllerPro.Demo;
 using Manager;
 using MoreMountains.Tools;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
+using Volume = UnityEngine.Rendering.Volume;
 
 public class BoxVolumeListener : MonoBehaviour, MMEventListener<GlobalSettingsEvent>,
     MMEventListener<LoadedManagerEvent>, MMEventListener<StatsStatusEvent>,

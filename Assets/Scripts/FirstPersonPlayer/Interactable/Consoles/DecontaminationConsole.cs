@@ -4,6 +4,7 @@ using Helpers.Events;
 using Helpers.Events.Status;
 using LevelConstruct.Interactable.ItemInteractables;
 using Manager;
+using Manager.Status.Scriptable;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
 using UnityEngine;
@@ -87,6 +88,8 @@ namespace FirstPersonPlayer.Interactable.Consoles
                         PlayerStatsEvent.PlayerStat.CurrentContamination,
                         PlayerStatsEvent.PlayerStatChangeType.Decrease, 100f, 2f,
                         PlayerStatsEvent.StatChangeCause.DecontaminationChamber, sourcePosition: transform.position);
+                    
+                    PlayerStatusEffectEvent.Trigger(PlayerStatusEffectEvent.StatusEffectEventType.RemoveAllOfAKind, null, null, PlayerStatusEffectEvent.DirectionOfEvent.Inbound, StatusEffect.StatusEffectKind.MinorInfections);
 
 
                     decontaminationStartFeedback?.PlayFeedbacks();

@@ -1,4 +1,5 @@
-﻿using MoreMountains.Tools;
+﻿using Manager.Status.Scriptable;
+using MoreMountains.Tools;
 
 namespace Helpers.Events
 {
@@ -10,8 +11,11 @@ namespace Helpers.Events
         {
             Apply,
             Remove,
-            RemoveAllFromCatalog
+            RemoveAllFromCatalog,
+            RemoveAllOfAKind
         }
+        
+        
 
         public enum DirectionOfEvent
         {
@@ -24,13 +28,15 @@ namespace Helpers.Events
         public string EffectID;
         public string CatalogID;
         public DirectionOfEvent Direction;
+        public StatusEffect.StatusEffectKind StatusEffectKind;
 
         public static void Trigger(StatusEffectEventType type, string effectID, string catalogID,
-            DirectionOfEvent direction)
+            DirectionOfEvent direction,  StatusEffect.StatusEffectKind statusEffectKind)
         {
             _e.Type = type;
             _e.EffectID = effectID;
             _e.CatalogID = catalogID;
+            _e.StatusEffectKind = statusEffectKind;
             _e.Direction = direction;
 
 

@@ -319,7 +319,7 @@ namespace Manager.Status
             ConditionalSave();
             PlayerStatusEffectEvent.Trigger(
                 PlayerStatusEffectEvent.StatusEffectEventType.Remove, effectID, effectData.catalogID,
-                PlayerStatusEffectEvent.DirectionOfEvent.Outbound);
+                PlayerStatusEffectEvent.DirectionOfEvent.Outbound, StatusEffect.StatusEffectKind.None);
 
             Debug.Log($"[PlayerStatusEffectManager] Removed effect: {effectID}");
         }
@@ -399,7 +399,7 @@ namespace Manager.Status
 
             PlayerStatusEffectEvent.Trigger(
                 PlayerStatusEffectEvent.StatusEffectEventType.Apply, effectID, catalogID,
-                PlayerStatusEffectEvent.DirectionOfEvent.Outbound);
+                PlayerStatusEffectEvent.DirectionOfEvent.Outbound, StatusEffect.StatusEffectKind.None);
 
             // TriggerShowAlertForStatusEffect(effectID);
 
@@ -433,7 +433,7 @@ namespace Manager.Status
             if (testEffect == null) return;
             PlayerStatusEffectEvent.Trigger(
                 PlayerStatusEffectEvent.StatusEffectEventType.Apply, testEffect.effectID, "TestCatalog",
-                PlayerStatusEffectEvent.DirectionOfEvent.Inbound);
+                PlayerStatusEffectEvent.DirectionOfEvent.Inbound, StatusEffect.StatusEffectKind.None);
 
             // ApplyStatusEffect("TestCatalog", testEffect.effectID);
         }
@@ -444,7 +444,7 @@ namespace Manager.Status
             if (testEffect == null) return;
             PlayerStatusEffectEvent.Trigger(
                 PlayerStatusEffectEvent.StatusEffectEventType.Remove, testEffect.effectID, "TestCatalog",
-                PlayerStatusEffectEvent.DirectionOfEvent.Inbound);
+                PlayerStatusEffectEvent.DirectionOfEvent.Inbound, StatusEffect.StatusEffectKind.None);
 
             // RemoveStatusEffect(testEffect.effectID);
         }

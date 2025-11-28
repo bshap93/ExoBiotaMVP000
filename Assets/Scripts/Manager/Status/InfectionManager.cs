@@ -223,7 +223,7 @@ namespace Manager.Status
                     PlayerStatusEffectEvent.Trigger(
                         PlayerStatusEffectEvent.StatusEffectEventType.Remove,
                         site.statusEffectOfInfection.effectID, null,
-                        PlayerStatusEffectEvent.DirectionOfEvent.Inbound);
+                        PlayerStatusEffectEvent.DirectionOfEvent.Inbound, StatusEffect.StatusEffectKind.MinorInfections);
                 }
 
             ReconstructProbabilities();
@@ -350,7 +350,7 @@ namespace Manager.Status
                 PlayerStatusEffectEvent.Trigger(
                     PlayerStatusEffectEvent.StatusEffectEventType.Apply,
                     infectionObject.statusEffectOfInfection.effectID, null,
-                    PlayerStatusEffectEvent.DirectionOfEvent.Inbound);
+                    PlayerStatusEffectEvent.DirectionOfEvent.Inbound, StatusEffect.StatusEffectKind.None);
 
             // TODO Notify UI
             InfectionUIEvent.Trigger(
