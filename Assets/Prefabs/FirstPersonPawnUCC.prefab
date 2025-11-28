@@ -6293,7 +6293,7 @@ MonoBehaviour:
     m_Bits: 1792
   terrainLayer:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 16778240
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 3585

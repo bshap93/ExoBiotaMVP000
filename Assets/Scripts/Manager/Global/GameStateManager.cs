@@ -25,6 +25,8 @@ namespace Manager.Global
         public string DefaultCategoryName = "Default";
         public string InGameUICategoryName = "InGameUI";
 
+        public Transform PlayerRoot => _playerRoot;
+
 
         ModeController _current;
 
@@ -32,7 +34,6 @@ namespace Manager.Global
 
 
         Transform _playerRoot;
-
         Dictionary<GameMode, GameObject> _prefabs;
 
         public GameMode CurrentMode => _current?.Mode ?? GameMode.None;

@@ -1,10 +1,13 @@
 ﻿using Manager.Global;
 using UnityEngine;
 
-public class PlayerRoot : MonoBehaviour
+namespace LevelConstruct.Spawn
 {
-    private void Awake()
+    public class PlayerRoot : MonoBehaviour
     {
-        GameStateManager.Instance.RegisterPlayerRoot(transform);
+        private void Awake()
+        {
+            GameStateManager.Instance.RegisterPlayerRoot(transform);
+        }
     }
 }
