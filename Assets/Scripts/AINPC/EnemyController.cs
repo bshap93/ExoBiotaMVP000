@@ -16,6 +16,7 @@ namespace AINPC
         [SerializeField] Blackboard blackboard;
 
         [SerializeField] EnemyNPCAnimationSet animationSet;
+        AnimancerState attackState;
 
         AnimancerState idleState;
         AnimancerState moveState;
@@ -37,6 +38,9 @@ namespace AINPC
         }
         void Update()
         {
+            
+            if (IsAttacking) return;
+            
             var speed = navMeshAgent.velocity.magnitude;
 
             if (speed < 0.1f)
@@ -51,14 +55,13 @@ namespace AINPC
 
         public void StartAttack()
         {
+            if (IsAttacking) return;
+
             IsAttacking = true;
 
-            // TODO: You call the Animancer attack animation here.
-            if (!IsAttacking)
-                animancerComponent.Play(animationSet.attackAnimation);
+            attackState = animancerComponent.Play(animationSet.attackAnimation);
 
-            // animancerComponent.Play(animationSet.attackAnimation);
-
+            attackState.Events(this).OnEnd = () => { FinishAttack(); };
 
             // After animation finishes:
             // call FinishAttack(),
