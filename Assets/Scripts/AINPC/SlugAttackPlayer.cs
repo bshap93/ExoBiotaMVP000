@@ -7,15 +7,16 @@ namespace AINPC
     [Category("AttackMoves")]
     public class SlugAttackPlayer : ActionTask
     {
-        EnemyController controller;
-        
+        // NodeCanvas Blackboard Parameters
         public BBParameter<float> attackDelay = 0.2f;
-        public BBParameter<float> cooldown = 1.2f;
-        
-        private float timer;
-        private enum AttackPhase { Delay, Attacking, Cooldown }
-        private AttackPhase phase;
 
+        EnemyController controller;
+        public BBParameter<float> cooldownAfterAttack = 0.5f;
+        bool hasAttacked;
+        bool inCooldown;
+
+
+        float timer;
         //Use for initialization. This is called only once in the lifetime of the task.
         //Return null if init was successfull. Return an error string otherwise
         protected override string OnInit()
@@ -29,10 +30,9 @@ namespace AINPC
         //EndAction can be called from anywhere.
         protected override void OnExecute()
         {
-            controller.StartAttack();
-            Debug.Log("SlugAttackPlayer: OnExecute - Attack started.");
-            phase = AttackPhase.Delay;
-
+            timer = attackDelay.value;
+            hasAttacked = false;
+            inCooldown = false;
         }
 
         //Called once per frame while the action is active.
@@ -40,30 +40,23 @@ namespace AINPC
         {
             timer -= Time.deltaTime;
 
-            switch (phase)
+            // Delay phase
+            if (!hasAttacked && timer <= 0f)
             {
-                case AttackPhase.Delay:
-                    if (timer <= 0f)
-                    {
-                        controller.StartAttack();       // (A) Trigger animation
-                        phase = AttackPhase.Attacking;
-                    }
-                    break;
-
-                case AttackPhase.Attacking:
-                    if (!controller.IsAttacking)        // (B) Wait until it finishes
-                    {
-                        timer = cooldown.value;         // (C) Enter cooldown
-                        phase = AttackPhase.Cooldown;
-                    }
-                    break;
-
-                case AttackPhase.Cooldown:
-                    if (timer <= 0f)
-                        EndAction(true);
-                    break;
+                controller.StartAttack();
+                hasAttacked = true;
             }
-            // if (!controller.IsAttacking) EndAction(true);
+
+            // Wait for attack to finish
+            if (hasAttacked && !inCooldown && !controller.IsAttacking)
+            {
+                timer = cooldownAfterAttack.value;
+                inCooldown = true;
+            }
+
+            // Cooldown phase
+            if (inCooldown && timer <= 0f) EndAction(true);
+            // Wait until attack finishes
         }
 
         //Called when the task is disabled.
@@ -74,6 +67,13 @@ namespace AINPC
         //Called when the task is paused.
         protected override void OnPause()
         {
+        }
+
+        enum AttackPhase
+        {
+            Delay,
+            Attacking,
+            Cooldown
         }
     }
 }

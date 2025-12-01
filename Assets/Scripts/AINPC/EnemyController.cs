@@ -11,6 +11,12 @@ namespace AINPC
         public float currentHealth;
         public float maxHealth;
 
+        [SerializeField] float attackStartupTime = 0.35f; // wind-up before it hits
+        [SerializeField] float hitActiveDuration = 0.2f; // active hit window
+
+
+        [SerializeField] EnemyHitbox hitBoxColliderMouth;
+
         [SerializeField] NavMeshAgent navMeshAgent;
         [SerializeField] AnimancerComponent animancerComponent;
         [SerializeField] Blackboard blackboard;
@@ -20,7 +26,6 @@ namespace AINPC
 
         AnimancerState idleState;
         AnimancerState moveState;
-
         public bool IsAttacking { get; private set; }
 
         void Awake()
@@ -38,9 +43,8 @@ namespace AINPC
         }
         void Update()
         {
-            
             if (IsAttacking) return;
-            
+
             var speed = navMeshAgent.velocity.magnitude;
 
             if (speed < 0.1f)
@@ -59,18 +63,23 @@ namespace AINPC
 
             IsAttacking = true;
 
+            hitBoxColliderMouth.Activate();
+
+
             attackState = animancerComponent.Play(animationSet.attackAnimation);
 
-            attackState.Events(this).OnEnd = () => { FinishAttack(); };
 
-            // After animation finishes:
-            // call FinishAttack(),
-            // probably using Animancer events OR animation length timer.
+            attackState.Events(this).OnEnd = () => { FinishAttack(); };
         }
 
         public void FinishAttack()
         {
             IsAttacking = false;
+            hitBoxColliderMouth.Deactivate();
+        }
+        public void OnHitPlayer(Collider other)
+        {
+            Debug.Log("Hit Player");
         }
     }
 }
