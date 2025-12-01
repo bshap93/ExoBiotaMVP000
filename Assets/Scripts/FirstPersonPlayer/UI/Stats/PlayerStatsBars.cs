@@ -35,8 +35,8 @@ namespace FirstPersonPlayer.UI.Stats
 
         void Start()
         {
-            var isMaxContaminated = PlayerStatsManager.Instance.CurrentContamination >=
-                                    PlayerStatsManager.Instance.CurrentMaxContamination;
+            var isMaxContaminated = PlayerMutableStatsManager.Instance.CurrentContamination >=
+                                    PlayerMutableStatsManager.Instance.CurrentMaxContamination;
 
             if (isMaxContaminated)
                 bioAlertIcon.enabled = true;
@@ -50,7 +50,7 @@ namespace FirstPersonPlayer.UI.Stats
 
         void LateUpdate()
         {
-            var stats = PlayerStatsManager.Instance;
+            var stats = PlayerMutableStatsManager.Instance;
 
             TryUpdateBar(ref _lastHealth, stats.CurrentHealth, 0f, stats.BaseMaxHealth, healthBar);
             TryUpdateBar(ref _lastStamina, stats.CurrentStamina, 0f, stats.BaseMaxStamina, staminaBar);
@@ -99,7 +99,7 @@ namespace FirstPersonPlayer.UI.Stats
 
         void ForceRefreshAll()
         {
-            var stats = PlayerStatsManager.Instance;
+            var stats = PlayerMutableStatsManager.Instance;
             if (stats == null) return;
 
             // Snap to current (no smoothing) so we start from correct baseline

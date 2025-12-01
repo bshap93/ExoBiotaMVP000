@@ -139,7 +139,7 @@ namespace FirstPersonPlayer
             if (sprintStart)
                 StaminaAffectorEvent.Trigger(
                     StaminaAffectorEventType.StaminaDrainActivityStarted,
-                    PlayerStatsManager.Instance.SprintStaminaDrainPerSecond);
+                    PlayerMutableStatsManager.Instance.SprintStaminaDrainPerSecond);
 
             if (sprintStop)
                 StaminaAffectorEvent.Trigger(

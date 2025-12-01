@@ -33,7 +33,8 @@ namespace FirstPersonPlayer.InputHandling
             NotGrounded
         }
 
-        [SerializeField] PlayerStatsManager playerStatsManager;
+        [FormerlySerializedAs("playerStatsManager")] [SerializeField]
+        PlayerMutableStatsManager playerMutableStatsManager;
 
         [SerializeField] MMFeedbacks cannotRunFeedbacks;
 
@@ -168,7 +169,7 @@ namespace FirstPersonPlayer.InputHandling
             var minCrouchHeightRatio = CharacterActor.BodySize.x / CharacterActor.BodySize.y;
             crouchParameters.heightRatio = Mathf.Max(minCrouchHeightRatio, crouchParameters.heightRatio);
 
-            playerStatsManager = PlayerStatsManager.Instance;
+            playerMutableStatsManager = PlayerMutableStatsManager.Instance;
         }
 
         protected virtual void OnEnable()
@@ -397,7 +398,7 @@ namespace FirstPersonPlayer.InputHandling
                     }
                     else
                     {
-                        if (playerStatsManager.CurrentStamina > 0)
+                        if (playerMutableStatsManager.CurrentStamina > 0)
                         {
                             wantToRun = CharacterActions.run.value;
                         }

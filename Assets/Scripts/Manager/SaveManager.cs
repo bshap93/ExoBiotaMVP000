@@ -158,7 +158,7 @@ namespace Manager
         public void LoadAll()
         {
             PlayerCurrencyManager.Instance.Load();
-            PlayerStatsManager.Instance.Load();
+            PlayerMutableStatsManager.Instance.Load();
             PlayerSpawnManager.Instance.Load();
             ScenePersistenceManager.Instance.Load();
             GlobalInventoryManager.Instance.Load();
@@ -200,7 +200,7 @@ namespace Manager
             PlayerCurrencyManager.Instance.Save();
             // Save Game State - Not yet implemented
             // GameStateManager.Instance.SaveGameState();
-            PlayerStatsManager.Instance.Save();
+            PlayerMutableStatsManager.Instance.Save();
             PlayerSpawnManager.Instance.Save();
             ScenePersistenceManager.Instance.SaveCurrentScene();
             GlobalInventoryManager.Instance.Save();
@@ -236,7 +236,7 @@ namespace Manager
         {
             // Reset global managers
             PlayerCurrencyManager.Instance.ResetData();
-            PlayerStatsManager.Instance.Reset();
+            PlayerMutableStatsManager.Instance.Reset();
             PlayerSpawnManager.Instance.Reset();
             ScenePersistenceManager.Instance.Reset();
             GlobalInventoryManager.Instance.Reset();

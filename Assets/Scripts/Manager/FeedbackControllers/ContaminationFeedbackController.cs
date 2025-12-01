@@ -3,6 +3,7 @@ using Helpers.Events.Status;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Manager.FeedbackControllers
 {
@@ -16,7 +17,8 @@ namespace Manager.FeedbackControllers
         public float spikeThreshold = 5f; // amount per second to trigger spike feedback
         public float spikeCooldown = 2f; // seconds between spikes
 
-        [SerializeField] PlayerStatsManager playerStatsManager;
+        [FormerlySerializedAs("playerStatsManager")] [SerializeField]
+        PlayerMutableStatsManager playerMutableStatsManager;
 
         float amountCntmLastSecond;
         float timeSinceLastSpike;
@@ -39,7 +41,7 @@ namespace Manager.FeedbackControllers
             if (eventType.StatType == PlayerStatsEvent.PlayerStat.CurrentContamination &&
                 eventType.ChangeType == PlayerStatsEvent.PlayerStatChangeType.Increase)
             {
-                if (playerStatsManager.CurrentContamination >= maxContamination)
+                if (playerMutableStatsManager.CurrentContamination >= maxContamination)
                     return; // no feedback at max contamination
 
                 var incBy = eventType.Amount;

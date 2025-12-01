@@ -147,7 +147,7 @@ namespace FirstPersonPlayer.Interactable.Gated
         }
         public virtual bool CanInteract(out GatedInteractionManager.ReasonWhyCannotInteract reason)
         {
-            var currentStamina = PlayerStatsManager.Instance.CurrentStamina;
+            var currentStamina = PlayerMutableStatsManager.Instance.CurrentStamina;
 
             if (currentStamina - gatedInteractionDetails.staminaCost < 0)
             {

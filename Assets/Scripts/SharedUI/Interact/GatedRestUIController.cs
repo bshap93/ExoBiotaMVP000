@@ -110,7 +110,7 @@ namespace SharedUI.Interact
         }
         static float GetStaminaAmountRecoverable(float theoreticalStaminaRecovered)
         {
-            var statManager = PlayerStatsManager.Instance;
+            var statManager = PlayerMutableStatsManager.Instance;
             if (statManager != null)
             {
                 // Calculate amount of stamina recoverable
@@ -127,7 +127,7 @@ namespace SharedUI.Interact
 
         int CalculateMinutesToRestUntilStaminaFull(GatedRestDetails currentRestDetails)
         {
-            var statManager = PlayerStatsManager.Instance;
+            var statManager = PlayerMutableStatsManager.Instance;
             if (statManager == null)
             {
                 Debug.LogError("No stats manager found for the current player");

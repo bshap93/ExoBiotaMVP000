@@ -106,7 +106,7 @@ namespace Helpers.FeedbackControllers
                     throw new ArgumentOutOfRangeException();
             }
 
-            if (PlayerStatsManager.Instance.GetHealthFraction() < 0.4f) // threshold
+            if (PlayerMutableStatsManager.Instance.GetHealthFraction() < 0.4f) // threshold
             {
                 lowHealthFeedback?.PlayFeedbacksTask();
                 AlertEvent.Trigger(

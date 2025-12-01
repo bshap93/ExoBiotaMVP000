@@ -60,7 +60,7 @@ namespace FirstPersonPlayer.Interactable.Consoles
                 return;
             }
 
-            if (PlayerStatsManager.Instance.CurrentContamination <= 0f)
+            if (PlayerMutableStatsManager.Instance.CurrentContamination <= 0f)
             {
                 AlertEvent.Trigger(
                     AlertReason.Decontamination,
@@ -88,8 +88,11 @@ namespace FirstPersonPlayer.Interactable.Consoles
                         PlayerStatsEvent.PlayerStat.CurrentContamination,
                         PlayerStatsEvent.PlayerStatChangeType.Decrease, 100f, 2f,
                         PlayerStatsEvent.StatChangeCause.DecontaminationChamber, sourcePosition: transform.position);
-                    
-                    PlayerStatusEffectEvent.Trigger(PlayerStatusEffectEvent.StatusEffectEventType.RemoveAllOfAKind, null, null, PlayerStatusEffectEvent.DirectionOfEvent.Inbound, StatusEffect.StatusEffectKind.MinorInfections);
+
+                    PlayerStatusEffectEvent.Trigger(
+                        PlayerStatusEffectEvent.StatusEffectEventType.RemoveAllOfAKind, null, null,
+                        PlayerStatusEffectEvent.DirectionOfEvent.Inbound,
+                        StatusEffect.StatusEffectKind.MinorInfections);
 
 
                     decontaminationStartFeedback?.PlayFeedbacks();

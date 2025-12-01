@@ -328,9 +328,9 @@ namespace LevelConstruct.Interactable.ItemInteractables.ItemPicker
             }
 
             // Check stamina first
-            if (PlayerStatsManager.Instance != null)
+            if (PlayerMutableStatsManager.Instance != null)
             {
-                var currentStamina = PlayerStatsManager.Instance.CurrentStamina;
+                var currentStamina = PlayerMutableStatsManager.Instance.CurrentStamina;
                 if (currentStamina < details.staminaCost)
                 {
                     AlertEvent.Trigger(
@@ -431,13 +431,13 @@ namespace LevelConstruct.Interactable.ItemInteractables.ItemPicker
 
         public bool PlayerCanPickUpAndMove()
         {
-            if (PlayerStatsManager.Instance == null || PickableManager.Instance == null)
+            if (PlayerMutableStatsManager.Instance == null || PickableManager.Instance == null)
             {
                 Debug.LogError("Tryiing to pick up object before the Managers are initialized");
                 return false;
             }
 
-            var weightPlayerCanPickup = PlayerStatsManager.Instance.playerStrength *
+            var weightPlayerCanPickup = PlayerMutableStatsManager.Instance.playerStrength *
                                         PickableManager.Instance.weightAblePerStrength;
 
 

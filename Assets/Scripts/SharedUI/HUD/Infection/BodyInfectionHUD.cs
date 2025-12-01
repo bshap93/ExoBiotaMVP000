@@ -26,7 +26,7 @@ namespace SharedUI.HUD.Infection
 
         void Start()
         {
-            if (PlayerStatsManager.Instance.IsContaminationMaxed())
+            if (PlayerMutableStatsManager.Instance.IsContaminationMaxed())
                 Show();
             else
                 Hide();

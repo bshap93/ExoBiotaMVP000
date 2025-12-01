@@ -268,6 +268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 4146720894161113681}
+  attackType: 0
 --- !u!136 &1542274358637386746
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1219,6 +1220,7 @@ MonoBehaviour:
   navMeshAgent: {fileID: 8123617248935692805}
   animancerComponent: {fileID: 1999422677953250452}
   blackboard: {fileID: 6711749669071568551}
+  attacksProfile: {fileID: 11400000, guid: d221c0310fae3f94e9a094e1d2ed74b3, type: 2}
   animationSet: {fileID: 11400000, guid: 370c0d6fc1ce0ed4f91874d1a21fcec0, type: 2}
 --- !u!1 &5047366615082320048
 GameObject:

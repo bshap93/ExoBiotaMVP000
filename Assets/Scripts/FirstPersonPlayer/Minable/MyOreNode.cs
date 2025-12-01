@@ -484,7 +484,7 @@ namespace FirstPersonPlayer.Minable
 
         public bool CanInteract(out GatedInteractionManager.ReasonWhyCannotInteract reason)
         {
-            var currentStamina = PlayerStatsManager.Instance.CurrentStamina;
+            var currentStamina = PlayerMutableStatsManager.Instance.CurrentStamina;
             if (currentStamina - gatedBreakableInteractionDetails.staminaCost < 0)
             {
                 reason = GatedInteractionManager.ReasonWhyCannotInteract.NotEnoughStamina;

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using AINPC.ScriptableObjects;
 using FirstPersonPlayer.UI.Stats;
 using Helpers.Events;
+using Helpers.Events.Combat;
 using Helpers.Events.Status;
 using Helpers.Interfaces;
 using Manager.DialogueScene;
@@ -14,11 +16,13 @@ using SharedUI.Alert;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 namespace Manager
 {
-    public class PlayerStatsManager : MonoBehaviour, ICoreGameService, MMEventListener<PlayerStatsEvent>,
-        MMEventListener<StaminaAffectorEvent>, MMEventListener<MyUIEvent>, MMEventListener<InGameTimeActionEvent>
+    public class PlayerMutableStatsManager : MonoBehaviour, ICoreGameService, MMEventListener<PlayerStatsEvent>,
+        MMEventListener<StaminaAffectorEvent>, MMEventListener<MyUIEvent>, MMEventListener<InGameTimeActionEvent>,
+        MMEventListener<NPCAttackEvent>
     {
         const string KeyBaseMaxHealth = "PlayerBaseMaxHealth";
         const string KeyBaseMaxStamina = "PlayerBaseMaxStamina";
@@ -54,6 +58,12 @@ namespace Manager
         [SerializeField] MMFeedbacks loseHealthFeedbacks;
         [SerializeField] MMFeedbacks loseStaminaFeedbacks;
         [SerializeField] MMFeedbacks drainHealthOverTimeFeedbacks;
+        // Hit feedbacks
+        [SerializeField] MMFeedbacks hitWithMeleeFeedbacks;
+        [SerializeField] MMFeedbacks hitWithProjectileFeedbacks;
+        [SerializeField] MMFeedbacks hitWithContaminantAOE;
+        [SerializeField] MMFeedbacks hitWithCriticalMeleeFeedbacks;
+
 
         [SerializeField] float healthDrainRateWhenMaxContaminated = 0.5f;
 
@@ -91,7 +101,7 @@ namespace Manager
         public float CurrentStamina { get; private set; }
 
 
-        public static PlayerStatsManager Instance { get; private set; }
+        public static PlayerMutableStatsManager Instance { get; private set; }
         // public int CurrentCU => Mathf.FloorToInt(CurrentContamination / ContaminationPointsPerCU);
         // public float CurrentCUFraction => CurrentContamination % ContaminationPointsPerCU / ContaminationPointsPerCU;
         public float SprintStaminaDrainPerSecond => defaultPlayerStatsSheet.sprintStaminaDrainPerSecond;
@@ -122,6 +132,7 @@ namespace Manager
             this.MMEventStartListening<StaminaAffectorEvent>();
             this.MMEventStartListening<MyUIEvent>();
             this.MMEventStartListening<InGameTimeActionEvent>();
+            this.MMEventStartListening<NPCAttackEvent>();
         }
 
         void OnDisable()
@@ -130,6 +141,7 @@ namespace Manager
             this.MMEventStopListening<StaminaAffectorEvent>();
             this.MMEventStopListening<MyUIEvent>();
             this.MMEventStopListening<InGameTimeActionEvent>();
+            this.MMEventStopListening<NPCAttackEvent>();
         }
 
 
@@ -316,6 +328,24 @@ namespace Manager
                     StaminaAffectorEventType.StaminaDrainActivityStopped, 0f);
         }
 
+        public void OnMMEvent(NPCAttackEvent eventType)
+        {
+            switch (eventType.Attack.attackType)
+            {
+                case NPCAttackType.Melee:
+                    CurrentHealth -= ProcessAttackDamage(eventType.Attack);
+                    DieIfDead();
+                    break;
+                case NPCAttackType.Ranged:
+                    CurrentHealth -= ProcessAttackDamage(eventType.Attack);
+                    DieIfDead();
+                    break;
+                case NPCAttackType.ContaminantPOE:
+                    CurrentContamination += eventType.Attack.contaminationAmount;
+                    break;
+            }
+        }
+
 
         public void OnMMEvent(PlayerStatsEvent e)
         {
@@ -327,16 +357,7 @@ namespace Manager
                         CurrentHealth -= e.Amount;
                         CurrentHealth -= e.Percent * BaseMaxHealth;
                         CurrentHealth = Mathf.Clamp(CurrentHealth, 0, BaseMaxHealth);
-                        if (CurrentHealth <= 0)
-                        {
-                            var deathInfo = new DeathInformation
-                            {
-                                causeOfDeath = PlayerStatsEvent.StatChangeCause.JabbarCreche
-                            };
-
-                            // Trigger player death
-                            PlayerDeathEvent.Trigger(deathInfo);
-                        }
+                        DieIfDead();
                     }
                     else if (e.ChangeType == PlayerStatsEvent.PlayerStatChangeType.Increase)
                     {
@@ -495,6 +516,19 @@ namespace Manager
                 StopCoroutine(DrainStaminaOverTime(eventType.ValuePerSecond));
             }
         }
+        void DieIfDead()
+        {
+            if (CurrentHealth <= 0)
+            {
+                var deathInfo = new DeathInformation
+                {
+                    causeOfDeath = PlayerStatsEvent.StatChangeCause.JabbarCreche
+                };
+
+                // Trigger player death
+                PlayerDeathEvent.Trigger(deathInfo);
+            }
+        }
         void StopDrainingHealth()
         {
             drainHealthOverTimeFeedbacks?.StopFeedbacks();
@@ -582,6 +616,20 @@ namespace Manager
         {
             _contaminationMaxed = CurrentContamination >= CurrentMaxContamination;
             return _contaminationMaxed;
+        }
+        float ProcessAttackDamage(EnemyAttack eventTypeAttack)
+        {
+            var damage = eventTypeAttack.rawDamage; // - (playerToughness * 0.5f);
+            damage = Mathf.Max(damage, 0f); // Ensure damage is not negative
+            // Calculate critical hit
+            if (Random.value < eventTypeAttack.critChance)
+            {
+                damage *= eventTypeAttack.critMultiplier;
+                hitWithCriticalMeleeFeedbacks?.PlayFeedbacks();
+            }
+
+            loseHealthFeedbacks?.PlayFeedbacks();
+            return damage;
         }
 
         [Serializable]

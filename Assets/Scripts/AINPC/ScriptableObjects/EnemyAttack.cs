@@ -22,8 +22,9 @@ namespace AINPC.ScriptableObjects
         // [Range(0f, 1f)] public float armorPenetration;
         public float contaminationAmount;
         [Range(0f, 1f)] public float critChance;
-        public float critMultiplier;
-        public float knockbackForce;
+        public float critMultiplier = 1f;
+        public float knockbackForce = 1f;
+        public bool causesBleeding;
 
         public NPCAttackType attackType;
     }

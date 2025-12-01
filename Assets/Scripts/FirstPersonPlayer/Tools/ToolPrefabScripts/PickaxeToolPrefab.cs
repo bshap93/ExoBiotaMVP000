@@ -114,7 +114,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
         public override void Use()
         {
-            if (PlayerStatsManager.Instance.CurrentStamina < staminaCostPerConnectingSwing)
+            if (PlayerMutableStatsManager.Instance.CurrentStamina < staminaCostPerConnectingSwing)
             {
                 // Not enough stamina
                 AlertEvent.Trigger(
