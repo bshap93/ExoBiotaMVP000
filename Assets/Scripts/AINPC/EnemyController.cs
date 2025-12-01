@@ -1,16 +1,20 @@
-﻿using AINPC.ScriptableObjects;
+﻿using System;
+using AINPC.ScriptableObjects;
 using Animancer;
 using Helpers.Events.Combat;
 using NodeCanvas.Framework;
 using UnityEngine;
 using UnityEngine.AI;
+using Utilities.Interface;
 
 namespace AINPC
 {
-    public class EnemyController : MonoBehaviour
+    public class EnemyController : MonoBehaviour, IRequiresUniqueID
     {
+        public string uniqueID;
         public float currentHealth;
         public float maxHealth;
+        public string enemyName;
 
         [SerializeField] float attackStartupTime = 0.35f; // wind-up before it hits
         [SerializeField] float hitActiveDuration = 0.2f; // active hit window
@@ -58,6 +62,15 @@ namespace AINPC
             {
                 if (!moveState.IsPlaying) animancerComponent.Play(moveState);
             }
+        }
+        public string UniqueID => uniqueID;
+        public void SetUniqueID()
+        {
+            uniqueID = Guid.NewGuid().ToString();
+        }
+        public bool IsUniqueIDEmpty()
+        {
+            return string.IsNullOrEmpty(uniqueID);
         }
 
         public void StartAttack()
