@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using AINPC.ScriptableObjects;
+using UnityEngine;
 
 namespace AINPC
 {
     public class EnemyHitbox : MonoBehaviour
     {
         public EnemyController owner;
+        [SerializeField] AttackUsed attackType;
         bool _active;
         Collider _collider;
         bool _hasHit;
@@ -19,7 +21,7 @@ namespace AINPC
 
             if (other.CompareTag("FirstPersonPlayer"))
             {
-                owner.OnHitPlayer(other);
+                owner.OnHitPlayer(other, attackType);
                 _hasHit = true;
             }
         }
@@ -30,7 +32,7 @@ namespace AINPC
 
             if (other.CompareTag("FirstPersonPlayer"))
             {
-                owner.OnHitPlayer(other);
+                owner.OnHitPlayer(other, attackType);
                 _hasHit = true;
             }
         }

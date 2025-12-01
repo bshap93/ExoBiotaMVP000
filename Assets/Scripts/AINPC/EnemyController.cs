@@ -1,5 +1,6 @@
 ﻿using AINPC.ScriptableObjects;
 using Animancer;
+using Helpers.Events.Combat;
 using NodeCanvas.Framework;
 using UnityEngine;
 using UnityEngine.AI;
@@ -20,6 +21,8 @@ namespace AINPC
         [SerializeField] NavMeshAgent navMeshAgent;
         [SerializeField] AnimancerComponent animancerComponent;
         [SerializeField] Blackboard blackboard;
+
+        [SerializeField] EnemyAttacksProfile attacksProfile;
 
         [SerializeField] EnemyNPCAnimationSet animationSet;
         AnimancerState attackState;
@@ -77,9 +80,18 @@ namespace AINPC
             IsAttacking = false;
             hitBoxColliderMouth.Deactivate();
         }
-        public void OnHitPlayer(Collider other)
+        public void OnHitPlayer(Collider other, AttackUsed attackUsed)
         {
-            Debug.Log("Hit Player");
+            if (other.CompareTag("FirstPersonPlayer"))
+                switch (attackUsed)
+                {
+                    case AttackUsed.Primary:
+                        NPCAttackEvent.Trigger(attacksProfile.primaryAttack);
+                        break;
+                    case AttackUsed.Secondary:
+                        NPCAttackEvent.Trigger(attacksProfile.secondaryAttack);
+                        break;
+                }
         }
     }
 }
