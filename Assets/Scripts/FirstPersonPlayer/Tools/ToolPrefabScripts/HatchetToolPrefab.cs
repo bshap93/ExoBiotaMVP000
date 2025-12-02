@@ -1,5 +1,6 @@
 using Feedbacks.Interface;
 using FirstPersonPlayer.Combat.AINPC;
+using FirstPersonPlayer.Combat.Player.ScriptableObjects;
 using FirstPersonPlayer.Interactable;
 using FirstPersonPlayer.Minable;
 using FirstPersonPlayer.Tools.Interface;
@@ -111,7 +112,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 // hardness/HP handled inside component
                 breakable.ApplyHit(hatchetPower, hit.point, hit.normal);
 
-                SpawnFxForConnectingHit(hit.point, hit.normal);
+                // SpawnFxForConnectingHit(hit.point, hit.normal);
                 PlayerStatsEvent.Trigger(
                     PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
                     staminaCostPerConnectingSwing);
@@ -141,28 +142,29 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             {
                 var enemyController = go.GetComponentInParent<EnemyController>();
 
-                var playerAttack = DetermineCorrectPlayerToolAttack();
-
-                var feedbacks = GetHitEnemyFeedbacks();
-                if (feedbacks == null)
+                if (enemyController == null)
                 {
-                    hitRigidOrganismFeedbacks?.PlayFeedbacks();
-                    Debug.LogWarning("HatchetToolPrefab: No feedbacks assigned for hitting enemy NPCs.");
+                    Debug.LogWarning("HatchetToolPrefab: Hit enemy NPC but no EnemyController found in parents.");
+                    return;
                 }
 
-                if (enemyController != null)
+                var playerAttack = DetermineCorrectPlayerToolAttack(AttackDamageType.BasicHit);
+
+
+                // Spawn VFX with proper cleanup
+                var vfx = enemyController.enemyType.effectsAndFeedbacks.basicHitVFX;
+                if (vfx != null)
                 {
-                    enemyController.ProcessAttackDamage(playerAttack);
-                    // SpawnFxForConnectingHit(hit.point, hit.normal);
-                    PlayerStatsEvent.Trigger(
-                        PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
-                        staminaCostPerConnectingSwing);
+                    var vfxInstance = Instantiate(vfx, hit.point, Quaternion.LookRotation(hit.normal));
+                    Destroy(vfxInstance, 2f); // Clean up after 2 seconds
                 }
+
+
+                enemyController.ProcessAttackDamage(playerAttack);
+                PlayerStatsEvent.Trigger(
+                    PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
+                    staminaCostPerConnectingSwing);
             }
-        }
-        MMFeedbacks GetHitEnemyFeedbacks()
-        {
-            return null;
         }
 
 

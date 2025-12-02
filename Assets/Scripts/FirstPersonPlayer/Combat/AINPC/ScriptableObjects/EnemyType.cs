@@ -1,5 +1,6 @@
 ﻿using AINPC.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace FirstPersonPlayer.Combat.AINPC.ScriptableObjects
 {
@@ -12,5 +13,6 @@ namespace FirstPersonPlayer.Combat.AINPC.ScriptableObjects
         public EnemyAttacksProfile attacksProfile;
         public EnemyNPCAnimationSet animationSet;
         public string enemyName;
+        [FormerlySerializedAs("vfxSet")] public EnemyEffectsAndFeedbacks effectsAndFeedbacks;
     }
 }

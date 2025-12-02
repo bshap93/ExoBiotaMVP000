@@ -1,9 +1,10 @@
 ﻿using System;
-using AINPC.ScriptableObjects;
 using Animancer;
 using FirstPersonPlayer.Combat.AINPC.ScriptableObjects;
 using FirstPersonPlayer.Combat.Player.ScriptableObjects;
 using Helpers.Events.Combat;
+using HighlightPlus;
+using MoreMountains.Feedbacks;
 using NodeCanvas.Framework;
 using UnityEngine;
 using UnityEngine.AI;
@@ -32,7 +33,10 @@ namespace FirstPersonPlayer.Combat.AINPC
         [SerializeField] NavMeshAgent navMeshAgent;
         [SerializeField] AnimancerComponent animancerComponent;
         [SerializeField] Blackboard blackboard;
+        [SerializeField] HighlightEffect highlightEffect;
 
+        [SerializeField] MMFeedbacks meleeHitFeedbacksBasic;
+        [SerializeField] MMFeedbacks meleeHitFeedbacksHeavy;
 
         AnimancerState attackState;
 
@@ -123,9 +127,14 @@ namespace FirstPersonPlayer.Combat.AINPC
                 // Provisional damage scaling based on player strength
                 var playerStrengthMultiplier = 1f + (playerStrength - 1) * 0.1f;
                 damageAmount *= playerStrengthMultiplier;
+
+                if (playerAttack.damageType == AttackDamageType.BasicHit)
+                    meleeHitFeedbacksBasic?.PlayFeedbacks();
+                else if (playerAttack.damageType == AttackDamageType.HeavyHit) meleeHitFeedbacksHeavy?.PlayFeedbacks();
             }
 
             currentHealth -= damageAmount;
+            highlightEffect.HitFX();
             Debug.Log("Enemy took " + damageAmount + " damage. Current health: " + currentHealth);
         }
     }

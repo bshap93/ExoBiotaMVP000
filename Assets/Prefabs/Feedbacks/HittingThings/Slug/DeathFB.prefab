@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8611767923585184953}
   - component: {fileID: 7569503658196812541}
   m_Layer: 8
-  m_Name: PenetrationFB
+  m_Name: DeathFB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

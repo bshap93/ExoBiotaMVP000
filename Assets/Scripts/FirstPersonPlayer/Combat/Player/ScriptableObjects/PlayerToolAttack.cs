@@ -10,6 +10,13 @@ namespace FirstPersonPlayer.Combat.Player.ScriptableObjects
         Ranged
     }
 
+    [Serializable]
+    public enum AttackDamageType
+    {
+        BasicHit,
+        HeavyHit
+    }
+
     [CreateAssetMenu(
         fileName = "PlayerToolAttackProfile",
         menuName = "Scriptable Objects/Character/First Person Player/Player Tool Attack",
@@ -20,6 +27,7 @@ namespace FirstPersonPlayer.Combat.Player.ScriptableObjects
         public float rawDamage;
         [Range(0f, 1f)] public float critChance;
         public float critMultiplier = 1f;
+        public AttackDamageType damageType;
         public float rawKnockbackForce;
         public bool causesBleeding;
         // showif

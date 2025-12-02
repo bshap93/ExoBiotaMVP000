@@ -9,6 +9,7 @@ namespace FirstPersonPlayer.Combat.AINPC
     {
         public Blackboard blackboard;
 
+
         void Start()
         {
             Invoke(nameof(Assign), 0.1f);

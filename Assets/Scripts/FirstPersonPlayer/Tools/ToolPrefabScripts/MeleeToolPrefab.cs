@@ -21,6 +21,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         [FormerlySerializedAs("ToolAttackProfile")]
         public PlayerToolAttackProfile toolAttackProfile;
 
+
         [Header("Effect Settings")] public float effectRadius = 1f;
 
         [SerializeField] CanBeAreaScannedType detectableType = CanBeAreaScannedType.BasicBioScanner;
@@ -41,13 +42,13 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         public float defaultHitDelay = 0.2f;
 
 
-        [FormerlySerializedAs("impactVfx")] [Header("FX")]
-        public GameObject connectingImpactVfx;
-        public GameObject ineffectualImpactVfx;
+        // [FormerlySerializedAs("impactVfx")] [Header("FX")]
+        // public GameObject connectingImpactVfx;
+        // public GameObject ineffectualImpactVfx;
 
 
-        [FormerlySerializedAs("debrisEffectPrefab")]
-        public GameObject connectingDebrisEffectPrefab;
+        // [FormerlySerializedAs("debrisEffectPrefab")]
+        // public GameObject connectingDebrisEffectPrefab;
         public GameObject ineffectualDebrisEffectPrefab;
 
 
@@ -105,39 +106,32 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             return detectableType;
         }
 
-        protected PlayerToolAttack DetermineCorrectPlayerToolAttack()
+        /// <summary>
+        ///     Spawns VFX at hit point with automatic cleanup
+        /// </summary>
+        protected void SpawnHitVFX(GameObject vfxPrefab, Vector3 position, Vector3 normal, float lifetime = 2f)
         {
-            // TODO: Logic for different attack types can go here
-            return toolAttackProfile.basicAttack;
+            if (vfxPrefab == null) return;
+
+            var vfxInstance = Instantiate(vfxPrefab, position, Quaternion.LookRotation(normal));
+            Destroy(vfxInstance, lifetime);
         }
 
-        protected void SpawnFxForConnectingHit(Vector3 pos, Vector3 normal)
+
+        protected PlayerToolAttack DetermineCorrectPlayerToolAttack(AttackDamageType attackType)
         {
-            if (connectingImpactVfx)
-            {
-                var fx = Instantiate(connectingImpactVfx, pos + normal * 0.05f, Quaternion.LookRotation(normal));
-                Destroy(fx, 2f);
-            }
+            if (attackType == AttackDamageType.BasicHit)
+                return toolAttackProfile.basicAttack;
 
-            if (connectingDebrisEffectPrefab)
-            {
-                var debris = Instantiate(
-                    connectingDebrisEffectPrefab, pos + normal * 0.05f,
-                    Quaternion.LookRotation(-mainCamera.transform.forward));
+            if (attackType == AttackDamageType.HeavyHit)
+                return toolAttackProfile.heavyAttack;
 
-                Destroy(debris, 2f);
-            }
+            return null;
         }
+
 
         protected void SpawnFxForIneffectualHit(Vector3 pos, Vector3 normal)
         {
-            // Could use a different VFX prefab for ineffectual hits
-            if (ineffectualImpactVfx)
-            {
-                var fx = Instantiate(connectingImpactVfx, pos + normal * 0.05f, Quaternion.LookRotation(normal));
-                Destroy(fx, 2f);
-            }
-
             if (ineffectualDebrisEffectPrefab)
             {
                 var debris = Instantiate(

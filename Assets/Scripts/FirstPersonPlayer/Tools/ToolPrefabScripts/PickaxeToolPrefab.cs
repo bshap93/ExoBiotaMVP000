@@ -221,7 +221,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                     PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
                     staminaCostPerConnectingSwing);
 
-                SpawnFxForConnectingHit(hit.point, hit.normal);
+                // SpawnFxForConnectingHit(hit.point, hit.normal);
                 return;
             }
 
@@ -291,16 +291,5 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
 
         /* --------- Helpers --------- */
-        void SpawnEffects(Vector3 pos, Vector3 normal)
-        {
-            if (connectingDebrisEffectPrefab != null)
-            {
-                var fx = Instantiate(
-                    connectingDebrisEffectPrefab, pos + normal * 0.1f,
-                    Quaternion.LookRotation(-mainCamera.transform.forward));
-
-                Destroy(fx, 2f);
-            }
-        }
     }
 }
