@@ -54,7 +54,8 @@ namespace Helpers.Events
         InfectionContracted_Brain01,
         InfectionContracted_Eyes01,
         TooFarFromDirigible,
-        ElevatorSceneChangePermission
+        ElevatorSceneChangePermission,
+        DoorLocked
     }
 
     [Serializable]

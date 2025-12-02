@@ -406,9 +406,15 @@ namespace Inventory
             if (inventory == null) return 0f;
             return GetWeightOfInventoryItems(inventory);
         }
-        public bool HasKeyForDoor(string uniqueID)
+        public bool HasKeyForDoor(string keyID)
         {
-            throw new NotImplementedException();
+            foreach (var item in keyItemInventory.Content)
+            {
+                var keyItem = item as KeyItemObject;
+                if (keyItem != null && keyItem.KeyID == keyID) return true;
+            }
+
+            return false;
         }
     }
 }
