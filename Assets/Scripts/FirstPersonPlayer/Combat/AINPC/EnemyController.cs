@@ -1,13 +1,15 @@
 ﻿using System;
+using AINPC;
 using AINPC.ScriptableObjects;
 using Animancer;
+using FirstPersonPlayer.Combat.Player.ScriptableObjects;
 using Helpers.Events.Combat;
 using NodeCanvas.Framework;
 using UnityEngine;
 using UnityEngine.AI;
 using Utilities.Interface;
 
-namespace AINPC
+namespace FirstPersonPlayer.Combat.AINPC
 {
     public class EnemyController : MonoBehaviour, IRequiresUniqueID
     {
@@ -105,6 +107,10 @@ namespace AINPC
                         NPCAttackEvent.Trigger(attacksProfile.secondaryAttack);
                         break;
                 }
+        }
+        public object ProcessAttackDamage(PlayerToolAttack playerAttack)
+        {
+            throw new NotImplementedException();
         }
     }
 }

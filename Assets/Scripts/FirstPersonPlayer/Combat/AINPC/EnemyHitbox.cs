@@ -1,7 +1,7 @@
 ﻿using AINPC.ScriptableObjects;
 using UnityEngine;
 
-namespace AINPC
+namespace FirstPersonPlayer.Combat.AINPC
 {
     public class EnemyHitbox : MonoBehaviour
     {

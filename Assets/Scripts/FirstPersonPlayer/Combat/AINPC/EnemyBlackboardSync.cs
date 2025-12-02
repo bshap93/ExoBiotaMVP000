@@ -1,7 +1,8 @@
+using AINPC;
 using NodeCanvas.Framework;
 using UnityEngine;
 
-namespace AINPC
+namespace FirstPersonPlayer.Combat.AINPC
 {
     public class EnemyBlackboardSync : MonoBehaviour
     {

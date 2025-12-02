@@ -3,7 +3,7 @@ using Manager.Global;
 using NodeCanvas.Framework;
 using UnityEngine;
 
-namespace AINPC
+namespace FirstPersonPlayer.Combat.AINPC
 {
     public class AssignPlayerToBT : MonoBehaviour
     {

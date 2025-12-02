@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using FirstPersonPlayer.Combat.Player.ScriptableObjects;
 using FirstPersonPlayer.Tools.Interface;
 using Helpers.AnimancerHelper;
 using Helpers.Events.ManagerEvents;
@@ -16,6 +17,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
         public float toolUsingRange = 5f;
         public int toolHardnessPower = 1;
+
+        public PlayerToolAttackProfile ToolAttackProfile;
 
         [Header("Effect Settings")] public float effectRadius = 1f;
 
@@ -99,6 +102,11 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         public CanBeAreaScannedType GetDetectableType()
         {
             return detectableType;
+        }
+
+        public PlayerToolAttack DetermineCorrectPlayerToolAttack()
+        {
+            throw new NotImplementedException();
         }
 
         protected void SpawnFxForConnectingHit(Vector3 pos, Vector3 normal)

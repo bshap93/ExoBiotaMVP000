@@ -2,7 +2,7 @@ using NodeCanvas.Framework;
 using ParadoxNotion.Design;
 using UnityEngine;
 
-namespace AINPC
+namespace FirstPersonPlayer.Combat.AINPC
 {
     [Category("AttackMoves")]
     public class SlugAttackPlayer : ActionTask

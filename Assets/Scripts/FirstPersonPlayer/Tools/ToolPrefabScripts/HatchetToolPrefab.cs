@@ -1,4 +1,6 @@
+using AINPC;
 using Feedbacks.Interface;
+using FirstPersonPlayer.Combat.AINPC;
 using FirstPersonPlayer.Interactable;
 using FirstPersonPlayer.Minable;
 using FirstPersonPlayer.Tools.Interface;
@@ -17,6 +19,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         public string[] allowedTags;
         // No cost if swing didn't make contact
         public float staminaCostPerConnectingSwing = 1f;
+
 
         [Tooltip("Number of seconds between swings.")]
         public float swingCooldown = 0.6f;
@@ -134,6 +137,21 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             else if (go.CompareTag("MiscRigidOrganism"))
             {
                 hitRigidOrganismFeedbacks?.PlayFeedbacks();
+            }
+            else if (go.CompareTag("EnemyNPC"))
+            {
+                var enemyController = go.GetComponentInParent<EnemyController>();
+
+                var playerAttack = DetermineCorrectPlayerToolAttack();
+
+                if (enemyController != null)
+                {
+                    enemyController.ProcessAttackDamage(playerAttack);
+                    // SpawnFxForConnectingHit(hit.point, hit.normal);
+                    PlayerStatsEvent.Trigger(
+                        PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
+                        staminaCostPerConnectingSwing);
+                }
             }
         }
 
