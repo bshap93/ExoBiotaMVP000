@@ -8,5 +8,7 @@ namespace FirstPersonPlayer.Combat.Player.ScriptableObjects
         order = 0)]
     public class PlayerToolAttackProfile : ScriptableObject
     {
+        public PlayerToolAttack basicAttack;
+        public PlayerToolAttack heavyAttack;
     }
 }

@@ -1,3 +1,4 @@
+using MoreMountains.Feedbacks;
 using NodeCanvas.Framework;
 using ParadoxNotion.Design;
 using UnityEngine;
@@ -9,6 +10,8 @@ namespace FirstPersonPlayer.Combat.AINPC
     {
         // NodeCanvas Blackboard Parameters
         public BBParameter<float> attackDelay = 0.2f;
+
+        public BBParameter<MMFeedbacks> attackFeedbacks;
 
         EnemyController controller;
         public BBParameter<float> cooldownAfterAttack = 0.5f;
@@ -33,6 +36,7 @@ namespace FirstPersonPlayer.Combat.AINPC
             timer = attackDelay.value;
             hasAttacked = false;
             inCooldown = false;
+            attackFeedbacks.value?.PlayFeedbacks();
         }
 
         //Called once per frame while the action is active.

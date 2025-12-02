@@ -1,4 +1,3 @@
-using AINPC;
 using Feedbacks.Interface;
 using FirstPersonPlayer.Combat.AINPC;
 using FirstPersonPlayer.Interactable;
@@ -144,6 +143,13 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
                 var playerAttack = DetermineCorrectPlayerToolAttack();
 
+                var feedbacks = GetHitEnemyFeedbacks();
+                if (feedbacks == null)
+                {
+                    hitRigidOrganismFeedbacks?.PlayFeedbacks();
+                    Debug.LogWarning("HatchetToolPrefab: No feedbacks assigned for hitting enemy NPCs.");
+                }
+
                 if (enemyController != null)
                 {
                     enemyController.ProcessAttackDamage(playerAttack);
@@ -153,6 +159,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                         staminaCostPerConnectingSwing);
                 }
             }
+        }
+        MMFeedbacks GetHitEnemyFeedbacks()
+        {
+            return null;
         }
 
 

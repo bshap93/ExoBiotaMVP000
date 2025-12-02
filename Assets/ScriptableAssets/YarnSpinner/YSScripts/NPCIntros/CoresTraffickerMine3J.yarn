@@ -3,7 +3,15 @@ title: PlayerTurnedPowerInHideout
 <<complete_objective DialogueCommands "ContactTrader003">>
 Fulmen: Good work, friend. 
 Fulmen: Take as long as you need in there to harvest your produce.
-Fulmen: I'll be here with your reward.
+Fulmen: I'll be here with your reward. Just cause I like you, heres something else!
+<<give_player_item DialogueCommands "AshpoolMineKey" 1>>
+Fulmen: That'll give you access to the Mine L1 B side as well as the caverns below L1.
+Fulmen: Just a heads up: the Sheolites patrol those caves. I don't go down there ever.
+Fulmen: Fucking things give me the creeps. I hear stories, though, (shiver) hard NOPE.
+-> Alright, I appreciate it.
+    <<jump End02>>
+-> What is it that frightens you?
+    <<jump WhatFrightensFulmen>>
 ===
 
 title: PlayerReturnedAfterRTGQuest
@@ -19,4 +27,17 @@ Fulmen: Your reward, of course... hmm, let's see here...
 <<give_player_item DialogueCommands "AshpoolMineKey" 1>>
 Fulmen: This key should help you get into locked areas of Ashpool mine.
 <<jump FulmenOfferingToBuy002>>
+===
+
+title: WhatFrightensFulmen
+---
+Fulmen: Sheolites aren't hostile to humans, exactly. But they don't understand us.
+Fulmen: They... do things... to humans in their desire to talk to us. 
+-> Ok I'll be careful.
+    <<jump End02>>
+-> They coerce people... to what? Alter themselves?
+Fulmen: Not without permission. No, they have a sort of morality, they need consent.
+Fulmen: But people I'd bet my one remaining fuckin' kidney woudn't consent, they... do?
+Fulmen: After that, people tend to drop off the map and fuck knows to where. 
+Fulmen: Just be careful.
 ===

@@ -1,4 +1,5 @@
 ﻿using System;
+using ParadoxNotion.Design;
 using UnityEngine;
 
 namespace AINPC.ScriptableObjects
@@ -17,6 +18,7 @@ namespace AINPC.ScriptableObjects
         order = 0)]
     public class EnemyAttack : ScriptableObject
     {
+        public string displayName;
         public float rawDamage;
         // Amount that an attack ignores armor. 
         // [Range(0f, 1f)] public float armorPenetration;
@@ -25,7 +27,15 @@ namespace AINPC.ScriptableObjects
         public float critMultiplier = 1f;
         public float knockbackForce = 1f;
         public bool causesBleeding;
+        // showif
+        [ShowIf("causesBleeding", 1)] [Range(0f, 1f)]
+        public float chanceToCauseBleeding;
+        public bool causesStagger;
+        // showif
+        [ShowIf("causesStagger", 1)] [Range(0f, 1f)]
+        public float chanceToCauseStagger;
 
         public NPCAttackType attackType;
+        public string AttackId => name;
     }
 }

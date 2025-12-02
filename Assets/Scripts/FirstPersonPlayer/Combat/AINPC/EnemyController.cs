@@ -1,5 +1,4 @@
 ﻿using System;
-using AINPC;
 using AINPC.ScriptableObjects;
 using Animancer;
 using FirstPersonPlayer.Combat.Player.ScriptableObjects;
@@ -17,6 +16,9 @@ namespace FirstPersonPlayer.Combat.AINPC
         public float currentHealth;
         public float maxHealth;
         public string enemyName;
+
+        // TODO : Replace with ScriptableObject reference
+        public string enemyTypeID;
 
         [SerializeField] float attackStartupTime = 0.35f; // wind-up before it hits
         [SerializeField] float hitActiveDuration = 0.2f; // active hit window
@@ -108,7 +110,7 @@ namespace FirstPersonPlayer.Combat.AINPC
                         break;
                 }
         }
-        public object ProcessAttackDamage(PlayerToolAttack playerAttack)
+        public void ProcessAttackDamage(PlayerToolAttack playerAttack)
         {
             throw new NotImplementedException();
         }

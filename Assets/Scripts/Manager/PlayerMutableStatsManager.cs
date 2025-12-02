@@ -627,6 +627,18 @@ namespace Manager
                 damage *= eventTypeAttack.critMultiplier;
                 hitWithCriticalMeleeFeedbacks?.PlayFeedbacks();
             }
+            else
+            {
+                switch (eventTypeAttack.attackType)
+                {
+                    case NPCAttackType.Melee:
+                        hitWithMeleeFeedbacks?.PlayFeedbacks();
+                        break;
+                    case NPCAttackType.Ranged:
+                        hitWithProjectileFeedbacks?.PlayFeedbacks();
+                        break;
+                }
+            }
 
             loseHealthFeedbacks?.PlayFeedbacks();
             return damage;

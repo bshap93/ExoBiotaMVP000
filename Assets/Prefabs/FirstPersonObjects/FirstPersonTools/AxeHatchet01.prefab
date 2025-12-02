@@ -1751,6 +1751,7 @@ MonoBehaviour:
   toolCooldown: 1
   toolUsingRange: 2
   toolHardnessPower: 1
+  ToolAttackProfile: {fileID: 11400000, guid: e3251e058139a894684eb6a3a27f2856, type: 2}
   effectRadius: 1
   detectableType: 0
   useMultipleSwings: 1
@@ -1771,7 +1772,7 @@ MonoBehaviour:
   reach: 3.25
   hitMask:
     serializedVersion: 2
-    m_Bits: 131071
+    m_Bits: 134348799
   allowedTags:
   - HackableBioStructure
   staminaCostPerConnectingSwing: 1
