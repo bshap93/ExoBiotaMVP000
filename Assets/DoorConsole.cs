@@ -2,16 +2,39 @@ using FirstPersonPlayer.Interface;
 using Helpers.Events;
 using Inventory;
 using LevelConstruct.Interactable.Door;
+using MoreMountains.Feedbacks;
 using UnityEngine;
 
 public class DoorConsole : MonoBehaviour, IInteractable
 {
     [SerializeField] LockedDoor lockedDoor;
 
+    public Vector3 switchOnPosition;
+    public Vector3 switchOffPosition;
+
+    public Vector3 switchOnRotation;
+    public Vector3 switchOffRotation;
+
+    public GameObject switchObject;
+
+    [SerializeField] MMFeedbacks switchFeedbacks;
+
+    void Start()
+    {
+        // Initialize switch animation based on door state
+        AnimateSwitch(!lockedDoor.isLocked);
+    }
+
 
     public void Interact()
     {
         if (!CanInteract()) return;
+
+        // Toggle door open/close
+        lockedDoor.ToggleDoor();
+
+        // Update console switch animation
+        AnimateSwitch(!lockedDoor.isOpen);
     }
 
     public bool CanInteract()
@@ -22,6 +45,7 @@ public class DoorConsole : MonoBehaviour, IInteractable
         if (GlobalInventoryManager.Instance.HasKeyForDoor(lockedDoor.keyID))
         {
             lockedDoor.isLocked = false;
+            switchFeedbacks?.PlayFeedbacks();
             Debug.Log(lockedDoor.keyID);
             return true;
         }
@@ -46,5 +70,21 @@ public class DoorConsole : MonoBehaviour, IInteractable
     }
     public void OnUnfocus()
     {
+    }
+
+    void AnimateSwitch(bool isOn)
+    {
+        if (switchObject == null) return;
+
+        if (isOn)
+        {
+            switchObject.transform.localPosition = switchOnPosition;
+            switchObject.transform.localEulerAngles = switchOnRotation;
+        }
+        else
+        {
+            switchObject.transform.localPosition = switchOffPosition;
+            switchObject.transform.localEulerAngles = switchOffRotation;
+        }
     }
 }
