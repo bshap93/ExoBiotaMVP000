@@ -37,6 +37,7 @@ namespace Inventory
         public const string BackEquipmentInventoryName = "BackEquippedItemInv";
         public const string DirigibleInventoryName = "DirigibleInventory";
         public const string DirigibleScannerInventoryName = "DirigMainScannerInventory";
+        public const string KeyTypeInventoryName = "KeyItemsInventory";
 
 
         static string _savePath;
@@ -52,6 +53,7 @@ namespace Inventory
 
         public MoreMountains.InventoryEngine.Inventory equipmentInventory;
         public MoreMountains.InventoryEngine.Inventory backEquipmentInventory;
+        public MoreMountains.InventoryEngine.Inventory keyItemInventory;
 
         [Header("Dirigible Inventory")] public MoreMountains.InventoryEngine.Inventory dirigibleInventory;
 
@@ -64,6 +66,7 @@ namespace Inventory
         public DefaultInventoryDefinition dirigibleStartingItems;
         public DefaultInventoryDefinition backEquipmentStartingItems;
         public DefaultInventoryDefinition dirigibleScannerStartingItems;
+        public DefaultInventoryDefinition keyItemStartingItems;
 
         [FormerlySerializedAs("intitialPlayerFPMaxWeight")] [Header("Initial Weight Limits")] [SerializeField]
         float initialPlayerFPMaxWeight;
@@ -236,6 +239,7 @@ namespace Inventory
             totalWeight += GetWeightOfInventoryItems(equipmentInventory);
             totalWeight += GetWeightOfInventoryItems(lEquipmentInventory);
             totalWeight += GetWeightOfInventoryItems(backEquipmentInventory);
+            // Note: Key items are not counted towards weight
             return totalWeight;
         }
 
@@ -245,6 +249,7 @@ namespace Inventory
             totalWeight += GetWeightOfInventoryItems(dirigibleInventory);
             totalWeight += GetWeightOfInventoryItems(dirigibleScannerSlot);
             totalWeight += GetWeightOfPlayerMainPlusEquipped();
+            // Note: Key items are not counted towards weight
             return totalWeight;
         }
 
@@ -285,6 +290,7 @@ namespace Inventory
             PopulateInventory(dirigibleInventory, dirigibleStartingItems);
             PopulateInventory(backEquipmentInventory, backEquipmentStartingItems);
             PopulateInventory(dirigibleScannerSlot, dirigibleScannerStartingItems);
+            PopulateInventory(keyItemInventory, keyItemStartingItems);
         }
 
         static void PopulateInventory(MoreMountains.InventoryEngine.Inventory inv,
@@ -313,6 +319,7 @@ namespace Inventory
             SaveOne(dirigibleInventory);
             SaveOne(backEquipmentInventory);
             SaveOne(dirigibleScannerSlot);
+            SaveOne(keyItemInventory);
         }
 
         public void ResetGlobalInventories()
@@ -323,6 +330,7 @@ namespace Inventory
             ResetOne(dirigibleInventory);
             ResetOne(backEquipmentInventory);
             ResetOne(dirigibleScannerSlot);
+            ResetOne(keyItemInventory);
         }
 
         public void LoadGlobalInventories()
@@ -333,6 +341,7 @@ namespace Inventory
             LoadOne(dirigibleInventory);
             LoadOne(backEquipmentInventory);
             LoadOne(dirigibleScannerSlot);
+            LoadOne(keyItemInventory);
         }
 
         static void SaveOne(MoreMountains.InventoryEngine.Inventory inv)
@@ -396,6 +405,10 @@ namespace Inventory
         {
             if (inventory == null) return 0f;
             return GetWeightOfInventoryItems(inventory);
+        }
+        public bool HasKeyForDoor(string uniqueID)
+        {
+            throw new NotImplementedException();
         }
     }
 }
