@@ -19,6 +19,7 @@ namespace AINPC
             if (blackboard == null)
                 blackboard = GetComponent<Blackboard>();
 
+
             // Get the top-level PlayerRoot
             var root = GameStateManager.Instance.PlayerRoot;
             if (root == null)
