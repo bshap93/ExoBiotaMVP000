@@ -1,6 +1,7 @@
 ﻿using System;
 using AINPC.ScriptableObjects;
 using Animancer;
+using FirstPersonPlayer.Combat.AINPC.ScriptableObjects;
 using FirstPersonPlayer.Combat.Player.ScriptableObjects;
 using Helpers.Events.Combat;
 using NodeCanvas.Framework;
@@ -10,15 +11,17 @@ using Utilities.Interface;
 
 namespace FirstPersonPlayer.Combat.AINPC
 {
+    [RequireComponent(typeof(AssignPlayerToBT))]
+    [RequireComponent(typeof(EnemyBlackboardSync))]
+    [DisallowMultipleComponent]
     public class EnemyController : MonoBehaviour, IRequiresUniqueID
     {
         public string uniqueID;
         public float currentHealth;
         public float maxHealth;
-        public string enemyName;
 
         // TODO : Replace with ScriptableObject reference
-        public string enemyTypeID;
+        public EnemyType enemyType;
 
         [SerializeField] float attackStartupTime = 0.35f; // wind-up before it hits
         [SerializeField] float hitActiveDuration = 0.2f; // active hit window
@@ -30,9 +33,7 @@ namespace FirstPersonPlayer.Combat.AINPC
         [SerializeField] AnimancerComponent animancerComponent;
         [SerializeField] Blackboard blackboard;
 
-        [SerializeField] EnemyAttacksProfile attacksProfile;
 
-        [SerializeField] EnemyNPCAnimationSet animationSet;
         AnimancerState attackState;
 
         AnimancerState idleState;
@@ -42,12 +43,12 @@ namespace FirstPersonPlayer.Combat.AINPC
         void Awake()
         {
             // Pre-load looping animation states
-            idleState = animancerComponent.States.GetOrCreate(animationSet.idleAnimation);
+            idleState = animancerComponent.States.GetOrCreate(enemyType.animationSet.idleAnimation);
             idleState.Speed = 1f;
             idleState.Time = 0f;
             idleState.Events(this).OnEnd = () => { idleState.Time = 0f; };
 
-            moveState = animancerComponent.States.GetOrCreate(animationSet.moveAnimation);
+            moveState = animancerComponent.States.GetOrCreate(enemyType.animationSet.moveAnimation);
             moveState.Speed = 1f;
             moveState.Time = 0f;
             moveState.Events(this).OnEnd = () => { moveState.Time = 0f; };
@@ -86,7 +87,7 @@ namespace FirstPersonPlayer.Combat.AINPC
             hitBoxColliderMouth.Activate();
 
 
-            attackState = animancerComponent.Play(animationSet.attackAnimation);
+            attackState = animancerComponent.Play(enemyType.animationSet.attackAnimation);
 
 
             attackState.Events(this).OnEnd = () => { FinishAttack(); };
@@ -103,16 +104,29 @@ namespace FirstPersonPlayer.Combat.AINPC
                 switch (attackUsed)
                 {
                     case AttackUsed.Primary:
-                        NPCAttackEvent.Trigger(attacksProfile.primaryAttack);
+                        NPCAttackEvent.Trigger(enemyType.attacksProfile.primaryAttack);
                         break;
                     case AttackUsed.Secondary:
-                        NPCAttackEvent.Trigger(attacksProfile.secondaryAttack);
+                        NPCAttackEvent.Trigger(enemyType.attacksProfile.secondaryAttack);
                         break;
                 }
         }
         public void ProcessAttackDamage(PlayerToolAttack playerAttack)
         {
-            throw new NotImplementedException();
+            var damageAmount = playerAttack.rawDamage;
+            var attackType = playerAttack.attackType;
+
+            if (attackType == PlayerAttackType.Melee)
+            {
+                // Placeholder for strength stat for player
+                var playerStrength = 1;
+                // Provisional damage scaling based on player strength
+                var playerStrengthMultiplier = 1f + (playerStrength - 1) * 0.1f;
+                damageAmount *= playerStrengthMultiplier;
+            }
+
+            currentHealth -= damageAmount;
+            Debug.Log("Enemy took " + damageAmount + " damage. Current health: " + currentHealth);
         }
     }
 }

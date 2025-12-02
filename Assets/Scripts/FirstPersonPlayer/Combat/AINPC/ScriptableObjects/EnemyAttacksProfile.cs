@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using AINPC.ScriptableObjects;
+using UnityEngine;
 
-namespace AINPC.ScriptableObjects
+namespace FirstPersonPlayer.Combat.AINPC.ScriptableObjects
 {
     public enum AttackUsed
     {

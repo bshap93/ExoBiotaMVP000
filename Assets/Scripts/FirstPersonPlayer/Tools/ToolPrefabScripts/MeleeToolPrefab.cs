@@ -18,7 +18,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         public float toolUsingRange = 5f;
         public int toolHardnessPower = 1;
 
-        public PlayerToolAttackProfile ToolAttackProfile;
+        [FormerlySerializedAs("ToolAttackProfile")]
+        public PlayerToolAttackProfile toolAttackProfile;
 
         [Header("Effect Settings")] public float effectRadius = 1f;
 
@@ -104,9 +105,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             return detectableType;
         }
 
-        public PlayerToolAttack DetermineCorrectPlayerToolAttack()
+        protected PlayerToolAttack DetermineCorrectPlayerToolAttack()
         {
-            throw new NotImplementedException();
+            // TODO: Logic for different attack types can go here
+            return toolAttackProfile.basicAttack;
         }
 
         protected void SpawnFxForConnectingHit(Vector3 pos, Vector3 normal)
