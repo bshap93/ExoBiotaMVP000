@@ -25,21 +25,23 @@ namespace Manager.Status.Scriptable
             MinorInfections,
             None
         }
-        [FormerlySerializedAs("EffectID")] public string effectID;
-        [FormerlySerializedAs("EffectName")] public string effectName;
+
         [FormerlySerializedAs("Description")] [TextArea(1, 4)]
         public string description;
-        public Sprite effectIcon;
-        [FormerlySerializedAs("stats")] [FormerlySerializedAs("Stats")]
-        public List<StatsChange> statsChanges = new();
 
         [Header("Visual Effects")] public bool distortion;
+        public Sprite effectIcon;
+        [FormerlySerializedAs("EffectID")] public string effectID;
+        [FormerlySerializedAs("EffectName")] public string effectName;
         public bool floaters;
-
-        [Range(0f, 1f)] public float riskOfDeath;
 
         [Header("Perceptual Effects")] public bool intrusiveThoughts;
 
         [Header("Removal Settings")] public bool removableViaDecontaminationTank = true;
+
+        [Range(0f, 1f)] public float riskOfDeath;
+        [FormerlySerializedAs("stats")] [FormerlySerializedAs("Stats")]
+        public List<StatsChange> statsChanges = new();
+        public StatusEffectKind statusEffectKind = StatusEffectKind.None;
     }
 }

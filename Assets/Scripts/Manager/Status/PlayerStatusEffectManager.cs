@@ -167,6 +167,14 @@ namespace Manager.Status
         }
         public void OnMMEvent(PlayerStatusEffectEvent eventType)
         {
+            if (eventType.Type == PlayerStatusEffectEvent.StatusEffectEventType.RemoveAllOfAKind)
+                switch (eventType.StatusEffectKind)
+                {
+                    case StatusEffect.StatusEffectKind.MinorInfections:
+                        RemoveAllOfAKind(StatusEffect.StatusEffectKind.MinorInfections);
+                        break;
+                }
+
             if (eventType.Direction == PlayerStatusEffectEvent.DirectionOfEvent.Outbound) return;
             if (eventType.Type == PlayerStatusEffectEvent.StatusEffectEventType.Apply)
             {
@@ -237,6 +245,20 @@ namespace Manager.Status
             foreach (var effectData in _appliedStatusEffects.Values)
                 if (effectData.catalogID == catalogID)
                     effectsToRemove.Add(effectData.effectID);
+
+            foreach (var effectID in effectsToRemove)
+                RemoveStatusEffect(effectID);
+        }
+        
+        public void RemoveAllOfAKind(StatusEffect.StatusEffectKind kind)
+        {
+            var effectsToRemove = new List<string>();
+            foreach (var effectData in _appliedStatusEffects.Values)
+            {
+                var effect = GetStatusEffectByID(effectData.effectID);
+                if (effect != null && effect.statusEffectKind == kind)
+                    effectsToRemove.Add(effectData.effectID);
+            }
 
             foreach (var effectID in effectsToRemove)
                 RemoveStatusEffect(effectID);
