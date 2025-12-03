@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace AINPC.ScriptableObjects
+namespace FirstPersonPlayer.Combat.AINPC.ScriptableObjects
 {
     [CreateAssetMenu(
         fileName = "EnemyNPCAnimationSet",
@@ -12,5 +12,6 @@ namespace AINPC.ScriptableObjects
         public AnimationClip secondaryIdleAnimation;
         public AnimationClip moveAnimation;
         public AnimationClip attackAnimation;
+        public AnimationClip deathAnimation;
     }
 }

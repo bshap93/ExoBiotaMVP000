@@ -1427,7 +1427,7 @@ MonoBehaviour:
     UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},"capsule":{"_name":"capsule","_id":"341acc3e-b63d-47d9-90e0-f7250dd2aecc","$type":"NodeCanvas.Framework.Variable`1[[UnityEngine.GameObject,
     UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},"currentHealth":{"_value":1.0,"_name":"currentHealth","_id":"753ab610-cd1d-4257-9ce0-073845cc21ee","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"maxHealth":{"_value":20.0,"_name":"maxHealth","_id":"75453a35-5e14-4873-a74d-b557792f4868","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"patrolWaypoints":{"_value":[null,null,null,null],"_name":"patrolWaypoints","_id":"b5210dd4-b527-48ee-8853-c7bf5af1d9a4","$type":"NodeCanvas.Framework.Variable`1[[System.Collections.Generic.List`1[[UnityEngine.Transform,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"patrolWaypoints":{"_value":[null,null,null,null],"_name":"patrolWaypoints","_id":"05505898-545e-4eb9-9c53-cd8669de6ad5","$type":"NodeCanvas.Framework.Variable`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject,
     UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}}}'
   _objectReferences: []
@@ -1444,7 +1444,7 @@ MonoBehaviour:
   - _json: '{"_value":20.0,"_name":"maxHealth","_id":"75453a35-5e14-4873-a74d-b557792f4868","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
       mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
     _references: []
-  - _json: '{"_value":[null,null,null,null],"_name":"patrolWaypoints","_id":"b5210dd4-b527-48ee-8853-c7bf5af1d9a4","$type":"NodeCanvas.Framework.Variable`1[[System.Collections.Generic.List`1[[UnityEngine.Transform,
+  - _json: '{"_value":[null,null,null,null],"_name":"patrolWaypoints","_id":"05505898-545e-4eb9-9c53-cd8669de6ad5","$type":"NodeCanvas.Framework.Variable`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject,
       UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
       mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
     _references: []

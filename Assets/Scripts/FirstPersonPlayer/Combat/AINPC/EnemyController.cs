@@ -21,6 +21,8 @@ namespace FirstPersonPlayer.Combat.AINPC
         public float currentHealth;
         public float maxHealth;
 
+        public bool isDead;
+
         // TODO : Replace with ScriptableObject reference
         public EnemyType enemyType;
 
@@ -70,6 +72,14 @@ namespace FirstPersonPlayer.Combat.AINPC
             else
             {
                 if (!moveState.IsPlaying) animancerComponent.Play(moveState);
+            }
+
+            if (currentHealth <= 0f && !isDead)
+            {
+                isDead = true;
+                animancerComponent.Play(enemyType.animationSet.deathAnimation);
+                navMeshAgent.isStopped = true;
+                blackboard.SetValue("isDead", true);
             }
         }
         public string UniqueID => uniqueID;

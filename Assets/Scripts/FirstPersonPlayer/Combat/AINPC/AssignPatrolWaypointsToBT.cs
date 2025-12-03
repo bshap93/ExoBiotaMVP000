@@ -1,4 +1,5 @@
-﻿using NodeCanvas.Framework;
+﻿using System.Collections.Generic;
+using NodeCanvas.Framework;
 using UnityEngine;
 
 namespace FirstPersonPlayer.Combat.AINPC
@@ -7,8 +8,7 @@ namespace FirstPersonPlayer.Combat.AINPC
     {
         public Blackboard blackboard;
 
-        public GameObject[] patrolWaypoints;
-        public int size = 4;
+        public List<GameObject> patrolWaypoints;
 
         void Start()
         {
