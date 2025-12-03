@@ -606,7 +606,7 @@ namespace FirstPersonPlayer.InputHandling
 
             ProcessGravity(dt);
             ProcessJump(dt);
-            if (!isJetpackEquipped) isJetpackEquipped = ProgressionManager.IsObjectiveCollected("Jetpack");
+            // if (!isJetpackEquipped) isJetpackEquipped = ProgressionManager.IsObjectiveCollected("Jetpack");
             if (isJetpackEquipped)
                 ProcessJetPack(dt);
         }

@@ -27,5 +27,7 @@ namespace Helpers.ScriptableObjects
         public Sprite addItemIcon;
         public Sprite removeItemIcon;
         public Sprite addLiquidSampleIcon;
+        public Sprite mediStatHubIcon;
+        public Sprite mediStatHubRestIcon;
     }
 }
