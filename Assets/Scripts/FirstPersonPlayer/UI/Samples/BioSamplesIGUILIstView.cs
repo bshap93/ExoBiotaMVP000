@@ -1,21 +1,22 @@
+using FirstPersonPlayer.Interactable.Samples;
 using Helpers.Events;
 using Manager.Global;
 using MoreMountains.Tools;
 using UnityEngine;
 
-namespace FirstPersonPlayer.Interactable.Samples
+namespace FirstPersonPlayer.UI.Samples
 {
     public class BioSamplesIGUILIstView : MonoBehaviour, MMEventListener<BioSampleEvent>
     {
-        [SerializeField] private Transform listTransform;
-        [SerializeField] private GameObject samplesListViewElementPrefab;
+        [SerializeField] Transform listTransform;
+        [SerializeField] GameObject samplesListViewElementPrefab;
 
-        private void OnEnable()
+        void OnEnable()
         {
             this.MMEventStartListening();
         }
 
-        private void OnDisable()
+        void OnDisable()
         {
             this.MMEventStopListening();
         }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
+using FirstPersonPlayer.Tools.ItemObjectTypes.CompositeObjects;
 using Helpers.Events.Inventory;
 using Helpers.Interfaces;
 using Inventory.ScriptableObjects;
@@ -422,6 +423,17 @@ namespace Inventory
             }
 
             return false;
+        }
+        public int GetNumberOfInnerCoresInInventory(HarvestableInnerObject.InnerObjectValueGrade standardGrade)
+        {
+            var total = 0;
+            foreach (var item in innerCoresInventory.Content)
+            {
+                var innerCore = item as HarvestableInnerObject;
+                if (innerCore != null && innerCore.innerObjectValueGrade == standardGrade) total += item.Quantity;
+            }
+
+            return total;
         }
     }
 }

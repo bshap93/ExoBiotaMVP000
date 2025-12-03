@@ -1,4 +1,4 @@
-using FirstPersonPlayer.Interactable.Samples;
+using FirstPersonPlayer.UI.Samples;
 using Helpers.Events;
 using Inventory;
 using Manager.Global;
