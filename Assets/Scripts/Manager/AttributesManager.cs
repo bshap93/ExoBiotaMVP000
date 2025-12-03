@@ -204,19 +204,19 @@ namespace Manager
                 switch (eventType.AttributeType)
                 {
                     case AttributeType.Strength:
-                        _strength += eventType.Value;
+                        AddTowardAttributeXp(AttributeType.Strength, eventType.Grade);
                         break;
                     case AttributeType.Agility:
-                        _agility += eventType.Value;
+                        AddTowardAttributeXp(AttributeType.Agility, eventType.Grade);
                         break;
                     case AttributeType.Dexterity:
-                        _dexterity += eventType.Value;
+                        AddTowardAttributeXp(AttributeType.Dexterity, eventType.Grade);
                         break;
                     case AttributeType.MentalToughness:
-                        _mentalToughness += eventType.Value;
+                        AddTowardAttributeXp(AttributeType.MentalToughness, eventType.Grade);
                         break;
                     case AttributeType.Exobiotic:
-                        _exobiotic += eventType.Value;
+                        AddTowardAttributeXp(AttributeType.Exobiotic, eventType.Grade);
                         break;
                 }
         }
@@ -235,22 +235,26 @@ namespace Manager
             return total;
         }
 
-        private void ProcessLevelUp(AttributeType attributeType, ref int currentLevel, int currentXp)
+        void ProcessLevelUp(AttributeType attributeType, ref int currentLevel, int currentXp)
         {
-            int maxLevel = 20;
+            var maxLevel = 20;
 
             while (currentLevel < maxLevel)
             {
-                int xpNeededForNextLevel = GetXpRequiredForLevel(currentLevel + 1);
+                var xpNeededForNextLevel = GetTotalXpForLevel(currentLevel + 1);
                 if (currentXp >= xpNeededForNextLevel)
                 {
                     currentLevel++;
                     AttributeLevelUpEvent.Trigger(attributeType, currentLevel);
                 }
+                else
+                {
+                    break;
+                }
             }
         }
 
-        public void AddTowardAttributeXp(AttributeType attributeType,
+        void AddTowardAttributeXp(AttributeType attributeType,
             HarvestableInnerObject.InnerObjectValueGrade coreGrade)
         {
             var amount = 0;
@@ -277,18 +281,23 @@ namespace Manager
             {
                 case AttributeType.Strength:
                     StrengthXp += amount;
+                    ProcessLevelUp(attributeType, ref _strength, StrengthXp);
                     break;
                 case AttributeType.Agility:
                     AgilityXp += amount;
+                    ProcessLevelUp(attributeType, ref _agility, AgilityXp);
                     break;
                 case AttributeType.Dexterity:
                     DexterityXp += amount;
+                    ProcessLevelUp(attributeType, ref _dexterity, DexterityXp);
                     break;
                 case AttributeType.MentalToughness:
                     MentalToughnessXp += amount;
+                    ProcessLevelUp(attributeType, ref _mentalToughness, MentalToughnessXp);
                     break;
                 case AttributeType.Exobiotic:
                     ExobioticXp += amount;
+                    ProcessLevelUp(attributeType, ref _exobiotic, ExobioticXp);
                     break;
             }
         }

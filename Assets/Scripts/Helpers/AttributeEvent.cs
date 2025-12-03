@@ -1,4 +1,5 @@
 ﻿using System;
+using FirstPersonPlayer.Tools.ItemObjectTypes.CompositeObjects;
 using MoreMountains.Tools;
 
 namespace Helpers
@@ -26,13 +27,15 @@ namespace Helpers
 
         public AttributeType AttributeType;
         public AttributeEventType EventType;
-        public int Value;
+        public HarvestableInnerObject.InnerObjectValueGrade Grade;
 
-        public static void Trigger(AttributeType attributeType, AttributeEventType eventType, int value)
+        public static void Trigger(AttributeType attributeType, AttributeEventType eventType,
+            HarvestableInnerObject.InnerObjectValueGrade grade)
         {
             _e.AttributeType = attributeType;
             _e.EventType = eventType;
-            _e.Value = value;
+            _e.Grade = grade;
+
             MMEventManager.TriggerEvent(_e);
         }
     }

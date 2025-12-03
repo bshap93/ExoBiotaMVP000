@@ -38,6 +38,7 @@ namespace Inventory
         public const string DirigibleInventoryName = "DirigibleInventory";
         public const string DirigibleScannerInventoryName = "DirigMainScannerInventory";
         public const string KeyTypeInventoryName = "KeyItemsInventory";
+        public const string InnerCoresInventoryName = "InnerCoresInventory";
 
 
         static string _savePath;
@@ -54,6 +55,7 @@ namespace Inventory
         public MoreMountains.InventoryEngine.Inventory equipmentInventory;
         public MoreMountains.InventoryEngine.Inventory backEquipmentInventory;
         public MoreMountains.InventoryEngine.Inventory keyItemInventory;
+        public MoreMountains.InventoryEngine.Inventory innerCoresInventory;
 
         [Header("Dirigible Inventory")] public MoreMountains.InventoryEngine.Inventory dirigibleInventory;
 
@@ -67,6 +69,7 @@ namespace Inventory
         public DefaultInventoryDefinition backEquipmentStartingItems;
         public DefaultInventoryDefinition dirigibleScannerStartingItems;
         public DefaultInventoryDefinition keyItemStartingItems;
+        public DefaultInventoryDefinition innerCoresStartingItems;
 
         [FormerlySerializedAs("intitialPlayerFPMaxWeight")] [Header("Initial Weight Limits")] [SerializeField]
         float initialPlayerFPMaxWeight;
@@ -291,6 +294,7 @@ namespace Inventory
             PopulateInventory(backEquipmentInventory, backEquipmentStartingItems);
             PopulateInventory(dirigibleScannerSlot, dirigibleScannerStartingItems);
             PopulateInventory(keyItemInventory, keyItemStartingItems);
+            PopulateInventory(innerCoresInventory, innerCoresStartingItems);
         }
 
         static void PopulateInventory(MoreMountains.InventoryEngine.Inventory inv,
@@ -320,6 +324,7 @@ namespace Inventory
             SaveOne(backEquipmentInventory);
             SaveOne(dirigibleScannerSlot);
             SaveOne(keyItemInventory);
+            SaveOne(innerCoresInventory);
         }
 
         public void ResetGlobalInventories()
@@ -331,6 +336,7 @@ namespace Inventory
             ResetOne(backEquipmentInventory);
             ResetOne(dirigibleScannerSlot);
             ResetOne(keyItemInventory);
+            ResetOne(innerCoresInventory);
         }
 
         public void LoadGlobalInventories()
@@ -342,6 +348,7 @@ namespace Inventory
             LoadOne(backEquipmentInventory);
             LoadOne(dirigibleScannerSlot);
             LoadOne(keyItemInventory);
+            LoadOne(innerCoresInventory);
         }
 
         static void SaveOne(MoreMountains.InventoryEngine.Inventory inv)
