@@ -4,6 +4,7 @@ using System.Linq;
 using Helpers.Events;
 using Helpers.Events.Status;
 using Helpers.Interfaces;
+using Helpers.ScriptableObjects;
 using Manager.Status.Scriptable;
 using MoreMountains.Tools;
 using Sirenix.OdinInspector;
@@ -28,6 +29,7 @@ namespace Manager.Status
 
 
         [SerializeField] int initialMinutesUntilNextInfection = 50;
+        public StatusEffectIconRepository iconRepository;
 
 
         bool _dirty;
@@ -223,7 +225,8 @@ namespace Manager.Status
                     PlayerStatusEffectEvent.Trigger(
                         PlayerStatusEffectEvent.StatusEffectEventType.Remove,
                         site.statusEffectOfInfection.effectID, null,
-                        PlayerStatusEffectEvent.DirectionOfEvent.Inbound, StatusEffect.StatusEffectKind.MinorInfections);
+                        PlayerStatusEffectEvent.DirectionOfEvent.Inbound,
+                        StatusEffect.StatusEffectKind.MinorInfections);
                 }
 
             ReconstructProbabilities();

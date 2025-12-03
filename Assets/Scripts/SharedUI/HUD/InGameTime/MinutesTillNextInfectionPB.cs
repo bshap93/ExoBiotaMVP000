@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SharedUI.HUD
+namespace SharedUI.HUD.InGameTime
 {
     public class MinutesTillNextInfectionPb : MonoBehaviour
     {
