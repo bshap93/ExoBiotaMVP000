@@ -23,7 +23,8 @@ namespace Helpers.Events
         GlobalSettingsPanel,
         MachineInteractChoice,
         RestTimeSetAmount,
-        InfoLogTablet
+        InfoLogTablet,
+        LevelingUI
     }
 
     public enum UIActionType
