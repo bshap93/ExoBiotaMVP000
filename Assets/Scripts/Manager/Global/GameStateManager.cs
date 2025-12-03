@@ -25,16 +25,15 @@ namespace Manager.Global
         public string DefaultCategoryName = "Default";
         public string InGameUICategoryName = "InGameUI";
 
-        public Transform PlayerRoot => _playerRoot;
-
 
         ModeController _current;
 
         string _currentGameplayCategory; // default at boot
 
 
-        Transform _playerRoot;
         Dictionary<GameMode, GameObject> _prefabs;
+
+        public Transform PlayerRoot { get; private set; }
 
         public GameMode CurrentMode => _current?.Mode ?? GameMode.None;
 
@@ -63,7 +62,7 @@ namespace Manager.Global
                 { GameMode.FirstPerson, pawns[1] },
                 { GameMode.Overview, pawns[2] }
             };
-            
+
 
             EnableUIMaps(false);
         }
@@ -133,7 +132,7 @@ namespace Manager.Global
             SwitchAmbienceEvent(mode);
 
             // Then instantiate the pawn
-            var go = Instantiate(_prefabs[mode], _playerRoot, false);
+            var go = Instantiate(_prefabs[mode], PlayerRoot, false);
             go.transform.localPosition = Vector3.zero;
             go.transform.localRotation = Quaternion.identity;
 
@@ -169,7 +168,7 @@ namespace Manager.Global
 
         public void RegisterPlayerRoot(Transform t)
         {
-            _playerRoot = t;
+            PlayerRoot = t;
         }
 
 

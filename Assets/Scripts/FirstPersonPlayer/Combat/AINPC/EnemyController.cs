@@ -79,7 +79,6 @@ namespace FirstPersonPlayer.Combat.AINPC
                 isDead = true;
                 animancerComponent.Play(enemyType.animationSet.deathAnimation);
                 navMeshAgent.isStopped = true;
-                blackboard.SetValue("isDead", true);
             }
         }
         public string UniqueID => uniqueID;

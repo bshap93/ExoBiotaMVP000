@@ -1963,7 +1963,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4df8cb32198248cc9f31120d5f5c5390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStatsManager: {fileID: 0}
+  playerMutableStatsManager: {fileID: 0}
   cannotRunFeedbacks: {fileID: 7361642293195615526}
   animancerRightArmController: {fileID: 9152139957155839416}
   planarMovementParameters:
@@ -2248,6 +2248,7 @@ GameObject:
   - component: {fileID: 3825372334485300609}
   - component: {fileID: 7375247139739557068}
   - component: {fileID: 1754756606063711649}
+  - component: {fileID: 8766147362344302376}
   m_Layer: 3
   m_Name: Capsule
   m_TagString: FirstPersonPlayer
@@ -2353,10 +2354,33 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &8766147362344302376
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2418127424620029257}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.00000011920929, z: 0}
 --- !u!1 &2665433876522492029
 GameObject:
   m_ObjectHideFlags: 0
