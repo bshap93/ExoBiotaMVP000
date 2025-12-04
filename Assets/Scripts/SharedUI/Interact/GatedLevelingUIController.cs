@@ -1,4 +1,6 @@
-﻿using Helpers.Events;
+﻿using FirstPersonPlayer.UI.InventoryListView;
+using Helpers.Events;
+using Michsky.MUIP;
 using MoreMountains.Tools;
 using UnityEngine;
 
@@ -6,6 +8,16 @@ namespace SharedUI.Interact
 {
     public class GatedLevelingUIController : MonoBehaviour, MMEventListener<MyUIEvent>
     {
+        [SerializeField] InnerCoresDisplay innerCoresDisplay;
+
+        [SerializeField] AttributePointSetter dexteritySetter;
+        [SerializeField] AttributePointSetter mentalToughnessSetter;
+        [SerializeField] AttributePointSetter agilitySetter;
+        [SerializeField] AttributePointSetter strengthSetter;
+
+
+        [SerializeField] ButtonManager commitButton;
+
         CanvasGroup _canvasGroup;
         void Awake()
         {
