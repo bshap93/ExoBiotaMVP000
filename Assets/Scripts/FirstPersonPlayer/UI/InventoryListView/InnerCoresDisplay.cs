@@ -14,6 +14,8 @@ namespace FirstPersonPlayer.UI.InventoryListView
         [SerializeField] GradeCoresUILVRow stellarCoreRow;
         [SerializeField] GradeCoresUILVRow unreasonableCoreRow;
 
+        [SerializeField] bool condensedView;
+
 
         void Start()
         {
@@ -57,6 +59,21 @@ namespace FirstPersonPlayer.UI.InventoryListView
             radiantCoreRow.Initialize(HarvestableInnerObject.InnerObjectValueGrade.Radiant, numRadiant);
             stellarCoreRow.Initialize(HarvestableInnerObject.InnerObjectValueGrade.Stellar, numStellar);
             unreasonableCoreRow.Initialize(HarvestableInnerObject.InnerObjectValueGrade.Unreasonable, numUnreasonable);
+
+            if (condensedView)
+            {
+                if (numStandard == 0) standardCoreRow.gameObject.SetActive(false);
+                else standardCoreRow.gameObject.SetActive(true);
+
+                if (numRadiant == 0) radiantCoreRow.gameObject.SetActive(false);
+                else radiantCoreRow.gameObject.SetActive(true);
+
+                if (numStellar == 0) stellarCoreRow.gameObject.SetActive(false);
+                else stellarCoreRow.gameObject.SetActive(true);
+
+                if (numUnreasonable == 0) unreasonableCoreRow.gameObject.SetActive(false);
+                else unreasonableCoreRow.gameObject.SetActive(true);
+            }
         }
     }
 }
