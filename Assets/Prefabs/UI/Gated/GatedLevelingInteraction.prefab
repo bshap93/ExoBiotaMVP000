@@ -3405,11 +3405,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   innerCoresDisplay: {fileID: 5791646080038152930}
-  dexteritySetter: {fileID: 0}
-  mentalToughnessSetter: {fileID: 0}
-  agilitySetter: {fileID: 0}
-  strengthSetter: {fileID: 0}
-  commitButton: {fileID: 0}
+  dexteritySetter: {fileID: 3288247256106437535}
+  mentalToughnessSetter: {fileID: 834567784041759006}
+  agilitySetter: {fileID: 7605431192926322397}
+  strengthSetter: {fileID: 4553616702512082068}
+  commitButton: {fileID: 2573546824490975697}
 --- !u!225 &5118307464288462003
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -4402,6 +4402,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2433169506603085679, guid: 5dca0783eeb7ab54ab0f7212fcfc44d7, type: 3}
   m_PrefabInstance: {fileID: 296614502411725470}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3288247256106437535 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3008398111360573697, guid: 5dca0783eeb7ab54ab0f7212fcfc44d7, type: 3}
+  m_PrefabInstance: {fileID: 296614502411725470}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31733838eecbe9c409722b8b51fbd792, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &439939978305388719
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4671,6 +4682,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -124
       objectReference: {fileID: 0}
+    - target: {fileID: 6170216839274885466, guid: 5dca0783eeb7ab54ab0f7212fcfc44d7, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -57
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391846747146169604, guid: 5dca0783eeb7ab54ab0f7212fcfc44d7, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -57
+      objectReference: {fileID: 0}
     - target: {fileID: 8238517404130952756, guid: 5dca0783eeb7ab54ab0f7212fcfc44d7, type: 3}
       propertyPath: m_Name
       value: Strength
@@ -4721,6 +4740,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2433169506603085679, guid: 5dca0783eeb7ab54ab0f7212fcfc44d7, type: 3}
   m_PrefabInstance: {fileID: 1625316124593671573}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4553616702512082068 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3008398111360573697, guid: 5dca0783eeb7ab54ab0f7212fcfc44d7, type: 3}
+  m_PrefabInstance: {fileID: 1625316124593671573}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31733838eecbe9c409722b8b51fbd792, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2462062578903359519
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4859,6 +4889,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2433169506603085679, guid: 5dca0783eeb7ab54ab0f7212fcfc44d7, type: 3}
   m_PrefabInstance: {fileID: 2462062578903359519}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &834567784041759006 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3008398111360573697, guid: 5dca0783eeb7ab54ab0f7212fcfc44d7, type: 3}
+  m_PrefabInstance: {fileID: 2462062578903359519}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31733838eecbe9c409722b8b51fbd792, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3705889264065483327
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5230,6 +5271,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -124
       objectReference: {fileID: 0}
+    - target: {fileID: 6170216839274885466, guid: 5dca0783eeb7ab54ab0f7212fcfc44d7, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -63
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391846747146169604, guid: 5dca0783eeb7ab54ab0f7212fcfc44d7, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -63
+      objectReference: {fileID: 0}
     - target: {fileID: 8238517404130952756, guid: 5dca0783eeb7ab54ab0f7212fcfc44d7, type: 3}
       propertyPath: m_Name
       value: Agility
@@ -5276,6 +5325,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2433169506603085679, guid: 5dca0783eeb7ab54ab0f7212fcfc44d7, type: 3}
   m_PrefabInstance: {fileID: 4626341938412789724}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7605431192926322397 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3008398111360573697, guid: 5dca0783eeb7ab54ab0f7212fcfc44d7, type: 3}
+  m_PrefabInstance: {fileID: 4626341938412789724}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31733838eecbe9c409722b8b51fbd792, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6189900221227885551
 PrefabInstance:
   m_ObjectHideFlags: 0

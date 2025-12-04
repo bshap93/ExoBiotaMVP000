@@ -83,11 +83,11 @@ namespace Manager
             }
         }
 
-        int StrengthXp { get; set; }
-        int AgilityXp { get; set; }
-        int DexterityXp { get; set; }
-        int MentalToughnessXp { get; set; }
-        int ExobioticXp { get; set; }
+        public int StrengthXp { get; set; }
+        public int AgilityXp { get; set; }
+        public int DexterityXp { get; set; }
+        public int MentalToughnessXp { get; set; }
+        public int ExobioticXp { get; set; }
 
 
         public static AttributesManager Instance { get; private set; }

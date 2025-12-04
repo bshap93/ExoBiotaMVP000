@@ -1,5 +1,6 @@
 ﻿using FirstPersonPlayer.UI.InventoryListView;
 using Helpers.Events;
+using Manager;
 using Michsky.MUIP;
 using MoreMountains.Tools;
 using UnityEngine;
@@ -23,9 +24,7 @@ namespace SharedUI.Interact
         {
             _canvasGroup = GetComponent<CanvasGroup>();
             // hide
-            _canvasGroup.alpha = 0;
-            _canvasGroup.interactable = false;
-            _canvasGroup.blocksRaycasts = false;
+            Hide();
         }
         void OnEnable()
         {
@@ -40,20 +39,42 @@ namespace SharedUI.Interact
             if (eventType.uiType == UIType.LevelingUI)
             {
                 if (eventType.uiActionType == UIActionType.Open)
-                {
-                    // show
-                    _canvasGroup.alpha = 1;
-                    _canvasGroup.interactable = true;
-                    _canvasGroup.blocksRaycasts = true;
-                }
-                else if (eventType.uiActionType == UIActionType.Close)
-                {
-                    // hide
-                    _canvasGroup.alpha = 0;
-                    _canvasGroup.interactable = false;
-                    _canvasGroup.blocksRaycasts = false;
-                }
+                    Show();
+                else if (eventType.uiActionType == UIActionType.Close) Hide();
             }
+        }
+
+        public void Initialize()
+        {
+            var attributeManager = AttributesManager.Instance;
+            dexteritySetter.Initialize(attributeManager.Dexterity, attributeManager.DexterityXp);
+            mentalToughnessSetter.Initialize(attributeManager.MentalToughness, attributeManager.MentalToughnessXp);
+            agilitySetter.Initialize(attributeManager.Agility, attributeManager.AgilityXp);
+            strengthSetter.Initialize(attributeManager.Strength, attributeManager.StrengthXp);
+
+            commitButton.onClick.AddListener(CommitChanges);
+        }
+
+        void CommitChanges()
+        {
+            // Logic to commit attribute point changes
+            Debug.Log("Committed attribute point changes.");
+        }
+
+        void Hide()
+        {
+            // hide
+            _canvasGroup.alpha = 0;
+            _canvasGroup.interactable = false;
+            _canvasGroup.blocksRaycasts = false;
+        }
+        void Show()
+        {
+            innerCoresDisplay.Refresh();
+            // show
+            _canvasGroup.alpha = 1;
+            _canvasGroup.interactable = true;
+            _canvasGroup.blocksRaycasts = true;
         }
     }
 }
