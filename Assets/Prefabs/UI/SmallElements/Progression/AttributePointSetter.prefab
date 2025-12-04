@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 6645484306691807728}
   - component: {fileID: 6461759315541851026}
   m_Layer: 0
-  m_Name: AttrXPValue
+  m_Name: XPNeededForOneIncrease
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -138,7 +138,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1611375231825846092}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -186,8 +186,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278220287
-  m_fontColor: {r: 1, g: 0.45999998, b: 0, a: 1}
+    rgba: 4281016987
+  m_fontColor: {r: 0.60784316, g: 0.13333334, b: 0.16862746, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -885,6 +885,7 @@ MonoBehaviour:
   attributeType: 2
   attributePointText: {fileID: 7968627710758330876}
   attributXPText: {fileID: 6461759315541851026}
+  pendingPointsText: {fileID: 0}
   increaseButton: {fileID: 2965865034491878230}
   decreaseButton: {fileID: 7019406449234057743}
 --- !u!1 &9174740586827550794
@@ -1081,8 +1082,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278220287
-  m_fontColor: {r: 1, g: 0.45999998, b: 0, a: 1}
+    rgba: 4281016987
+  m_fontColor: {r: 0.60784316, g: 0.13333334, b: 0.16862746, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

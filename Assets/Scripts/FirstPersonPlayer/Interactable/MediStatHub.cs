@@ -1,5 +1,6 @@
 ﻿using System;
 using FirstPersonPlayer.Interface;
+using Helpers.Events;
 using Manager;
 using MoreMountains.Feedbacks;
 using SharedUI.Interface;
@@ -37,7 +38,7 @@ namespace FirstPersonPlayer.Interactable
         }
         public void Interact()
         {
-            throw new NotImplementedException();
+            MyUIEvent.Trigger(UIType.LevelingUI, UIActionType.Open);
         }
         public void OnInteractionStart()
         {
@@ -47,7 +48,7 @@ namespace FirstPersonPlayer.Interactable
         }
         public bool CanInteract()
         {
-            throw new NotImplementedException();
+            return true;
         }
         public bool IsInteractable()
         {

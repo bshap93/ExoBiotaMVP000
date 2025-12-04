@@ -2,6 +2,7 @@
 using Inventory;
 using MoreMountains.InventoryEngine;
 using MoreMountains.Tools;
+using SharedUI.Interact;
 using SharedUI.Inventory;
 using UnityEngine;
 
@@ -15,6 +16,8 @@ namespace FirstPersonPlayer.UI.InventoryListView
         [SerializeField] GradeCoresUILVRow unreasonableCoreRow;
 
         [SerializeField] bool condensedView;
+
+        [SerializeField] GatedLevelingUIController gatedLevelingUIController;
 
 
         void Start()
@@ -73,6 +76,20 @@ namespace FirstPersonPlayer.UI.InventoryListView
 
                 if (numUnreasonable == 0) unreasonableCoreRow.gameObject.SetActive(false);
                 else unreasonableCoreRow.gameObject.SetActive(true);
+            }
+            else
+            {
+                if (numStandard == 0) standardCoreRow.convertToXPButton.gameObject.SetActive(false);
+                else standardCoreRow.convertToXPButton.gameObject.SetActive(true);
+
+                if (numRadiant == 0) radiantCoreRow.convertToXPButton.gameObject.SetActive(false);
+                else radiantCoreRow.convertToXPButton.gameObject.SetActive(true);
+
+                if (numStellar == 0) stellarCoreRow.convertToXPButton.gameObject.SetActive(false);
+                else stellarCoreRow.convertToXPButton.gameObject.SetActive(true);
+
+                if (numUnreasonable == 0) unreasonableCoreRow.convertToXPButton.gameObject.SetActive(false);
+                else unreasonableCoreRow.convertToXPButton.gameObject.SetActive(true);
             }
         }
     }

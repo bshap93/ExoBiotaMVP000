@@ -1,13 +1,14 @@
 ﻿using FirstPersonPlayer.Tools.ItemObjectTypes.CompositeObjects;
-using Helpers;
+using Helpers.Events;
 using Helpers.Events.Progression;
 using Helpers.Interfaces;
+using Helpers.StaticHelpers;
 using MoreMountains.Tools;
 using UnityEngine;
 
 namespace Manager
 {
-    public class AttributesManager : MonoBehaviour, ICoreGameService, MMEventListener<AttributeEvent>
+    public class AttributesManager : MonoBehaviour, ICoreGameService, MMEventListener<InnerCoreXPEvent>
     {
         const float XpBase = 10f;
         const float XpExponent = 1.5f;
@@ -15,6 +16,8 @@ namespace Manager
         // has endurance and agility's traditional 
         // functions been merged into a single stat...for now
         int _agility;
+
+        int _currentUnusedXP;
 
 
         // has perception and dexterity's traditional (and possibly thief)
@@ -31,6 +34,15 @@ namespace Manager
         string _savePath;
         // just strength as normal
         int _strength;
+        public int CurrentUnusedXP
+        {
+            get => _currentUnusedXP;
+            set
+            {
+                _currentUnusedXP = value;
+                MarkDirty();
+            }
+        }
 
         public int Agility
         {
@@ -83,12 +95,6 @@ namespace Manager
             }
         }
 
-        public int StrengthXp { get; set; }
-        public int AgilityXp { get; set; }
-        public int DexterityXp { get; set; }
-        public int MentalToughnessXp { get; set; }
-        public int ExobioticXp { get; set; }
-
 
         public static AttributesManager Instance { get; private set; }
 
@@ -111,6 +117,15 @@ namespace Manager
 
             Load();
         }
+        void OnEnable()
+        {
+            this.MMEventStartListening();
+        }
+
+        void OnDisable()
+        {
+            this.MMEventStopListening();
+        }
         public void Save()
         {
             var path = GetSaveFilePath();
@@ -119,12 +134,9 @@ namespace Manager
             ES3.Save("Dexterity", _dexterity, path);
             ES3.Save("MentalToughness", _mentalToughness, path);
             ES3.Save("Exobiotic", _exobiotic, path);
+            ES3.Save("CurrentUnusedXP", _currentUnusedXP, path);
 
-            ES3.Save("StrengthXp", StrengthXp, path);
-            ES3.Save("AgilityXp", AgilityXp, path);
-            ES3.Save("DexterityXp", DexterityXp, path);
-            ES3.Save("MentalToughnessXp", MentalToughnessXp, path);
-            ES3.Save("ExobioticXp", ExobioticXp, path);
+
             _dirty = false;
         }
         public void Load()
@@ -145,20 +157,8 @@ namespace Manager
             if (ES3.KeyExists("Exobiotic", path))
                 _exobiotic = ES3.Load<int>("Exobiotic", path);
 
-            if (ES3.KeyExists("StrengthXp", path))
-                StrengthXp = ES3.Load<int>("StrengthXp", path);
-
-            if (ES3.KeyExists("AgilityXp", path))
-                AgilityXp = ES3.Load<int>("AgilityXp", path);
-
-            if (ES3.KeyExists("DexterityXp", path))
-                DexterityXp = ES3.Load<int>("DexterityXp", path);
-
-            if (ES3.KeyExists("MentalToughnessXp", path))
-                MentalToughnessXp = ES3.Load<int>("MentalToughnessXp", path);
-
-            if (ES3.KeyExists("ExobioticXp", path))
-                ExobioticXp = ES3.Load<int>("ExobioticXp", path);
+            if (ES3.KeyExists("CurrentUnusedXP", path))
+                _currentUnusedXP = ES3.Load<int>("CurrentUnusedXP", path);
         }
         public void Reset()
         {
@@ -168,11 +168,8 @@ namespace Manager
             _mentalToughness = 1;
             _exobiotic = 1;
 
-            StrengthXp = 0;
-            AgilityXp = 0;
-            DexterityXp = 0;
-            MentalToughnessXp = 0;
-            ExobioticXp = 0;
+            _currentUnusedXP = 0;
+
             MarkDirty();
 
             ConditionalSave();
@@ -198,27 +195,10 @@ namespace Manager
         {
             return ES3.FileExists(_savePath ?? GetSaveFilePath());
         }
-        public void OnMMEvent(AttributeEvent eventType)
+        public void OnMMEvent(InnerCoreXPEvent eventType)
         {
-            if (eventType.EventType == AttributeEventType.Increase)
-                switch (eventType.AttributeType)
-                {
-                    case AttributeType.Strength:
-                        AddTowardAttributeXp(AttributeType.Strength, eventType.Grade);
-                        break;
-                    case AttributeType.Agility:
-                        AddTowardAttributeXp(AttributeType.Agility, eventType.Grade);
-                        break;
-                    case AttributeType.Dexterity:
-                        AddTowardAttributeXp(AttributeType.Dexterity, eventType.Grade);
-                        break;
-                    case AttributeType.MentalToughness:
-                        AddTowardAttributeXp(AttributeType.MentalToughness, eventType.Grade);
-                        break;
-                    case AttributeType.Exobiotic:
-                        AddTowardAttributeXp(AttributeType.Exobiotic, eventType.Grade);
-                        break;
-                }
+            if (eventType.EventType == InnerCoreXPEventType.ConvertCoreToXP)
+                ConvertCoreToXP(eventType.CoreGrade);
         }
 
 
@@ -235,28 +215,13 @@ namespace Manager
             return total;
         }
 
-        void ProcessLevelUp(AttributeType attributeType, ref int currentLevel, int currentXp)
-        {
-            var maxLevel = 20;
-
-            while (currentLevel < maxLevel)
-            {
-                var xpNeededForNextLevel = GetTotalXpForLevel(currentLevel + 1);
-                if (currentXp >= xpNeededForNextLevel)
-                {
-                    currentLevel++;
-                    AttributeLevelUpEvent.Trigger(attributeType, currentLevel);
-                }
-                else
-                {
-                    break;
-                }
-            }
-        }
-
-        void AddTowardAttributeXp(AttributeType attributeType,
+        void ConvertCoreToXP(
             HarvestableInnerObject.InnerObjectValueGrade coreGrade)
         {
+            // remove one core from inventory
+            InventoryHelperCommands.RemoveInnerCore(coreGrade);
+
+            // add the XP
             var amount = 0;
             switch (coreGrade)
             {
@@ -277,29 +242,11 @@ namespace Manager
                     break;
             }
 
-            switch (attributeType)
-            {
-                case AttributeType.Strength:
-                    StrengthXp += amount;
-                    ProcessLevelUp(attributeType, ref _strength, StrengthXp);
-                    break;
-                case AttributeType.Agility:
-                    AgilityXp += amount;
-                    ProcessLevelUp(attributeType, ref _agility, AgilityXp);
-                    break;
-                case AttributeType.Dexterity:
-                    DexterityXp += amount;
-                    ProcessLevelUp(attributeType, ref _dexterity, DexterityXp);
-                    break;
-                case AttributeType.MentalToughness:
-                    MentalToughnessXp += amount;
-                    ProcessLevelUp(attributeType, ref _mentalToughness, MentalToughnessXp);
-                    break;
-                case AttributeType.Exobiotic:
-                    ExobioticXp += amount;
-                    ProcessLevelUp(attributeType, ref _exobiotic, ExobioticXp);
-                    break;
-            }
+            _currentUnusedXP += amount;
+
+            XPEvent.Trigger(XPEventType.SetUnusedXP, _currentUnusedXP);
+
+            MarkDirty();
         }
     }
 }

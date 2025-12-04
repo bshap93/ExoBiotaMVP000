@@ -1,4 +1,6 @@
 using FirstPersonPlayer.Tools.ItemObjectTypes.CompositeObjects;
+using Helpers.Events;
+using Michsky.MUIP;
 using MoreMountains.Feedbacks;
 using TMPro;
 using UnityEngine;
@@ -18,6 +20,8 @@ namespace SharedUI.Inventory
         [SerializeField]
         MMFeedbacks onIncreaseQuantityFeedbacks;
         [SerializeField] MMFeedbacks onDecreaseQuantityFeedbacks;
+        public ButtonManager convertToXPButton;
+        [SerializeField] HarvestableInnerObject.InnerObjectValueGrade coreGrade;
 
 
         int _currentQuantity;
@@ -30,6 +34,14 @@ namespace SharedUI.Inventory
 
             _currentQuantity = quantity;
             coreQuantityText.text = _currentQuantity.ToString();
+
+            convertToXPButton.onClick.RemoveAllListeners();
+            convertToXPButton.onClick.AddListener(ConvertToXP);
+        }
+
+        void ConvertToXP()
+        {
+            InnerCoreXPEvent.Trigger(InnerCoreXPEventType.ConvertCoreToXP, coreGrade);
         }
     }
 }
