@@ -59,12 +59,11 @@ namespace FirstPersonPlayer.Interactable
             _rf.demolitionEvent.LocalEvent += OnDemolished;
         }
 
-        public bool CanBeDamagedBy(int toolPower)
+
+        public bool CanBeDamagedBy(int toolPower, int strength)
         {
             return toolPower >= hardness;
         }
-
-
         public void ApplyHit(int toolPower, Vector3 hitPoint, Vector3 hitNormal)
         {
             ApplyHatchetHit(toolPower, hitPoint, hitNormal);
@@ -100,7 +99,7 @@ namespace FirstPersonPlayer.Interactable
                 return;
             }
 
-            if (!CanBeDamagedBy(toolPower))
+            if (!CanBeDamagedBy(toolPower, 0))
             {
                 PlayHitFx(hitPoint, hitNormal, true);
                 return;

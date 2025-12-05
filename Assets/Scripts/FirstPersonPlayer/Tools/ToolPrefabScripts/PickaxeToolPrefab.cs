@@ -240,6 +240,11 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 hitFleshyFeedbacks?.PlayFeedbacks();
                 fleshyObject.MakeJiggle();
             }
+            else if (go.TryGetComponent<BreakableStoneBarrier>(out var breakableStone))
+            {
+                breakableStone.ApplyHit(pickaxePower, hit.point, hit.normal);
+                hitRockFeedbacks?.PlayFeedbacks();
+            }
             else if (go.CompareTag("MiscRigidOrganism"))
             {
                 hitRigidOrganismFeedbacks?.PlayFeedbacks();
