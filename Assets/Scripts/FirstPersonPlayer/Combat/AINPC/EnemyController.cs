@@ -4,6 +4,7 @@ using FirstPersonPlayer.Combat.AINPC.ScriptableObjects;
 using FirstPersonPlayer.Combat.Player.ScriptableObjects;
 using Helpers.Events.Combat;
 using HighlightPlus;
+using Manager;
 using MoreMountains.Feedbacks;
 using NodeCanvas.Framework;
 using UnityEngine;
@@ -126,15 +127,16 @@ namespace FirstPersonPlayer.Combat.AINPC
         }
         public void ProcessAttackDamage(PlayerToolAttack playerAttack)
         {
+            var attributeManager = AttributesManager.Instance;
             var damageAmount = playerAttack.rawDamage;
             var attackType = playerAttack.attackType;
 
             if (attackType == PlayerAttackType.Melee)
             {
                 // Placeholder for strength stat for player
-                var playerStrength = 1;
+                var playerStrength = attributeManager.Strength;
                 // Provisional damage scaling based on player strength
-                var playerStrengthMultiplier = 1f + (playerStrength - 1) * 0.1f;
+                var playerStrengthMultiplier = 1f + (playerStrength - 1) * 0.5f;
                 damageAmount *= playerStrengthMultiplier;
 
                 if (playerAttack.damageType == AttackDamageType.BasicHit)

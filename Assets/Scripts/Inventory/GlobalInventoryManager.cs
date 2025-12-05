@@ -2,19 +2,22 @@ using System;
 using System.Collections.Generic;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
 using FirstPersonPlayer.Tools.ItemObjectTypes.CompositeObjects;
+using Helpers.Events;
 using Helpers.Events.Inventory;
 using Helpers.Interfaces;
 using Inventory.ScriptableObjects;
 using Manager;
 using MoreMountains.InventoryEngine;
 using MoreMountains.Tools;
+using SharedUI.Progression;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 namespace Inventory
 {
-    public class GlobalInventoryManager : MonoBehaviour, ICoreGameService, MMEventListener<GlobalInventoryEvent>
+    public class GlobalInventoryManager : MonoBehaviour, ICoreGameService, MMEventListener<GlobalInventoryEvent>,
+        MMEventListener<LoadedManagerEvent>, MMEventListener<AttributeLevelUpEvent>
     {
         public enum EquippableType
         {
@@ -128,12 +131,16 @@ namespace Inventory
 
         void OnEnable()
         {
-            this.MMEventStartListening();
+            this.MMEventStartListening<GlobalInventoryEvent>();
+            this.MMEventStartListening<LoadedManagerEvent>();
+            this.MMEventStartListening<AttributeLevelUpEvent>();
         }
 
         void OnDisable()
         {
-            this.MMEventStopListening();
+            this.MMEventStopListening<GlobalInventoryEvent>();
+            this.MMEventStopListening<LoadedManagerEvent>();
+            this.MMEventStopListening<AttributeLevelUpEvent>();
         }
 
 
@@ -193,6 +200,20 @@ namespace Inventory
         {
             return ES3.FileExists(GetSaveFilePath());
         }
+        public void OnMMEvent(AttributeLevelUpEvent eventType)
+        {
+            if (eventType.AttributeType == AttributeType.Strength)
+                switch (eventType.NewLevel)
+                {
+                    case 1:
+                        break;
+                    default:
+                        _maxPlayerFPWeight += 10f;
+                        MarkDirty();
+                        ConditionalSave();
+                        break;
+                }
+        }
 
         public void OnMMEvent(GlobalInventoryEvent eventType)
         {
@@ -200,6 +221,12 @@ namespace Inventory
                 MMInventoryEvent.Trigger(
                     MMInventoryEventType.UnEquipRequest, null, equipmentInventory.name, equipmentInventory.Content[0],
                     0, 0, equipmentInventory.PlayerID);
+        }
+        public void OnMMEvent(LoadedManagerEvent eventType)
+        {
+            if (eventType.ManagerType == ManagerType.All)
+            {
+            }
         }
         void LoadWeightValues()
         {

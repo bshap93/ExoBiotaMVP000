@@ -7,11 +7,11 @@ namespace Helpers.Events
     {
         static AttributeLevelUpEvent _e;
         public AttributeType AttributeType;
-        public int CurrentLevel;
-        public static void Trigger(AttributeType attributeType, int currentLevel)
+        public int NewLevel;
+        public static void Trigger(AttributeType attributeType, int newLevel)
         {
             _e.AttributeType = attributeType;
-            _e.CurrentLevel = currentLevel;
+            _e.NewLevel = newLevel;
             MMEventManager.TriggerEvent(_e);
         }
     }

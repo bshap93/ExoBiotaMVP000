@@ -40,7 +40,7 @@ public class AttrIGUIList : MonoBehaviour, MMEventListener<GatedLevelingEvent>, 
         if (eventType.ManagerType == ManagerType.All) Initialize();
     }
 
-    void Initialize()
+    public void Initialize()
     {
         var attrMgr = AttributesManager.Instance;
         strengthText.text = attrMgr.Strength.ToString();

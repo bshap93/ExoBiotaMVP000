@@ -5,6 +5,7 @@ using Helpers.Events.Progression;
 using Helpers.Interfaces;
 using Helpers.StaticHelpers;
 using MoreMountains.Tools;
+using SharedUI.Progression;
 using UnityEngine;
 
 namespace Manager
@@ -205,10 +206,27 @@ namespace Manager
             {
                 var newAttributeValues = eventType.AttributeValues;
 
-                _strength = newAttributeValues.strength;
-                _agility = newAttributeValues.agility;
-                _dexterity = newAttributeValues.dexterity;
-                _mentalToughness = newAttributeValues.mentalToughness;
+                // If any have increased, call AttributeLevelUpEvent
+                if (newAttributeValues.strength > _strength)
+                    AttributeLevelUpEvent.Trigger(AttributeType.Strength, newAttributeValues.strength);
+
+                if (newAttributeValues.agility > _agility)
+                    AttributeLevelUpEvent.Trigger(AttributeType.Agility, newAttributeValues.agility);
+
+                if (newAttributeValues.dexterity > _dexterity)
+                    AttributeLevelUpEvent.Trigger(AttributeType.Dexterity, newAttributeValues.dexterity);
+
+                if (newAttributeValues.mentalToughness > _mentalToughness)
+                    AttributeLevelUpEvent.Trigger(AttributeType.MentalToughness, newAttributeValues.mentalToughness);
+
+                if (newAttributeValues.exobiotic > _exobiotic)
+                    AttributeLevelUpEvent.Trigger(AttributeType.Exobiotic, newAttributeValues.exobiotic);
+
+
+                Strength = newAttributeValues.strength;
+                Agility = newAttributeValues.agility;
+                Dexterity = newAttributeValues.dexterity;
+                MentalToughness = newAttributeValues.mentalToughness;
                 _exobiotic = newAttributeValues.exobiotic;
 
                 MarkDirty();

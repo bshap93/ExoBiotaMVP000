@@ -16,6 +16,8 @@ namespace SharedUI.IGUI
         public string dirigibleInvName = "DirigibleInventory";
 
         [SerializeField] ObjectivesIGUIController objectivesIGUIController;
+
+        [SerializeField] AttrIGUIList attrIGUIList;
         BioSamplesIGUILIstView _bioSamplesIGUILIstView;
         Canvas _canvas;
         CanvasGroup _canvasGroup;
@@ -249,6 +251,8 @@ namespace SharedUI.IGUI
 
             _objectivesIGUIController?.Refresh();
             _bioSamplesIGUILIstView?.Refresh();
+
+            attrIGUIList.Initialize();
         }
 
         void OnClose()

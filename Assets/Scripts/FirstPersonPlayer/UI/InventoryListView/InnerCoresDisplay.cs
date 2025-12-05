@@ -39,8 +39,7 @@ namespace FirstPersonPlayer.UI.InventoryListView
         {
             if (eventType.TargetInventoryName != GlobalInventoryManager.InnerCoresInventoryName) return;
             if (eventType.InventoryEventType == MMInventoryEventType.ContentChanged)
-                if (eventType.EventItem is HarvestableInnerObject)
-                    Refresh();
+                Refresh();
         }
 
         void Initialize()
