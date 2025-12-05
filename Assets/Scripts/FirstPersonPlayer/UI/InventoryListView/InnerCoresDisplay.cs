@@ -22,7 +22,7 @@ namespace FirstPersonPlayer.UI.InventoryListView
 
         void Start()
         {
-            // Refresh();
+            Initialize();
         }
 
         void OnEnable()
@@ -38,7 +38,14 @@ namespace FirstPersonPlayer.UI.InventoryListView
         public void OnMMEvent(MMInventoryEvent eventType)
         {
             if (eventType.TargetInventoryName != GlobalInventoryManager.InnerCoresInventoryName) return;
-            if (eventType.InventoryEventType == MMInventoryEventType.ContentChanged) Refresh();
+            if (eventType.InventoryEventType == MMInventoryEventType.ContentChanged)
+                if (eventType.EventItem is HarvestableInnerObject)
+                    Refresh();
+        }
+
+        void Initialize()
+        {
+            Refresh();
         }
 
         public void Refresh()

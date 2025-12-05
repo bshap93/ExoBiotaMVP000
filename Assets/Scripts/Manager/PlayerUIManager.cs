@@ -1,3 +1,4 @@
+using System;
 using Events;
 using Helpers.Events;
 using Helpers.Events.UI;
@@ -24,7 +25,7 @@ namespace Manager
         public bool modalIsOpen;
 
         public bool gatedUIIsOpen;
-        
+
         // Persistent variables
 
 
@@ -52,6 +53,42 @@ namespace Manager
             this.MMEventStopListening<ModeLoadEvent>();
             this.MMEventStopListening<HUDEvent>();
         }
+        public void Save()
+        {
+            throw new NotImplementedException();
+        }
+        public void Load()
+        {
+            throw new NotImplementedException();
+        }
+        public void Reset()
+        {
+            throw new NotImplementedException();
+        }
+        public void ConditionalSave()
+        {
+            throw new NotImplementedException();
+        }
+        public void MarkDirty()
+        {
+            throw new NotImplementedException();
+        }
+        public string GetSaveFilePath()
+        {
+            throw new NotImplementedException();
+        }
+        public void CommitCheckpointSave()
+        {
+            throw new NotImplementedException();
+        }
+        public bool HasSavedData()
+        {
+            throw new NotImplementedException();
+        }
+        public void OnMMEvent(HUDEvent eventType)
+        {
+            throw new NotImplementedException();
+        }
 
         public void OnMMEvent(ModeLoadEvent eventType)
         {
@@ -77,6 +114,7 @@ namespace Manager
                     else if (eventType.uiType == UIType.HarvestableInteractChoice ||
                              eventType.uiType == UIType.BreakableInteractChoice ||
                              eventType.uiType == UIType.MachineInteractChoice ||
+                             eventType.uiType == UIType.LevelingUI ||
                              eventType.uiType == UIType.WaitWhileInteracting)
                         gatedUIIsOpen = true;
 
@@ -89,6 +127,7 @@ namespace Manager
                     else if (eventType.uiType == UIType.HarvestableInteractChoice ||
                              eventType.uiType == UIType.BreakableInteractChoice ||
                              eventType.uiType == UIType.MachineInteractChoice ||
+                             eventType.uiType == UIType.LevelingUI ||
                              eventType.uiType == UIType.WaitWhileInteracting)
                         gatedUIIsOpen = false;
 
@@ -106,42 +145,6 @@ namespace Manager
                     Debug.LogWarning($"Unhandled UIActionType: {eventType.uiActionType}");
                     break;
             }
-        }
-        public void OnMMEvent(HUDEvent eventType)
-        {
-            throw new System.NotImplementedException();
-        }
-        public void Save()
-        {
-            throw new System.NotImplementedException();
-        }
-        public void Load()
-        {
-            throw new System.NotImplementedException();
-        }
-        public void Reset()
-        {
-            throw new System.NotImplementedException();
-        }
-        public void ConditionalSave()
-        {
-            throw new System.NotImplementedException();
-        }
-        public void MarkDirty()
-        {
-            throw new System.NotImplementedException();
-        }
-        public string GetSaveFilePath()
-        {
-            throw new System.NotImplementedException();
-        }
-        public void CommitCheckpointSave()
-        {
-            throw new System.NotImplementedException();
-        }
-        public bool HasSavedData()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

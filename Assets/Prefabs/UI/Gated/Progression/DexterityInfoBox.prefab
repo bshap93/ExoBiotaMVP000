@@ -286,6 +286,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9079788085922262693}
   - component: {fileID: 969250371978003241}
+  - component: {fileID: 6955568020053387626}
   m_Layer: 0
   m_Name: DexterityInfoBox
   m_TagString: Untagged
@@ -325,6 +326,19 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &6955568020053387626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5833188127637817966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4cb5f6f24ddd7342b61c2af7ca7519c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startHidden: 1
 --- !u!1 &8166811077514802812
 GameObject:
   m_ObjectHideFlags: 0

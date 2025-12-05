@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Helpers.Events;
 using Manager.DialogueScene;
+using Manager.UI;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
 using SharedUI.InputsD;
@@ -42,6 +43,9 @@ namespace Manager.Global
         {
             if (TutorialManager.Instance != null && TutorialManager.Instance.IsTutorialOpen()) return;
             if (DialogueManager.Instance != null && DialogueManager.Instance.IsDialogueActive) return;
+            if (GatedInteractionManager.Instance != null &&
+                GatedInteractionManager.Instance.isActiveGui) return;
+
             if (defaultInput.isPausePressed && !PlayerUIManager.Instance.uiIsOpen)
             {
                 Paused = !Paused;

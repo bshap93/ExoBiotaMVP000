@@ -3,6 +3,7 @@ using Helpers.Events;
 using Helpers.Events.Gated;
 using Helpers.Events.Progression;
 using Manager;
+using Manager.UI;
 using Michsky.MUIP;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
@@ -270,6 +271,8 @@ namespace SharedUI.Interact
             _pendingNewMentalToughness = _initialMentalToughness;
             _initialStrength = AttributesManager.Instance.Strength;
             _pendingNewStrength = _initialStrength;
+
+            GatedInteractionManager.Instance.isActiveGui = false;
         }
 
         void CommitChanges()

@@ -1,6 +1,7 @@
 ﻿using System;
 using FirstPersonPlayer.Interface;
 using Helpers.Events;
+using Helpers.Events.Gated;
 using Manager;
 using MoreMountains.Feedbacks;
 using SharedUI.Interface;
@@ -39,6 +40,7 @@ namespace FirstPersonPlayer.Interactable
         public void Interact()
         {
             MyUIEvent.Trigger(UIType.LevelingUI, UIActionType.Open);
+            GatedLevelingEvent.Trigger(GatedInteractionEventType.TriggerGateUI, null);
         }
         public void OnInteractionStart()
         {

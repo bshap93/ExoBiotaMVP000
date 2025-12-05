@@ -13,6 +13,7 @@ public class AttrIGUIList : MonoBehaviour, MMEventListener<GatedLevelingEvent>, 
     [SerializeField] TMP_Text mentalToughnessText;
     [SerializeField] TMP_Text exobioticText;
 
+
     void OnEnable()
     {
         this.MMEventStartListening<GatedLevelingEvent>();

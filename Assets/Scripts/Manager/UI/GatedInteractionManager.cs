@@ -25,6 +25,9 @@ namespace Manager.UI
             LackingNecessaryFuelBattery
         }
 
+        public static GatedInteractionManager Instance;
+        public bool isActiveGui;
+
         [FormerlySerializedAs("uiController")] [FormerlySerializedAs("gatedInteractionUIController")] [SerializeField]
         GatedBreakableUIController breakableUIController;
         [SerializeField] GatedHarvestableUIController gatedHarvestableUIController;
@@ -48,6 +51,13 @@ namespace Manager.UI
         GatedMachineInteractionDetails _currentMachineDetails;
         GatedRestDetails _currentRestDetails;
         string _currentSubjectUniqueID; // ✅ Store the unique ID
+        void Awake()
+        {
+            if (Instance == null)
+                Instance = this;
+            else
+                Destroy(gameObject);
+        }
 
 
         void OnEnable()
@@ -71,6 +81,8 @@ namespace Manager.UI
             if (eventType.EventType == GatedInteractionEventType.TriggerGateUI)
             {
                 _currentBreakableDetails = eventType.Details;
+
+                isActiveGui = true;
 
                 // Optionally, if event also carries source node:
                 // currentNode = e.SourceNode;
@@ -111,6 +123,8 @@ namespace Manager.UI
             {
                 InGameTimeActionEvent.Trigger(InGameTimeActionEvent.ActionType.StopLapseTime);
 
+                isActiveGui = false;
+
                 var staminaCost = eventType.Details.staminaCost;
                 // Deduct stamina from player
                 PlayerStatsEvent.Trigger(
@@ -124,6 +138,8 @@ namespace Manager.UI
             {
                 _currentHarvestableDetails = eventType.Details;
                 _currentSubjectUniqueID = eventType.SubjectUniqueID; // ✅ Store unique ID
+
+                isActiveGui = true;
 
                 // ✅ Find the ItemPicker by unique ID
                 var allPickers = FindObjectsByType<ItemPicker>(FindObjectsSortMode.None);
@@ -176,6 +192,8 @@ namespace Manager.UI
             {
                 InGameTimeActionEvent.Trigger(InGameTimeActionEvent.ActionType.StopLapseTime);
 
+                isActiveGui = false;
+
                 var staminaCost = eventType.Details.staminaCost;
                 // Deduct stamina from player
                 PlayerStatsEvent.Trigger(
@@ -185,6 +203,9 @@ namespace Manager.UI
         }
         public void OnMMEvent(GatedLevelingEvent eventType)
         {
+            if (eventType.EventType == GatedInteractionEventType.TriggerGateUI)
+                isActiveGui = true;
+            else if (eventType.EventType == GatedInteractionEventType.CompleteInteraction) isActiveGui = false;
         }
         public void OnMMEvent(GatedMachineInteractionEvent eventType)
         {
@@ -192,6 +213,8 @@ namespace Manager.UI
             {
                 _currentMachineDetails = eventType.Details;
                 _currentSubjectUniqueID = eventType.SubjectUniqueID;
+
+                isActiveGui = true;
 
                 var allMachines = FindObjectsByType<InteractableMachine>(FindObjectsSortMode.None);
 
@@ -241,6 +264,8 @@ namespace Manager.UI
             {
                 InGameTimeActionEvent.Trigger(InGameTimeActionEvent.ActionType.StopLapseTime);
 
+                isActiveGui = false;
+
                 var staminaCost = eventType.Details.staminaCost;
                 // Deduct stamina from player
                 PlayerStatsEvent.Trigger(
@@ -256,6 +281,8 @@ namespace Manager.UI
                 _currentDockId = eventType.DockId;
                 gatedRestUIController.currentDockId = eventType.DockId;
                 // _currentSubjectUniqueID = eventType.SubjectUniqueID;
+
+                isActiveGui = true;
 
                 gatedRestUIController.Initialize(eventType.RestDetails);
 
@@ -305,6 +332,8 @@ namespace Manager.UI
                 var staminaRestored = eventType.RestTimeMinutes *
                                       eventType.RestDetails.staminaRestoredPerMinute;
 
+                isActiveGui = false;
+
                 // Restore stamina to player
                 PlayerStatsEvent.Trigger(
                     PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Increase,
@@ -317,6 +346,8 @@ namespace Manager.UI
             gatedRestUIController.cancelButton.onClick.RemoveAllListeners();
             gatedRestUIController.restUntilStaminaFullButton.onClick.RemoveAllListeners();
             gatedRestUIController.timeLengthSlider.onValueChanged.RemoveAllListeners();
+
+            isActiveGui = false;
 
             cancelGatedInteractionFeedbacks?.PlayFeedbacks();
 
@@ -333,6 +364,8 @@ namespace Manager.UI
         {
             gatedMachineUIController.confirmDoButton.onClick.RemoveAllListeners();
             gatedMachineUIController.cancelButton.onClick.RemoveAllListeners();
+
+            isActiveGui = false;
 
             // hide UI, reset references, etc.
             MyUIEvent.Trigger(UIType.MachineInteractChoice, UIActionType.Close);
@@ -376,6 +409,8 @@ namespace Manager.UI
             breakableUIController.cancelButton.onClick.RemoveAllListeners();
             // hide UI, reset references, etc.
             MyUIEvent.Trigger(UIType.BreakableInteractChoice, UIActionType.Close);
+
+            isActiveGui = false;
         }
 
         void CancelHarvestableInteraction()
@@ -388,6 +423,8 @@ namespace Manager.UI
             gatedHarvestableUIController.confirmDoButton.onClick.RemoveAllListeners();
             gatedHarvestableUIController.cancelButton.onClick.RemoveAllListeners();
             gatedHarvestableUIController.pickupItemButton.onClick.RemoveAllListeners();
+
+            isActiveGui = false;
 
             // hide UI, reset references, etc.
             MyUIEvent.Trigger(UIType.HarvestableInteractChoice, UIActionType.Close);
