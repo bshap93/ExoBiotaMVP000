@@ -85,26 +85,31 @@ namespace SharedUI.Interact
             var attributeManager = AttributesManager.Instance;
             if (eventType.PendingBuyEventType == PendingBuyEventType.IncreasePendingAttribute)
             {
+                var xpRequired = attributeManager.GetXpRequiredForLevel(eventType.AttrLevelTarget);
                 if (attributeManager.CurrentUnusedXP -
-                    attributeManager.GetXpRequiredForLevel(eventType.AttrLevelTarget) < 0)
+                    xpRequired < 0)
                     return;
 
                 _pendingNewUnusedXP = attributeManager.CurrentUnusedXP -
-                                      attributeManager.GetXpRequiredForLevel(eventType.AttrLevelTarget);
+                                      xpRequired;
 
                 switch (eventType.AttributeType)
                 {
                     case AttributeType.Dexterity:
                         _pendingNewDexterity = eventType.AttrLevelTarget;
+                        dexteritySetter.Initialize(eventType.AttrLevelTarget);
                         break;
                     case AttributeType.MentalToughness:
                         _pendingNewMentalToughness = eventType.AttrLevelTarget;
+                        mentalToughnessSetter.Initialize(eventType.AttrLevelTarget);    
                         break;
                     case AttributeType.Agility:
                         _pendingNewAgility = eventType.AttrLevelTarget;
+                        agilitySetter.Initialize(eventType.AttrLevelTarget);
                         break;
                     case AttributeType.Strength:
                         _pendingNewStrength = eventType.AttrLevelTarget;
+                        strengthSetter.Initialize(eventType.AttrLevelTarget);
                         break;
                 }
             }
@@ -134,15 +139,20 @@ namespace SharedUI.Interact
                 {
                     case AttributeType.Dexterity:
                         _pendingNewDexterity = eventType.AttrLevelTarget;
+                        dexteritySetter.Initialize(eventType.AttrLevelTarget);
                         break;
                     case AttributeType.MentalToughness:
                         _pendingNewMentalToughness = eventType.AttrLevelTarget;
+                        mentalToughnessSetter.Initialize(eventType.AttrLevelTarget);
                         break;
                     case AttributeType.Agility:
                         _pendingNewAgility = eventType.AttrLevelTarget;
+                        agilitySetter.Initialize(eventType.AttrLevelTarget);
+
                         break;
                     case AttributeType.Strength:
                         _pendingNewStrength = eventType.AttrLevelTarget;
+                        strengthSetter.Initialize(eventType.AttrLevelTarget);
                         break;
                 }
             }
