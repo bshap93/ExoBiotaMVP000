@@ -22,9 +22,10 @@ namespace Helpers.Events.Gated
 
         public NewAttributeValues AttributeValues;
 
-        public static void Trigger(GatedInteractionEventType eventType)
+        public static void Trigger(GatedInteractionEventType eventType, NewAttributeValues newAttributeValues)
         {
             _e.EventType = eventType;
+            _e.AttributeValues = newAttributeValues;
 
             MMEventManager.TriggerEvent(_e);
         }

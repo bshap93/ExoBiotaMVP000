@@ -234,6 +234,11 @@ namespace SharedUI.Interact
             _initialMentalToughness = attributeManager.MentalToughness;
             _initialStrength = attributeManager.Strength;
 
+            _pendingNewAgility = _initialAgility;
+            _pendingNewDexterity = _initialDexterity;
+            _pendingNewMentalToughness = _initialMentalToughness;
+            _pendingNewStrength = _initialStrength;
+
             cancelButton.onClick.RemoveAllListeners();
             cancelButton.onClick.AddListener(() => { CancelLeveling(); });
             commitButton.onClick.RemoveAllListeners();
@@ -284,7 +289,16 @@ namespace SharedUI.Interact
 
             commitChangesFeedbacks?.PlayFeedbacks();
 
-            GatedLevelingEvent.Trigger(GatedInteractionEventType.CompleteInteraction);
+            var newAttrValues = new NewAttributeValues
+            {
+                dexterity = _pendingNewDexterity,
+                mentalToughness = _pendingNewMentalToughness,
+                agility = _pendingNewAgility,
+                strength = _pendingNewStrength,
+                exobiotic = AttributesManager.Instance.Exobiotic
+            };
+
+            GatedLevelingEvent.Trigger(GatedInteractionEventType.CompleteInteraction, newAttrValues);
         }
 
         void Hide()

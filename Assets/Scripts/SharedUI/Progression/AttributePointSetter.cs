@@ -26,6 +26,7 @@ namespace SharedUI.Progression
         TMP_Text xpNeededForNextIncreaseText;
         [SerializeField] Button increaseButton;
         [SerializeField] Button decreaseButton;
+        [SerializeField] CanvasGroup infoBoxCanvasGroup;
 
         public bool canDecrease;
 
@@ -36,11 +37,30 @@ namespace SharedUI.Progression
         public int PendingChanges { get; private set; }
         public AttributeType AttributeType => attributeType;
 
+        void Start()
+        {
+            HideInfoBox();
+        }
+        public void HideInfoBox()
+        {
+            infoBoxCanvasGroup.alpha = 0f;
+            infoBoxCanvasGroup.blocksRaycasts = false;
+            infoBoxCanvasGroup.interactable = false;
+        }
+
+        public void ShowInfoBox()
+        {
+            infoBoxCanvasGroup.alpha = 1f;
+            infoBoxCanvasGroup.blocksRaycasts = true;
+            infoBoxCanvasGroup.interactable = true;
+        }
+
         public void Initialize(int currentPoints, int currentUnusedXP)
         {
             var attributeManager = AttributesManager.Instance;
             _currentPoints = currentPoints;
             PendingChanges = 0;
+
 
             _xpNeededForNextIncrease = attributeManager.GetXpRequiredForLevel(_currentPoints + 1);
             xpNeededForNextIncreaseText.text =
