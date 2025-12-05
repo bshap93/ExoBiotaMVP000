@@ -1,5 +1,5 @@
 using System;
-using Helpers.Events;
+using Helpers.Events.Progression;
 using Manager;
 using TMPro;
 using UnityEngine;
@@ -22,21 +22,27 @@ namespace SharedUI.Progression
     {
         [SerializeField] AttributeType attributeType;
         [SerializeField] TMP_Text attributePointText;
-        [FormerlySerializedAs("attributXPText")] [SerializeField]
-        TMP_Text xpNeededForNextIncrease;
+        [FormerlySerializedAs("xpNeededForNextIncrease")] [FormerlySerializedAs("attributXPText")] [SerializeField]
+        TMP_Text xpNeededForNextIncreaseText;
         [SerializeField] Button increaseButton;
         [SerializeField] Button decreaseButton;
 
         int _currentPoints;
         int _currentXP;
+        int _xpNeededForNextIncrease;
 
         public int PendingChanges { get; private set; }
         public AttributeType AttributeType => attributeType;
 
         public void Initialize(int currentPoints)
         {
+            var attributeManager = AttributesManager.Instance;
             _currentPoints = currentPoints;
             PendingChanges = 0;
+
+            _xpNeededForNextIncrease = attributeManager.GetXpRequiredForLevel(_currentPoints + 1);
+            xpNeededForNextIncreaseText.text =
+                _xpNeededForNextIncrease.ToString();
 
             UpdateDisplay();
 
@@ -60,51 +66,18 @@ namespace SharedUI.Progression
             // xpNeededForNextIncrease.text = _currentXP.ToString();
         }
 
-        public void CommitChanges()
-        {
-            if (PendingChanges <= 0) return;
-            var attributeManager = AttributesManager.Instance;
-
-            switch (attributeType)
-            {
-                case AttributeType.Strength:
-                    attributeManager.Strength += PendingChanges;
-                    break;
-                case AttributeType.Agility:
-                    attributeManager.Agility += PendingChanges;
-                    break;
-                case AttributeType.Dexterity:
-                    attributeManager.Dexterity += PendingChanges;
-                    break;
-                case AttributeType.MentalToughness:
-                    attributeManager.MentalToughness += PendingChanges;
-                    break;
-                case AttributeType.Exobiotic:
-                    attributeManager.Exobiotic += PendingChanges;
-                    break;
-            }
-
-            attributeManager.ConditionalSave();
-
-            AttributeLevelUpEvent.Trigger(attributeType, _currentPoints + PendingChanges);
-
-            _currentPoints += PendingChanges;
-            PendingChanges = 0;
-
-            UpdateDisplay();
-            UpdateButtonStates();
-        }
-
         void OnIncreaseButtonClicked()
         {
-            // Logic to increase attribute points
-            Debug.Log($"Increased {attributeType} points.");
+            AttrPendingBuyEvent.Trigger(
+                attributeType, PendingBuyEventType.IncreasePendingAttribute, _currentPoints + 1);
         }
 
         void OnDecreaseButtonClicked()
         {
             // Logic to decrease attribute points
-            Debug.Log($"Decreased {attributeType} points.");
+            AttrPendingBuyEvent.Trigger(
+                attributeType, PendingBuyEventType.DecreasePendingAttribute,
+                _currentPoints - 1);
         }
     }
 }

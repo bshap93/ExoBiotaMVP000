@@ -12127,10 +12127,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 36.35
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -12165,7 +12165,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -10.489075, y: 0, z: 161.69989, w: 0}
+  m_margin: {x: -30.982056, y: 0, z: 117.77588, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -13714,6 +13714,7 @@ MonoBehaviour:
   agilitySetter: {fileID: 7605431192926322397}
   strengthSetter: {fileID: 4553616702512082068}
   totalUnusedXPText: {fileID: 3177521543343498456}
+  waitOverlay: {fileID: 0}
   openFeedbacks: {fileID: 0}
   addXPFeedbacks: {fileID: 0}
   commitButton: {fileID: 2573546824490975697}

@@ -1,5 +1,6 @@
 ﻿using FirstPersonPlayer.Tools.ItemObjectTypes.CompositeObjects;
 using Helpers.Events;
+using Helpers.Events.Gated;
 using Helpers.Events.Progression;
 using Helpers.Interfaces;
 using Helpers.StaticHelpers;
@@ -8,10 +9,11 @@ using UnityEngine;
 
 namespace Manager
 {
-    public class AttributesManager : MonoBehaviour, ICoreGameService, MMEventListener<InnerCoreXPEvent>
+    public class AttributesManager : MonoBehaviour, ICoreGameService, MMEventListener<InnerCoreXPEvent>,
+        MMEventListener<GatedLevelingEvent>
     {
-        const float XpBase = 10f;
-        const float XpExponent = 1.5f;
+        const float baseCost = 20f; // cost for first level
+        const float growth = 1.4f; // how fast it scales
         public bool autoSave;
         // has endurance and agility's traditional 
         // functions been merged into a single stat...for now
@@ -119,12 +121,14 @@ namespace Manager
         }
         void OnEnable()
         {
-            this.MMEventStartListening();
+            this.MMEventStartListening<InnerCoreXPEvent>();
+            this.MMEventStartListening<GatedLevelingEvent>();
         }
 
         void OnDisable()
         {
-            this.MMEventStopListening();
+            this.MMEventStopListening<InnerCoreXPEvent>();
+            this.MMEventStopListening<GatedLevelingEvent>();
         }
         public void Save()
         {
@@ -158,7 +162,7 @@ namespace Manager
                 _exobiotic = ES3.Load<int>("Exobiotic", path);
 
             if (ES3.KeyExists("CurrentUnusedXP", path))
-                _currentUnusedXP = ES3.Load<int>("CurrentUnusedXP", path);
+                CurrentUnusedXP = ES3.Load<int>("CurrentUnusedXP", path);
         }
         public void Reset()
         {
@@ -195,6 +199,21 @@ namespace Manager
         {
             return ES3.FileExists(_savePath ?? GetSaveFilePath());
         }
+        public void OnMMEvent(GatedLevelingEvent eventType)
+        {
+            if (eventType.EventType == GatedInteractionEventType.CompleteInteraction)
+            {
+                var newAttributeValues = eventType.AttributeValues;
+
+                _strength = newAttributeValues.strength;
+                _agility = newAttributeValues.agility;
+                _dexterity = newAttributeValues.dexterity;
+                _mentalToughness = newAttributeValues.mentalToughness;
+                _exobiotic = newAttributeValues.exobiotic;
+
+                MarkDirty();
+            }
+        }
         public void OnMMEvent(InnerCoreXPEvent eventType)
         {
             if (eventType.EventType == InnerCoreXPEventType.ConvertCoreToXP)
@@ -204,15 +223,10 @@ namespace Manager
 
         public int GetXpRequiredForLevel(int level)
         {
-            if (level <= 1) return 0;
-            return Mathf.RoundToInt(XpBase * Mathf.Pow(level, XpExponent));
-        }
+            if (level <= 1)
+                return Mathf.RoundToInt(baseCost);
 
-        public int GetTotalXpForLevel(int targetLevel)
-        {
-            var total = 0;
-            for (var i = 2; i <= targetLevel; i++) total += GetXpRequiredForLevel(i);
-            return total;
+            return Mathf.RoundToInt(baseCost * Mathf.Pow(growth, level - 2));
         }
 
         void ConvertCoreToXP(
@@ -248,5 +262,10 @@ namespace Manager
 
             MarkDirty();
         }
+
+        // public int AmtXPNeededForNextAttributePoint(AttributeType attributeType)
+        // {
+        //     
+        // }
     }
 }

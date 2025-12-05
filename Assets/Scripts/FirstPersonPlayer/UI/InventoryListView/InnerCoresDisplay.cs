@@ -22,7 +22,7 @@ namespace FirstPersonPlayer.UI.InventoryListView
 
         void Start()
         {
-            Refresh();
+            // Refresh();
         }
 
         void OnEnable()
@@ -43,19 +43,20 @@ namespace FirstPersonPlayer.UI.InventoryListView
 
         public void Refresh()
         {
-            var numStandard = GlobalInventoryManager.Instance.GetNumberOfInnerCoresInInventory(
+            var globalInventoryManager = GlobalInventoryManager.Instance;
+            var numStandard = globalInventoryManager.GetNumberOfInnerCoresInInventory(
                 HarvestableInnerObject.InnerObjectValueGrade.StandardGrade);
 
-            var numRadiant = GlobalInventoryManager.Instance.GetNumberOfInnerCoresInInventory(
+            var numRadiant = globalInventoryManager.GetNumberOfInnerCoresInInventory(
                 HarvestableInnerObject.InnerObjectValueGrade.Radiant);
 
-            var numStellar = GlobalInventoryManager.Instance.GetNumberOfInnerCoresInInventory(
+            var numStellar = globalInventoryManager.GetNumberOfInnerCoresInInventory(
                 HarvestableInnerObject.InnerObjectValueGrade.Stellar);
 
-            var numUnreasonable = GlobalInventoryManager.Instance.GetNumberOfInnerCoresInInventory(
+            var numUnreasonable = globalInventoryManager.GetNumberOfInnerCoresInInventory(
                 HarvestableInnerObject.InnerObjectValueGrade.Unreasonable);
 
-            // var numExotic = GlobalInventoryManager.Instance.GetNumberOfInnerCoresInInventory(
+            // var numExotic = globalInventoryManager.GetNumberOfInnerCoresInInventory(
             //     HarvestableInnerObject.InnerObjectValueGrade.MiscExotic);
 
             standardCoreRow.Initialize(HarvestableInnerObject.InnerObjectValueGrade.StandardGrade, numStandard);
@@ -79,17 +80,29 @@ namespace FirstPersonPlayer.UI.InventoryListView
             }
             else
             {
-                if (numStandard == 0) standardCoreRow.convertToXPButton.gameObject.SetActive(false);
-                else standardCoreRow.convertToXPButton.gameObject.SetActive(true);
+                if (standardCoreRow.convertToXPButton != null)
+                {
+                    if (numStandard == 0) standardCoreRow.convertToXPButton.gameObject.SetActive(false);
+                    else standardCoreRow.convertToXPButton.gameObject.SetActive(true);
+                }
 
-                if (numRadiant == 0) radiantCoreRow.convertToXPButton.gameObject.SetActive(false);
-                else radiantCoreRow.convertToXPButton.gameObject.SetActive(true);
+                if (radiantCoreRow.convertToXPButton != null)
+                {
+                    if (numRadiant == 0) radiantCoreRow.convertToXPButton.gameObject.SetActive(false);
+                    else radiantCoreRow.convertToXPButton.gameObject.SetActive(true);
+                }
 
-                if (numStellar == 0) stellarCoreRow.convertToXPButton.gameObject.SetActive(false);
-                else stellarCoreRow.convertToXPButton.gameObject.SetActive(true);
+                if (stellarCoreRow.convertToXPButton != null)
+                {
+                    if (numStellar == 0) stellarCoreRow.convertToXPButton.gameObject.SetActive(false);
+                    else stellarCoreRow.convertToXPButton.gameObject.SetActive(true);
+                }
 
-                if (numUnreasonable == 0) unreasonableCoreRow.convertToXPButton.gameObject.SetActive(false);
-                else unreasonableCoreRow.convertToXPButton.gameObject.SetActive(true);
+                if (unreasonableCoreRow.convertToXPButton != null)
+                {
+                    if (numUnreasonable == 0) unreasonableCoreRow.convertToXPButton.gameObject.SetActive(false);
+                    else unreasonableCoreRow.convertToXPButton.gameObject.SetActive(true);
+                }
             }
         }
     }

@@ -15,7 +15,7 @@ namespace Manager.UI
 {
     public class GatedInteractionManager : MonoBehaviour, MMEventListener<GatedBreakableInteractionEvent>,
         MMEventListener<GatedHarvestableInteractionEvent>, MMEventListener<GatedMachineInteractionEvent>,
-        MMEventListener<GatedRestEvent>
+        MMEventListener<GatedRestEvent>, MMEventListener<GatedLevelingEvent>
     {
         public enum ReasonWhyCannotInteract
         {
@@ -56,6 +56,7 @@ namespace Manager.UI
             this.MMEventStartListening<GatedHarvestableInteractionEvent>();
             this.MMEventStartListening<GatedMachineInteractionEvent>();
             this.MMEventStartListening<GatedRestEvent>();
+            this.MMEventStartListening<GatedLevelingEvent>();
         }
         void OnDisable()
         {
@@ -63,6 +64,7 @@ namespace Manager.UI
             this.MMEventStopListening<GatedHarvestableInteractionEvent>();
             this.MMEventStopListening<GatedMachineInteractionEvent>();
             this.MMEventStopListening<GatedRestEvent>();
+            this.MMEventStopListening<GatedLevelingEvent>();
         }
         public void OnMMEvent(GatedBreakableInteractionEvent eventType)
         {
@@ -180,6 +182,9 @@ namespace Manager.UI
                     PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
                     staminaCost);
             }
+        }
+        public void OnMMEvent(GatedLevelingEvent eventType)
+        {
         }
         public void OnMMEvent(GatedMachineInteractionEvent eventType)
         {

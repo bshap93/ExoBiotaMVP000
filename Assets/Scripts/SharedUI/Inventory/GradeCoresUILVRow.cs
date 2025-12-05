@@ -35,8 +35,11 @@ namespace SharedUI.Inventory
             _currentQuantity = quantity;
             coreQuantityText.text = _currentQuantity.ToString();
 
-            convertToXPButton.onClick.RemoveAllListeners();
-            convertToXPButton.onClick.AddListener(ConvertToXP);
+            if (convertToXPButton != null)
+            {
+                convertToXPButton.onClick.RemoveAllListeners();
+                convertToXPButton.onClick.AddListener(ConvertToXP);
+            }
         }
 
         void ConvertToXP()
