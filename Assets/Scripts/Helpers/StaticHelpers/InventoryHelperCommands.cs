@@ -66,8 +66,8 @@ namespace Helpers.StaticHelpers
                 removed++;
             }
 
-            AlertEvent.Trigger(
-                AlertReason.ItemsRemoved, $"Removed {removed} x {grade} Inner Core", $"InnerCore_{grade}");
+            // AlertEvent.Trigger(
+            // AlertReason.ItemsRemoved, $"Removed {removed} x {grade} Inner Core", $"InnerCore_{grade}");
         }
     }
 }

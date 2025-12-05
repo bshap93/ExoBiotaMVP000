@@ -13,7 +13,7 @@ using UnityEngine;
 namespace SharedUI.Interact
 {
     public class GatedLevelingUIController : MonoBehaviour, MMEventListener<MyUIEvent>, MMEventListener<XPEvent>,
-        MMEventListener<AttrPendingBuyEvent>
+        MMEventListener<AttrPendingBuyEvent>, MMEventListener<InnerCoreXPEvent>
     {
         [SerializeField] InnerCoresDisplay innerCoresDisplay;
 
@@ -29,6 +29,7 @@ namespace SharedUI.Interact
         [Header("Feedbacks and Buttons")] [SerializeField]
         MMFeedbacks openFeedbacks;
         [SerializeField] MMFeedbacks addXPFeedbacks;
+        [SerializeField] MMFeedbacks commitChangesFeedbacks;
 
 
         [Header(" Buttons ")] [SerializeField] ButtonManager commitButton;
@@ -73,12 +74,14 @@ namespace SharedUI.Interact
             this.MMEventStartListening<MyUIEvent>();
             this.MMEventStartListening<XPEvent>();
             this.MMEventStartListening<AttrPendingBuyEvent>();
+            this.MMEventStartListening<InnerCoreXPEvent>();
         }
         void OnDisable()
         {
             this.MMEventStopListening<MyUIEvent>();
             this.MMEventStopListening<XPEvent>();
             this.MMEventStopListening<AttrPendingBuyEvent>();
+            this.MMEventStopListening<InnerCoreXPEvent>();
         }
         public void OnMMEvent(AttrPendingBuyEvent eventType)
         {
@@ -86,30 +89,36 @@ namespace SharedUI.Interact
             if (eventType.PendingBuyEventType == PendingBuyEventType.IncreasePendingAttribute)
             {
                 var xpRequired = attributeManager.GetXpRequiredForLevel(eventType.AttrLevelTarget);
-                if (attributeManager.CurrentUnusedXP -
+                if (_pendingNewUnusedXP -
                     xpRequired < 0)
                     return;
 
-                _pendingNewUnusedXP = attributeManager.CurrentUnusedXP -
+                _pendingNewUnusedXP = _pendingNewUnusedXP -
                                       xpRequired;
+
+                totalUnusedXPText.text = _pendingNewUnusedXP.ToString();
 
                 switch (eventType.AttributeType)
                 {
                     case AttributeType.Dexterity:
                         _pendingNewDexterity = eventType.AttrLevelTarget;
-                        dexteritySetter.Initialize(eventType.AttrLevelTarget);
+                        dexteritySetter.Initialize(eventType.AttrLevelTarget, _pendingNewUnusedXP);
+                        dexteritySetter.canDecrease = true;
                         break;
                     case AttributeType.MentalToughness:
                         _pendingNewMentalToughness = eventType.AttrLevelTarget;
-                        mentalToughnessSetter.Initialize(eventType.AttrLevelTarget);    
+                        mentalToughnessSetter.Initialize(eventType.AttrLevelTarget, _pendingNewUnusedXP);
+                        mentalToughnessSetter.canDecrease = true;
                         break;
                     case AttributeType.Agility:
                         _pendingNewAgility = eventType.AttrLevelTarget;
-                        agilitySetter.Initialize(eventType.AttrLevelTarget);
+                        agilitySetter.Initialize(eventType.AttrLevelTarget, _pendingNewUnusedXP);
+                        agilitySetter.canDecrease = true;
                         break;
                     case AttributeType.Strength:
                         _pendingNewStrength = eventType.AttrLevelTarget;
-                        strengthSetter.Initialize(eventType.AttrLevelTarget);
+                        strengthSetter.Initialize(eventType.AttrLevelTarget, _pendingNewUnusedXP);
+                        strengthSetter.canDecrease = true;
                         break;
                 }
             }
@@ -131,30 +140,46 @@ namespace SharedUI.Interact
                         break;
                 }
 
-                _pendingNewUnusedXP = attributeManager.CurrentUnusedXP +
-                                      attributeManager.GetXpRequiredForLevel(eventType.AttrLevelTarget - 1);
+                _pendingNewUnusedXP += attributeManager.GetXpRequiredForLevel(eventType.AttrLevelTarget - 1);
+
+                totalUnusedXPText.text = _pendingNewUnusedXP.ToString();
 
 
                 switch (eventType.AttributeType)
                 {
                     case AttributeType.Dexterity:
                         _pendingNewDexterity = eventType.AttrLevelTarget;
-                        dexteritySetter.Initialize(eventType.AttrLevelTarget);
+                        dexteritySetter.Initialize(eventType.AttrLevelTarget, _pendingNewUnusedXP);
+                        dexteritySetter.canDecrease = eventType.AttrLevelTarget >= _initialDexterity;
                         break;
                     case AttributeType.MentalToughness:
                         _pendingNewMentalToughness = eventType.AttrLevelTarget;
-                        mentalToughnessSetter.Initialize(eventType.AttrLevelTarget);
+                        mentalToughnessSetter.Initialize(eventType.AttrLevelTarget, _pendingNewUnusedXP);
+                        mentalToughnessSetter.canDecrease = eventType.AttrLevelTarget >= _initialMentalToughness;
                         break;
                     case AttributeType.Agility:
                         _pendingNewAgility = eventType.AttrLevelTarget;
-                        agilitySetter.Initialize(eventType.AttrLevelTarget);
+                        agilitySetter.Initialize(eventType.AttrLevelTarget, _pendingNewUnusedXP);
+                        agilitySetter.canDecrease = eventType.AttrLevelTarget >= _initialAgility;
 
                         break;
                     case AttributeType.Strength:
                         _pendingNewStrength = eventType.AttrLevelTarget;
-                        strengthSetter.Initialize(eventType.AttrLevelTarget);
+                        strengthSetter.Initialize(eventType.AttrLevelTarget, _pendingNewUnusedXP);
+                        strengthSetter.canDecrease = eventType.AttrLevelTarget >= _initialStrength;
                         break;
                 }
+            }
+        }
+        public void OnMMEvent(InnerCoreXPEvent eventType)
+        {
+            if (eventType.EventType == InnerCoreXPEventType.ConvertCoreToXP)
+            {
+                _currentUnusedXP = _currentUnusedXP +
+                                   AttributesManager.Instance.GetXPGainedForCoreGrade(eventType.CoreGrade);
+
+                _pendingNewUnusedXP = _currentUnusedXP;
+                RefreshAttrSetters();
             }
         }
         public void OnMMEvent(MyUIEvent eventType)
@@ -196,16 +221,13 @@ namespace SharedUI.Interact
 
             // Unused XP
             _currentUnusedXP = attributeManager.CurrentUnusedXP;
-            totalUnusedXPText.text = _currentUnusedXP.ToString();
+            _pendingNewUnusedXP = _currentUnusedXP;
+            totalUnusedXPText.text = _pendingNewUnusedXP.ToString();
 
             // Inner Cores Display
             innerCoresDisplay.Refresh();
 
-            // Attribute Setters
-            dexteritySetter.Initialize(attributeManager.Dexterity);
-            mentalToughnessSetter.Initialize(attributeManager.MentalToughness);
-            agilitySetter.Initialize(attributeManager.Agility);
-            strengthSetter.Initialize(attributeManager.Strength);
+            RefreshAttrSetters();
 
             _initialAgility = attributeManager.Agility;
             _initialDexterity = attributeManager.Dexterity;
@@ -217,12 +239,32 @@ namespace SharedUI.Interact
             commitButton.onClick.RemoveAllListeners();
             commitButton.onClick.AddListener(CommitChanges);
         }
+        void RefreshAttrSetters()
+        {
+            var attributeManager = AttributesManager.Instance;
+            // Attribute Setters
+            dexteritySetter.Initialize(attributeManager.Dexterity, _pendingNewUnusedXP);
+            mentalToughnessSetter.Initialize(attributeManager.MentalToughness, _pendingNewUnusedXP);
+            agilitySetter.Initialize(attributeManager.Agility, _pendingNewUnusedXP);
+            strengthSetter.Initialize(attributeManager.Strength, _pendingNewUnusedXP);
+        }
 
         void CancelLeveling()
         {
             // Logic to cancel attribute point changes
             Debug.Log("Canceled attribute point changes.");
             MyUIEvent.Trigger(UIType.LevelingUI, UIActionType.Close);
+
+            _currentUnusedXP = AttributesManager.Instance.CurrentUnusedXP;
+            _pendingNewUnusedXP = _currentUnusedXP;
+            _initialAgility = AttributesManager.Instance.Agility;
+            _pendingNewAgility = _initialAgility;
+            _initialDexterity = AttributesManager.Instance.Dexterity;
+            _pendingNewDexterity = _initialDexterity;
+            _initialMentalToughness = AttributesManager.Instance.MentalToughness;
+            _pendingNewMentalToughness = _initialMentalToughness;
+            _initialStrength = AttributesManager.Instance.Strength;
+            _pendingNewStrength = _initialStrength;
         }
 
         void CommitChanges()
@@ -232,6 +274,15 @@ namespace SharedUI.Interact
             MyUIEvent.Trigger(UIType.LevelingUI, UIActionType.Close);
             // MyUIEvent.Trigger(UIType.WaitWhileInteracting, UIActionType.Open);
             // waitOverlay.Show("Applying Attribute Augments");
+            AttributesManager.Instance.ApplyPendingAttributeChanges(
+                _pendingNewDexterity,
+                _pendingNewMentalToughness,
+                _pendingNewAgility,
+                _pendingNewStrength);
+
+            AttributesManager.Instance.ApplyPendingUnusedXP(_pendingNewUnusedXP);
+
+            commitChangesFeedbacks?.PlayFeedbacks();
 
             GatedLevelingEvent.Trigger(GatedInteractionEventType.CompleteInteraction);
         }

@@ -884,9 +884,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attributeType: 2
   attributePointText: {fileID: 7968627710758330876}
-  xpNeededForNextIncrease: {fileID: 6461759315541851026}
+  xpNeededForNextIncreaseText: {fileID: 6461759315541851026}
   increaseButton: {fileID: 2965865034491878230}
   decreaseButton: {fileID: 7019406449234057743}
+  canDecrease: 0
 --- !u!1 &9174740586827550794
 GameObject:
   m_ObjectHideFlags: 0

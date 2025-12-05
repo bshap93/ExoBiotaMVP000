@@ -27,6 +27,8 @@ namespace SharedUI.Progression
         [SerializeField] Button increaseButton;
         [SerializeField] Button decreaseButton;
 
+        public bool canDecrease;
+
         int _currentPoints;
         int _currentXP;
         int _xpNeededForNextIncrease;
@@ -34,7 +36,7 @@ namespace SharedUI.Progression
         public int PendingChanges { get; private set; }
         public AttributeType AttributeType => attributeType;
 
-        public void Initialize(int currentPoints)
+        public void Initialize(int currentPoints, int currentUnusedXP)
         {
             var attributeManager = AttributesManager.Instance;
             _currentPoints = currentPoints;
@@ -51,12 +53,14 @@ namespace SharedUI.Progression
             increaseButton.onClick.AddListener(() => OnIncreaseButtonClicked());
             decreaseButton.onClick.AddListener(() => OnDecreaseButtonClicked());
 
-            UpdateButtonStates();
+            var canIncrease = _xpNeededForNextIncrease <= currentUnusedXP;
+            UpdateButtonStates(canDecrease, canIncrease);
         }
 
-        void UpdateButtonStates()
+        public void UpdateButtonStates(bool decreaseEnable, bool increaseEnable)
         {
-            decreaseButton.interactable = PendingChanges > 0;
+            increaseButton.interactable = true;
+            decreaseButton.interactable = true;
         }
 
         void UpdateDisplay()

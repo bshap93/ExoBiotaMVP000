@@ -267,5 +267,39 @@ namespace Manager
         // {
         //     
         // }
+        public int GetXPGainedForCoreGrade(HarvestableInnerObject.InnerObjectValueGrade eventTypeCoreGrade)
+        {
+            switch (eventTypeCoreGrade)
+            {
+                case HarvestableInnerObject.InnerObjectValueGrade.StandardGrade:
+                    return 10;
+                case HarvestableInnerObject.InnerObjectValueGrade.Radiant:
+                    return 20;
+                case HarvestableInnerObject.InnerObjectValueGrade.Stellar:
+                    return 30;
+                case HarvestableInnerObject.InnerObjectValueGrade.Unreasonable:
+                    return 50;
+                case HarvestableInnerObject.InnerObjectValueGrade.MiscExotic:
+                    return 0;
+                default:
+                    return 0;
+            }
+        }
+        public void ApplyPendingAttributeChanges(int pendingNewDexterity, int pendingNewMentalToughness,
+            int pendingNewAgility, int pendingNewStrength)
+        {
+            _dexterity = pendingNewDexterity;
+            _mentalToughness = pendingNewMentalToughness;
+            _agility = pendingNewAgility;
+            _strength = pendingNewStrength;
+
+            MarkDirty();
+        }
+        public void ApplyPendingUnusedXP(int pendingNewUnusedXP)
+        {
+            _currentUnusedXP = pendingNewUnusedXP;
+
+            MarkDirty();
+        }
     }
 }
