@@ -1024,20 +1024,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74821b393212fae43aa90348649fe128, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toolCooldown: 1
-  toolUsingRange: 2
-  toolHardnessPower: 1
   toolAttackProfile: {fileID: 11400000, guid: e3251e058139a894684eb6a3a27f2856, type: 2}
-  effectRadius: 1
+  attributesManager: {fileID: 0}
+  agilityCooldownSecondsReducePerPoint: 0
   detectableType: 0
   useMultipleSwings: 1
   swing01HitDelay: 0.65
   swing02HitDelay: 0.4
   swing03HitDelay: 0.4
   defaultHitDelay: 0.4
-  connectingImpactVfx: {fileID: 0}
-  ineffectualImpactVfx: {fileID: 0}
-  connectingDebrisEffectPrefab: {fileID: 0}
   ineffectualDebrisEffectPrefab: {fileID: 761645417365632772, guid: d930383bf4b2ce64d95f23bedbd942db, type: 3}
   equipFeedbacks: {fileID: 2658347934427604760}
   unequippedFeedbacks: {fileID: 5031370039458286709}

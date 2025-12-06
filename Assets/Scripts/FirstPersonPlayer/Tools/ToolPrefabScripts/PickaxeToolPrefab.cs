@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Digger.Modules.Runtime.Sources;
 using Domains.Gameplay.Mining.Scripts;
 using Feedbacks.Interface;
 using FirstPersonPlayer.Interactable;
@@ -8,10 +7,8 @@ using Helpers.Events;
 using Helpers.Events.Status;
 using LevelConstruct.Highlighting;
 using Manager;
-using Manager.Global;
 using MoreMountains.Feedbacks;
 using UnityEngine;
-using Utilities;
 
 namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 {
@@ -29,9 +26,6 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
 
         // Not in abstract base class
-        public float effectOpacity = 10f;
-
-        // Not in abstract base class
         [Header("Allowed Textures")] public int[] allowedTerrainTextureIndices;
 
         [SerializeField] MMFeedbacks equippedFeedbacks;
@@ -45,14 +39,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         LayerMask minableLayers = -1; // Default: all layers
 
 
-        // Not in abstract base class
-        public TerrainLayerDetector terrainLayerDetector;
-
         [Tooltip("Tool power sent to breakables (compares to their hardness).")]
         public int pickaxePower = 1;
         float _checkObjectsCooldown;
 
-        DiggerMasterRuntime _digger;
         bool _hasValidHit;
 
         RaycastHit _pendingHit;
@@ -107,8 +97,6 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         public override void Initialize(PlayerEquipment owner)
         {
             mainCamera = Camera.main;
-            terrainLayerDetector = owner.terrainLayerDetector;
-            _digger = TerrainManager.Instance?.currentDiggerMasterRuntime;
             AnimController = owner.animancerRightArmController;
         }
 
@@ -198,11 +186,6 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             return false;
         }
 
-        public int GetCurrentTextureIndex()
-        {
-            return terrainLayerDetector?.GetTextureIndex(LastHit, out _) ?? -1;
-        }
-
         public override void ApplyHit()
         {
             // Use the stored hit from when button was pressed
@@ -252,6 +235,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         }
         public override void PerformToolAction()
         {
+            miningCooldown -= agilityCooldownSecondsReducePerPoint * attributesManager.Agility;
             // Check cooldown first
             if (Time.time < LastSwingTime + miningCooldown) return;
 

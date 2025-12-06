@@ -35,6 +35,7 @@ namespace FirstPersonPlayer.InputHandling
 
         [FormerlySerializedAs("playerStatsManager")] [SerializeField]
         PlayerMutableStatsManager playerMutableStatsManager;
+        [SerializeField] AttributesManager attributesManager;
 
         [SerializeField] MMFeedbacks cannotRunFeedbacks;
 
@@ -170,6 +171,7 @@ namespace FirstPersonPlayer.InputHandling
             crouchParameters.heightRatio = Mathf.Max(minCrouchHeightRatio, crouchParameters.heightRatio);
 
             playerMutableStatsManager = PlayerMutableStatsManager.Instance;
+            attributesManager = AttributesManager.Instance;
         }
 
         protected virtual void OnEnable()
@@ -368,6 +370,14 @@ namespace FirstPersonPlayer.InputHandling
             var speedMultiplier = materialController != null
                 ? materialController.CurrentSurface.speedMultiplier * materialController.CurrentVolume.speedMultiplier
                 : 1f;
+
+            // Based on Agility attribute (from AttributesManager)
+            if (attributesManager != null)
+            {
+                var agilityMultiplier = 1f + (attributesManager.Agility - 1) * 0.1f;
+                speedMultiplier *= agilityMultiplier;
+                // Debug.Log("Speed multipliler: " + speedMultiplier);
+            }
 
 
             var needToAccelerate =
@@ -1018,6 +1028,8 @@ namespace FirstPersonPlayer.InputHandling
 
                 OnJumpPerformed?.Invoke();
 
+                var agilityJumpMultiplier = 1 + (attributesManager.Agility - 1) * 0.1f;
+
                 jumpStartFeedbacks?.PlayFeedbacks();
 
                 // Define the jump direction ---------------------------------------------------
@@ -1030,7 +1042,10 @@ namespace FirstPersonPlayer.InputHandling
                 // First remove any velocity associated with the jump direction.
                 CharacterActor.Velocity -= Vector3.Project(CharacterActor.Velocity, jumpDirection);
                 CharacterActor.Velocity += CustomUtilities.Multiply(
-                    jumpDirection, verticalMovementParameters.jumpSpeed);
+                    jumpDirection, verticalMovementParameters.jumpSpeed * agilityJumpMultiplier);
+
+                Debug.Log("Jump Velocity: " + CharacterActor.Velocity);
+
 
                 if (verticalMovementParameters.cancelJumpOnRelease)
                     isAllowedToCancelJump = true;

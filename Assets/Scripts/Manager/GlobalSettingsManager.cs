@@ -21,7 +21,7 @@ namespace Manager
         [FormerlySerializedAs("intitialMouseSensitivity")] [Range(0.0f, 2.0f)] [SerializeField]
         float intitialMouseXSensitivity = 1.0f;
         [Range(0.0f, 2.0f)] [SerializeField] float initialMouseYSensitivity = 1.0f;
-        [SerializeField] int numInputBehaviors = 4;
+        // [SerializeField] int numInputBehaviors = 4;
 
 
         public List<ResolutionSettings> chooseableResolutions = new()

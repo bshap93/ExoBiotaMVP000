@@ -44,6 +44,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 return;
             }
 
+            if (attributesManager == null) attributesManager = AttributesManager.Instance;
+
             PerformToolAction();
         }
 
@@ -170,6 +172,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
         public override void PerformToolAction()
         {
+            swingCooldown -= agilityCooldownSecondsReducePerPoint * (attributesManager.Agility - 1);
             if (Time.time < LastSwingTime + swingCooldown) return;
             LastSwingTime = Time.time;
 

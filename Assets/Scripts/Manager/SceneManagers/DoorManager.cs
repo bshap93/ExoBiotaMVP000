@@ -36,7 +36,7 @@ namespace Manager.SceneManagers
 
         bool _dirty;
 
-        bool _loadedOnce; // add this field near the top of the class
+        // bool _loadedOnce; // add this field near the top of the class
         string _savePath;
         public static DoorManager Instance { get; private set; }
 
@@ -66,7 +66,6 @@ namespace Manager.SceneManagers
             }
 
             Load();
-            _loadedOnce = true;
 
             // ---- GRANT DEFAULTS & SAVE IMMEDIATELY ----
             if (!_data.DefaultKeysGranted && defaultKeys != null && defaultKeys.Count > 0)

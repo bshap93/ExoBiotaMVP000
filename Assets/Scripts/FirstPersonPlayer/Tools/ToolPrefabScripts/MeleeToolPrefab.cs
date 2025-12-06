@@ -5,6 +5,7 @@ using FirstPersonPlayer.Tools.Interface;
 using Helpers.AnimancerHelper;
 using Helpers.Events.ManagerEvents;
 using Helpers.ScriptableObjects.Animation;
+using Manager;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -13,16 +14,11 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 {
     public abstract class MeleeToolPrefab : MonoBehaviour, IRuntimeTool
     {
-        [Header("Tool Settings")] public float toolCooldown = 1f;
-
-        public float toolUsingRange = 5f;
-        public int toolHardnessPower = 1;
-
         [FormerlySerializedAs("ToolAttackProfile")]
         public PlayerToolAttackProfile toolAttackProfile;
 
-
-        [Header("Effect Settings")] public float effectRadius = 1f;
+        [SerializeField] protected AttributesManager attributesManager;
+        [SerializeField] protected float agilityCooldownSecondsReducePerPoint;
 
         [SerializeField] CanBeAreaScannedType detectableType = CanBeAreaScannedType.BasicBioScanner;
 
@@ -42,13 +38,6 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         public float defaultHitDelay = 0.2f;
 
 
-        // [FormerlySerializedAs("impactVfx")] [Header("FX")]
-        // public GameObject connectingImpactVfx;
-        // public GameObject ineffectualImpactVfx;
-
-
-        // [FormerlySerializedAs("debrisEffectPrefab")]
-        // public GameObject connectingDebrisEffectPrefab;
         public GameObject ineffectualDebrisEffectPrefab;
 
 
@@ -80,6 +69,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
         public virtual void Use()
         {
+            if (attributesManager == null) attributesManager = AttributesManager.Instance;
             PerformToolAction();
         }
 
