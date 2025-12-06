@@ -1110,7 +1110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ac48b33887d4bcaa4596b9dbb9144dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitsToBreak: 3
+  defaultHitsToBreak: 3
   hardness: 1
   destroyRoot: {fileID: 0}
   destroyGameObject: 1
@@ -1119,6 +1119,7 @@ MonoBehaviour:
   hitParticles: {fileID: 0}
   breakParticles: {fileID: 0}
   uniqueIdForPersistence: 
+  _rf: {fileID: 0}
 --- !u!114 &2545303251790250292
 MonoBehaviour:
   m_ObjectHideFlags: 0
