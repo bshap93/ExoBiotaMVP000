@@ -111,6 +111,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 return;
             }
 
+            if (attributesManager == null) attributesManager = AttributesManager.Instance;
+
             PerformToolAction();
         }
 
@@ -235,18 +237,19 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         }
         public override void PerformToolAction()
         {
-            miningCooldown -= agilityCooldownSecondsReducePerPoint * attributesManager.Agility;
+            float effectiveCooldown = miningCooldown - agilityCooldownSecondsReducePerPoint * attributesManager.Agility;
+
+            // miningCooldown -= agilityCooldownSecondsReducePerPoint * attributesManager.Agility;
             // Check cooldown first
-            if (Time.time < LastSwingTime + miningCooldown) return;
+            if (Time.time < LastSwingTime + effectiveCooldown) return;
 
             LastSwingTime = Time.time; // ← Move this up here
 
-            PlaySwingSequence();
             // IMMEDIATELY raycast to capture target
             _hasValidHit = Physics.Raycast(
                 mainCamera.transform.position,
                 mainCamera.transform.forward,
-                out _pendingHit, // ← Store result here
+                out _pendingHit,
                 reach,
                 hitMask,
                 QueryTriggerInteraction.Ignore
@@ -259,23 +262,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 if (!CanInteractWithObject(targetGo)) return; // Not valid - don't waste swing
             }
 
-            // LastSwingTime = Time.time;
-
-
-            // if (Time.time < LastSwingTime + miningCooldown) return;
-
-            // if (useMultipleSwings && AnimController.currentToolAnimationSet != null)
-            // {
-            //     PlaySwingSequence();
-            // }
-            // else
-            // {
-            //     // Fallback to legacy single animation mode
-            //     AnimController.PlayToolUseOneShot();
-            //     StartCoroutine(ApplyHitAfterDelay(defaultHitDelay));
-            // }
-
-            // PlayerInteractionEvent.Trigger(PlayerInteractionEventType.Interacted);
+            LastSwingTime = Time.time;
+            PlaySwingSequence();
         }
 
 
