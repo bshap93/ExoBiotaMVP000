@@ -13,7 +13,7 @@ namespace FirstPersonPlayer.ScriptableObjects
         public Sprite actionIcon;
         public string actionText;
 
-        public IdentificationMode identificationMode = IdentificationMode.NeedsLogonOnce;
+        public IdentificationMode identificationMode = IdentificationMode.RecognizableOnSight;
 
         public string UnknownName = "Unknown Console";
 

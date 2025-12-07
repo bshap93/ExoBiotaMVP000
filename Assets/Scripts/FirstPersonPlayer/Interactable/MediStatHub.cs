@@ -2,6 +2,7 @@
 using FirstPersonPlayer.Interface;
 using Helpers.Events;
 using Helpers.Events.Gated;
+using LevelConstruct.Interactable.ItemInteractables;
 using Manager;
 using MoreMountains.Feedbacks;
 using SharedUI.Interface;
@@ -10,67 +11,75 @@ using Utilities.Interface;
 
 namespace FirstPersonPlayer.Interactable
 {
-    public class MediStatHub : MonoBehaviour, IRequiresUniqueID, IInteractable, IBillboardable
+    public class MediStatHub : ActionConsole, IRequiresUniqueID, IInteractable, IBillboardable
     {
-        public string uniqueID;
         [SerializeField] AnimationClip openAnimation;
         [SerializeField] AnimationClip closeAnimation;
         [SerializeField] MMFeedbacks openFeedbacks;
         [SerializeField] MMFeedbacks closeFeedbacks;
-        public string GetName()
-        {
-            return "Medi-Stat Hub";
-        }
-        public Sprite GetIcon()
+
+        public override Sprite GetIcon()
         {
             return ExaminationManager.Instance.iconRepository.mediStatHubIcon;
         }
-        public string ShortBlurb()
+        public override string ShortBlurb()
         {
             return "A rest station capable of bio-core augments.";
         }
-        public Sprite GetActionIcon()
+        public override Sprite GetActionIcon()
         {
             return ExaminationManager.Instance.iconRepository.mediStatHubRestIcon;
         }
-        public string GetActionText()
+        public override string GetActionText()
         {
             return "Utilize";
         }
-        public void Interact()
+        public override void Interact()
         {
-            MyUIEvent.Trigger(UIType.LevelingUI, UIActionType.Open);
-            GatedLevelingEvent.Trigger(GatedInteractionEventType.TriggerGateUI, null);
+            if (CanInteract())
+            {
+                MyUIEvent.Trigger(UIType.LevelingUI, UIActionType.Open);
+                GatedLevelingEvent.Trigger(GatedInteractionEventType.TriggerGateUI, null);
+            }
+            else
+            {
+                AlertWhyCant();
+            }
         }
-        public void OnInteractionStart()
-        {
-        }
-        public void OnInteractionEnd(string param)
-        {
-        }
-        public bool CanInteract()
-        {
-            return true;
-        }
-        public bool IsInteractable()
-        {
-            return true;
-        }
-        public void OnFocus()
+        public override void OnInteractionStart()
         {
         }
-        public void OnUnfocus()
+        void AlertWhyCant()
         {
+            if (currentConsoleState == ActionConsoleState.Broken)
+                AlertEvent.Trigger(
+                    AlertReason.BrokenMachine, "The medi-stat hub console is broken and cannot be used.",
+                    "Medi-Stat Console");
+            else if (currentConsoleState == ActionConsoleState.LacksPower)
+                AlertEvent.Trigger(
+                    AlertReason.MachineLacksPower, "The medi-stat hub console lacks power and cannot be used.",
+                    "Medi-Stat Console");
         }
-        public string UniqueID => uniqueID;
 
-        public void SetUniqueID()
+
+        public override void OnInteractionEnd()
         {
-            uniqueID = Guid.NewGuid().ToString();
         }
-        public bool IsUniqueIDEmpty()
+        protected override string GetActionText(bool recognizableOnSight)
         {
-            return string.IsNullOrEmpty(uniqueID);
+            return "Utilize";
+        }
+        public override void SetConsoleToLacksPowerState()
+        {
+            currentConsoleState = ActionConsoleState.LacksPower;
+        }
+        public override void SetConsoleToPoweredOnState()
+        {
+            currentConsoleState = ActionConsoleState.PoweredOn;
+        }
+        public override void SetConsoleToHailPlayerState()
+        {
+            throw new NotImplementedException();
         }
     }
 }

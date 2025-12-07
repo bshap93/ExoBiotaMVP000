@@ -48,15 +48,7 @@ namespace FirstPersonPlayer.Interactable.Consoles
         {
             if (!CanInteract())
             {
-                if (currentConsoleState == ActionConsoleState.Broken)
-                    AlertEvent.Trigger(
-                        AlertReason.BrokenMachine, "The decontamination console is broken and cannot be used.",
-                        "Decontamination Console");
-                else if (currentConsoleState == ActionConsoleState.LacksPower)
-                    AlertEvent.Trigger(
-                        AlertReason.MachineLacksPower, "The decontamination console lacks power and cannot be used.",
-                        "Decontamination Console");
-
+                AlertWhyCant();
                 return;
             }
 
@@ -98,6 +90,17 @@ namespace FirstPersonPlayer.Interactable.Consoles
                     decontaminationStartFeedback?.PlayFeedbacks();
                 }, onCancel: () => { }
             );
+        }
+        void AlertWhyCant()
+        {
+            if (currentConsoleState == ActionConsoleState.Broken)
+                AlertEvent.Trigger(
+                    AlertReason.BrokenMachine, "The decontamination console is broken and cannot be used.",
+                    "Decontamination Console");
+            else if (currentConsoleState == ActionConsoleState.LacksPower)
+                AlertEvent.Trigger(
+                    AlertReason.MachineLacksPower, "The decontamination console lacks power and cannot be used.",
+                    "Decontamination Console");
         }
 
         public override bool CanInteract()
