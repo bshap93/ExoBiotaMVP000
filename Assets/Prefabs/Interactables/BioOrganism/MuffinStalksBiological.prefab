@@ -844,7 +844,6 @@ GameObject:
   - component: {fileID: 2748839042437222524}
   - component: {fileID: 2460289656664110901}
   - component: {fileID: 6778237335935744191}
-  - component: {fileID: 4953136418069886313}
   - component: {fileID: 309221501269863399}
   - component: {fileID: 41089312349693829}
   - component: {fileID: 6497548135870623851}
@@ -853,6 +852,7 @@ GameObject:
   - component: {fileID: 4522678549797751314}
   - component: {fileID: 8247039373456511930}
   - component: {fileID: 1349992885899753282}
+  - component: {fileID: 8876119547784175961}
   m_Layer: 8
   m_Name: MuffinStalksBiological
   m_TagString: LiquidFilledBiostructure
@@ -868,7 +868,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7843155360606256982}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.04898622, y: 0.02018036, z: -0.0058514276, w: 0.9985784}
+  m_LocalRotation: {x: 0.046911713, y: -0.40121242, z: 0.015270232, w: 0.9146555}
   m_LocalPosition: {x: -40.223465, y: 2.7979584, z: -26.3694}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -876,7 +876,7 @@ Transform:
   - {fileID: 481230785503283938}
   - {fileID: 4533635321490929853}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 5.628, y: 2.288, z: -0.559}
+  m_LocalEulerAnglesHint: {x: 5.628, y: -47.397, z: -0.559}
 --- !u!33 &2460289656664110901
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -884,7 +884,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7843155360606256982}
-  m_Mesh: {fileID: 625422527552870557, guid: 552f9daa4626dfc44acba6205800b75c, type: 3}
+  m_Mesh: {fileID: -8364502594078382794, guid: 552f9daa4626dfc44acba6205800b75c, type: 3}
 --- !u!23 &6778237335935744191
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -930,28 +930,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4953136418069886313
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7843155360606256982}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 625422527552870557, guid: 552f9daa4626dfc44acba6205800b75c, type: 3}
 --- !u!114 &309221501269863399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1471,3 +1449,25 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   StartShakingButton: 0
+--- !u!64 &8876119547784175961
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7843155360606256982}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8364502594078382794, guid: 552f9daa4626dfc44acba6205800b75c, type: 3}

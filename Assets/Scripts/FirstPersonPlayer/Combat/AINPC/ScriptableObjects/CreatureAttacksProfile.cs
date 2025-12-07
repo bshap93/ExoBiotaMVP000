@@ -13,7 +13,7 @@ namespace FirstPersonPlayer.Combat.AINPC.ScriptableObjects
         fileName = "EnemyAttacksProfile",
         menuName = "Scriptable Objects/Character/Enemy NPC/Enemy Attacks Profile",
         order = 0)]
-    public class EnemyAttacksProfile : ScriptableObject
+    public class CreatureAttacksProfile : ScriptableObject
     {
         public EnemyAttack primaryAttack;
         public EnemyAttack secondaryAttack;

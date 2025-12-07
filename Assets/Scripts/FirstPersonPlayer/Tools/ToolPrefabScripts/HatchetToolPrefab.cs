@@ -1,5 +1,5 @@
 using Feedbacks.Interface;
-using FirstPersonPlayer.Combat.AINPC;
+using FirstPersonPlayer.Combat.AINPC.Creatures;
 using FirstPersonPlayer.Combat.Player.ScriptableObjects;
 using FirstPersonPlayer.Interactable;
 using FirstPersonPlayer.Minable;
@@ -154,7 +154,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
 
                 // Spawn VFX with proper cleanup
-                var vfx = enemyController.enemyType.effectsAndFeedbacks.basicHitVFX;
+                var vfx = enemyController.GetEffectsAndFeedbacks().basicHitVFX;
                 if (vfx != null)
                 {
                     var vfxInstance = Instantiate(vfx, hit.point, Quaternion.LookRotation(hit.normal));

@@ -6,7 +6,7 @@ namespace FirstPersonPlayer.Combat.AINPC.ScriptableObjects
         fileName = "EnemyVFXSet",
         menuName = "Scriptable Objects/Character/Enemy NPC/Enemy VFX Set",
         order = 0)]
-    public class EnemyEffectsAndFeedbacks : ScriptableObject
+    public class CreatureEffectsAndFeedbacks : ScriptableObject
     {
         public GameObject basicHitVFX;
         public GameObject heavyHitVFX;

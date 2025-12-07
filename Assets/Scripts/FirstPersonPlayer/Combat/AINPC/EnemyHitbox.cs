@@ -1,4 +1,4 @@
-﻿using AINPC.ScriptableObjects;
+﻿using FirstPersonPlayer.Combat.AINPC.Creatures;
 using FirstPersonPlayer.Combat.AINPC.ScriptableObjects;
 using UnityEngine;
 

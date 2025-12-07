@@ -1,4 +1,4 @@
-using AINPC;
+using FirstPersonPlayer.Combat.AINPC.Creatures;
 using NodeCanvas.Framework;
 using UnityEngine;
 

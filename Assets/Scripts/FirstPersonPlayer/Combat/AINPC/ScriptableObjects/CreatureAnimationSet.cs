@@ -6,7 +6,7 @@ namespace FirstPersonPlayer.Combat.AINPC.ScriptableObjects
         fileName = "EnemyNPCAnimationSet",
         menuName = "Scriptable Objects/Character/Enemy NPC/Enemy NPC Animation Set",
         order = 0)]
-    public class EnemyNPCAnimationSet : ScriptableObject
+    public class CreatureAnimationSet : ScriptableObject
     {
         public AnimationClip idleAnimation;
         public AnimationClip secondaryIdleAnimation;

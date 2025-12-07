@@ -1,31 +1,26 @@
-﻿using System;
-using Animancer;
+﻿using Animancer;
 using FirstPersonPlayer.Combat.AINPC.ScriptableObjects;
 using FirstPersonPlayer.Combat.Player.ScriptableObjects;
 using Helpers.Events.Combat;
 using HighlightPlus;
 using Manager;
 using MoreMountains.Feedbacks;
-using NodeCanvas.Framework;
 using UnityEngine;
 using UnityEngine.AI;
 using Utilities.Interface;
 
-namespace FirstPersonPlayer.Combat.AINPC
+namespace FirstPersonPlayer.Combat.AINPC.Creatures
 {
     [RequireComponent(typeof(AssignPlayerToBT))]
     [RequireComponent(typeof(EnemyBlackboardSync))]
     [DisallowMultipleComponent]
-    public class EnemyController : MonoBehaviour, IRequiresUniqueID
+    public class EnemyController : CreatureController, IRequiresUniqueID
     {
-        public string uniqueID;
         public float currentHealth;
         public float maxHealth;
 
         public bool isDead;
 
-        // TODO : Replace with ScriptableObject reference
-        public EnemyType enemyType;
 
         [SerializeField] float attackStartupTime = 0.35f; // wind-up before it hits
         [SerializeField] float hitActiveDuration = 0.2f; // active hit window
@@ -34,32 +29,16 @@ namespace FirstPersonPlayer.Combat.AINPC
         [SerializeField] EnemyHitbox hitBoxColliderMouth;
 
         [SerializeField] NavMeshAgent navMeshAgent;
-        [SerializeField] AnimancerComponent animancerComponent;
-        [SerializeField] Blackboard blackboard;
         [SerializeField] HighlightEffect highlightEffect;
 
         [SerializeField] MMFeedbacks meleeHitFeedbacksBasic;
         [SerializeField] MMFeedbacks meleeHitFeedbacksHeavy;
 
-        AnimancerState attackState;
+        protected AnimancerState AttackState;
 
-        AnimancerState idleState;
-        AnimancerState moveState;
         public bool IsAttacking { get; private set; }
 
-        void Awake()
-        {
-            // Pre-load looping animation states
-            idleState = animancerComponent.States.GetOrCreate(enemyType.animationSet.idleAnimation);
-            idleState.Speed = 1f;
-            idleState.Time = 0f;
-            idleState.Events(this).OnEnd = () => { idleState.Time = 0f; };
 
-            moveState = animancerComponent.States.GetOrCreate(enemyType.animationSet.moveAnimation);
-            moveState.Speed = 1f;
-            moveState.Time = 0f;
-            moveState.Events(this).OnEnd = () => { moveState.Time = 0f; };
-        }
         void Update()
         {
             if (IsAttacking) return;
@@ -68,29 +47,21 @@ namespace FirstPersonPlayer.Combat.AINPC
 
             if (speed < 0.1f)
             {
-                if (!idleState.IsPlaying) animancerComponent.Play(idleState);
+                if (!IdleState.IsPlaying) animancerComponent.Play(IdleState);
             }
             else
             {
-                if (!moveState.IsPlaying) animancerComponent.Play(moveState);
+                if (!MoveState.IsPlaying) animancerComponent.Play(MoveState);
             }
 
             if (currentHealth <= 0f && !isDead)
             {
                 isDead = true;
-                animancerComponent.Play(enemyType.animationSet.deathAnimation);
+                animancerComponent.Play(creatureType.animationSet.deathAnimation);
                 navMeshAgent.isStopped = true;
             }
         }
-        public string UniqueID => uniqueID;
-        public void SetUniqueID()
-        {
-            uniqueID = Guid.NewGuid().ToString();
-        }
-        public bool IsUniqueIDEmpty()
-        {
-            return string.IsNullOrEmpty(uniqueID);
-        }
+
 
         public void StartAttack()
         {
@@ -101,10 +72,10 @@ namespace FirstPersonPlayer.Combat.AINPC
             hitBoxColliderMouth.Activate();
 
 
-            attackState = animancerComponent.Play(enemyType.animationSet.attackAnimation);
+            AttackState = animancerComponent.Play(creatureType.animationSet.attackAnimation);
 
 
-            attackState.Events(this).OnEnd = () => { FinishAttack(); };
+            AttackState.Events(this).OnEnd = () => { FinishAttack(); };
         }
 
         public void FinishAttack()
@@ -118,10 +89,10 @@ namespace FirstPersonPlayer.Combat.AINPC
                 switch (attackUsed)
                 {
                     case AttackUsed.Primary:
-                        NPCAttackEvent.Trigger(enemyType.attacksProfile.primaryAttack);
+                        NPCAttackEvent.Trigger(creatureType.attacksProfile.primaryAttack);
                         break;
                     case AttackUsed.Secondary:
-                        NPCAttackEvent.Trigger(enemyType.attacksProfile.secondaryAttack);
+                        NPCAttackEvent.Trigger(creatureType.attacksProfile.secondaryAttack);
                         break;
                 }
         }
