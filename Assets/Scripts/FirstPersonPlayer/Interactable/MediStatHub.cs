@@ -40,6 +40,7 @@ namespace FirstPersonPlayer.Interactable
             {
                 MyUIEvent.Trigger(UIType.LevelingUI, UIActionType.Open);
                 GatedLevelingEvent.Trigger(GatedInteractionEventType.TriggerGateUI, null);
+                BillboardEvent.Trigger(null, BillboardEventType.Hide);
             }
             else
             {

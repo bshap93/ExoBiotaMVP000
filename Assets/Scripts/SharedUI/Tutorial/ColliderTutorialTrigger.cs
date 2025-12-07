@@ -42,14 +42,15 @@ namespace SharedUI.Tutorial
         [SerializeField] TriggerType triggerType = TriggerType.OnEnter;
         [SerializeField] TutorialType tutorialType;
 
-        public string uniqueID;
+        [Header("Unique ID")] public string uniqueID;
 
-        public string prePromptTextOverride;
+        [Header("Control Prompt Overrides")] public string prePromptTextOverride;
         public string postPromptTextOverride;
 
-        public bool canBeBooped;
+        [Header("Boop Settings")] public bool canBeBooped;
+        [Header("Objective Settings")] public bool ifNotBoopedStartObjectiveOnLeave;
         public bool objectiveToBecomeActive = true;
-        public bool setNotTriggerableOnExit;
+        [Header("Trigger Settings")] public bool setNotTriggerableOnExit;
         public bool startDisabled;
         bool _isActionButtonPressed;
 
@@ -96,17 +97,7 @@ namespace SharedUI.Tutorial
                             tutorialBit.mainTutID,
                             MainTutorialBitEventType.ClearTutorialColliderTrigger, tutorialBit.tutBitName);
 
-                    if (objectiveToStartOnBoop != null)
-                    {
-                        ObjectiveEvent.Trigger(
-                            objectiveToStartOnBoop.objectiveId,
-                            ObjectiveEventType.ObjectiveAdded);
-
-                        if (objectiveToBecomeActive)
-                            ObjectiveEvent.Trigger(
-                                objectiveToStartOnBoop.objectiveId,
-                                ObjectiveEventType.ObjectiveActivated);
-                    }
+                    TryAddAndActivateObjective();
                 }
             }
         }
@@ -183,6 +174,10 @@ namespace SharedUI.Tutorial
         }
         void OnTriggerExit(Collider other)
         {
+            if (ifNotBoopedStartObjectiveOnLeave)
+                if (other.CompareTag("FirstPersonPlayer") || other.CompareTag("Player"))
+                    TryAddAndActivateObjective();
+
             if (tutorialType == TutorialType.ControlPromptSequence)
             {
                 if (other.CompareTag("FirstPersonPlayer") || other.CompareTag("Player"))
@@ -229,6 +224,20 @@ namespace SharedUI.Tutorial
                     TriggerColliderEvent.Trigger(
                         uniqueID, TriggerColliderEventType.SetTriggerable, true, TriggerColliderType.Tutorial);
                 }
+        }
+        void TryAddAndActivateObjective()
+        {
+            if (objectiveToStartOnBoop != null)
+            {
+                ObjectiveEvent.Trigger(
+                    objectiveToStartOnBoop.objectiveId,
+                    ObjectiveEventType.ObjectiveAdded);
+
+                if (objectiveToBecomeActive)
+                    ObjectiveEvent.Trigger(
+                        objectiveToStartOnBoop.objectiveId,
+                        ObjectiveEventType.ObjectiveActivated);
+            }
         }
 
 #if UNITY_EDITOR
