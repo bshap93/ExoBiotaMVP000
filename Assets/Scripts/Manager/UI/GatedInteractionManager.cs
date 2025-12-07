@@ -42,6 +42,7 @@ namespace Manager.UI
         MMFeedbacks closeGatedUIFeedbacks;
 
         [SerializeField] MMFeedbacks cancelGatedInteractionFeedbacks;
+        [SerializeField] AttributesManager attributesManager;
         GatedBreakableInteractionDetails _currentBreakableDetails;
         string _currentDockId;
         GatedHarvestalbeInteractionDetails _currentHarvestableDetails;
@@ -78,9 +79,14 @@ namespace Manager.UI
         }
         public void OnMMEvent(GatedBreakableInteractionEvent eventType)
         {
+            var effectiveTimeCostMultiplier =
+                attributesManager.GetEffectiveTimeCostMultiplier(GatedInteractionType.BreakObstacle);
+
             if (eventType.EventType == GatedInteractionEventType.TriggerGateUI)
             {
                 _currentBreakableDetails = eventType.Details;
+                _currentBreakableDetails.timeCostMins = Mathf.FloorToInt(
+                    _currentBreakableDetails.timeCostMins * effectiveTimeCostMultiplier);
 
                 isActiveGui = true;
 
@@ -109,10 +115,13 @@ namespace Manager.UI
 
             else if (eventType.EventType == GatedInteractionEventType.StartInteraction)
             {
+                var effectiveTimeCost =
+                    Mathf.FloorToInt(eventType.Details.timeCostMins * effectiveTimeCostMultiplier);
+
                 // ✅ Calculate and set the required acceleration
                 var timeManager = InGameTimeManager.Instance;
                 var requiredAcceleration = timeManager.CalculateRequiredAcceleration(
-                    eventType.Details.timeCostMins,
+                    effectiveTimeCost,
                     eventType.Details.realWorldWaitDuration);
 
                 timeManager.SetAcceleration(requiredAcceleration);
@@ -134,10 +143,15 @@ namespace Manager.UI
         }
         public void OnMMEvent(GatedHarvestableInteractionEvent eventType)
         {
+            var effectiveTimeCostMultiplier =
+                attributesManager.GetEffectiveTimeCostMultiplier(GatedInteractionType.HarvesteableBiological);
+
             if (eventType.EventType == GatedInteractionEventType.TriggerGateUI)
             {
                 _currentHarvestableDetails = eventType.Details;
                 _currentSubjectUniqueID = eventType.SubjectUniqueID; // ✅ Store unique ID
+                _currentHarvestableDetails.timeCostMins = Mathf.FloorToInt(
+                    _currentHarvestableDetails.timeCostMins * effectiveTimeCostMultiplier);
 
                 isActiveGui = true;
 
@@ -178,10 +192,13 @@ namespace Manager.UI
 
             else if (eventType.EventType == GatedInteractionEventType.StartInteraction)
             {
+                var effectiveTimeCost =
+                    Mathf.FloorToInt(eventType.Details.timeCostMins * effectiveTimeCostMultiplier);
+
                 // ✅ Calculate and set the required acceleration
                 var timeManager = InGameTimeManager.Instance;
                 var requiredAcceleration = timeManager.CalculateRequiredAcceleration(
-                    eventType.Details.timeCostMins,
+                    effectiveTimeCost,
                     eventType.Details.realWorldWaitDuration);
 
                 timeManager.SetAcceleration(requiredAcceleration);
@@ -209,10 +226,16 @@ namespace Manager.UI
         }
         public void OnMMEvent(GatedMachineInteractionEvent eventType)
         {
+            var effectiveTimeCostMultiplier =
+                attributesManager.GetEffectiveTimeCostMultiplier(GatedInteractionType.InteractMachine);
+
             if (eventType.EventType == GatedInteractionEventType.TriggerGateUI)
             {
                 _currentMachineDetails = eventType.Details;
                 _currentSubjectUniqueID = eventType.SubjectUniqueID;
+                _currentMachineDetails.timeCostMins = Mathf.FloorToInt(
+                    _currentMachineDetails.timeCostMins * effectiveTimeCostMultiplier);
+
 
                 isActiveGui = true;
 
@@ -252,8 +275,11 @@ namespace Manager.UI
             {
                 // ✅ Calculate and set the required acceleration
                 var timeManager = InGameTimeManager.Instance;
+                var effectiveTimeCost =
+                    Mathf.FloorToInt(eventType.Details.timeCostMins * effectiveTimeCostMultiplier);
+
                 var requiredAcceleration = timeManager.CalculateRequiredAcceleration(
-                    eventType.Details.timeCostMins,
+                    effectiveTimeCost,
                     eventType.Details.realWorldWaitDuration);
 
                 timeManager.SetAcceleration(requiredAcceleration);
@@ -275,12 +301,16 @@ namespace Manager.UI
         }
         public void OnMMEvent(GatedRestEvent eventType)
         {
+            var effectiveTimeCostMultiplier =
+                attributesManager.GetEffectiveTimeCostMultiplier(GatedInteractionType.Rest);
+
             if (eventType.EventType == GatedInteractionEventType.TriggerGateUI)
             {
                 _currentRestDetails = eventType.RestDetails;
                 _currentDockId = eventType.DockId;
                 gatedRestUIController.currentDockId = eventType.DockId;
-                // _currentSubjectUniqueID = eventType.SubjectUniqueID;
+                _currentRestDetails.timeCostMins = Mathf.FloorToInt(
+                    _currentRestDetails.timeCostMins * effectiveTimeCostMultiplier);
 
                 isActiveGui = true;
 
@@ -317,8 +347,11 @@ namespace Manager.UI
             else if (eventType.EventType == GatedInteractionEventType.StartInteraction)
             {
                 var timeManager = InGameTimeManager.Instance;
+                var effectiveTimeCost =
+                    Mathf.FloorToInt(eventType.RestTimeMinutes * effectiveTimeCostMultiplier);
+
                 var requiredAcceleration = timeManager.CalculateRequiredAcceleration(
-                    eventType.RestTimeMinutes,
+                    effectiveTimeCost,
                     eventType.RestDetails.realWorldWaitDuration);
 
                 timeManager.SetAcceleration(requiredAcceleration);

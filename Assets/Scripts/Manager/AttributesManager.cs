@@ -319,5 +319,28 @@ namespace Manager
 
             MarkDirty();
         }
+        public float GetEffectiveTimeCostMultiplier(GatedInteractionType interactionType)
+        {
+            switch (interactionType)
+            {
+                case GatedInteractionType.BreakObstacle:
+                    return 1.0f - Strength * 0.05f;
+                case GatedInteractionType.HarvesteableBiological:
+                    return 1.0f - Dexterity * 0.05f;
+                case GatedInteractionType.InteractMachine:
+                    return 1.0f - Dexterity * 0.05f;
+                case GatedInteractionType.NotGated:
+                    return 1.0f - Dexterity * 0.05f;
+                case GatedInteractionType.Rest:
+                    return 1.0f - MentalToughness * 0.05f;
+                default:
+                    return 1.0f;
+            }
+        }
+        public float GetStatusEffectSeverityMultiplier(string effectID)
+        {
+            // higher mental toughness reduces severity of status effects
+            return 1.0f - MentalToughness * 0.05f;
+        }
     }
 }

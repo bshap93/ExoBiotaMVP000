@@ -249,7 +249,7 @@ namespace Manager.Status
             foreach (var effectID in effectsToRemove)
                 RemoveStatusEffect(effectID);
         }
-        
+
         public void RemoveAllOfAKind(StatusEffect.StatusEffectKind kind)
         {
             var effectsToRemove = new List<string>();
@@ -349,6 +349,7 @@ namespace Manager.Status
 
         public void ApplyStatusEffect(string effectID, string catalogID = null)
         {
+            var effectiveMultiplier = AttributesManager.Instance.GetStatusEffectSeverityMultiplier(effectID);
             // Check if already applied
             if (_appliedStatusEffects.ContainsKey(effectID))
             {

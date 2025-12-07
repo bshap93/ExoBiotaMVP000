@@ -1097,7 +1097,7 @@ MonoBehaviour:
   hitParticles: {fileID: 0}
   breakParticles: {fileID: 0}
   uniqueIdForPersistence: 
-  _rf: {fileID: 0}
+  _rf: {fileID: 2545303251790250292}
 --- !u!114 &2545303251790250292
 MonoBehaviour:
   m_ObjectHideFlags: 0

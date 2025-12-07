@@ -403,6 +403,7 @@ namespace LevelConstruct.Interactable.ItemInteractables
             }
         }
 
+        // TODO: Where was this used?
         IEnumerator WaitThenResetDissolver()
         {
             yield return new WaitForSeconds(timeToDissolve - .01f);
