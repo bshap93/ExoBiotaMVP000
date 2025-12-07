@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
 using Animancer;
 using FirstPersonPlayer.Combat.AINPC.ScriptableObjects;
+using Helpers.Events.NPCs;
+using Manager.StateManager;
 using NodeCanvas.Framework;
 using UnityEngine;
 using Utilities.Interface;
@@ -15,9 +18,18 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
         [SerializeField] protected Blackboard blackboard;
         [SerializeField] protected AnimancerComponent animancerComponent;
         [SerializeField] protected CreatureType creatureType;
+        public CreatureStateManager.CreatureState initialCreatureState;
+
+        // CreatureStateManager.CreatureState _currentCreatureState;
+
+        [SerializeField] protected float secondsBeforeSettingShouldBeDestroyed = 5f;
+
+        [SerializeField] protected bool appearsOnlyOnce;
 
         protected AnimancerState IdleState;
         protected AnimancerState MoveState;
+
+
         protected virtual void Awake()
         {
             // Pre-load looping animation states
@@ -31,6 +43,11 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
             MoveState.Time = 0f;
             MoveState.Events(this).OnEnd = () => { MoveState.Time = 0f; };
         }
+
+        protected virtual void Start()
+        {
+            StartCoroutine(InitializeAfterCreatureStateManager());
+        }
         public string UniqueID => uniqueID;
         public void SetUniqueID()
         {
@@ -41,9 +58,54 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
             return string.IsNullOrEmpty(uniqueID);
         }
 
+        protected virtual IEnumerator InitializeAfterCreatureStateManager()
+        {
+            yield return null;
+
+            var creatureStateManager = CreatureStateManager.Instance;
+            if (creatureStateManager != null)
+            {
+                var creatureState = creatureStateManager.GetCreatureState(uniqueID);
+
+                Debug.Log("Creating creature state " + creatureState);
+                if (creatureState == CreatureStateManager.CreatureState.None) creatureState = initialCreatureState;
+
+                if (creatureState == CreatureStateManager.CreatureState.HasBeenInitialized)
+                {
+                    ReLoadCreatureStateData();
+                }
+                else if (creatureState == CreatureStateManager.CreatureState.ShouldBeDestroyed)
+                {
+                    Debug.Log("Destroying creature on load");
+                    Destroy(gameObject);
+                }
+            }
+
+            if (appearsOnlyOnce)
+            {
+                // Wait x seconds 
+                yield return new WaitForSeconds(secondsBeforeSettingShouldBeDestroyed);
+                CreatureStateEvent.Trigger(
+                    CreatureStateEventType.SetNewCreatureState, uniqueID,
+                    CreatureStateManager.CreatureState.ShouldBeDestroyed);
+            }
+        }
+
         public CreatureEffectsAndFeedbacks GetEffectsAndFeedbacks()
         {
             return creatureType.effectsAndFeedbacks;
+        }
+
+        protected virtual void ReLoadCreatureStateData()
+        {
+            Debug.Log("Loading creature state data");
+        }
+
+        protected virtual void OnDeath()
+        {
+            CreatureStateEvent.Trigger(
+                CreatureStateEventType.SetNewCreatureState, uniqueID,
+                CreatureStateManager.CreatureState.ShouldBeDestroyed);
         }
     }
 }

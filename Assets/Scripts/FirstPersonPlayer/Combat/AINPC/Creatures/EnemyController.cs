@@ -59,6 +59,7 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
                 isDead = true;
                 animancerComponent.Play(creatureType.animationSet.deathAnimation);
                 navMeshAgent.isStopped = true;
+                OnDeath();
             }
         }
 

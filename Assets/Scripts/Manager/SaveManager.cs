@@ -9,6 +9,7 @@ using Manager.FirstPerson;
 using Manager.Global;
 using Manager.SceneManagers;
 using Manager.SceneManagers.Pickable;
+using Manager.StateManager;
 using Manager.Status;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
@@ -59,7 +60,8 @@ namespace Manager
         MachineStateSave,
         InfectionManagerSave,
         TriggerColliderSave,
-        AttributesSave
+        AttributesSave,
+        CreatureStateSave
     }
 
     public enum LocalManagerType
@@ -184,6 +186,7 @@ namespace Manager
             InfectionManager.Instance.Load();
             TriggerColliderManager.Instance.Load();
             AttributesManager.Instance.Load();
+            CreatureStateManager.Instance.Load();
 
             if (!_config.DisabledGlobalManagers.Contains(GlobalManagerType.TutorialSave))
                 TutorialManager.Instance?.Load();
@@ -227,6 +230,7 @@ namespace Manager
             InfectionManager.Instance.Save();
             TriggerColliderManager.Instance.Save();
             AttributesManager.Instance.Save();
+            CreatureStateManager.Instance.Save();
 
             if (!_config.DisabledGlobalManagers.Contains(GlobalManagerType.TutorialSave))
                 TutorialManager.Instance?.Save();
@@ -264,6 +268,7 @@ namespace Manager
             InfectionManager.Instance.Reset();
             TriggerColliderManager.Instance.Reset();
             AttributesManager.Instance.Reset();
+            CreatureStateManager.Instance.Reset();
 
 
             if (!_config.DisabledGlobalManagers.Contains(GlobalManagerType.TutorialSave))
@@ -346,6 +351,8 @@ namespace Manager
                     return "TriggerColliderSave.es3";
                 case GlobalManagerType.AttributesSave:
                     return "AttributesSave.es3";
+                case GlobalManagerType.CreatureStateSave:
+                    return "CreatureStateSave.es3";
                 default:
 
                     Debug.LogError($"Unknown manager type: {globalManagerType}");

@@ -3,7 +3,6 @@ using MoreMountains.Feedbacks;
 using NodeCanvas.Framework;
 using UnityEngine;
 using UnityEngine.AI;
-using Utilities.Interface;
 using Random = UnityEngine.Random;
 
 namespace FirstPersonPlayer.Combat.AINPC.Creatures
@@ -11,7 +10,7 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
     [RequireComponent(typeof(Blackboard))]
     [RequireComponent(typeof(AnimancerComponent))]
     [DisallowMultipleComponent]
-    public class OverworldFlierController : CreatureController, IRequiresUniqueID
+    public class OverworldFlierController : CreatureController
     {
         [SerializeField] NavMeshAgent navMeshAgent;
 
@@ -25,8 +24,9 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
         float _nextCallTime;
 
 
-        void Start()
+        protected override void Start()
         {
+            base.Start();
             // Screech immediately on spawn
             creatureCallFeedbacks?.PlayFeedbacks();
             ScheduleNextCall();
