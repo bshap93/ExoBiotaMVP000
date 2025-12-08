@@ -142,20 +142,20 @@ namespace FirstPersonPlayer.Interactable
             var terrMask = terrainLayer & ~playerLayerMask;
             var obstacleMask = obstacleLayer & ~playerLayerMask; // Add obstacle mask
 
-            // Check for obstacles first
+            // Use maxInteractDistance for initial detection
             RaycastHit obstacleHit;
             var obstacleBlocking = Physics.Raycast(
-                rayOrigin, rayDirection, out obstacleHit, interactionDistance, obstacleMask);
+                rayOrigin, rayDirection, out obstacleHit, maxInteractDistance, obstacleMask);
 
             // Check if terrain is blocking
             RaycastHit terrainHit;
             var terrainBlocking = Physics.Raycast(
-                rayOrigin, rayDirection, out terrainHit, interactionDistance, terrMask);
+                rayOrigin, rayDirection, out terrainHit, maxInteractDistance, terrMask);
 
             // Check for interactables
             RaycastHit interactableHit;
             var hitInteractable = Physics.Raycast(
-                rayOrigin, rayDirection, out interactableHit, interactionDistance, interactMask);
+                rayOrigin, rayDirection, out interactableHit, maxInteractDistance, interactMask);
 
             if (hitInteractable &&
                 (!obstacleBlocking || interactableHit.distance < obstacleHit.distance) &&
@@ -163,7 +163,13 @@ namespace FirstPersonPlayer.Interactable
             {
                 var itemPicker = interactableHit.collider.GetComponent<ItemPicker>();
                 if (itemPicker != null)
-                    itemPicker.PickupItemDirect();
+                {
+                    // Check if we're within the item's specific interaction distance
+                    var interactable = itemPicker as IInteractable;
+                    var requiredDistance = interactable?.GetInteractionDistance() ?? interactionDistance;
+
+                    if (interactableHit.distance <= requiredDistance) itemPicker.PickupItemDirect();
+                }
             }
         }
 
@@ -191,17 +197,17 @@ namespace FirstPersonPlayer.Interactable
             // Check for obstacles first
             RaycastHit obstacleHit;
             var obstacleBlocking = Physics.Raycast(
-                rayOrigin, rayDirection, out obstacleHit, interactionDistance, obstacleMask);
+                rayOrigin, rayDirection, out obstacleHit, maxInteractDistance, obstacleMask);
 
             // Check if terrain is blocking
             RaycastHit terrainHit;
             var terrainBlocking = Physics.Raycast(
-                rayOrigin, rayDirection, out terrainHit, interactionDistance, terrMask);
+                rayOrigin, rayDirection, out terrainHit, maxInteractDistance, terrMask);
 
             // Check for interactables
             RaycastHit interactableHit;
             var hitInteractable = Physics.Raycast(
-                rayOrigin, rayDirection, out interactableHit, interactionDistance, interactMask);
+                rayOrigin, rayDirection, out interactableHit, maxInteractDistance, interactMask);
 
             // Only interact if:
             // 1. We hit an interactable AND
@@ -213,7 +219,11 @@ namespace FirstPersonPlayer.Interactable
             {
                 var interactable = interactableHit.collider.GetComponent<IInteractable>();
                 if (interactable != null)
-                    interactable.Interact();
+                {
+                    var requiredDistance = interactable.GetInteractionDistance();
+                    if (interactableHit.distance <= requiredDistance)
+                        interactable.Interact();
+                }
             }
         }
 
@@ -235,39 +245,57 @@ namespace FirstPersonPlayer.Interactable
             // Combined raycast check
             RaycastHit terrainHit;
             var terrainBlocking =
-                Physics.Raycast(rayOrigin, rayDirection, out terrainHit, interactionDistance, terrMask);
+                Physics.Raycast(rayOrigin, rayDirection, out terrainHit, maxInteractDistance, terrMask);
 
             if (terrainBlocking) forwardTerrainLayerDetector?.UpdateFromHit(terrainHit);
 
             RaycastHit interactableHit;
             var hitInteractable = Physics.Raycast(
-                rayOrigin, rayDirection, out interactableHit, interactionDistance,
+                rayOrigin, rayDirection, out interactableHit, maxInteractDistance,
                 interactMask);
 
             // Determine the hit to process
             RaycastHit? actualHit = null;
             var isTerrainBlocking = false;
+            var isOutOfRange = false;
 
             if (terrainBlocking && hitInteractable)
             {
                 if (terrainHit.distance < interactableHit.distance)
+                {
                     isTerrainBlocking = true;
+                }
                 else
-                    actualHit = interactableHit;
+                {
+                    // Check if within interaction distance
+                    var interactable = interactableHit.collider.GetComponent<IInteractable>();
+                    var requiredDistance = interactable?.GetInteractionDistance() ?? interactionDistance;
+
+                    if (interactableHit.distance <= requiredDistance)
+                        actualHit = interactableHit;
+                    else
+                        isOutOfRange = true;
+                }
             }
             else if (hitInteractable)
             {
-                actualHit = interactableHit;
+                // Check if within interaction distance
+                var interactable = interactableHit.collider.GetComponent<IInteractable>();
+                var requiredDistance = interactable?.GetInteractionDistance() ?? interactionDistance;
+
+                if (interactableHit.distance <= requiredDistance)
+                    actualHit = interactableHit;
+                else
+                    isOutOfRange = true;
             }
 
 
-
             // NEW: Handle hover state for IHoverable objects
-            HandleHoverState(actualHit, isTerrainBlocking);
+            HandleHoverState(actualHit, isTerrainBlocking || isOutOfRange);
 
 
             // Update reticle through controller
-            reticleController.UpdateReticle(actualHit, isTerrainBlocking);
+            reticleController.UpdateReticle(actualHit, isTerrainBlocking || isOutOfRange);
 
             // If the current tool is ShovelToolSimple, update its hit
             var peWithShovel = PlayerEquipment.GetWithToolType(typeof(ShovelToolSimple));
