@@ -7,7 +7,7 @@ using UnityEngine;
 namespace FirstPersonPlayer.Combat.AINPC.ActionTasks
 {
     [Category("AttackMoves")]
-    public class SlugAttackPlayer : ActionTask
+    public class CreatureMouthMeleeAttack : ActionTask
     {
         // NodeCanvas Blackboard Parameters
         public readonly BBParameter<float> AttackDelay = 0.2f;
