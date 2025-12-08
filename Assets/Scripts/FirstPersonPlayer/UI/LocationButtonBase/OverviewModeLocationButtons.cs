@@ -71,6 +71,10 @@ namespace FirstPersonPlayer.UI.LocationButtonBase
         public virtual void OnUnfocus()
         {
         }
+        public float GetInteractionDistance()
+        {
+            return 2f;
+        }
 
         public virtual void OnInteractionEnd()
         {

@@ -35,6 +35,8 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
 #endif
         public int breakActionId;
 
+        [SerializeField] float interactionDistance = 2f;
+
         [SerializeField] MMFeedbacks loopedInteractionFeedbacks;
         [SerializeField] MMFeedbacks startInteractionFeedbacks;
         bool _hasBeenBroken;
@@ -198,6 +200,10 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
         }
         public void OnUnfocus()
         {
+        }
+        public float GetInteractionDistance()
+        {
+            return interactionDistance;
         }
         public void OnInteractionEnd(string subjectUniquedID)
         {

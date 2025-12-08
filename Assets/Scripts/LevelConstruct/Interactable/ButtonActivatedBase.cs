@@ -12,8 +12,9 @@ namespace LevelConstruct.Interactable
         [ValueDropdown(nameof(GetAllRewiredActions))]
 #endif
         public int actionId;
-        public abstract void Interact();
 
+        [SerializeField] protected float interactionDistance = 2f;
+        public abstract void Interact();
         public void OnInteractionStart()
         {
         }
@@ -41,6 +42,10 @@ namespace LevelConstruct.Interactable
         {
             // This method can be used to remove any highlight or UI feedback
             // when the player unfocuses from the interactable object.
+        }
+        public float GetInteractionDistance()
+        {
+            return interactionDistance;
         }
 #if UNITY_EDITOR
         public IEnumerable<ValueDropdownItem<int>> GetAllRewiredActions()

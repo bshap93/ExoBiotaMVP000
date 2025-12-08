@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using FirstPersonPlayer.FPNPCs.ScriptableObject;
+using Helpers.Events.Dialog;
 using Manager.DialogueScene;
 using Manager.SceneManagers.Dock;
 using Sirenix.OdinInspector;
@@ -52,7 +52,7 @@ namespace Overview.NPC
         public AnimationClip idleClip;
 
         [FormerlySerializedAs("NativeLanguage")]
-        public DialogueLanguage nativeLanguage;
+        public LanguageType nativeLanguage;
 
         public bool hasAvatarDiorama = true;
 

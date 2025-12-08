@@ -33,6 +33,20 @@ public class NPCPresenterGroupListener : MonoBehaviour, MMEventListener<Dialogue
     {
         if (eventType.EventType == DialoguePresentationEventType.ChangeFontsOfNPCSide)
         {
+            if (eventType.Language == LanguageType.ModernGalactic)
+            {
+                characterNameText.font = modernGalacticFont;
+                npcLineText.font = modernGalacticFont;
+                lastLineText.font = modernGalacticFont;
+            }
+            else if (eventType.Language == LanguageType.Sheolite)
+            {
+                characterNameText.font = sheoliteFont;
+                npcLineText.font = sheoliteFont;
+                lastLineText.font = sheoliteFont;
+
+                Debug.Log("Changed NPC side fonts to Sheolite");
+            }
         }
     }
 }

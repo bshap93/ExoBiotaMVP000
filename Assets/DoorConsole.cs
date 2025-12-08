@@ -17,6 +17,8 @@ public class DoorConsole : MonoBehaviour, IInteractable
 
     public GameObject switchObject;
 
+    [SerializeField] float interactionDistance = 2f;
+
     [SerializeField] MMFeedbacks switchFeedbacks;
 
     void Start()
@@ -70,6 +72,10 @@ public class DoorConsole : MonoBehaviour, IInteractable
     }
     public void OnUnfocus()
     {
+    }
+    public float GetInteractionDistance()
+    {
+        return interactionDistance;
     }
 
     void AnimateSwitch(bool isOn)

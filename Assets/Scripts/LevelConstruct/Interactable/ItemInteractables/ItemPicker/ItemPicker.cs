@@ -53,6 +53,8 @@ namespace LevelConstruct.Interactable.ItemInteractables.ItemPicker
 
         [Header("Picker Settings")] public int quantity = 1;
 
+        [SerializeField] protected float interactionDistance = 2f;
+
         public UnityEvent onItemPicked;
 
         public ObjectiveObject objectiveOnPick;
@@ -279,6 +281,10 @@ namespace LevelConstruct.Interactable.ItemInteractables.ItemPicker
 
         public void OnUnfocus()
         {
+        }
+        public float GetInteractionDistance()
+        {
+            return interactionDistance;
         }
 
 

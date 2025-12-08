@@ -31,6 +31,8 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
 
         public int timesAllowedToSample = 1;
 
+        [SerializeField] float interactionDistance = 2f;
+
         [SerializeField] GameObject[] disableWhenDepleted;
 
         [SerializeField] string actionTextIfNotToolEquipped = "Equip";
@@ -54,6 +56,10 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
         {
             RefreshDepletionState();
             _objectiveHelper = GetComponent<ObjectiveHelper>();
+        }
+        public void MakeJiggle()
+        {
+            jiggleFeedbacks?.PlayFeedbacks();
         }
         public void Interact()
         {
@@ -85,6 +91,10 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
         }
         public void OnUnfocus()
         {
+        }
+        public float GetInteractionDistance()
+        {
+            return interactionDistance;
         }
 
         void RefreshDepletionState()
@@ -239,9 +249,5 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
             AutoSyncSampleFromType();
         }
 #endif
-        public void MakeJiggle()
-        {
-            jiggleFeedbacks?.PlayFeedbacks();
-        }
     }
 }

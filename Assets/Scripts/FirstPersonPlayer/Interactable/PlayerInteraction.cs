@@ -22,7 +22,8 @@ namespace FirstPersonPlayer.Interactable
 {
     public class PlayerInteraction : MonoBehaviour, MMEventListener<PlayerInteractionEvent>
     {
-        public float interactionDistance = 2f; // How far the player can interact
+        public float maxInteractDistance = 10f; // Maximum distance for interaction
+        public float interactionDistance = 2; // How far the player can interact
         public LayerMask interactableLayer; // Only detect objects in this layer
         public LayerMask terrainLayer; // Only detect objects in this layer
         public LayerMask obstacleLayer; // New: layers that block interaction (e.g., walls, rocks)
@@ -258,6 +259,8 @@ namespace FirstPersonPlayer.Interactable
             {
                 actualHit = interactableHit;
             }
+
+
 
             // NEW: Handle hover state for IHoverable objects
             HandleHoverState(actualHit, isTerrainBlocking);

@@ -22,6 +22,8 @@ namespace LevelConstruct.Interactable
 #endif
         public int actionId;
 
+        [SerializeField] float interactionDistance = 2f;
+
         [SerializeField] float triggerCooldown = 6f;
         [SerializeField] bool askOnTrigger = true;
         CharacterActor _characterActor;
@@ -73,6 +75,10 @@ namespace LevelConstruct.Interactable
 
         public void OnUnfocus()
         {
+        }
+        public float GetInteractionDistance()
+        {
+            return interactionDistance;
         }
         public void OnInteractionEnd()
         {

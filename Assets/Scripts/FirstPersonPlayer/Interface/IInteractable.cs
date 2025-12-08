@@ -12,5 +12,7 @@ namespace FirstPersonPlayer.Interface
         void OnFocus();
 
         void OnUnfocus();
+
+        float GetInteractionDistance();
     }
 }

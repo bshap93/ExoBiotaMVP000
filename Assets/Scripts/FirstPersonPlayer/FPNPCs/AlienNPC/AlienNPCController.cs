@@ -1,4 +1,5 @@
 ﻿using Animancer;
+using FirstPersonPlayer.Combat.AINPC.Creatures;
 using FirstPersonPlayer.Interface;
 using Helpers.Events;
 using Helpers.Events.Dialog;
@@ -19,12 +20,14 @@ namespace FirstPersonPlayer.FPNPCs.AlienNPC
         Unavailable
     }
 
-    public class AlienNPCController : MonoBehaviour, IInteractable
+    public class AlienNPCController : CreatureController, IInteractable
     {
         [SerializeField] AnimancerComponent animancerComponent;
         [FormerlySerializedAs("NPCId")] [ValueDropdown("GetNpcIdOptions")]
         public
             string npcId;
+
+        [SerializeField] float interactDistanceOverride = 5f;
 
         [SerializeField] string defaultStartNode;
         [SerializeField] MMFeedbacks startDialogueFeedback;
@@ -32,13 +35,25 @@ namespace FirstPersonPlayer.FPNPCs.AlienNPC
         [SerializeField] bool isInteractable = true;
         [SerializeField] NpcDefinition npcDefinition;
         protected AlienNPCState CurrentState;
-        void Start()
+        protected override void Start()
         {
+            base.Start();
             CurrentState = initialState;
+        }
+        public float GetInteractionDistance()
+        {
+            return interactDistanceOverride;
         }
         public void Interact()
         {
             if (!CanInteract()) return;
+
+            if (npcDefinition.nativeLanguage == LanguageType.ModernGalactic)
+                DialoguePresentationEvent.Trigger(
+                    DialoguePresentationEventType.ChangeFontsOfNPCSide, LanguageType.ModernGalactic);
+            else if (npcDefinition.nativeLanguage == LanguageType.Sheolite)
+                DialoguePresentationEvent.Trigger(
+                    DialoguePresentationEventType.ChangeFontsOfNPCSide, LanguageType.Sheolite);
 
 
             var nodeToUse = GetAppropriateDialogueNode();
@@ -75,6 +90,7 @@ namespace FirstPersonPlayer.FPNPCs.AlienNPC
         public void OnUnfocus()
         {
         }
+
 
         protected string GetAppropriateDialogueNode()
         {

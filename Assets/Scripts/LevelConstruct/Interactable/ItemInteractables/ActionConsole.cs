@@ -37,6 +37,7 @@ namespace LevelConstruct.Interactable.ItemInteractables
 
         public string uniqueID;
 
+        [SerializeField] protected float interactionDistance = 2f;
 
         [FormerlySerializedAs("state")] [SerializeField]
         protected ActionConsoleState currentConsoleState = ActionConsoleState.None;
@@ -170,6 +171,10 @@ namespace LevelConstruct.Interactable.ItemInteractables
 
         public virtual void OnUnfocus()
         {
+        }
+        public float GetInteractionDistance()
+        {
+            return interactionDistance;
         }
         public string UniqueID => uniqueID;
         public void SetUniqueID()

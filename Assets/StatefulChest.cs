@@ -36,4 +36,8 @@ public class StatefulChest : MonoBehaviour, IInteractable
     {
         throw new NotImplementedException();
     }
+    public float GetInteractionDistance()
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -33,6 +33,8 @@ namespace CustomAssets.Scripts
 
         public ElevatorButtonType buttonType;
 
+        [SerializeField] float interactionDistance = 2f;
+
 
         [SerializeField] string associatedObjectiveID;
 
@@ -174,6 +176,10 @@ namespace CustomAssets.Scripts
         }
         public void OnUnfocus()
         {
+        }
+        public float GetInteractionDistance()
+        {
+            return interactionDistance;
         }
         public void OnMMEvent(SceneEvent eventType)
         {

@@ -39,6 +39,8 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
 
         [SerializeField] PlayerStatsEvent.StatChangeCause causeOfEffect;
 
+        [SerializeField] protected float interactionDistance = 2f;
+
 
         public void Interact()
         {
@@ -82,6 +84,10 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
 
         public void OnUnfocus()
         {
+        }
+        public float GetInteractionDistance()
+        {
+            return interactionDistance;
         }
 
         public void OnInteractionEnd()

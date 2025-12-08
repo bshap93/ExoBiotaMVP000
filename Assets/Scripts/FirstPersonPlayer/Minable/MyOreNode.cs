@@ -48,6 +48,8 @@ namespace FirstPersonPlayer.Minable
         const string DefaultActionText = "Mine Ore";
         [SerializeField] GameObject pieces;
 
+        [SerializeField] float interactionDistance = 2f;
+
 
         [SerializeField] MeshRenderer intactRenderer; // single intact renderer
         [SerializeField] Collider nodeCollider; // intact collider
@@ -342,6 +344,10 @@ namespace FirstPersonPlayer.Minable
         }
         public void OnUnfocus()
         {
+        }
+        public float GetInteractionDistance()
+        {
+            return interactionDistance;
         }
         public void OnInteractionEnd(string subjectUniquedID)
         {

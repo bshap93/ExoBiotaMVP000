@@ -40,6 +40,8 @@ namespace FirstPersonPlayer.Interactable.Gated
         public Sprite offSprite;
         public Sprite brokenSprite;
 
+        [SerializeField] protected float interactionDistance = 2f;
+
         [SerializeField] protected SceneObjectData sceneObjectData;
         [SerializeField] protected bool isCurrentlyInteractable;
         [SerializeField] protected ObjectiveObject completesObjective;
@@ -313,6 +315,10 @@ namespace FirstPersonPlayer.Interactable.Gated
         }
         public void OnUnfocus()
         {
+        }
+        public float GetInteractionDistance()
+        {
+            return interactionDistance;
         }
         public string UniqueID
         {

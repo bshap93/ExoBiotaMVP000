@@ -22,6 +22,8 @@ namespace FirstPersonPlayer.Interactable.Doors
 #endif
         public int actionId;
 
+        [SerializeField] protected float interactionDistance = 2f;
+
 
         protected SceneObjectData data;
         protected HighlightTrigger trigger;
@@ -84,6 +86,10 @@ namespace FirstPersonPlayer.Interactable.Doors
         public virtual void OnUnfocus()
         {
             // ControlsHelpEvent.Trigger(ControlHelpEventType.Hide, actionId);
+        }
+        public float GetInteractionDistance()
+        {
+            return interactionDistance;
         }
         public string UniqueID => uniqueId;
         public void SetUniqueID()
