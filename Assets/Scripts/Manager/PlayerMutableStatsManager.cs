@@ -78,6 +78,8 @@ namespace Manager
         [Header("Current Max Stat")] bool _dirty;
 
         bool _inGameTimePaused;
+
+        Coroutine _restoreStaminaRoutine;
         // int _lastCU = -1;
 
         string _savePath;
@@ -124,6 +126,25 @@ namespace Manager
             }
 
             Load();
+        }
+
+        void Update()
+        {
+            if (CurrentStamina < CurrentMaxStamina && !_sprinting)
+            {
+                if (_restoreStaminaRoutine == null)
+                    _restoreStaminaRoutine = StartCoroutine(
+                        RestoreStaminaOverTime(defaultPlayerStatsSheet.baseStaminaRestorePerSecond)
+                    );
+            }
+            else
+            {
+                if (_restoreStaminaRoutine != null)
+                {
+                    StopCoroutine(_restoreStaminaRoutine);
+                    _restoreStaminaRoutine = null;
+                }
+            }
         }
 
         void OnEnable()
@@ -558,6 +579,25 @@ namespace Manager
 
                 yield return null;
             }
+        }
+
+        IEnumerator RestoreStaminaOverTime(float restoreRate)
+        {
+            yield return new WaitForSeconds(0.3f);
+
+            while (CurrentStamina < CurrentMaxStamina)
+            {
+                if (!_inGameTimePaused && !_sprinting)
+                {
+                    CurrentStamina += restoreRate * Time.deltaTime;
+                    CurrentStamina = Mathf.Clamp(CurrentStamina, 0, BaseMaxStamina);
+                    PlayerStatsSyncEvent.Trigger();
+                }
+
+                yield return null;
+            }
+
+            _restoreStaminaRoutine = null;
         }
 
         IEnumerator DrainHealthOverTime(float drainRate)

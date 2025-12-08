@@ -24,5 +24,6 @@ namespace OWPData.ScriptableObjects
         public float currentMaxContamination;
 
         public float sprintStaminaDrainPerSecond;
+        public float baseStaminaRestorePerSecond;
     }
 }

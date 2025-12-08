@@ -5,7 +5,9 @@ namespace Helpers.Events
     public enum StaminaAffectorEventType
     {
         StaminaDrainActivityStarted,
-        StaminaDrainActivityStopped
+        StaminaDrainActivityStopped,
+        StaminaRestoreActivityStarted,
+        StaminaRestoreActivityStopped
     }
 
     public struct StaminaAffectorEvent
