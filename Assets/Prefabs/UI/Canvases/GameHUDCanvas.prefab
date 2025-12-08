@@ -8964,8 +8964,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4701275625216488365}
   m_HandleRect: {fileID: 2798624938333154857}
   m_Direction: 2
-  m_Value: 0.99999875
-  m_Size: 0.39933375
+  m_Value: 0.9999986
+  m_Size: 0.39933372
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -11727,6 +11727,10 @@ PrefabInstance:
     - target: {fileID: 1048289671286843578, guid: 562df3de4bc176c42870dce85571ade8, type: 3}
       propertyPath: m_Name
       value: DirigibleGroup
+      objectReference: {fileID: 0}
+    - target: {fileID: 3234010745962043537, guid: 562df3de4bc176c42870dce85571ade8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4427114564333580651, guid: 562df3de4bc176c42870dce85571ade8, type: 3}
       propertyPath: m_Pivot.x

@@ -28,7 +28,7 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
         {
             base.Start();
             // Screech immediately on spawn
-            creatureCallFeedbacks?.PlayFeedbacks();
+            // creatureCallFeedbacks?.PlayFeedbacks();
             ScheduleNextCall();
         }
 
