@@ -104,12 +104,5 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
         {
             Debug.Log("Loading creature state data");
         }
-
-        protected virtual void OnDeath()
-        {
-            CreatureStateEvent.Trigger(
-                CreatureStateEventType.SetNewCreatureState, uniqueID,
-                CreatureStateManager.CreatureState.ShouldBeDestroyed);
-        }
     }
 }

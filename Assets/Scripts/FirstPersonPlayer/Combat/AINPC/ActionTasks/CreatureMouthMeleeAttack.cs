@@ -18,6 +18,7 @@ namespace FirstPersonPlayer.Combat.AINPC.ActionTasks
         bool _inCooldown;
 
         public BBParameter<MMFeedbacks> AttackFeedbacks;
+        public BBParameter<float> TimeBeforeAttackFeedback = 0.0f;
 
 
         float timer;

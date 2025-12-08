@@ -2,8 +2,10 @@
 using FirstPersonPlayer.Combat.AINPC.ScriptableObjects;
 using FirstPersonPlayer.Combat.Player.ScriptableObjects;
 using Helpers.Events.Combat;
+using Helpers.Events.NPCs;
 using HighlightPlus;
 using Manager;
+using Manager.StateManager;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.AI;
@@ -34,7 +36,14 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
         [SerializeField] MMFeedbacks meleeHitFeedbacksBasic;
         [SerializeField] MMFeedbacks meleeHitFeedbacksHeavy;
 
+        [SerializeField] GameObject deathParticlesPrefab;
+        [SerializeField] MMFeedbacks deathFeedbacks;
+
+        [SerializeField] MMFeedbacks movementLoopFeedbacks;
+
         protected AnimancerState AttackState;
+        protected AnimancerState DeathState;
+        protected AnimancerState HitState;
 
         public bool IsAttacking { get; private set; }
 
@@ -57,8 +66,9 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
             if (currentHealth <= 0f && !isDead)
             {
                 isDead = true;
-                animancerComponent.Play(creatureType.animationSet.deathAnimation);
-                navMeshAgent.isStopped = true;
+                DeathState = animancerComponent.Play(creatureType.animationSet.deathAnimation);
+                DeathState.Events(this).OnEnd = () => { Destroy(gameObject); };
+
                 OnDeath();
             }
         }
@@ -119,6 +129,20 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
             currentHealth -= damageAmount;
             highlightEffect.HitFX();
             Debug.Log("Enemy took " + damageAmount + " damage. Current health: " + currentHealth);
+        }
+
+        protected virtual void OnDeath()
+        {
+            navMeshAgent.isStopped = true;
+            CreatureStateEvent.Trigger(
+                CreatureStateEventType.SetNewCreatureState, uniqueID,
+                CreatureStateManager.CreatureState.ShouldBeDestroyed);
+
+            deathFeedbacks?.PlayFeedbacks();
+            if (deathParticlesPrefab != null)
+                Instantiate(deathParticlesPrefab, transform.position + Vector3.up * 0.5f, Quaternion.identity);
+
+            Destroy(gameObject, 2f);
         }
     }
 }
