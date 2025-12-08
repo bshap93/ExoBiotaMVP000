@@ -13,5 +13,6 @@ namespace FirstPersonPlayer.Combat.AINPC.ScriptableObjects
         public AnimationClip moveAnimation;
         public AnimationClip attackAnimation;
         public AnimationClip deathAnimation;
+        public AnimationClip getHitAnimation;
     }
 }
