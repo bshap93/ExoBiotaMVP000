@@ -26,9 +26,10 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
 
         [SerializeField] protected bool appearsOnlyOnce;
 
+        [SerializeField] bool doesNotImmediatelyNeedToMove;
+
         protected AnimancerState IdleState;
         protected AnimancerState MoveState;
-
 
         protected virtual void Awake()
         {
@@ -37,6 +38,9 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
             IdleState.Speed = 1f;
             IdleState.Time = 0f;
             IdleState.Events(this).OnEnd = () => { IdleState.Time = 0f; };
+
+            if (doesNotImmediatelyNeedToMove)
+                return;
 
             MoveState = animancerComponent.States.GetOrCreate(creatureType.animationSet.moveAnimation);
             MoveState.Speed = 1f;

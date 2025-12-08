@@ -1,5 +1,4 @@
-﻿using Animancer;
-using FirstPersonPlayer.Combat.AINPC.Creatures;
+﻿using FirstPersonPlayer.Combat.AINPC.Creatures;
 using FirstPersonPlayer.Interface;
 using Helpers.Events;
 using Helpers.Events.Dialog;
@@ -22,7 +21,6 @@ namespace FirstPersonPlayer.FPNPCs.AlienNPC
 
     public class AlienNPCController : CreatureController, IInteractable
     {
-        [SerializeField] AnimancerComponent animancerComponent;
         [FormerlySerializedAs("NPCId")] [ValueDropdown("GetNpcIdOptions")]
         public
             string npcId;

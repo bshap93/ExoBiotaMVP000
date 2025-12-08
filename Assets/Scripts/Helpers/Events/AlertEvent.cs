@@ -55,7 +55,8 @@ namespace Helpers.Events
         InfectionContracted_Eyes01,
         TooFarFromDirigible,
         ElevatorSceneChangePermission,
-        DoorLocked
+        DoorLocked,
+        PlayTestEndYesOrNo
     }
 
     [Serializable]
