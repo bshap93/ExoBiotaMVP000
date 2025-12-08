@@ -1964,6 +1964,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerMutableStatsManager: {fileID: 0}
+  attributesManager: {fileID: 0}
   cannotRunFeedbacks: {fileID: 7361642293195615526}
   animancerRightArmController: {fileID: 9152139957155839416}
   planarMovementParameters:
@@ -6333,6 +6334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 107a70f1c08d47c48dce725bfb2c6de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxInteractDistance: 10
   interactionDistance: 2
   interactableLayer:
     serializedVersion: 2
