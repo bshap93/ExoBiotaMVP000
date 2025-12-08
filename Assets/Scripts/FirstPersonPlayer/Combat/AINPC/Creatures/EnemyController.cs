@@ -21,6 +21,8 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
         public float currentHealth;
         public float maxHealth;
 
+        public bool destroyAfterDeath = true;
+
         public bool isDead;
 
 
@@ -142,7 +144,8 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
             if (deathParticlesPrefab != null)
                 Instantiate(deathParticlesPrefab, transform.position + Vector3.up * 0.5f, Quaternion.identity);
 
-            Destroy(gameObject, 2f);
+            if (destroyAfterDeath)
+                Destroy(gameObject, 2f);
         }
     }
 }
