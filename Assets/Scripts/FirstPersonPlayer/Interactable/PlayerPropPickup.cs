@@ -1,13 +1,18 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Dirigible.Input;
 using FirstPersonPlayer.Tools;
+using FirstPersonPlayer.Tools.ItemObjectTypes;
 using Gameplay.Events;
 using Helpers.Events;
-using LevelConstruct.Interactable.ItemInteractables.ItemPicker;
+using Inventory;
+using LevelConstruct.Interactable.ItemInteractables;
 using Manager.SceneManagers.Pickable;
+using MoreMountains.Feedbacks;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using ItemPicker = LevelConstruct.Interactable.ItemInteractables.ItemPicker.ItemPicker;
 
 namespace FirstPersonPlayer.Interactable
 {
@@ -23,12 +28,21 @@ namespace FirstPersonPlayer.Interactable
         [Header("Refs")] [SerializeField] public Transform holdPoint;
         [SerializeField] LayerMask pickupMask;
 
+        [Header("Feedbacks")] [SerializeField] MMFeedbacks noCoresAvailableFeedbacks;
+        [SerializeField] MMFeedbacks placeObjectFeedbacks;
+
         [Header("UI Help Info")]
 #if UNITY_EDITOR
         [ValueDropdown(nameof(GetAllRewiredActions))]
 #endif
         public int actionID;
         [SerializeField] string actionText;
+
+#if UNITY_EDITOR
+        [ValueDropdown(nameof(GetAllRewiredActions))]
+#endif
+        [SerializeField]
+        int dropItemActionId;
 
 
         [Header("References")] [SerializeField]
@@ -55,9 +69,10 @@ namespace FirstPersonPlayer.Interactable
         void Update()
         {
             // Fire1 (left mouse) → pick / drop.  Replace with Rewired action if you use Rewired
-            if (rewired.dropPropOrHold)
+            if (rewired.dropPropOrHoldDown)
                 if (heldRb == null)
-                    TryPickUp();
+                    TryPlaceCore();
+                // TryPickUp();
                 else
                     Drop();
         }
@@ -94,6 +109,80 @@ namespace FirstPersonPlayer.Interactable
             if (rHandIsOccupied && lHandIsOccupied) return true;
 
             return false;
+        }
+
+        void TryPlaceCore()
+        {
+            // 0. Get GlobalInventoryManager
+            var globInvMgr = GlobalInventoryManager.Instance;
+            // 1. Determine which core from PlayerMainInventory to place
+            var coreToPlaceIndex = globInvMgr.GetHighestPriorityOuterCore();
+            if (coreToPlaceIndex == -1)
+                // AlertEvent.Trigger(AlertReason.InvalidAction, "No cores available to place", "Placement Error!");
+            {
+                noCoresAvailableFeedbacks?.PlayFeedbacks();
+                return;
+            }
+
+            // 2. Place the core
+            PlaceItem(globInvMgr.playerInventory, coreToPlaceIndex);
+            Debug.Log("[PlayerPropPickup] Placing core at index: " + coreToPlaceIndex);
+        }
+
+
+        public void PlaceItem(MoreMountains.InventoryEngine.Inventory fromInventory, int itemIndexWithinContents)
+        {
+            var contentLength = fromInventory.Content.Length;
+            if (itemIndexWithinContents < 0 || itemIndexWithinContents >= fromInventory.Content.Length)
+            {
+                Debug.LogError("[PlayerPropPickup] Invalid item index within inventory contents.");
+                return;
+            }
+
+            var itemToPlace = fromInventory.Content[itemIndexWithinContents] as MyBaseItem;
+            if (itemToPlace == null)
+            {
+                Debug.LogError("[PlayerPropPickup] Item to place is null or not of type MyBaseItem.");
+                return;
+            }
+
+            if (itemToPlace.isQuestItem)
+            {
+                AlertEvent.Trigger(
+                    AlertReason.CannotPlaceQuestItem, "Cannot remove a quest item by placing it.",
+                    "Cannot Remove Quest Item");
+
+                return;
+            }
+
+            if (heldRb == null)
+            {
+                // Remove item from inventory
+                var playerInventory = GlobalInventoryManager.Instance.playerInventory;
+                var prefab = itemToPlace.Prefab;
+                playerInventory?.RemoveItemByID(itemToPlace.ItemID, 1);
+
+                // Create Item Picker instance in world
+                var instance = Instantiate(prefab, holdPoint.position, holdPoint.rotation);
+                placeObjectFeedbacks?.PlayFeedbacks();
+                var itemPicker = instance.GetComponent<ItemPicker>();
+                var statefulItemPicker = instance.GetComponent<IStatefulItemPicker>();
+                if (statefulItemPicker != null) statefulItemPicker.SetStateToDefault();
+                itemPicker.uniqueID = Guid.NewGuid().ToString();
+
+                // Set the item in hold point
+                SetItem(instance);
+
+                // Close In-Game UI and show help info
+                MyUIEvent.Trigger(UIType.InGameUI, UIActionType.Close);
+                ControlsHelpEvent.Trigger(
+                    ControlHelpEventType.Show, dropItemActionId, "BlockAllNewRequests");
+            }
+            else
+            {
+                AlertEvent.Trigger(
+                    AlertReason.HoldingItemAlready, "Cannot place item, already holding one.", "Holding an Item");
+            }
         }
 
 

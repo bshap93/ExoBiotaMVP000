@@ -462,5 +462,18 @@ namespace Inventory
 
             return total;
         }
+        public int GetHighestPriorityOuterCore()
+        {
+            var highestPriorityCoreIndex = -1;
+            for (var i = 0; i < playerInventory.Content.Length; i++)
+            {
+                var item = playerInventory.Content[i];
+                var outerCore = item as OuterCoreItemObject;
+                if (outerCore != null && outerCore.corePriorityLevel > highestPriorityCoreIndex)
+                    highestPriorityCoreIndex = i;
+            }
+
+            return highestPriorityCoreIndex;
+        }
     }
 }

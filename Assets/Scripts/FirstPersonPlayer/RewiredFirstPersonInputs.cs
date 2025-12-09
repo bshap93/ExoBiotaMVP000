@@ -53,6 +53,7 @@ namespace FirstPersonPlayer
         public bool crouch;
         public bool useEquipped;
         [FormerlySerializedAs("pickUpProp")] public bool dropPropOrHold;
+        public bool dropPropOrHoldDown;
         public bool pause;
         public bool leftHandToggle;
         public bool pickablePick;
@@ -107,6 +108,7 @@ namespace FirstPersonPlayer
             interactHeld = _rewiredPlayer.GetButton("Interact");
             crouch = _rewiredPlayer.GetButton("Crouch");
             dropPropOrHold = _rewiredPlayer.GetButton("DropPropOrHold");
+            dropPropOrHoldDown = _rewiredPlayer.GetButtonDown("DropPropOrHold");
             useEquipped = _rewiredPlayer.GetButton("UseEquipped");
             leftHandToggle = _rewiredPlayer.GetButtonDown("LeftHandToggle");
             pickablePick = _rewiredPlayer.GetButtonDown("PickablePick");

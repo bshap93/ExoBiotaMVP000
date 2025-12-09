@@ -74,12 +74,12 @@ namespace LevelConstruct.Interactable.ItemInteractables
         public GameObject innerCoreObjectPicker;
         public InventoryItem innerCoreInventoryItem;
 
-        [FormerlySerializedAs("inventoryItem")]
-        public CoreItemObject coreItemObject;
+        [FormerlySerializedAs("coreItemObject")] [FormerlySerializedAs("inventoryItem")]
+        public OuterCoreItemObject outerCoreItemObject;
 
         public float timeToDissolve = 2.0f;
 
-        CoreItemObject.CoreReactivity _coreReactivity;
+        OuterCoreItemObject.CoreReactivity _coreReactivity;
         ItemPicker.ItemPicker _itemPicker;
 
         int _numInnerCoresHarvested;
@@ -239,7 +239,7 @@ namespace LevelConstruct.Interactable.ItemInteractables
             // Wait one more frame to ensure Load() has completed
             yield return null;
 
-            _coreReactivity = coreItemObject.coreReactivity;
+            _coreReactivity = outerCoreItemObject.coreReactivity;
 
             _itemPicker = GetComponent<ItemPicker.ItemPicker>();
 

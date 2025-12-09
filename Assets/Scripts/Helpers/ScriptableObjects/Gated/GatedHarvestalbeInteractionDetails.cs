@@ -20,7 +20,7 @@ namespace Helpers.ScriptableObjects.Gated
     public class GatedHarvestalbeInteractionDetails : GatedInteractionDetailsBase
 
     {
-        public CoreItemObject item;
+        public OuterCoreItemObject item;
         [Header("General Settings")]
         // public GatedInteractionType gatedInteractionType = GatedInteractionType.HarvesteableBiological;
         public HarvestableInteractionType harvestableInteractionType;
@@ -64,7 +64,7 @@ namespace Helpers.ScriptableObjects.Gated
 #endif
         public string mostEfficientChemicalID;
 
-        CoreItemObject.CoreReactivity CoreReactivity => item.coreReactivity;
+        OuterCoreItemObject.CoreReactivity CoreReactivity => item.coreReactivity;
 
 
         public string GetMostEfficientChemicalID(List<string> appropriateChemsFound)

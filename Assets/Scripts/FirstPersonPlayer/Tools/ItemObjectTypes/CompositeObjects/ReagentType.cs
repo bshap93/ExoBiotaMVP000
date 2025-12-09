@@ -17,6 +17,6 @@ namespace FirstPersonPlayer.Tools.ItemObjectTypes.CompositeObjects
     {
         [FormerlySerializedAs("ReagentClass")] public ReagentClass reagentClass;
         [FormerlySerializedAs("coreGradesDissolve")] [FormerlySerializedAs("CoreGrades")]
-        public List<CoreItemObject.CoreReactivity> coreGradesAffected;
+        public List<OuterCoreItemObject.CoreReactivity> coreGradesAffected;
     }
 }

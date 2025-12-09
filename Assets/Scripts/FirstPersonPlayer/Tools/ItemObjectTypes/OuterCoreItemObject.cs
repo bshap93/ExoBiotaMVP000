@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 namespace FirstPersonPlayer.Tools.ItemObjectTypes
 {
     [CreateAssetMenu(fileName = "CoreItemObject", menuName = "Scriptable Objects/Items/Core Item Object")]
-    public class CoreItemObject : MyBaseItem
+    public class OuterCoreItemObject : MyBaseItem
     {
         public enum CoreReactivity
         {
@@ -26,5 +26,7 @@ namespace FirstPersonPlayer.Tools.ItemObjectTypes
         // For testing purposed, we just do 1 to 1 rather than loot tables
         public InventoryItem innerCoreItem;
         public GameObject innerCoreObjectPicker;
+
+        [Header("Sorting")] public int corePriorityLevel;
     }
 }

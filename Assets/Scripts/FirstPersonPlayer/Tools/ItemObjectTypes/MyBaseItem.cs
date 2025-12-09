@@ -23,7 +23,7 @@ namespace FirstPersonPlayer.Tools.ItemObjectTypes
         public float weight = 1.0f;
         public EquippableCtx equippableContext = EquippableCtx.None;
 
-        public float normalBuyPrice = 1f;
+        [Header("Buying/Selling Settings")] public float normalBuyPrice = 1f;
         public float normalSellPrice = 0.5f;
         [FormerlySerializedAs("sellable")] public bool legalSellable = true;
         public bool illegalSellable;

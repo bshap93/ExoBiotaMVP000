@@ -17888,7 +17888,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4109609748755465550}
   m_HandleRect: {fileID: 8093417334570744551}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -19092,6 +19092,7 @@ MonoBehaviour:
   playerMainInvName: PlayerMainInventory
   dirigibleInvName: DirigibleInventory
   objectivesIGUIController: {fileID: 8981728466290151485}
+  attrIGUIList: {fileID: 0}
 --- !u!1 &4027985377070032982
 GameObject:
   m_ObjectHideFlags: 0
@@ -40428,7 +40429,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3307516389756340556}
   m_HandleRect: {fileID: 4033829714368990823}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0.9999984
   m_Size: 0.97050726
   m_NumberOfSteps: 0
   m_OnValueChanged:
