@@ -29,7 +29,6 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         [Header("Allowed Textures")] public int[] allowedTerrainTextureIndices;
 
         [SerializeField] MMFeedbacks equippedFeedbacks;
-        [SerializeField] MMFeedbacks unequippedFeedbacks;
 
 
         [SerializeField] GameObject unequippedEffectPrefab;
@@ -237,7 +236,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         }
         public override void PerformToolAction()
         {
-            float effectiveCooldown = miningCooldown - agilityCooldownSecondsReducePerPoint * attributesManager.Agility;
+            var effectiveCooldown = miningCooldown - agilityCooldownSecondsReducePerPoint * attributesManager.Agility;
 
             // miningCooldown -= agilityCooldownSecondsReducePerPoint * attributesManager.Agility;
             // Check cooldown first

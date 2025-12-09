@@ -22,7 +22,8 @@ namespace Objectives.ScriptableObjects
         Collect,
         TalkTo,
         Visit,
-        Interact
+        Interact,
+        ExploreArea
     }
 
     [CreateAssetMenu(
