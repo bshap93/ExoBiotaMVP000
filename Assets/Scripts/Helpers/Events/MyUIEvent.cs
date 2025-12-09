@@ -32,7 +32,7 @@ namespace Helpers.Events
         Open,
         Close,
         Update,
-        Toggle
+        // Toggle
     }
 
     public struct MyUIEvent

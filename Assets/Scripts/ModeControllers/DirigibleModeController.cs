@@ -72,9 +72,9 @@ namespace ModeControllers
                     case UIActionType.Close:
                         rewiredCinemachineAxisController.enabled = true;
                         break;
-                    case UIActionType.Toggle:
-                        rewiredCinemachineAxisController.enabled = !rewiredCinemachineAxisController.enabled;
-                        break;
+                    // case UIActionType.Toggle:
+                    //     rewiredCinemachineAxisController.enabled = !rewiredCinemachineAxisController.enabled;
+                    //     break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }

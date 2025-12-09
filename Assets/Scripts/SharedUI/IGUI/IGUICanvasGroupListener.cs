@@ -147,39 +147,39 @@ namespace SharedUI.IGUI
                     if (_objectivesIGUIController != null) _objectivesIGUIController.Refresh();
                     if (_bioSamplesIGUILIstView != null) _bioSamplesIGUILIstView.Refresh();
                 }
-                else if (eventType.uiActionType == UIActionType.Toggle)
-                {
-                    if (_canvasGroup != null)
-                    {
-                        if (_isOpen)
-                        {
-                            OnClose();
-                        }
-                        else
-                        {
-                            MoreMountains.InventoryEngine.Inventory centerInventory = null;
-                            var slotsSetIndex = 0;
-                            if (GameStateManager.Instance.CurrentMode == GameMode.FirstPerson)
-                            {
-                                slotsSetIndex = SlotsIGUIController.FirstPersonSlotsTypeIndex;
-                                centerInventory =
-                                    MoreMountains.InventoryEngine.Inventory.FindInventory(
-                                        playerMainInvName,
-                                        "Player1");
-                            }
-                            else if (GameStateManager.Instance.CurrentMode == GameMode.DirigibleFlight)
-                            {
-                                slotsSetIndex = SlotsIGUIController.DirigibleSlotsTypeIndex;
-                                centerInventory =
-                                    MoreMountains.InventoryEngine.Inventory.FindInventory(
-                                        dirigibleInvName,
-                                        "Player1");
-                            }
-
-                            OnOpen(centerInventory, slotsSetIndex);
-                        }
-                    }
-                }
+                // else if (eventType.uiActionType == UIActionType.Toggle)
+                // {
+                //     if (_canvasGroup != null)
+                //     {
+                //         if (_isOpen)
+                //         {
+                //             OnClose();
+                //         }
+                //         else
+                //         {
+                //             MoreMountains.InventoryEngine.Inventory centerInventory = null;
+                //             var slotsSetIndex = 0;
+                //             if (GameStateManager.Instance.CurrentMode == GameMode.FirstPerson)
+                //             {
+                //                 slotsSetIndex = SlotsIGUIController.FirstPersonSlotsTypeIndex;
+                //                 centerInventory =
+                //                     MoreMountains.InventoryEngine.Inventory.FindInventory(
+                //                         playerMainInvName,
+                //                         "Player1");
+                //             }
+                //             else if (GameStateManager.Instance.CurrentMode == GameMode.DirigibleFlight)
+                //             {
+                //                 slotsSetIndex = SlotsIGUIController.DirigibleSlotsTypeIndex;
+                //                 centerInventory =
+                //                     MoreMountains.InventoryEngine.Inventory.FindInventory(
+                //                         dirigibleInvName,
+                //                         "Player1");
+                //             }
+                //
+                //             OnOpen(centerInventory, slotsSetIndex);
+                //         }
+                //     }
+                // }
             }
         }
 
@@ -262,6 +262,7 @@ namespace SharedUI.IGUI
             _canvasGroup.blocksRaycasts = false;
             _isOpen = false;
 
+
             if (_canvas != null) _canvas.enabled = false; // <- add
 
 
@@ -269,8 +270,6 @@ namespace SharedUI.IGUI
             var inOverview = GameStateManager.Instance &&
                              GameStateManager.Instance.CurrentMode == GameMode.Overview;
 
-            // Cursor.lockState = inOverview ? CursorLockMode.None : CursorLockMode.Locked;
-            // Cursor.visible = inOverview;
 
             Time.timeScale = 1f;
         }

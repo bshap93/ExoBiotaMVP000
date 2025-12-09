@@ -1,4 +1,3 @@
-using Events;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
 using Helpers.Events;
 using Michsky.MUIP;
@@ -7,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class IGUIItemInfoPopup : MonoBehaviour, MMEventListener<InventoryEvent>
+public class IGUIItemInfoPopup : MonoBehaviour, MMEventListener<InventoryEvent>, MMEventListener<MyUIEvent>
 {
     [Header("Canvas Group")] [SerializeField]
     CanvasGroup canvasGroup;
@@ -38,12 +37,14 @@ public class IGUIItemInfoPopup : MonoBehaviour, MMEventListener<InventoryEvent>
 
     void OnEnable()
     {
-        this.MMEventStartListening();
+        this.MMEventStartListening<MyUIEvent>();
+        this.MMEventStartListening<InventoryEvent>();
     }
 
     void OnDisable()
     {
-        this.MMEventStopListening();
+        this.MMEventStopListening<MyUIEvent>();
+        this.MMEventStopListening<InventoryEvent>();
     }
     public void OnMMEvent(InventoryEvent eventType)
     {
@@ -54,6 +55,12 @@ public class IGUIItemInfoPopup : MonoBehaviour, MMEventListener<InventoryEvent>
                 AlertEvent.Trigger(
                     AlertReason.InvalidAction, "Item info not able to be shown",
                     "Cannot Show Item Info");
+    }
+    public void OnMMEvent(MyUIEvent eventType)
+    {
+        if (eventType.uiActionType == UIActionType.Close)
+            if (eventType.uiType == UIType.Any || eventType.uiType == UIType.InGameUI)
+                Close();
     }
 
     void SetCurrentItem(MyBaseItem item)

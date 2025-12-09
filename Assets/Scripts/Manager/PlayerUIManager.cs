@@ -138,9 +138,9 @@ namespace Manager
                 case UIActionType.Update:
                     // Handle any updates if necessary
                     break;
-                case UIActionType.Toggle:
-                    uiIsOpen = !uiIsOpen;
-                    break;
+                // case UIActionType.Toggle:
+                //     uiIsOpen = !uiIsOpen;
+                //     break;
                 default:
                     Debug.LogWarning($"Unhandled UIActionType: {eventType.uiActionType}");
                     break;

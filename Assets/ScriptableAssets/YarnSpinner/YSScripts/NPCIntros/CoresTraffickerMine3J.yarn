@@ -3,15 +3,29 @@ title: PlayerTurnedPowerInHideout
 <<complete_objective DialogueCommands "ContactTrader003">>
 Fulmen: Good work, friend. 
 Fulmen: Take as long as you need in there to harvest your produce.
-Fulmen: I'll be here with your reward. Just cause I like you, heres something else!
+Fulmen: Here's your reward...
 <<give_player_item DialogueCommands "AshpoolMineKey" 1>>
-Fulmen: That'll give you access to the Mine L1 B side as well as the caverns below L1.
-Fulmen: Just a heads up: the Sheolites patrol those caves. I don't go down there ever.
-Fulmen: Fucking things give me the creeps. I hear stories, though, (shiver) hard NOPE.
--> Alright, I appreciate it.
+-> A key? That's it?
+    Fulmen: That key will give you access to some of the most secluded Core Patches in the valley.
+    Fulmen: You seem able to take care of yourself. Still, be careful and ready to fight some alien bugs...
+    -> Ok, thanks.
+    -> And?
+        Fulmen: I don't recommend it, but you'll find a key that'll give you access to caverns below the mines.
+        Fulmen: Things down there... they are strange and often perilous to encounter.
+        -> What is it that frightens you?
+            <<jump WhatFrightensFulmen>>
+-> Ah, yes I saw the door this opens on the way here. Alright, I appreciate it.
     <<jump End02>>
--> What is it that frightens you?
-    <<jump WhatFrightensFulmen>>
+-> And what does this open?
+    Fulmen: Near the mine level exit of the first elevator you used, there is a door which this opens.
+    Fulmen: That key will give you access to some of the most secluded Core Patches in the valley.
+    -> Ok, thanks.
+    -> And?
+        Fulmen: I don't recommend it, but you'll find a key that'll give you access to caverns below the mines.
+        Fulmen: Things down there... they are strange and often perilous to encounter.
+            -> What is it that frightens you?
+                <<jump WhatFrightensFulmen>>
+
 ===
 
 title: PlayerReturnedAfterRTGQuest
