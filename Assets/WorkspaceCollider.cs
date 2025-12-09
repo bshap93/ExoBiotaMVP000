@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Dirigible.Input;
+using Helpers.Events;
 using LevelConstruct.Interactable.ItemInteractables.ItemPicker;
 using MoreMountains.Feedbacks;
 using Sirenix.OdinInspector;
@@ -11,7 +13,18 @@ public class WorkspaceCollider : MonoBehaviour
 {
     [SerializeField] MMFeedbacks enterIntendedItemFeedbacks;
 
+#if UNITY_EDITOR
+    [ValueDropdown(nameof(GetAllRewiredActions))]
+#endif
+    [SerializeField]
+    int altActionId;
+    [SerializeField] string additionalInstruction;
+    [SerializeField] Sprite toolIcon;
+    [SerializeField] string additionalText;
+
     readonly HashSet<string> _itemPickerUniqueIDs = new();
+
+    float _timeElapsed = 0f;
 
     void OnTriggerEnter(Collider other)
     {
@@ -23,6 +36,25 @@ public class WorkspaceCollider : MonoBehaviour
                 enterIntendedItemFeedbacks?.PlayFeedbacks();
                 _itemPickerUniqueIDs.Add(uniqueID);
             }
+    }
+
+#if UNITY_EDITOR
+    public IEnumerable<ValueDropdownItem<int>> GetAllRewiredActions()
+    {
+        return AllRewiredActions.GetAllRewiredActions();
+    }
+
+#endif
+
+    public void PromptPlayerToPlaceWithAltInteractButton()
+    {
+        ControlsHelpEvent.Trigger(
+            ControlHelpEventType.Show, altActionId);
+    }
+
+    public void ClearPromptPlayerToPlaceWithAltInteractButton()
+    {
+        ControlsHelpEvent.Trigger(ControlHelpEventType.Hide, altActionId);
     }
 
 

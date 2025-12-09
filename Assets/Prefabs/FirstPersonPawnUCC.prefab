@@ -6383,7 +6383,7 @@ MonoBehaviour:
   interactHeld: 0
   crouch: 0
   useEquipped: 0
-  dropPropOrHold: 1
+  dropPropOrHold: 0
   pause: 0
   leftHandToggle: 0
   pickablePick: 0

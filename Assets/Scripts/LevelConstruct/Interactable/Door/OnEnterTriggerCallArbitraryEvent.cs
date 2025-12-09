@@ -8,9 +8,17 @@ namespace LevelConstruct.Interactable.Door
     {
         [FormerlySerializedAs("OnTriggerEnterEvent")]
         public UnityEvent onTriggerEnterEvent;
+        public UnityEvent onTriggerExitEvent;
         void OnTriggerEnter(Collider other)
         {
-            onTriggerEnterEvent?.Invoke();
+            if (other.CompareTag("Player") || other.CompareTag("FirstPersonPlayer"))
+                onTriggerEnterEvent?.Invoke();
+        }
+
+        void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag("Player") || other.CompareTag("FirstPersonPlayer"))
+                onTriggerExitEvent?.Invoke();
         }
     }
 }
