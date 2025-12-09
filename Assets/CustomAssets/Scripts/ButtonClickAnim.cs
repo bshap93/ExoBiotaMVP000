@@ -72,20 +72,10 @@ namespace CustomAssets.Scripts
         void OnEnable()
         {
             this.MMEventStartListening();
-            // if (_trigger == null) return;
-            // _trigger.OnObjectHighlightStart += OnHoverStart; // return false to cancel hover highlight
-            // _trigger.OnObjectHighlightStay +=
-            //     OnHoverStay; // called while highlighted; return false to force unhighlight
-            //
-            // _trigger.OnObjectHighlightEnd += OnHoverEnd;
         }
         void OnDisable()
         {
             this.MMEventStopListening();
-            // if (_trigger == null) return;
-            // _trigger.OnObjectHighlightStart -= OnHoverStart;
-            // _trigger.OnObjectHighlightStay -= OnHoverStay;
-            // _trigger.OnObjectHighlightEnd -= OnHoverEnd;
         }
         public string GetName()
         {

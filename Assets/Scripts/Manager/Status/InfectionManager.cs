@@ -169,6 +169,7 @@ namespace Manager.Status
         }
         public void OnMMEvent(InGameTimeUpdateEvent eventType)
         {
+            _isContaminationMaxed = PlayerMutableStatsManager.Instance.IsContaminationMaxed();
             if (_isContaminationMaxed)
             {
                 OngoingInfection newInfection;

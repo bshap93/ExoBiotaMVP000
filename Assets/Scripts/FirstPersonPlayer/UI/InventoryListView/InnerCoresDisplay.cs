@@ -1,4 +1,5 @@
 ﻿using FirstPersonPlayer.Tools.ItemObjectTypes.CompositeObjects;
+using Helpers.Events;
 using Inventory;
 using MoreMountains.InventoryEngine;
 using MoreMountains.Tools;
@@ -8,7 +9,8 @@ using UnityEngine;
 
 namespace FirstPersonPlayer.UI.InventoryListView
 {
-    public class InnerCoresDisplay : MonoBehaviour, MMEventListener<MMInventoryEvent>
+    public class InnerCoresDisplay : MonoBehaviour, MMEventListener<MMInventoryEvent>,
+        MMEventListener<LoadedManagerEvent>
     {
         [SerializeField] GradeCoresUILVRow standardCoreRow;
         [SerializeField] GradeCoresUILVRow radiantCoreRow;
@@ -27,12 +29,18 @@ namespace FirstPersonPlayer.UI.InventoryListView
 
         void OnEnable()
         {
-            this.MMEventStartListening();
+            this.MMEventStartListening<MMInventoryEvent>();
+            this.MMEventStartListening<LoadedManagerEvent>();
         }
 
         void OnDisable()
         {
-            this.MMEventStopListening();
+            this.MMEventStopListening<MMInventoryEvent>();
+            this.MMEventStopListening<LoadedManagerEvent>();
+        }
+        public void OnMMEvent(LoadedManagerEvent eventType)
+        {
+            if (eventType.ManagerType == ManagerType.All) Initialize();
         }
 
         public void OnMMEvent(MMInventoryEvent eventType)

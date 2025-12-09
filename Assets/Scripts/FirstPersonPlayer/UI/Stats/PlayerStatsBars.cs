@@ -111,6 +111,11 @@ namespace FirstPersonPlayer.UI.Stats
             if (contaminationBar != null && stats.CurrentMaxContamination > 0)
                 contaminationBar.SetBar(stats.CurrentContamination, 0f, stats.CurrentMaxContamination);
 
+            if (stats.CurrentContamination < stats.CurrentMaxContamination)
+                bioAlertIcon.enabled = false;
+            else
+                bioAlertIcon.enabled = true;
+
 
             // Set lost capacity bar
             if (lostHealthCapacityFill != null)

@@ -62,6 +62,8 @@ namespace FirstPersonPlayer.Interactable.Stateful
 
         public ElevatorState currentState;
 
+        public MMFeedbacks accessDeniedFeedbacks;
+
         public string elevatorUniqueID;
 
 
@@ -162,14 +164,7 @@ namespace FirstPersonPlayer.Interactable.Stateful
 
         void ElevatorGoDown(int indexOfDestination)
         {
-            if (!TryRequestFloor(indexOfDestination))
-            {
-                AlertEvent.Trigger(
-                    AlertReason.ElevatorIssue, "The selected floor is not accessible from this elevator.",
-                    "Elevator Issue");
-
-                return;
-            }
+            if (!TryRequestFloor(indexOfDestination)) return;
 
             var floorsToTravel = indexOfDestination - currentState.currentFloor;
             var destinationPoint = elevatorPoints[indexOfDestination];
@@ -179,11 +174,7 @@ namespace FirstPersonPlayer.Interactable.Stateful
 
             frontalBarrier.SetActive(true);
 
-            // //Debug.Log("Button Elevator Clicked");
-            // TweenXYZ.Add(
-            //         elevatorScriptObject.transform.gameObject, travelTime * floorsToTravel,
-            //         destinationPoint.transform.localPosition)
-            //     .EaseInOutSine();
+
             DOTween.Kill(elevatorScriptObject.transform); // prevent overlapping tweens
 
             elevatorScriptObject.transform
@@ -386,6 +377,8 @@ namespace FirstPersonPlayer.Interactable.Stateful
                 AlertEvent.Trigger(
                     AlertReason.ElevatorIssue,
                     "You need a key to access this floor.", "Access Denied");
+
+                accessDeniedFeedbacks?.PlayFeedbacks();
 
                 return false;
             }

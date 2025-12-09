@@ -133,7 +133,6 @@ namespace Manager.Global
                     Paused = false;
                     Time.timeScale = 1;
                     UnPauseAudio();
-                    // SceneEvent.Trigger(SceneEventType.TogglePauseScene);
                     InGameTimeActionEvent.Trigger(InGameTimeActionEvent.ActionType.Resume);
                     quitUIFeedbacks?.PlayFeedbacks();
                 }
@@ -154,24 +153,16 @@ namespace Manager.Global
                 UnPauseAudio();
 
 
-            // SceneEvent.Trigger(SceneEventType.TogglePauseScene);
             pauseFeedback?.PlayFeedbacks();
         }
 
         void UnPauseAudio()
         {
-            // foreach (var audioSource in _audioSources)
-            //     if (audioSource != null && audioSource != uiButtonAudioSource)
-            //         audioSource.UnPause();
             AudioEvent.Trigger(AudioEventType.UnPauseAudio);
         }
 
         void PauseAudio()
         {
-            // _audioSources = new List<AudioSource>(FindObjectsByType<AudioSource>(FindObjectsSortMode.None));
-            // foreach (var audioSource in _audioSources)
-            //     if (audioSource != null && audioSource != uiButtonAudioSource)
-            //         audioSource.Pause();
             AudioEvent.Trigger(AudioEventType.PauseAudio);
         }
 
