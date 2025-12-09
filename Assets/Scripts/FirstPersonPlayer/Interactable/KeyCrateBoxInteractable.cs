@@ -14,6 +14,7 @@ namespace FirstPersonPlayer.Interactable
 {
     public class KeyCrateBoxInteractable : MonoBehaviour, IInteractable, IRequiresUniqueID, IHoverable, IBillboardable
     {
+        static readonly int BaseColor = Shader.PropertyToID("_BaseColor");
         public string uniqueID;
         [SerializeField] KeyItemObject keyItem;
         [SerializeField] float interactionDistance = 3f;
@@ -26,6 +27,9 @@ namespace FirstPersonPlayer.Interactable
 
         [Header("Feedbacks")] [SerializeField] MMFeedbacks getKeyItemFeedback;
         [SerializeField] MMFeedbacks alreadyGotKeyFeedback;
+
+        [SerializeField] GameObject holoScreenMesh;
+        [SerializeField] int screenlayer09Index = 5;
 
         bool _hasBeenOpened;
         void Start()
@@ -123,6 +127,25 @@ namespace FirstPersonPlayer.Interactable
         public bool IsUniqueIDEmpty()
         {
             return string.IsNullOrEmpty(uniqueID);
+        }
+
+        public void SetHoloScreenTint(Color newColor, int index = 2)
+        {
+            var rendererVar = holoScreenMesh.GetComponent<MeshRenderer>();
+            var mats = rendererVar.materials;
+
+            var newMat = new Material(mats[index]); // clone instance-safe
+            newMat.SetColor(BaseColor, newColor);
+
+            //  enhance emissive glow
+            // if (newMat.HasProperty("_EmissionColor"))
+            // {
+            //     newMat.EnableKeyword("_EMISSION");
+            //     newMat.SetColor("_EmissionColor", newColor * 1.5f);
+            // }
+
+            mats[index] = newMat;
+            rendererVar.materials = mats;
         }
     }
 }

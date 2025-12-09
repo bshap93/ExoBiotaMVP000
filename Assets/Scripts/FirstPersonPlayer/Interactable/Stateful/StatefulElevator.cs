@@ -5,8 +5,10 @@ using creepycat.scifikitvol4;
 using CustomAssets.Scripts;
 using DG.Tweening;
 using FirstPersonPlayer.ScriptableObjects;
+using FirstPersonPlayer.Tools.ItemObjectTypes;
 using Helpers.Events;
 using Helpers.Events.Machine;
+using Inventory;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
 using Sirenix.OdinInspector;
@@ -160,7 +162,7 @@ namespace FirstPersonPlayer.Interactable.Stateful
 
         void ElevatorGoDown(int indexOfDestination)
         {
-            if (!currentState.accessibleFloors.Contains(indexOfDestination))
+            if (!TryRequestFloor(indexOfDestination))
             {
                 AlertEvent.Trigger(
                     AlertReason.ElevatorIssue, "The selected floor is not accessible from this elevator.",
@@ -207,7 +209,7 @@ namespace FirstPersonPlayer.Interactable.Stateful
                 Debug.Log(
                     "Trigger ask about scene change modal... commence regular elevator travel if yes, if Cancel, do nothing.");
 
-            if (!currentState.accessibleFloors.Contains(indexOfDestination))
+            if (!TryRequestFloor(indexOfDestination))
             {
                 AlertEvent.Trigger(
                     AlertReason.ElevatorIssue, "The selected floor is not accessible from this elevator.",
@@ -358,6 +360,39 @@ namespace FirstPersonPlayer.Interactable.Stateful
             if (playerInput == null) Debug.LogError("No RewiredFirstPersonInputs found in scene.");
         }
 
+        bool HasRequiredKeyForFloor(int targetFloor)
+        {
+            var requiredKey = currentState.requiredKeysPerFloor?[targetFloor];
+            if (requiredKey == null) return true;
+
+            return GlobalInventoryManager.Instance.HasKeyForDoor(requiredKey.KeyID);
+        }
+
+        bool TryRequestFloor(int targetFloor)
+        {
+            // First check if the floor is normally accessible
+            if (!currentState.accessibleFloors.Contains(targetFloor))
+            {
+                AlertEvent.Trigger(
+                    AlertReason.ElevatorIssue,
+                    "This floor is not accessible.", "Elevator Access");
+
+                return false;
+            }
+
+            // Then check key requirement
+            if (!HasRequiredKeyForFloor(targetFloor))
+            {
+                AlertEvent.Trigger(
+                    AlertReason.ElevatorIssue,
+                    "You need a key to access this floor.", "Access Denied");
+
+                return false;
+            }
+
+            return true;
+        }
+
 
         [Serializable]
         public class ElevatorState
@@ -366,6 +401,10 @@ namespace FirstPersonPlayer.Interactable.Stateful
             public ElevatorPowerState powerState;
             public int currentFloor;
             public int[] accessibleFloors;
+
+
+            [Tooltip("Optional: If a floor has a required key, the player must possess it to go there.")]
+            public KeyItemObject[] requiredKeysPerFloor;
         }
     }
 }
