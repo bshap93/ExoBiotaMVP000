@@ -1044,8 +1044,6 @@ namespace FirstPersonPlayer.InputHandling
                 CharacterActor.Velocity += CustomUtilities.Multiply(
                     jumpDirection, verticalMovementParameters.jumpSpeed * agilityJumpMultiplier);
 
-                Debug.Log("Jump Velocity: " + CharacterActor.Velocity);
-
 
                 if (verticalMovementParameters.cancelJumpOnRelease)
                     isAllowedToCancelJump = true;

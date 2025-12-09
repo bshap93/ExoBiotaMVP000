@@ -5,7 +5,8 @@ using UnityEngine;
 
 namespace FirstPersonPlayer.Tools.ItemObjectTypes
 {
-    [CreateAssetMenu(fileName = "RightHandEquippableTool",
+    [CreateAssetMenu(
+        fileName = "RightHandEquippableTool",
         menuName = "Scriptable Objects/Items/RightHandEquippableTool",
         order = 0)]
     [Serializable]
@@ -13,9 +14,12 @@ namespace FirstPersonPlayer.Tools.ItemObjectTypes
     {
         public ScanProfile scannerProfile;
 
+        [SerializeField] float baseStaminaConsumedPerUse;
+
         public override bool Equip(string playerID)
         {
-            MMInventoryEvent.Trigger(MMInventoryEventType.ItemEquipped,
+            MMInventoryEvent.Trigger(
+                MMInventoryEventType.ItemEquipped,
                 null, // Slot is not used in this context
                 "EquippedItemInventory", // Assuming this is the inventory name
                 this, // The item being equipped

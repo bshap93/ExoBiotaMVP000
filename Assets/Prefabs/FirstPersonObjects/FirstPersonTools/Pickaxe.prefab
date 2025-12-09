@@ -998,11 +998,10 @@ MonoBehaviour:
   miningCooldown: 1
   hardnessCanBreak: 2
   highlighingRange: 5
-  staminaCostPerConnectingSwing: 1
+  staminaCostPerConnectingSwing: 3
   defaultReticleForTool: {fileID: 21300000, guid: 4f5efa23f803efe41900694e287ac262, type: 3}
   allowedTerrainTextureIndices: 
   equippedFeedbacks: {fileID: 5697828116582486340}
-  unequippedFeedbacks: {fileID: 6348381471594586437}
   unequippedEffectPrefab: {fileID: 0}
   showHighlights: 1
   minableLayers:

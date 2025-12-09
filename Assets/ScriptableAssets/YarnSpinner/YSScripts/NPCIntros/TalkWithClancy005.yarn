@@ -9,8 +9,10 @@ Clancy: once you've some more experience under your belt.
 
 title: DidNotGiveCoresClancyTalk
 ---
-Clancy: Well, Hypolita does not seem pleased. I get it. You need the money.
-Clancy: Might as well make your way to the Core trafficker to the Southwest and sell them.
+Clancy: Well, I really hope Hypolita you got some useful information to go on.
+Clancy: Don't forget about our outpost's commissary if you need supplies. 
+Clancy: You're good for now, but come see me later. I can help repair or upgrade your vehicle or gear, 
+Clancy: once you've some more experience under your belt.
 <<jump ClancyDirectToMine>>
 ===
 

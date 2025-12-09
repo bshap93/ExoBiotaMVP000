@@ -1046,7 +1046,7 @@ MonoBehaviour:
     m_Bits: 134348799
   allowedTags:
   - HackableBioStructure
-  staminaCostPerConnectingSwing: 1
+  staminaCostPerConnectingSwing: 2.5
   swingCooldown: 1.2
   hatchetPower: 1
   defaultReticleForTool: {fileID: 21300000, guid: 85b809804a98b954dbc107053cc51dfb, type: 3}

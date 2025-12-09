@@ -3675,7 +3675,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000014305115}
+  m_AnchoredPosition: {x: 0, y: -0.00004529953}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &7035283024767006064
@@ -3799,7 +3799,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 18.5, y: 0.0001373291}
+  m_AnchoredPosition: {x: 18.5, y: 0.000030517578}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &3061560261422951685
@@ -4385,8 +4385,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3234982408758051059}
   m_HandleRect: {fileID: 7191744531259007888}
   m_Direction: 2
-  m_Value: 1.0000005
-  m_Size: 0.39933375
+  m_Value: 1.0000024
+  m_Size: 0.39909163
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5638,7 +5638,7 @@ GameObject:
   - component: {fileID: 4550758007816536220}
   - component: {fileID: 6304199910268583720}
   m_Layer: 0
-  m_Name: GameHUDCanvas
+  m_Name: GameHUDCanvas 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6974,7 +6974,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 7030301781289546972}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.4667108
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -9168,7 +9168,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 164215472912901105, guid: 011fb21da29f66a42a94f557d2caf919, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 164.01001
       objectReference: {fileID: 0}
     - target: {fileID: 164215472912901105, guid: 011fb21da29f66a42a94f557d2caf919, type: 3}
       propertyPath: m_SizeDelta.y
@@ -9196,7 +9196,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1400265437643956762, guid: 011fb21da29f66a42a94f557d2caf919, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 84.01
       objectReference: {fileID: 0}
     - target: {fileID: 1400265437643956762, guid: 011fb21da29f66a42a94f557d2caf919, type: 3}
       propertyPath: m_SizeDelta.y
@@ -9320,7 +9320,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3556693500491258689, guid: 011fb21da29f66a42a94f557d2caf919, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 84.01
       objectReference: {fileID: 0}
     - target: {fileID: 3556693500491258689, guid: 011fb21da29f66a42a94f557d2caf919, type: 3}
       propertyPath: m_SizeDelta.y

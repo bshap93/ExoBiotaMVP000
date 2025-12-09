@@ -84,7 +84,8 @@ Clancy: Change your mind on that sampling job in the mine?
 
 title: AcceptScanQuest
 ---
-Clancy: Great, there's a sampling tool you can use in the mine.
+Clancy: Great, there's a sampling tool you can use in the mine, near a comms station.
+Clancy: You'll contact me from that comms station to keep me apprised of your safety.
 Clancy: It's next to a Comms console in the cavern where you'll want to sample.
 Clancy: It's easy enough to use. Just jab into the organisms with the needle end.
 <<complete_objective DialogueCommands "TalkToClancy">>
