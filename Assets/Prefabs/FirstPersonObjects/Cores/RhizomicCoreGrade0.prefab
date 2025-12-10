@@ -1297,7 +1297,7 @@ MonoBehaviour:
   DebugActive: 0
   InScriptDrivenPause: 0
   FeedbacksList:
-  - rid: 1616504639524700638
+  - rid: 2956590306212970798
   KeepPlayModeChanges: 0
   PerformanceMode: 0
   RestoreInitialValuesOnDisable: 0
@@ -1306,7 +1306,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 1616504639524700638
+    - rid: 2956590306212970798
       type: {class: MMF_MMSoundManagerSound, ns: MoreMountains.Feedbacks, asm: MoreMountains.Tools}
       data:
         Active: 1
@@ -1397,7 +1397,7 @@ MonoBehaviour:
         ID: 0
         AudioGroup: {fileID: 0}
         RecycleAudioSource: {fileID: 0}
-        Loop: 1
+        Loop: 0
         Persistent: 0
         DoNotPlayIfClipAlreadyPlaying: 1
         StopSoundOnFeedbackStop: 1
@@ -2031,7 +2031,7 @@ MonoBehaviour:
   innerCoreYield: 1
   innerCoreObjectPicker: {fileID: 4888187701277431673, guid: 742e4ea19e1e6c64ea1db1b9259d6b24, type: 3}
   innerCoreInventoryItem: {fileID: 11400000, guid: 7b62c1e94bb3d1d44964e846226e28d4, type: 2}
-  coreItemObject: {fileID: 11400000, guid: 39d228236c7e17c40badfd44bcfdf6aa, type: 2}
+  outerCoreItemObject: {fileID: 11400000, guid: 39d228236c7e17c40badfd44bcfdf6aa, type: 2}
   timeToDissolve: 2
 --- !u!114 &951873382746345019
 MonoBehaviour:
@@ -2049,6 +2049,7 @@ MonoBehaviour:
   actionId: 97
   actionText: To Pickup (E for Harvesting)
   quantity: 1
+  interactionDistance: 2
   onItemPicked:
     m_PersistentCalls:
       m_Calls: []
