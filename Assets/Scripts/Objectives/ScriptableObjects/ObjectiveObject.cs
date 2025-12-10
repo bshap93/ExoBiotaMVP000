@@ -37,6 +37,8 @@ namespace Objectives.ScriptableObjects
         public bool shouldBeMadeActiveOnAdd = true;
 
         public List<ObjectiveObject> prerequisiteObjectives;
+        
+        
 
 
         [Header("NPC Linking")] [ValueDropdown("GetNpcIdOptions", IsUniqueList = true)]

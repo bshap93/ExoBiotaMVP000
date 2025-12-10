@@ -1,5 +1,6 @@
 using Helpers.Events;
 using Helpers.Events.Tutorial;
+using Manager;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
 using Rewired;
@@ -9,7 +10,7 @@ using UnityEngine.UI;
 
 namespace SharedUI.Tutorial
 {
-    public class OptionalTutorialTip : MonoBehaviour, MMEventListener<MainTutorialBitEvent>
+    public class OptionalTutorialTip : MonoBehaviour, MMEventListener<MainTutorialBitEvent>, MMEventListener<MyUIEvent>
     {
         [SerializeField] CanvasGroup canvasGroup;
         [SerializeField] TMP_Text tutorialName;
@@ -26,6 +27,7 @@ namespace SharedUI.Tutorial
         string _currentTutorialId;
         bool _isHolding;
         Player _player;
+        PlayerUIManager _playerUIManagerSingleton;
         bool _tutorialShown;
 
 
@@ -42,13 +44,14 @@ namespace SharedUI.Tutorial
                 buttonKeyImage.fillAmount = 1f;
                 buttonKeyImage.color = fillColorNormal;
             }
+
+            _playerUIManagerSingleton = PlayerUIManager.Instance;
         }
 
 
         void Update()
         {
             if (_player == null) return;
-
             // Check if the button is being held
             var isButtonHeld = _player.GetButton(universalInteractId);
 
@@ -73,6 +76,9 @@ namespace SharedUI.Tutorial
                 // Check if hold duration reached
                 if (_currentHoldTime >= holdDuration)
                 {
+                    if (_playerUIManagerSingleton.IsAnyUIOpen())
+                        return;
+
                     ShowTutorial();
                     _tutorialShown = true;
                 }
@@ -91,12 +97,14 @@ namespace SharedUI.Tutorial
 
         void OnEnable()
         {
-            this.MMEventStartListening();
+            this.MMEventStartListening<MainTutorialBitEvent>();
+            this.MMEventStartListening<MyUIEvent>();
         }
 
         void OnDisable()
         {
-            this.MMEventStopListening();
+            this.MMEventStopListening<MainTutorialBitEvent>();
+            this.MMEventStopListening<MyUIEvent>();
         }
         public void OnMMEvent(MainTutorialBitEvent eventType)
         {
@@ -116,6 +124,10 @@ namespace SharedUI.Tutorial
                 Hide();
                 _tutorialShown = false;
             }
+        }
+        public void OnMMEvent(MyUIEvent eventType)
+        {
+            if (eventType.uiActionType == UIActionType.Open) Hide();
         }
 
         void ResetHold()

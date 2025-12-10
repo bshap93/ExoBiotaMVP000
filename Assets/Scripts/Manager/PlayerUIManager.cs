@@ -146,5 +146,10 @@ namespace Manager
                     break;
             }
         }
+
+        public bool IsAnyUIOpen()
+        {
+            return uiIsOpen || iGUIsOpen || modalIsOpen || gatedUIIsOpen;
+        }
     }
 }
