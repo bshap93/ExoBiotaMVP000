@@ -9,7 +9,7 @@ using SharedUI.Interface;
 using UnityEngine;
 using Utilities.Interface;
 
-namespace FirstPersonPlayer.Interactable
+namespace FirstPersonPlayer.Interactable.MediStat
 {
     public class MediStatHub : ActionConsole, IRequiresUniqueID, IInteractable, IBillboardable
     {

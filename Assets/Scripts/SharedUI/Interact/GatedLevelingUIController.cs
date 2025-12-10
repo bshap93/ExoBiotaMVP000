@@ -278,7 +278,19 @@ namespace SharedUI.Interact
         void CommitChanges()
         {
             // Logic to commit attribute point changes
+            if (_pendingNewDexterity == _initialDexterity &&
+                _pendingNewMentalToughness == _initialMentalToughness &&
+                _pendingNewAgility == _initialAgility &&
+                _pendingNewStrength == _initialStrength)
+            {
+                AlertEvent.Trigger(
+                    AlertReason.Test, "No attribute changes to commit.", "Leveling");
+
+                return;
+            }
+
             Debug.Log("Committed attribute point changes.");
+
             MyUIEvent.Trigger(UIType.LevelingUI, UIActionType.Close);
             // MyUIEvent.Trigger(UIType.WaitWhileInteracting, UIActionType.Open);
             // waitOverlay.Show("Applying Attribute Augments");
