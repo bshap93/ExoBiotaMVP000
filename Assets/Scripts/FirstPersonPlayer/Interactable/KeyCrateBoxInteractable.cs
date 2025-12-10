@@ -25,6 +25,10 @@ namespace FirstPersonPlayer.Interactable
         [ShowIf("hasOtherItems")] [SerializeField]
         MyBaseItem[] items;
 
+        [SerializeField] bool givesMoney;
+        [ShowIf("givesMoney")] [SerializeField]
+        int moneyAmount;
+
         [Header("Feedbacks")] [SerializeField] MMFeedbacks getKeyItemFeedback;
         [SerializeField] MMFeedbacks alreadyGotKeyFeedback;
 

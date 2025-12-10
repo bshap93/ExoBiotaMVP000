@@ -227,7 +227,7 @@ namespace Manager
                 "TestMine03Spawn",
                 //  Three Jane Mine,
                 "ThreeJaneMineDoorSpawn", "DebugThreeJaneMineSpawn", "Hangar3JMineSpawn",
-                "AshpoolMineBackElevatorL01",
+                "AshpoolMineBackElevatorL01", "AshpoolMineL1AB",
                 // Choked Caverns
                 "ChokedCavernsDebugSpawn", "ElevatorStopChokedCaves"
             };

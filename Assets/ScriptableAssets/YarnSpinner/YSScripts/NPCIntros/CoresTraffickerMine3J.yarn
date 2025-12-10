@@ -4,27 +4,14 @@ title: PlayerTurnedPowerInHideout
 Fulmen: Good work, friend. 
 Fulmen: Take as long as you need in there to harvest your produce.
 Fulmen: Here's your reward...
-<<give_player_item DialogueCommands "AshpoolMineKey" 1>>
+<<give_player_item DialogueCommands "ChokedCavernsElevatorKey" 1>>
 -> A key? That's it?
-    Fulmen: That key will give you access to some of the most secluded Core Patches in the valley.
-    Fulmen: You seem able to take care of yourself. Still, be careful and ready to fight some alien bugs...
+    Fulmen: That key will give you access to the bottom-most level of my elevator right outside this building.
+    Fulmen: You seem able to take care of yourself. Still, be careful, the Sheolites are not to be fooled with.
     -> Ok, thanks.
-    -> And?
-        Fulmen: I don't recommend it, but you'll find a key that'll give you access to caverns below the mines.
-        Fulmen: Things down there... they are strange and often perilous to encounter.
-        -> What is it that frightens you?
-            <<jump WhatFrightensFulmen>>
--> Ah, yes I saw the door this opens on the way here. Alright, I appreciate it.
-    <<jump End02>>
--> And what does this open?
-    Fulmen: Near the mine level exit of the first elevator you used, there is a door which this opens.
-    Fulmen: That key will give you access to some of the most secluded Core Patches in the valley.
-    -> Ok, thanks.
-    -> And?
-        Fulmen: I don't recommend it, but you'll find a key that'll give you access to caverns below the mines.
-        Fulmen: Things down there... they are strange and often perilous to encounter.
-            -> What is it that frightens you?
-                <<jump WhatFrightensFulmen>>
+        <<jump End02>>
+    -> What is it that frightens you?
+        <<jump WhatFrightensFulmen>>
 
 ===
 
