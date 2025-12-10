@@ -1,5 +1,5 @@
 ﻿using Helpers.Events;
-using Manager;
+using Manager.Settings;
 using Michsky.MUIP;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;

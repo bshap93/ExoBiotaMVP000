@@ -7,7 +7,7 @@ using Rewired;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Manager
+namespace Manager.Settings
 {
     public class GlobalSettingsManager : MonoBehaviour, ICoreGameService, MMEventListener<GlobalSettingsEvent>
     {
@@ -18,9 +18,9 @@ namespace Manager
         [SerializeField] bool initialIsFullScreen = true;
         [SerializeField] ResolutionSettings initialResolutionSettings = new() { width = 1920, height = 1080 };
         [SerializeField] bool initialDitheringEnabled = true;
-        [FormerlySerializedAs("intitialMouseSensitivity")] [Range(0.0f, 2.0f)] [SerializeField]
+        [FormerlySerializedAs("intitialMouseSensitivity")] [Range(0.1f, 2.0f)] [SerializeField]
         float intitialMouseXSensitivity = 1.0f;
-        [Range(0.0f, 2.0f)] [SerializeField] float initialMouseYSensitivity = 1.0f;
+        [Range(0.1f, 2.0f)] [SerializeField] float initialMouseYSensitivity = 1.0f;
         // [SerializeField] int numInputBehaviors = 4;
         [SerializeField] bool initialIsAutoSaveAtCheckpoints;
 
@@ -148,8 +148,14 @@ namespace Manager
             if (ES3.KeyExists("MouseXSensitivity", savePath))
                 MouseXSensitivity = ES3.Load<float>("MouseXSensitivity", savePath);
 
+            if (MouseXSensitivity < 0.1f)
+                MouseXSensitivity = 0.1f;
+
             if (ES3.KeyExists("MouseYSensitivity", savePath))
                 MouseYSensitivity = ES3.Load<float>("MouseYSensitivity", savePath);
+
+            if (MouseYSensitivity < 0.1f)
+                MouseYSensitivity = 0.1f;
 
             if (ES3.KeyExists("TutorialOn", savePath))
             {

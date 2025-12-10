@@ -9,6 +9,7 @@ using Manager.FirstPerson;
 using Manager.Global;
 using Manager.SceneManagers;
 using Manager.SceneManagers.Pickable;
+using Manager.Settings;
 using Manager.StateManager;
 using Manager.Status;
 using MoreMountains.Feedbacks;

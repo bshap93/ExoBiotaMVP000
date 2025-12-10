@@ -1,7 +1,6 @@
 using Helpers.Events;
 using Helpers.Events.Status;
-using Lightbug.CharacterControllerPro.Demo;
-using Manager;
+using Manager.Settings;
 using MoreMountains.Tools;
 using UnityEngine;
 using UnityEngine.Rendering;

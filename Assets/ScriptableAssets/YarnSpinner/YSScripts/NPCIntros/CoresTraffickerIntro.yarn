@@ -15,23 +15,18 @@ Fulmen: Hello, hello. Well, come on in. I'm Fulmen.
 
 title: FulmenOfferingToBuy
 ---
-Fulmen: Do you have any Harvested Cores to sell to me? I'll buy any you have.
+
 <<complete_objective DialogueCommands "VisitCoreTrader">>
--> No I haven't got any.
-    <<if !$traffickerGaveJob001>>
-        Fulmen: Alright. Come see me if you get some. You wouldn't be looking for work?
-            -> No.
-            -> Yes.
-                <<jump OfferJobInChokedCaverns>>
-    <<else>>
-        Fulmen: Alright. Come see me if you get some.
-    <<endif>>
--> Yes, I have some to sell.
-    <<start_shopping_sell_illegal DialogueCommands "ShadyCoreTrafficker">>
-    -> Alright, I'm done.
-    <<stop_shopping_sell DialogueCommands "ShadyCoreTrafficker">>
-    Fulmen: See ya round.
-<<if !$fulmenDiscussedSister>>
+<<if $fulmenDiscussedSister>>
+    Fulmen: Do you have any Harvested Cores to sell to me? I'll buy any you have.
+        -> No I haven't got any.
+            <<jump End02>>
+        -> Yes, I have some to sell.
+            <<start_shopping_sell_illegal DialogueCommands "ShadyCoreTrafficker">>
+            -> Alright, I'm done.
+            <<stop_shopping_sell DialogueCommands "ShadyCoreTrafficker">>
+            Fulmen: See ya round.
+<<elseif !$fulmenDiscussedSister>>
 -> I'm here to talk about my sister. (Show picture) 
     The scientist from Science Outpost 427 said you were her guide?
     <<if $completedRTGQuestForFulmen>>
@@ -41,8 +36,8 @@ Fulmen: Do you have any Harvested Cores to sell to me? I'll buy any you have.
     <<endif>>
 <<endif>>
 <<if !$traffickerGaveJob001>>
--> Actually, I'm looking for work..
-    <<jump OfferJobInChokedCaverns>>
+    -> Actually, I'm looking for work..
+        <<jump OfferJobInChokedCaverns>>
 <<endif>>
 ===
 
@@ -102,8 +97,6 @@ Fulmen: I need someone to replace the RTG that keeps the place running.
 Fulmen: And I happen to know that down there are two valuable core groves.
 Fulmen: Get them and harvest them in my facility.
 Fulmen: Come back here. I'll reward you nicely for the Cores you find and the favor.
--> I will think about it.
-    Fulmen: I'll be here if you change your mind.
 -> Yes, count me in. 
     Fulmen: Excellent. 
     <<add_objective DialogueCommands "VisitAshpoolMine">>
