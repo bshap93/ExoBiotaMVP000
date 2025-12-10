@@ -14,7 +14,7 @@ namespace FirstPersonPlayer.Tools.ItemObjectTypes
     {
         public ScanProfile scannerProfile;
 
-        [SerializeField] float baseStaminaConsumedPerUse;
+        [SerializeField] float baseStaminaConsumedPerUse = 3f;
 
         public override bool Equip(string playerID)
         {

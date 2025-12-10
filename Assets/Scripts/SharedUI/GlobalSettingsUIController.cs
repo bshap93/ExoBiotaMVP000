@@ -28,6 +28,8 @@ namespace SharedUI
         bool ditheringCanBeToggled;
         [SerializeField] ButtonManager ditherToggleButton;
 
+        [SerializeField] Toggle autoSaveAtCheckpointToggle;
+
         CanvasGroup _canvasGroup;
 
         bool _isDitheringOn;
@@ -47,7 +49,7 @@ namespace SharedUI
             SetupResolutionDropdown();
             SetupDitheringButton();
             SetupMouseSensitivitySlider();
-            SetupTutorialOnDropdown();
+            SetupGameplaySettings();
         }
 
         void OnEnable()
@@ -102,6 +104,7 @@ namespace SharedUI
                 ditherToggleButton.gameObject.SetActive(true);
                 var gsm = GlobalSettingsManager.Instance;
                 _isDitheringOn = gsm.DitheringEnabled;
+
                 ditherToggleButton.onClick.AddListener(OnDitheringToggleButtonPressed);
             }
             else
@@ -151,6 +154,7 @@ namespace SharedUI
             resolutionDropdown.SetupDropdown();
 
             // Handle value change event
+            resolutionDropdown.onValueChanged.RemoveAllListeners();
             resolutionDropdown.onValueChanged.AddListener(OnResolutionChanged);
 
             // Optionally set current resolution
@@ -162,7 +166,7 @@ namespace SharedUI
         }
 
         // Setup CustomDropdown with only two options: On and Off
-        void SetupTutorialOnDropdown()
+        void SetupGameplaySettings()
         {
             var gsm = GlobalSettingsManager.Instance;
             if (gsm == null || resolutionDropdown == null)
@@ -171,16 +175,29 @@ namespace SharedUI
                 return;
             }
 
+            // Tutorial On/Off
             if (!gsm.IsTutorialOn)
                 tutorialOnDropdown.SetDropdownIndex(1); // Off
             else
                 tutorialOnDropdown.SetDropdownIndex(0); // On
 
 
+            tutorialOnDropdown.onValueChanged.RemoveAllListeners();
             tutorialOnDropdown.onValueChanged.AddListener(index =>
             {
                 GlobalSettingsEvent.Trigger(GlobalSettingsEventType.TutorialOnChanged, index);
             });
+
+            // Auto Save at Checkpoint Toggle
+            if (autoSaveAtCheckpointToggle != null)
+            {
+                autoSaveAtCheckpointToggle.isOn = gsm.AutoSaveAtCheckpoints;
+                autoSaveAtCheckpointToggle.onValueChanged.RemoveAllListeners();
+                autoSaveAtCheckpointToggle.onValueChanged.AddListener(isOn =>
+                {
+                    GlobalSettingsEvent.Trigger(GlobalSettingsEventType.AutoSaveAtCheckpointsChanged, isOn ? 0 : 1);
+                });
+            }
         }
 
 

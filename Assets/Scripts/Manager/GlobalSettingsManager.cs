@@ -22,6 +22,7 @@ namespace Manager
         float intitialMouseXSensitivity = 1.0f;
         [Range(0.0f, 2.0f)] [SerializeField] float initialMouseYSensitivity = 1.0f;
         // [SerializeField] int numInputBehaviors = 4;
+        [SerializeField] bool initialIsAutoSaveAtCheckpoints;
 
 
         public List<ResolutionSettings> chooseableResolutions = new()
@@ -69,6 +70,7 @@ namespace Manager
 
         public bool IsTutorialOn { get; private set; }
 
+        public bool AutoSaveAtCheckpoints { get; private set; }
 
         void Awake()
         {
@@ -120,6 +122,7 @@ namespace Manager
             ES3.Save("MouseXSensitivity", MouseXSensitivity, savePath);
             ES3.Save("MouseYSensitivity", MouseYSensitivity, savePath);
             ES3.Save("TutorialOn", IsTutorialOn, savePath);
+            ES3.Save("AutoSaveAtCheckpoints", AutoSaveAtCheckpoints, savePath);
         }
         public void Load()
         {
@@ -154,6 +157,9 @@ namespace Manager
                 if (TutorialManager.Instance != null)
                     TutorialManager.Instance.SetTutorialsEnabled(IsTutorialOn);
             }
+
+            if (ES3.KeyExists("AutoSaveAtCheckpoints", savePath))
+                AutoSaveAtCheckpoints = ES3.Load<bool>("AutoSaveAtCheckpoints", savePath);
         }
         public void Reset()
         {
@@ -178,6 +184,8 @@ namespace Manager
 
             IsTutorialOn = true;
             TutorialManager.Instance.SetTutorialsEnabled(IsTutorialOn);
+
+            AutoSaveAtCheckpoints = initialIsAutoSaveAtCheckpoints;
 
 
             MarkDirty();
@@ -231,8 +239,19 @@ namespace Manager
                 case GlobalSettingsEventType.TutorialOnChanged:
                     ChangeTutorialOnOff(eventType.ChoiceIndex == 0);
                     break;
+                case GlobalSettingsEventType.AutoSaveAtCheckpointsChanged:
+                    ChangeAutoSaveAtCheckpoints(eventType.ChoiceIndex == 0);
+                    break;
             }
         }
+        void ChangeAutoSaveAtCheckpoints(bool checkpointAutoSaveOn)
+        {
+            AutoSaveAtCheckpoints = checkpointAutoSaveOn;
+
+            MarkDirty();
+            ConditionalSave();
+        }
+
         void ChangeTutorialOnOff(bool tutorialOn)
         {
             IsTutorialOn = tutorialOn;

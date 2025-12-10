@@ -8,7 +8,8 @@ namespace Helpers.Events
         DitheringToggled,
         MouseXSensitivityChanged,
         MouseYSensitivityChanged,
-        TutorialOnChanged
+        TutorialOnChanged,
+        AutoSaveAtCheckpointsChanged
     }
 
     public enum ValueType
