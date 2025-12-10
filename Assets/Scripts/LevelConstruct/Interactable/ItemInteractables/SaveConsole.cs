@@ -17,7 +17,6 @@ namespace LevelConstruct.Interactable.ItemInteractables
     [DisallowMultipleComponent]
     public class SaveConsole : ActionConsole, IInteractable, IRequiresUniqueID
     {
-        [FormerlySerializedAs("UniqueId")] public string uniqueId;
         [FormerlySerializedAs("_spawnPoint")] public SpawnPoint spawnPoint;
 
         [SerializeField] Light pointLight;
