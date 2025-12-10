@@ -167,6 +167,13 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                     PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
                     staminaCostPerConnectingSwing);
             }
+            else
+            {
+                // No apply here – ore nodes are for pickaxe only
+
+                SpawnFxForIneffectualHit(hit.point, hit.normal);
+                hitRockFeedbacks?.PlayFeedbacks();
+            }
         }
 
 

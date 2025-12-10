@@ -190,10 +190,17 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         public override void ApplyHit()
         {
             // Use the stored hit from when button was pressed
-            if (!_hasValidHit) return;
+
 
             var hit = _pendingHit; // ← Use stored data
             var go = hit.collider.gameObject;
+
+            if (!_hasValidHit)
+            {
+                SpawnFxForIneffectualHit(hit.point, hit.normal);
+                hitRockFeedbacks?.PlayFeedbacks();
+                return;
+            }
 
             // First priority: dedicated component
             if (go.TryGetComponent<HatchetBreakable>(out var breakable))
@@ -254,12 +261,12 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 QueryTriggerInteraction.Ignore
             );
 
-            // Validate target BEFORE starting animation
-            if (_hasValidHit)
-            {
-                var targetGo = _pendingHit.collider.gameObject;
-                if (!CanInteractWithObject(targetGo)) return; // Not valid - don't waste swing
-            }
+            // // Validate target BEFORE starting animation
+            // if (_hasValidHit)
+            // {
+            //     var targetGo = _pendingHit.collider.gameObject;
+            //     if (!CanInteractWithObject(targetGo)) return; // Not valid - don't waste swing
+            // }
 
             LastSwingTime = Time.time;
             PlaySwingSequence();
