@@ -1,4 +1,5 @@
-﻿using Helpers.Events;
+﻿using System.Collections;
+using Helpers.Events;
 using Manager.Settings;
 using Michsky.MUIP;
 using MoreMountains.Feedbacks;
@@ -90,13 +91,6 @@ namespace SharedUI
             }
         }
 
-        public void ToggleVisibility(bool isVisible)
-        {
-            _canvasGroup.alpha = isVisible ? 1f : 0f;
-            _canvasGroup.interactable = isVisible;
-            _canvasGroup.blocksRaycasts = isVisible;
-        }
-
         void SetupDitheringButton()
         {
             if (ditheringCanBeToggled)
@@ -122,13 +116,16 @@ namespace SharedUI
                 return;
             }
 
-            mouseXSensitivitySliderComponent.minValue = 0.0f;
+            // FIX: Set minValue to 0.1f (not 0.0f) to match valid range
+            mouseXSensitivitySliderComponent.minValue = 0.1f;
             mouseXSensitivitySliderComponent.maxValue = initialMaxMouseSensitivity;
             mouseXSensitivitySliderComponent.value = gsm.MouseXSensitivity;
-            mouseYSensitivitySliderComponent.minValue = 0.0f;
+
+            mouseYSensitivitySliderComponent.minValue = 0.1f;
             mouseYSensitivitySliderComponent.maxValue = initialMaxMouseSensitivity;
             mouseYSensitivitySliderComponent.value = gsm.MouseYSensitivity;
         }
+
 
         void SetupResolutionDropdown()
         {
@@ -219,10 +216,21 @@ namespace SharedUI
         public void OnExitSettingsButtonPressed()
         {
             onCloseFeedbacks?.PlayFeedbacks();
-            MyUIEvent.Trigger(UIType.GlobalSettingsPanel, UIActionType.Close);
+            // MyUIEvent.Trigger(UIType.GlobalSettingsPanel, UIActionType.Close);
             // PauseEvent.Trigger(PauseEventType.PauseOff);
+            _canvasGroup.alpha = 0f;
+            _canvasGroup.interactable = false;
+            _canvasGroup.blocksRaycasts = false;
         }
 
+        IEnumerator MakeCursorVisibleAndUnlocked()
+        {
+            // Wait for end of frame to ensure UI has closed
+            // wait 1 second to ensure any transitions are complete
+            yield return new WaitForSeconds(1.0f);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
         void OnDitheringToggleButtonPressed()
         {
             _isDitheringOn = !_isDitheringOn;

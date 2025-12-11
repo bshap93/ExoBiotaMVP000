@@ -146,16 +146,28 @@ namespace Manager.Settings
                 DitheringEnabled = ES3.Load<bool>("DitheringEnabled", savePath);
 
             if (ES3.KeyExists("MouseXSensitivity", savePath))
+            {
                 MouseXSensitivity = ES3.Load<float>("MouseXSensitivity", savePath);
+                MouseXSensitivity = Mathf.Clamp(MouseXSensitivity, 0.1f, 2.0f);
 
-            if (MouseXSensitivity < 0.1f)
-                MouseXSensitivity = 0.1f;
+                // Apply to ReInput immediately
+                var xIndex = ReInput.mapping.GetInputBehaviorId("MouseX");
+                var inputXMouse = ReInput.mapping.GetInputBehavior(_player.id, xIndex);
+                if (inputXMouse != null)
+                    inputXMouse.mouseXYAxisSensitivity = MouseXSensitivity;
+            }
 
             if (ES3.KeyExists("MouseYSensitivity", savePath))
+            {
                 MouseYSensitivity = ES3.Load<float>("MouseYSensitivity", savePath);
+                MouseYSensitivity = Mathf.Clamp(MouseYSensitivity, 0.1f, 2.0f);
 
-            if (MouseYSensitivity < 0.1f)
-                MouseYSensitivity = 0.1f;
+                // Apply to ReInput immediately
+                var yIndex = ReInput.mapping.GetInputBehaviorId("MouseY");
+                var inputYMouse = ReInput.mapping.GetInputBehavior(_player.id, yIndex);
+                if (inputYMouse != null)
+                    inputYMouse.mouseXYAxisSensitivity = MouseYSensitivity;
+            }
 
             if (ES3.KeyExists("TutorialOn", savePath))
             {
@@ -187,6 +199,17 @@ namespace Manager.Settings
 
             MouseXSensitivity = intitialMouseXSensitivity;
             MouseYSensitivity = initialMouseYSensitivity;
+
+            // Apply to ReInput immediately
+            var xIndex = ReInput.mapping.GetInputBehaviorId("MouseX");
+            var inputXMouse = ReInput.mapping.GetInputBehavior(_player.id, xIndex);
+            if (inputXMouse != null)
+                inputXMouse.mouseXYAxisSensitivity = MouseXSensitivity;
+
+            var yIndex = ReInput.mapping.GetInputBehaviorId("MouseY");
+            var inputYMouse = ReInput.mapping.GetInputBehavior(_player.id, yIndex);
+            if (inputYMouse != null)
+                inputYMouse.mouseXYAxisSensitivity = MouseYSensitivity;
 
             IsTutorialOn = true;
             TutorialManager.Instance.SetTutorialsEnabled(IsTutorialOn);

@@ -1,8 +1,5 @@
-using System;
 using Events;
 using Helpers.Events;
-using Helpers.Events.UI;
-using Helpers.Interfaces;
 using Helpers.ScriptableObjects;
 using MoreMountains.Tools;
 using Structs;
@@ -11,8 +8,7 @@ using UnityEngine;
 namespace Manager
 {
     [DefaultExecutionOrder(0)]
-    public class PlayerUIManager : MonoBehaviour, MMEventListener<MyUIEvent>, MMEventListener<ModeLoadEvent>,
-        MMEventListener<HUDEvent>, ICoreGameService
+    public class PlayerUIManager : MonoBehaviour, MMEventListener<MyUIEvent>, MMEventListener<ModeLoadEvent>
     {
         public static PlayerUIManager Instance;
 
@@ -44,51 +40,14 @@ namespace Manager
         {
             this.MMEventStartListening<MyUIEvent>();
             this.MMEventStartListening<ModeLoadEvent>();
-            this.MMEventStartListening<HUDEvent>();
         }
 
         void OnDisable()
         {
             this.MMEventStopListening<MyUIEvent>();
             this.MMEventStopListening<ModeLoadEvent>();
-            this.MMEventStopListening<HUDEvent>();
         }
-        public void Save()
-        {
-            throw new NotImplementedException();
-        }
-        public void Load()
-        {
-            throw new NotImplementedException();
-        }
-        public void Reset()
-        {
-            throw new NotImplementedException();
-        }
-        public void ConditionalSave()
-        {
-            throw new NotImplementedException();
-        }
-        public void MarkDirty()
-        {
-            throw new NotImplementedException();
-        }
-        public string GetSaveFilePath()
-        {
-            throw new NotImplementedException();
-        }
-        public void CommitCheckpointSave()
-        {
-            throw new NotImplementedException();
-        }
-        public bool HasSavedData()
-        {
-            throw new NotImplementedException();
-        }
-        public void OnMMEvent(HUDEvent eventType)
-        {
-            throw new NotImplementedException();
-        }
+
 
         public void OnMMEvent(ModeLoadEvent eventType)
         {
