@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.4178619, y: -0.85000056, z: -22.080482}
-  m_LocalScale: {x: 1.6069, y: 1.6069005, z: 1.6069006}
+  m_LocalScale: {x: 1.6068997, y: 1.6068997, z: 1.6069006}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4742474148154501169}
@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdaa70120a2245cba6f4776438cd2c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueID: 066ae17b-7869-4246-a94d-5df6d99d93da
+  uniqueID: 
   bioOrganismType: {fileID: 11400000, guid: 4d4173d2b6f3fc84dae20c0dabd5c6e0, type: 2}
   actionId: 86
   actionText: 
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78ba861a214074aa4bdac708dcacc9fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 1907025118
+  id: 587651032
   priority: 0
   visibility: 2
   ignoreAreaOfInterest: 0
@@ -216,7 +216,7 @@ MonoBehaviour:
   revealPolicy: 0
   examinationPolicy: 1
   canBeAreaScannedType: 0
-  compassProPOI: {fileID: 0}
+  compassProPOI: {fileID: 2280068322274724927}
   locationObject: {fileID: 0}
 --- !u!1 &6130236316671294610
 GameObject:
@@ -630,7 +630,7 @@ MonoBehaviour:
   sdfQuality: 1
   maximumFrameCostMilliseconds: 0.88
   maximumStepCount: 64
-  maximumDensity: 0.61
+  maximumDensity: 2.5
   minimumVisibility: 0.172
   noiseTexture: {fileID: 11700000, guid: 373c8120693a0ae4980eae7e55f1c680, type: 2}
   erosionScale: 1
@@ -1079,7 +1079,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0986de822ecb4835bfb249feaeb7996f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetID: 
+  targetID: d673514d-f2e7-4c6c-9e03-c50d6e14760a
   seeThroughDuration: 5
   onScanned:
     m_PersistentCalls:

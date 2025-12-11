@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1122104988419554387}
   - component: {fileID: 7210914481008826935}
   - component: {fileID: 7596770071193312571}
-  m_Layer: 21
+  m_Layer: 0
   m_Name: ReleasedSmoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,8 +50,8 @@ MonoBehaviour:
   sdfQuality: 1
   maximumFrameCostMilliseconds: 0.88
   maximumStepCount: 64
-  maximumDensity: 5.87
-  minimumVisibility: 0.172
+  maximumDensity: 2.5
+  minimumVisibility: 0.2
   noiseTexture: {fileID: 11700000, guid: 373c8120693a0ae4980eae7e55f1c680, type: 2}
   erosionScale: 1
   wind: {x: 0, y: 0, z: 0}
@@ -66,7 +66,7 @@ MonoBehaviour:
   expansionDuration: 1
   fadeInDuration: 1
   activeLifetime: 15
-  fadeOutDuration: 5
+  fadeOutDuration: 4.5
   cleanupOptions: 1
   startupOptions: 0
   regenerate: 0
@@ -194,7 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdaa70120a2245cba6f4776438cd2c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueID: a18dfc38-85c4-4145-b9ce-490d4cec01b4
+  uniqueID: 
   bioOrganismType: {fileID: 11400000, guid: 7a3997b125ea4b3449d97fed52122b48, type: 2}
   actionId: 86
   actionText: Sample Gas Released
@@ -717,7 +717,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0986de822ecb4835bfb249feaeb7996f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetID: 20c8fd3c-9c6d-454f-8f30-c9f6f776c442
+  targetID: a45b46b0-c318-42d0-be9b-eabf2cca615d
   seeThroughDuration: 5
   onScanned:
     m_PersistentCalls:
@@ -733,7 +733,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5594725403426466630}
   - component: {fileID: 3468862931710257772}
-  m_Layer: 21
+  m_Layer: 0
   m_Name: FB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
