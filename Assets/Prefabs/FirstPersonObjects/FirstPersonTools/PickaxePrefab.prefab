@@ -866,7 +866,7 @@ GameObject:
   - component: {fileID: 8434107762429702526}
   - component: {fileID: 8366716114946432193}
   m_Layer: 0
-  m_Name: Pickaxe
+  m_Name: PickaxePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -992,7 +992,7 @@ MonoBehaviour:
   hitRigidOrganismFeedbacks: {fileID: 2215188712371121997}
   hitFleshyFeedbacks: {fileID: 4476328586239247021}
   mainCamera: {fileID: 0}
-  reach: 3.25
+  reach: 3.74
   hitMask:
     serializedVersion: 2
     m_Bits: 16777215

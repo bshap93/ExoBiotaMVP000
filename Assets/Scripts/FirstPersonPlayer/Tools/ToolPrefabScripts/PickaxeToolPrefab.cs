@@ -193,6 +193,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
 
             var hit = _pendingHit; // ← Use stored data
+            if (!hit.collider) return;
             var go = hit.collider.gameObject;
 
             if (!_hasValidHit)
@@ -203,7 +204,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             }
 
             // First priority: dedicated component
-            if (go.TryGetComponent<HatchetBreakable>(out var breakable))
+            if (go.TryGetComponent<IBreakable>(out var breakable))
             {
                 // hardness/HP handled inside component
                 breakable.ApplyHit(pickaxePower, hit.point, hit.normal);

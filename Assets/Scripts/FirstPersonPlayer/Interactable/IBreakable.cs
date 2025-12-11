@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace FirstPersonPlayer.Interactable
 {
@@ -6,5 +7,6 @@ namespace FirstPersonPlayer.Interactable
     {
         bool CanBeDamagedBy(int toolPower, int strength);
         void ApplyHit(int toolPower, Vector3 hitPoint, Vector3 hitNormal);
+        IEnumerator InitializeAfterDestructableManager();
     }
 }

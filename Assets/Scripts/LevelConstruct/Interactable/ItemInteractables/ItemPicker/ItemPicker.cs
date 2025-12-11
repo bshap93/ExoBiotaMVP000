@@ -36,7 +36,6 @@ namespace LevelConstruct.Interactable.ItemInteractables.ItemPicker
 {
     [RequireComponent(typeof(HighlightEffectController))]
     [RequireComponent(typeof(Collider))]
-    [RequireComponent(typeof(Rigidbody))]
     [ExecuteInEditMode]
     public class ItemPicker : MonoBehaviour, IInteractable, IBillboardable, IExaminable, IHoverable,
         MMEventListener<LoadedManagerEvent>, IRequiresUniqueID

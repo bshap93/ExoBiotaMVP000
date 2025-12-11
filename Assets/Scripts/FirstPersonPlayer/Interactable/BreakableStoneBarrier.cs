@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using HighlightPlus;
 using Manager;
+using Manager.SceneManagers;
 using MoreMountains.Feedbacks;
 using RayFire;
 using UnityEngine;
@@ -16,9 +18,9 @@ namespace FirstPersonPlayer.Interactable
 
         [Tooltip("If set, destroy this root instead of just this component's GameObject.")]
         public GameObject destroyRoot;
-        HighlightEffect _highlightEffect;
-        
+
         public MMFeedbacks onBreakFeedbacks;
+        HighlightEffect _highlightEffect;
 
 
         void Awake()
@@ -51,6 +53,16 @@ namespace FirstPersonPlayer.Interactable
                 else
                     Destroy(root, 0.05f);
             }
+        }
+        public IEnumerator InitializeAfterDestructableManager()
+        {
+            // Wait one frame so core managers come up
+            yield return null;
+
+            // Despawn if already destroyed in this save
+            if (DestructableManager.Instance != null &&
+                DestructableManager.Instance.IsDestroyed(uniqueId))
+                Destroy(gameObject);
         }
         public string UniqueID =>
             uniqueId;

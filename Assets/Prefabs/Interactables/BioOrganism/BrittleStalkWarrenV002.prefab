@@ -744,9 +744,8 @@ GameObject:
   - component: {fileID: 3473292220995776103}
   - component: {fileID: 5479944399679038613}
   - component: {fileID: 8051043424617394512}
-  - component: {fileID: 744939760243860752}
-  - component: {fileID: 2545303251790250292}
   - component: {fileID: 9042846770939651545}
+  - component: {fileID: 2545303251790250292}
   - component: {fileID: 8218691688700966577}
   m_Layer: 8
   m_Name: BrittleStalkWarrenV002
@@ -1076,7 +1075,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   targetDuration: 3
---- !u!114 &744939760243860752
+--- !u!114 &9042846770939651545
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1085,9 +1084,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 4549538890612926772}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ac48b33887d4bcaa4596b9dbb9144dc, type: 3}
+  m_Script: {fileID: 11500000, guid: fa1cac55029a4dab8e0a04ac51243045, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uniqueID: 
+  bioOrganismType: {fileID: 11400000, guid: 066edcc4cebe68d41a27803650b3305d, type: 2}
+  actionId: 43
+  actionText: Break
+  trigger: {fileID: 5479944399679038613}
+  gatedBreakableInteractionDetails: {fileID: 11400000, guid: 803c9a666e29a734ab25e1086ec2ba8b, type: 2}
+  hatchetBreakable: {fileID: 0}
+  breakActionId: 54
+  interactionDistance: 2
+  loopedInteractionFeedbacks: {fileID: 6442879865983918944}
+  startInteractionFeedbacks: {fileID: 6664671690443329113}
   defaultHitsToBreak: 3
   hardness: 1
   destroyRoot: {fileID: 0}
@@ -1096,8 +1106,8 @@ MonoBehaviour:
   onBreakFeedbacks: {fileID: 4296776823870068452}
   hitParticles: {fileID: 0}
   breakParticles: {fileID: 0}
-  uniqueIdForPersistence: 
-  _rf: {fileID: 2545303251790250292}
+  bioOrganismNode: {fileID: 0}
+  rf: {fileID: 2545303251790250292}
 --- !u!114 &2545303251790250292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1291,28 +1301,6 @@ MonoBehaviour:
   skr: {fileID: 0}
   rest: {fileID: 0}
   sound: {fileID: 0}
---- !u!114 &9042846770939651545
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4549538890612926772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa1cac55029a4dab8e0a04ac51243045, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uniqueID: 
-  bioOrganismType: {fileID: 11400000, guid: 066edcc4cebe68d41a27803650b3305d, type: 2}
-  actionId: 43
-  actionText: Break
-  trigger: {fileID: 5479944399679038613}
-  gatedBreakableInteractionDetails: {fileID: 11400000, guid: 803c9a666e29a734ab25e1086ec2ba8b, type: 2}
-  hatchetBreakable: {fileID: 744939760243860752}
-  breakActionId: 54
-  loopedInteractionFeedbacks: {fileID: 6442879865983918944}
-  startInteractionFeedbacks: {fileID: 6664671690443329113}
 --- !u!64 &8218691688700966577
 MeshCollider:
   m_ObjectHideFlags: 0

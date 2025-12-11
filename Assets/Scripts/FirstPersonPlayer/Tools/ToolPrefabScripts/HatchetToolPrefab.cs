@@ -67,7 +67,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             if (target == null) return false;
 
             // Component gate
-            if (target.TryGetComponent<HatchetBreakable>(out _)) return true;
+            if (target.TryGetComponent<IBreakable>(out _)) return true;
 
             // Tag gate
             if (allowedTags != null && allowedTags.Length > 0)
@@ -109,7 +109,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             var go = hit.collider.gameObject;
 
             // First priority: dedicated component
-            if (go.TryGetComponent<HatchetBreakable>(out var breakable))
+            if (go.TryGetComponent<IBreakable>(out var breakable))
             {
                 // hardness/HP handled inside component
                 breakable.ApplyHit(hatchetPower, hit.point, hit.normal);

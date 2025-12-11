@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using FirstPersonPlayer.Interface;
@@ -7,6 +8,7 @@ using Helpers.Events;
 using Helpers.Events.Domains.Player.Events;
 using Helpers.Events.Gated;
 using Helpers.ScriptableObjects.Gated;
+using HighlightPlus;
 using Inventory;
 using Manager;
 using Manager.SceneManagers;
@@ -14,6 +16,7 @@ using Manager.UI;
 using MoreMountains.Feedbacks;
 using MoreMountains.InventoryEngine;
 using MoreMountains.Tools;
+using RayFire;
 using SharedUI.Interface;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -23,12 +26,12 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
 {
     [DisallowMultipleComponent]
     public class BioOrganismBreakableNode : BioOrganismBase, IInteractable,
-        MMEventListener<GatedBreakableInteractionEvent>, IGatedInteractable
+        MMEventListener<GatedBreakableInteractionEvent>, IGatedInteractable, IBreakable
     {
         [FormerlySerializedAs("gatedInteractionDetails")] [SerializeField]
         GatedBreakableInteractionDetails gatedBreakableInteractionDetails;
 
-        [SerializeField] HatchetBreakable hatchetBreakable;
+        // [SerializeField] HatchetBreakable hatchetBreakable;
 
 #if UNITY_EDITOR
         [ValueDropdown(nameof(GetAllRewiredActions))]
@@ -39,7 +42,39 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
 
         [SerializeField] MMFeedbacks loopedInteractionFeedbacks;
         [SerializeField] MMFeedbacks startInteractionFeedbacks;
+
+        [Header("IBreakable Settings")]
+        [FormerlySerializedAs("hitsToBreak")]
+        [Header("Break Settings")]
+        [Tooltip("How many successful hatchet hits until this is destroyed.")]
+        public int defaultHitsToBreak = 2;
+
+        [Tooltip("Minimum tool power required to count as a successful hit.")]
+        public int hardness = 1;
+
+        [Tooltip("If set, destroy this root instead of just this component's GameObject.")]
+        public GameObject destroyRoot;
+
+        [Tooltip("If true, Destroy() the object. If false, just disable renderers/colliders.")]
+        public bool destroyGameObject = true;
+
+        [Header("FX")] public MMFeedbacks onHitFeedbacks;
+
+        public MMFeedbacks onBreakFeedbacks;
+        public GameObject hitParticles;
+        public GameObject breakParticles;
+
+        // [SerializeField] BioOrganismBreakableNode bioOrganismNode;
+
+
+        [FormerlySerializedAs("_rf")] [SerializeField]
+        RayfireRigid rf;
         bool _hasBeenBroken;
+
+        HighlightEffect _highlight; // cache HighlightEffect if present
+
+        int _hitCount;
+        bool _isBroken; // Prevent multiple breaks
         bool _isProcessingInteraction;
         List<string> _toolsFound;
         protected override void Awake()
@@ -48,21 +83,28 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
             // Ensure uniqueID is set FIRST
             // if (string.IsNullOrEmpty(uniqueID)) uniqueID = Guid.NewGuid().ToString();
             // Ensure hatchetBreakable uses the same uniqueID
-            if (hatchetBreakable != null)
-            {
-                if (string.IsNullOrEmpty(hatchetBreakable.uniqueIdForPersistence))
-                    hatchetBreakable.uniqueIdForPersistence = uniqueID;
-                else
-                    // Make sure they match
-                    uniqueID = hatchetBreakable.uniqueIdForPersistence;
-            }
+            // if (hatchetBreakable != null)
+            if (string.IsNullOrEmpty(uniqueID))
+                uniqueID = Guid.NewGuid().ToString();
+
+            // if (string.IsNullOrEmpty(hatchetBreakable.uniqueIdForPersistence))
+            //     hatchetBreakable.uniqueIdForPersistence = uniqueID;
+            // else
+            //     // Make sure they match
+            //     uniqueID = hatchetBreakable.uniqueIdForPersistence;
+            _highlight = GetComponent<HighlightEffect>();
+            rf = GetComponent<RayfireRigid>();
+
+
+            rf.demolitionEvent.LocalEvent += OnDemolished;
         }
 
         void Start()
         {
-            // Check synchronously - no coroutine
-            if (DestructableManager.Instance != null && DestructableManager.Instance.IsDestroyed(uniqueID))
-                Destroy(gameObject);
+            // // Check synchronously - no coroutine
+            // if (DestructableManager.Instance != null && DestructableManager.Instance.IsDestroyed(uniqueID))
+            //     Destroy(gameObject);
+            StartCoroutine(InitializeAfterDestructableManager());
         }
 
         protected override void OnEnable()
@@ -75,6 +117,25 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
         {
             base.OnDisable();
             this.MMEventStopListening();
+        }
+
+        public IEnumerator InitializeAfterDestructableManager()
+        {
+            // Wait one frame so core managers come up
+            yield return null;
+
+            // Despawn if already destroyed in this save
+            if (DestructableManager.Instance != null &&
+                DestructableManager.Instance.IsDestroyed(uniqueID))
+                Destroy(gameObject);
+        }
+        public bool CanBeDamagedBy(int toolPower, int strength)
+        {
+            return toolPower >= hardness;
+        }
+        public void ApplyHit(int toolPower, Vector3 hitPoint, Vector3 hitNormal)
+        {
+            ApplyHatchetHit(toolPower, hitPoint, hitNormal);
         }
         public List<string> HasToolForInteractionInInventory()
         {
@@ -224,25 +285,25 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
             }
 
 
-            if (hatchetBreakable == null)
-            {
-                hatchetBreakable = GetComponent<HatchetBreakable>();
-                if (hatchetBreakable == null)
-                    // Debug.LogWarning("BioOrganismBreakableNode: No HatchetBreakable component found.");
-                {
-                    _isProcessingInteraction = false;
-                    return;
-                }
-            }
+            // if (hatchetBreakable == null)
+            // {
+            //     hatchetBreakable = GetComponent<HatchetBreakable>();
+            //     if (hatchetBreakable == null)
+            //         // Debug.LogWarning("BioOrganismBreakableNode: No HatchetBreakable component found.");
+            //     {
+            //         _isProcessingInteraction = false;
+            //         return;
+            //     }
+            // }
 
             _hasBeenBroken = true;
 
-            // Perform the break action
-            if (hatchetBreakable != null)
-            {
-                hatchetBreakable.BreakInstantly();
-                DestructableEvent.Trigger(DestructableEventType.Destroyed, uniqueID, transform);
-            }
+            // // Perform the break action
+            // if (hatchetBreakable != null)
+            // {
+            BreakInstantly();
+            // DestructableEvent.Trigger(DestructableEventType.Destroyed, uniqueID, transform);
+            // }
 
             _isProcessingInteraction = false;
         }
@@ -292,6 +353,13 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
                 _isProcessingInteraction = true;
                 OnInteractionEnd(eventType.SubjectUniqueID);
             }
+        }
+
+        void OnDemolished(RayfireRigid demolished)
+        {
+            if (demolished.HasFragments)
+                foreach (var frag in demolished.fragments)
+                    frag.gameObject.layer = LayerMask.NameToLayer("Debris");
         }
 
 
@@ -379,31 +447,128 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
             return false;
         }
 
-        bool IsPlayerAlreadyEquippedWithBestTool(GatedBreakableInteractionDetails details, List<string> toolsFound)
+        // bool IsPlayerAlreadyEquippedWithBestTool(GatedBreakableInteractionDetails details, List<string> toolsFound)
+        // {
+        //     if (toolsFound == null)
+        //     {
+        //         _toolsFound = HasToolForInteractionInInventory();
+        //         if (_toolsFound.Count == 0) return false;
+        //     }
+        //
+        //     var toolID = details.GetMostEfficientRequiredToolID(toolsFound);
+        //
+        //     var equipmentInventory =
+        //         GlobalInventoryManager.Instance.equipmentInventory;
+        //
+        //     if (equipmentInventory == null) throw new Exception("Equipment inventory is null");
+        //
+        //     var equippedTool = equipmentInventory.Content.FirstOrDefault(s => s != null && s.ItemID == toolID);
+        //     if (equippedTool != null) return equippedTool.ItemID == toolID;
+        //
+        //     return false;
+        // }
+
+        void PlayHitFx(Vector3 hitPoint, Vector3 hitNormal)
         {
-            if (toolsFound == null)
+            onHitFeedbacks?.PlayFeedbacks(transform.position);
+
+            if (hitParticles)
             {
-                _toolsFound = HasToolForInteractionInInventory();
-                if (_toolsFound.Count == 0) return false;
+                var fx = Instantiate(hitParticles, hitPoint, Quaternion.LookRotation(hitNormal));
+                Destroy(fx, 2f);
             }
 
-            var toolID = details.GetMostEfficientRequiredToolID(toolsFound);
-
-            var equipmentInventory =
-                GlobalInventoryManager.Instance.equipmentInventory;
-
-            if (equipmentInventory == null) throw new Exception("Equipment inventory is null");
-
-            var equippedTool = equipmentInventory.Content.FirstOrDefault(s => s != null && s.ItemID == toolID);
-            if (equippedTool != null) return equippedTool.ItemID == toolID;
-
-            return false;
+            // Highlight Plus Hit FX
+            if (_highlight != null) _highlight.HitFX(); // plays the configured hit effect
         }
 
 
         protected override string GetActionText(bool recognizableOnSight)
         {
             return "Clear Growth";
+        }
+
+        public void BreakInstantly()
+        {
+            if (_isBroken)
+            {
+                Debug.LogWarning(
+                    $"HatchetBreakable [{uniqueID}]: Already broken, ignoring BreakInstantly call");
+
+                return;
+            }
+
+            // Skip the incremental hits; just perform the full break logic
+            _hitCount = defaultHitsToBreak;
+            ApplyHatchetHit(hardness, transform.position, transform.up);
+        }
+
+
+        void ApplyHatchetHit(int toolPower, Vector3 hitPoint, Vector3 hitNormal)
+        {
+            var attrMgr = AttributesManager.Instance;
+            // Prevent breaking if already broken
+            if (_isBroken)
+            {
+                Debug.LogWarning($"HatchetBreakable [{uniqueID}]: Already broken, ignoring hit");
+                return;
+            }
+
+            if (!CanBeDamagedBy(toolPower, 0))
+            {
+                PlayHitFx(hitPoint, hitNormal);
+                return;
+            }
+
+            var actualHitsToBreak = defaultHitsToBreak;
+
+            switch (attrMgr.Strength)
+            {
+                case 1:
+                    break;
+                default:
+                    // 4/5^(level-1) of the hits rounded up
+                    actualHitsToBreak = Mathf.RoundToInt(defaultHitsToBreak * Mathf.Pow(0.8f, attrMgr.Strength - 1));
+                    actualHitsToBreak = Mathf.Max(1, actualHitsToBreak);
+                    break;
+            }
+
+            _hitCount++;
+            PlayHitFx(hitPoint, hitNormal);
+
+            if (_hitCount < actualHitsToBreak) return;
+
+            _isBroken = true;
+
+            // break FX
+            onBreakFeedbacks?.PlayFeedbacks(transform.position);
+            if (breakParticles)
+            {
+                var fx2 = Instantiate(breakParticles, transform.position, Quaternion.identity);
+                Destroy(fx2, 3f);
+            }
+
+            if (!string.IsNullOrEmpty(uniqueID))
+                DestructableEvent.Trigger(DestructableEventType.Destroyed, uniqueID, transform);
+
+            var root = destroyRoot != null ? destroyRoot : gameObject;
+            if (destroyGameObject)
+            {
+                foreach (var col in root.GetComponentsInChildren<Collider>(true)) col.enabled = false;
+                foreach (var r in root.GetComponentsInChildren<Renderer>(true)) r.enabled = false;
+                if (rf != null)
+                    rf.Demolish();
+                else
+                    Destroy(root, 0.05f);
+            }
+            else
+            {
+                foreach (var col in root.GetComponentsInChildren<Collider>(true)) col.enabled = false;
+                foreach (var r in root.GetComponentsInChildren<Renderer>(true)) r.enabled = false;
+                enabled = false;
+            }
+
+            ControlsHelpEvent.Trigger(ControlHelpEventType.ShowUseThenHide, 54);
         }
     }
 }

@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: 6366262875888271362}
   - component: {fileID: 50622077108301320}
   - component: {fileID: 4640213103877572443}
-  - component: {fileID: 9008912876248858171}
   m_Layer: 8
   m_Name: BrittleStalkWarrenSmall00
   m_TagString: HackableBiostructure
@@ -579,22 +578,11 @@ MonoBehaviour:
   actionText: Break
   trigger: {fileID: 6392069568347120475}
   gatedBreakableInteractionDetails: {fileID: 11400000, guid: 0a6a47d4be95d6640a6172f05d8bc173, type: 2}
-  hatchetBreakable: {fileID: 9008912876248858171}
+  hatchetBreakable: {fileID: 0}
   breakActionId: 54
+  interactionDistance: 2
   loopedInteractionFeedbacks: {fileID: 3771652228430234889}
   startInteractionFeedbacks: {fileID: 4058637251946219436}
---- !u!114 &9008912876248858171
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1160839599030103873}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ac48b33887d4bcaa4596b9dbb9144dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   defaultHitsToBreak: 2
   hardness: 1
   destroyRoot: {fileID: 0}
@@ -603,8 +591,8 @@ MonoBehaviour:
   onBreakFeedbacks: {fileID: 7518590549183490000}
   hitParticles: {fileID: 0}
   breakParticles: {fileID: 0}
-  uniqueIdForPersistence: 
-  _rf: {fileID: 50622077108301320}
+  bioOrganismNode: {fileID: 0}
+  rf: {fileID: 50622077108301320}
 --- !u!1 &3469991829118237979
 GameObject:
   m_ObjectHideFlags: 0
