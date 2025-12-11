@@ -414,8 +414,8 @@ MonoBehaviour:
   mainVolume: {fileID: 7003717897356504854}
   distortVolume01: {fileID: 6450007570389725408}
   floatersVolume01: {fileID: 6901979609825216339}
+  disableNonDithering: 1
   ditheringProfile: {fileID: 11400000, guid: c5aee2f573642474c943256e72bb9d8a, type: 2}
-  cleanProfile: {fileID: 11400000, guid: c24e8750b429b0140922785ad2913121, type: 2}
   initialDistortProfile: {fileID: 11400000, guid: 1b554e69a7236a649b4ae9b04dc05f4e, type: 2}
   distortProfile: {fileID: 11400000, guid: aeb7bd081454d1944a20bb161f8292d9, type: 2}
   floatersProfile: {fileID: 11400000, guid: 54a4712f802efe64b9877ae01ad87842, type: 2}
