@@ -46,19 +46,35 @@ namespace Manager.Global
             if (GatedInteractionManager.Instance != null &&
                 GatedInteractionManager.Instance.isActiveGui) return;
 
-            if (defaultInput.isPausePressed && !PlayerUIManager.Instance.uiIsOpen)
+            // if (defaultInput.isPausePressed && !PlayerUIManager.Instance.uiIsOpen)
+            if (defaultInput.isPausePressed)
             {
                 Paused = !Paused;
                 Time.timeScale = Paused ? 0 : 1;
                 pauseOverlayCanvasGroup.alpha = Paused ? 1 : 0;
                 pauseOverlayCanvasGroup.blocksRaycasts = Paused;
                 pauseOverlayCanvasGroup.interactable = Paused;
-                Cursor.visible = Paused;
-                Cursor.lockState = CursorLockMode.None;
+                if (GameStateManager.Instance.CurrentMode == GameMode.FirstPerson ||
+                    GameStateManager.Instance.CurrentMode == GameMode.DirigibleFlight)
+                {
+                    Cursor.visible = Paused;
+                    Cursor.lockState = CursorLockMode.None;
+                }
+                else if (GameStateManager.Instance.CurrentMode == GameMode.Overview)
+                {
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
+                }
+
                 if (Paused)
+                {
                     PauseAudio();
+                }
                 else
+                {
                     UnPauseAudio();
+                    MyUIEvent.Trigger(UIType.Any, UIActionType.Close);
+                }
 
 
                 // SceneEvent.Trigger(SceneEventType.TogglePauseScene);
