@@ -55,6 +55,9 @@ namespace SharedUI
         void OnEnable()
         {
             this.MMEventStartListening();
+            // Apply current values BEFORE listeners are added
+            mouseXSensitivitySliderComponent.value = GlobalSettingsManager.Instance.MouseXSensitivity;
+            mouseYSensitivitySliderComponent.value = GlobalSettingsManager.Instance.MouseYSensitivity;
             mouseXSensitivitySliderComponent.onValueChanged.AddListener(OnMouseXSensitivitySliderChanged);
             mouseYSensitivitySliderComponent.onValueChanged.AddListener(OnMouseYSensitivitySliderChanged);
         }
@@ -122,10 +125,10 @@ namespace SharedUI
                 return;
             }
 
-            mouseXSensitivitySliderComponent.minValue = 0.0f;
+            mouseXSensitivitySliderComponent.minValue = 0.1f;
             mouseXSensitivitySliderComponent.maxValue = initialMaxMouseSensitivity;
             mouseXSensitivitySliderComponent.value = gsm.MouseXSensitivity;
-            mouseYSensitivitySliderComponent.minValue = 0.0f;
+            mouseYSensitivitySliderComponent.minValue = 0.1f;
             mouseYSensitivitySliderComponent.maxValue = initialMaxMouseSensitivity;
             mouseYSensitivitySliderComponent.value = gsm.MouseYSensitivity;
         }

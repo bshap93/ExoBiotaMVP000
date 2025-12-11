@@ -187,6 +187,8 @@ namespace Manager.Settings
 
             MouseXSensitivity = intitialMouseXSensitivity;
             MouseYSensitivity = initialMouseYSensitivity;
+            ChangeXMouseSensitivity(intitialMouseXSensitivity);
+            ChangeYMouseSensitivity(initialMouseYSensitivity);
 
             IsTutorialOn = true;
             TutorialManager.Instance.SetTutorialsEnabled(IsTutorialOn);
