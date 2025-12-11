@@ -22,14 +22,16 @@ namespace Helpers.Events
         public ShoppingEventType EventType;
         public int CurrentQuantity;
         public MyBaseItem CurrentItem;
+        public string InventoryId;
 
         public static void Trigger(string npcId, ShoppingEventType eventType, int currentQuantity = 1,
-            MyBaseItem currentItem = null)
+            MyBaseItem currentItem = null, string inventoryId = "PlayerMainInventory")
         {
             _e.NpcId = npcId;
             _e.CurrentQuantity = currentQuantity;
             _e.CurrentItem = currentItem;
             _e.EventType = eventType;
+            _e.InventoryId = inventoryId;
             MMEventManager.TriggerEvent(_e);
         }
     }

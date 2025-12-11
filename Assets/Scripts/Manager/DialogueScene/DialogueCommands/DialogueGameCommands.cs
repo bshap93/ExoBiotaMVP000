@@ -354,5 +354,9 @@ namespace Manager.DialogueScene.DialogueCommands
                 yield return new ValueDropdownItem<int>(action.name, action.id);
         }
 #endif
+        public void RemoveDirigibleItem(string currentItemItemID)
+        {
+            InventoryHelperCommands.RemoveDirigibleItem(currentItemItemID);
+        }
     }
 }

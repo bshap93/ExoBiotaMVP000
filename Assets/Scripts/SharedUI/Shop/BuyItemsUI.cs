@@ -45,7 +45,7 @@ namespace SharedUI.Shop
             {
                 var go = Instantiate(itemElementPrefab, listRoot);
                 var element = go.GetComponent<BuySellItemsElementUI>();
-                element.Initialize(itemsForSale[i], 1, false, npcId);
+                element.Initialize(itemsForSale[i], 1, false, npcId, null);
             }
         }
 

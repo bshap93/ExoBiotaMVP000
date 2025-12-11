@@ -75,28 +75,40 @@ namespace SharedUI.Shop
                 return;
             }
 
-            var itemsToSell = new List<MyBaseItem>();
+            var itemsToSellFromPlayerInventory = new List<MyBaseItem>();
+            var itemsToSellFromDirigibleInventory = new List<MyBaseItem>();
 
             foreach (var item in _playerInventory.Content)
                 if (item is MyBaseItem myBaseItem)
                     if (myBaseItem.legalSellable && !illegal)
-                        itemsToSell.Add(myBaseItem);
+                        itemsToSellFromPlayerInventory.Add(myBaseItem);
                     else if (myBaseItem.illegalSellable && illegal)
-                        itemsToSell.Add(myBaseItem);
+                        itemsToSellFromPlayerInventory.Add(myBaseItem);
 
             foreach (var item in _dirigibleInventory.Content)
                 if (item is MyBaseItem myBaseItem)
                     if (myBaseItem.legalSellable && !illegal)
-                        itemsToSell.Add(myBaseItem);
+                        itemsToSellFromDirigibleInventory.Add(myBaseItem);
                     else if (myBaseItem.illegalSellable && illegal)
-                        itemsToSell.Add(myBaseItem);
+                        itemsToSellFromDirigibleInventory.Add(myBaseItem);
 
 
-            for (var i = 0; i < itemsToSell.Count; i++)
+            for (var i = 0; i < itemsToSellFromPlayerInventory.Count; i++)
             {
                 var go = Instantiate(itemElementPrefab, listRoot);
                 var element = go.GetComponent<BuySellItemsElementUI>();
-                element.Initialize(itemsToSell[i], 1, true, npcId);
+                element.Initialize(
+                    itemsToSellFromPlayerInventory[i], 1,
+                    true, npcId, _playerInventory.name);
+            }
+
+            for (var i = 0; i < itemsToSellFromDirigibleInventory.Count; i++)
+            {
+                var go = Instantiate(itemElementPrefab, listRoot);
+                var element = go.GetComponent<BuySellItemsElementUI>();
+                element.Initialize(
+                    itemsToSellFromDirigibleInventory[i], 1,
+                    true, npcId, _dirigibleInventory.name);
             }
         }
     }

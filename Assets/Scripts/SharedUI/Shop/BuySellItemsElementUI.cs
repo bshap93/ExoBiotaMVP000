@@ -21,10 +21,12 @@ namespace SharedUI.Shop
 
         MyBaseItem _currentItem;
         int _currentQuantity;
+        string _inventoryId;
         bool _isSell;
         string _npcId;
 
-        public void Initialize(MyBaseItem item, int quantity, bool sell, string npcId)
+        public void Initialize(MyBaseItem item, int quantity, bool sell, string npcId,
+            string itemLocationInventoryName)
         {
             itemImage.sprite = item.Icon;
             itemNameText.text = item.ItemName;
@@ -38,6 +40,7 @@ namespace SharedUI.Shop
             _currentItem = item;
             _currentQuantity = quantity;
             _isSell = sell;
+            _inventoryId = itemLocationInventoryName;
 
             if (!sell)
             {
@@ -72,7 +75,7 @@ namespace SharedUI.Shop
 
         public void Sell()
         {
-            ShoppingEvent.Trigger(_npcId, ShoppingEventType.SoldItem, _currentQuantity, _currentItem);
+            ShoppingEvent.Trigger(_npcId, ShoppingEventType.SoldItem, _currentQuantity, _currentItem, _inventoryId);
         }
 
         void ShowItemInfo()

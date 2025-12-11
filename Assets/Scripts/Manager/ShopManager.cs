@@ -1,6 +1,5 @@
 ﻿using System;
 using Domains.Player.Events;
-using Events;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
 using Helpers.Events;
 using Helpers.Interfaces;
@@ -24,6 +23,9 @@ namespace Manager
     {
         [SerializeField] MMFeedbacks buyFeedbacks;
         [SerializeField] MMFeedbacks sellFeedbacks;
+
+        [SerializeField] string playerInventoryNameId;
+        [SerializeField] string dirigibleInventoryNameId;
 
         [SerializeField] NPCShopStock[] npcStocks;
 
@@ -61,7 +63,11 @@ namespace Manager
                     if (_dialogueGameCommands == null)
                         _dialogueGameCommands = FindFirstObjectByType<DialogueGameCommands>();
 
-                    _dialogueGameCommands?.RemovePlayerItem(shoppingEvent.CurrentItem.ItemID);
+                    if (shoppingEvent.InventoryId == playerInventoryNameId)
+                        _dialogueGameCommands?.RemovePlayerItem(shoppingEvent.CurrentItem.ItemID);
+                    else if (shoppingEvent.InventoryId == dirigibleInventoryNameId)
+                        _dialogueGameCommands?.RemoveDirigibleItem(shoppingEvent.CurrentItem.ItemID);
+
                     sellFeedbacks?.PlayFeedbacks();
                     break;
                 case ShoppingEventType.BoughtItem:
