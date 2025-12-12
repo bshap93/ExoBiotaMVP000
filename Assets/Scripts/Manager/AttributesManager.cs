@@ -6,6 +6,7 @@ using Helpers.Interfaces;
 using Helpers.StaticHelpers;
 using MoreMountains.Tools;
 using SharedUI.Progression;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Manager
@@ -16,6 +17,18 @@ namespace Manager
         const float baseCost = 20f; // cost for first level
         const float growth = 1.4f; // how fast it scales
         public bool autoSave;
+
+        public bool overrideAttributesOnLoad;
+        [ShowIf("overrideAttributesOnLoad")] [SerializeField]
+        int overrideStrength = 2;
+        [ShowIf("overrideAttributesOnLoad")] [SerializeField]
+        int overrideAgility = 2;
+        [ShowIf("overrideAttributesOnLoad")] [SerializeField]
+        int overrideDexterity = 2;
+        [ShowIf("overrideAttributesOnLoad")] [SerializeField]
+        int overrideMentalToughness = 2;
+        [ShowIf("overrideAttributesOnLoad")] [SerializeField]
+        int overrideExobiotic = 2;
         // has endurance and agility's traditional 
         // functions been merged into a single stat...for now
         int _agility;
@@ -146,7 +159,25 @@ namespace Manager
         }
         public void Load()
         {
+            if (overrideAttributesOnLoad)
+            {
+                _strength = overrideStrength;
+                _agility = overrideAgility;
+                _dexterity = overrideDexterity;
+                _mentalToughness = overrideMentalToughness;
+                _exobiotic = overrideExobiotic;
+
+                _currentUnusedXP = 0;
+
+                MarkDirty();
+
+                ConditionalSave();
+
+                return;
+            }
+
             var path = GetSaveFilePath();
+
             if (ES3.KeyExists("Strength", path))
                 _strength = ES3.Load<int>("Strength", path);
 
