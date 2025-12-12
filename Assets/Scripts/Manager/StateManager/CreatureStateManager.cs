@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Helpers.Events.NPCs;
 using MoreMountains.Tools;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Manager.StateManager
@@ -16,6 +17,10 @@ namespace Manager.StateManager
             HasBeenInitialized,
             ShouldBeDestroyed
         }
+
+        public bool overrideAllCreaturesState;
+        [ShowIf("overrideAllCreaturesState")] [SerializeField]
+        CreatureState overrideCreatureState;
 
         Dictionary<string, CreatureState> _creatureStates = new(StringComparer.Ordinal);
         public override void Reset()
@@ -49,8 +54,16 @@ namespace Manager.StateManager
         {
             var path = GetSaveFilePath();
             _creatureStates.Clear();
+
+
             if (ES3.KeyExists("CreatureStates", path))
                 _creatureStates = ES3.Load<Dictionary<string, CreatureState>>("CreatureStates", path);
+
+            if (overrideAllCreaturesState)
+            {
+                var keys = new List<string>(_creatureStates.Keys);
+                foreach (var key in keys) _creatureStates[key] = overrideCreatureState;
+            }
 
             Dirty = false;
         }
