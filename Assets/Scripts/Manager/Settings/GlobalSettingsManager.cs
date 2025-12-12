@@ -128,6 +128,8 @@ namespace Manager.Settings
         {
             var savePath = GetSaveFilePath();
 
+            _player = ReInput.players.GetPlayer(0);
+
             if (!ES3.KeyExists("FullScreenMode", savePath)) return;
 
             if (ES3.KeyExists("FullScreenMode", savePath))

@@ -56,7 +56,8 @@ namespace Helpers.Events
         TooFarFromDirigible,
         ElevatorSceneChangePermission,
         DoorLocked,
-        PlayTestEndYesOrNo
+        PlayTestEndYesOrNo,
+        BreakableToolIneffective
     }
 
     [Serializable]

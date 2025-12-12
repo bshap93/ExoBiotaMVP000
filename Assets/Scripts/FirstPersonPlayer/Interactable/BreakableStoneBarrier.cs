@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Helpers.Events;
 using HighlightPlus;
 using Manager;
 using Manager.SceneManagers;
@@ -20,6 +21,7 @@ namespace FirstPersonPlayer.Interactable
         public GameObject destroyRoot;
 
         public MMFeedbacks onBreakFeedbacks;
+        public MMFeedbacks onHitFeedbacks;
         HighlightEffect _highlightEffect;
 
 
@@ -53,6 +55,14 @@ namespace FirstPersonPlayer.Interactable
                 else
                     Destroy(root, 0.05f);
             }
+            else // Feedback for hitting but not breaking
+            {
+                onHitFeedbacks?.PlayFeedbacks();
+                AlertEvent.Trigger(
+                    AlertReason.BreakableToolIneffective,
+                    "This tool is ineffective at your current strength level.",
+                    "Tool Ineffective");
+            }
         }
         public IEnumerator InitializeAfterDestructableManager()
         {
@@ -81,6 +91,8 @@ namespace FirstPersonPlayer.Interactable
             if (demolished.HasFragments)
                 foreach (var frag in demolished.fragments)
                     frag.gameObject.layer = LayerMask.NameToLayer("Debris");
+
+            onBreakFeedbacks?.PlayFeedbacks();
         }
     }
 }
