@@ -18,6 +18,8 @@ Fulmen: Here's your reward...
 title: PlayerReturnedAfterRTGQuest
 ---
 <<complete_objective DialogueCommands "TalkToCoreSalesman02">>
+<<add_objective DialogueCommands "TakeElevatorToChokedCav">>
+<<activate_objective DialogueCommands "TakeElevatorToChokedCav">>
 Fulmen: Thank you, friend.
 Fulmen: It'll be nice to have the old hideout back to full power.
 Fulmen: You may use its facilities in your further activities in Ashpool Mine.

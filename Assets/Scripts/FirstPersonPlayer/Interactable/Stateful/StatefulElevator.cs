@@ -4,6 +4,7 @@ using System.Linq;
 using creepycat.scifikitvol4;
 using CustomAssets.Scripts;
 using DG.Tweening;
+using Events;
 using FirstPersonPlayer.ScriptableObjects;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
 using Helpers.Events;
@@ -11,6 +12,7 @@ using Helpers.Events.Machine;
 using Inventory;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
+using Objectives.ScriptableObjects;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -86,6 +88,8 @@ namespace FirstPersonPlayer.Interactable.Stateful
         public int floorWhichGoingToTriggersSceneChange;
         [ShowIf(nameof(doesElevatorLeadToSceneChange))]
         public string sceneNameToDisplayInModal;
+
+        public ObjectiveToCompleteOnTravelingToFloor[] ObjectivesToCompleteOnTravelingToFloor;
 
         readonly EasyTimer movetimer = new();
 
@@ -165,6 +169,11 @@ namespace FirstPersonPlayer.Interactable.Stateful
         void ElevatorGoDown(int indexOfDestination)
         {
             if (!TryRequestFloor(indexOfDestination)) return;
+
+            foreach (var objectiveToComplete in ObjectivesToCompleteOnTravelingToFloor)
+                if (objectiveToComplete.floorIndex == indexOfDestination)
+                    ObjectiveEvent.Trigger(
+                        objectiveToComplete.objectiveToComplete.objectiveId, ObjectiveEventType.ObjectiveCompleted);
 
             var floorsToTravel = indexOfDestination - currentState.currentFloor;
             var destinationPoint = elevatorPoints[indexOfDestination];
@@ -384,6 +393,14 @@ namespace FirstPersonPlayer.Interactable.Stateful
             }
 
             return true;
+        }
+
+        [Serializable]
+        public class ObjectiveToCompleteOnTravelingToFloor
+        {
+            [FormerlySerializedAs("FloorIndex")] public int floorIndex;
+            [FormerlySerializedAs("ObjectiveToComplete")]
+            public ObjectiveObject objectiveToComplete;
         }
 
 
