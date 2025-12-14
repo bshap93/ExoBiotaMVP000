@@ -83,6 +83,13 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
         public override Sprite GetReticleForTool(GameObject colliderGameObject)
         {
+            // Check if the object has a tag that should show inability reticle
+            if (tagsWhichShouldShowInabilityReticle != null)
+                foreach (var tagName in tagsWhichShouldShowInabilityReticle)
+                    if (colliderGameObject.CompareTag(tagName))
+                        return reticleForInabilityToSample;
+
+            // Default to the normal reticle
             return defaultReticleForTool;
         }
 

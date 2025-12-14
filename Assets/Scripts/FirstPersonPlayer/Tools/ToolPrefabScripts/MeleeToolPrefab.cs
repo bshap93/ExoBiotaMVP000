@@ -40,6 +40,9 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
         public GameObject ineffectualDebrisEffectPrefab;
 
+        [SerializeField] protected Sprite reticleForInabilityToSample;
+
+        [SerializeField] protected string[] tagsWhichShouldShowInabilityReticle;
 
         public MMFeedbacks equipFeedbacks;
         public MMFeedbacks unequippedFeedbacks;

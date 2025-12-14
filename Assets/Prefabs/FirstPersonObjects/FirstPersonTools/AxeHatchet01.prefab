@@ -1034,6 +1034,9 @@ MonoBehaviour:
   swing03HitDelay: 0.4
   defaultHitDelay: 0.4
   ineffectualDebrisEffectPrefab: {fileID: 761645417365632772, guid: d930383bf4b2ce64d95f23bedbd942db, type: 3}
+  reticleForInabilityToSample: {fileID: 0}
+  tagsWhichShouldShowInabilityReticle:
+  - MiscRigidOrganism
   equipFeedbacks: {fileID: 2658347934427604760}
   unequippedFeedbacks: {fileID: 5031370039458286709}
   hitRockFeedbacks: {fileID: 462974749733811513}
