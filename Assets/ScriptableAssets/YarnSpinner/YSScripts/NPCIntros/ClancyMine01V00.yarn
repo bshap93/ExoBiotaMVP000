@@ -68,6 +68,8 @@ Clancy: That'll dissolve the outer fleshy stuff and leave the Kernel.
 title: FinishingUpCoreQuest
 ---
 Clancy: Ok, pick them up and make your way back up the mine.
+<<complete_objective DialogueCommands "GetKeyForElevatorMine01">>
+<<give_player_item DialogueCommands "Mine01ElevatorKey" 1>>
 -> Right, I'll get back to my airship.
 -> Aren't these illegal?
     Clancy: Only if you sell them. These are for research.

@@ -210,13 +210,10 @@ namespace FirstPersonPlayer.Interactable.Stateful
                     "Trigger ask about scene change modal... commence regular elevator travel if yes, if Cancel, do nothing.");
 
             if (!TryRequestFloor(indexOfDestination))
-            {
-                AlertEvent.Trigger(
-                    AlertReason.ElevatorIssue, "The selected floor is not accessible from this elevator.",
-                    "Elevator Issue");
-
+                // AlertEvent.Trigger(
+                //     AlertReason.ElevatorIssue, "The selected floor is not accessible from this elevator.",
+                //     "Elevator Issue");
                 return;
-            }
 
             var floorsToTravel = currentState.currentFloor - indexOfDestination;
             var destinationPoint = elevatorPoints[indexOfDestination];
