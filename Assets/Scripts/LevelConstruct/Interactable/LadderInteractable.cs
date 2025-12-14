@@ -95,7 +95,7 @@ namespace LevelConstruct.Interactable
         }
         public bool OnHoverStay(GameObject go)
         {
-            ControlsHelpEvent.Trigger(ControlHelpEventType.ShowIfNothingElseShowing, actionId);
+            // ControlsHelpEvent.Trigger(ControlHelpEventType.ShowIfNothingElseShowing, actionId);
             return true;
         }
         public bool OnHoverEnd(GameObject go)

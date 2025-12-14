@@ -58,6 +58,7 @@ namespace SharedUI
         {
             if (eventType.EventType == ControlHelpEventType.ShowIfNothingElseShowing)
             {
+                // if (_blockNewOpenRequests) return;
                 if (_isShowingAControlsPrompt) return;
 
                 ShowAppropriatePrompt(eventType);

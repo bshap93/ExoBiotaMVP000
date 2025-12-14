@@ -124,6 +124,8 @@ namespace LevelConstruct.Interactable.ItemInteractables
 
         public bool OnHoverStay(GameObject go)
         {
+            // ControlsHelpEvent.Trigger(ControlHelpEventType.ShowIfNothingElseShowing, actionId);
+
             return true;
         }
 
