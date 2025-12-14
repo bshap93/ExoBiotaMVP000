@@ -3,7 +3,6 @@ using FirstPersonPlayer.Interactable;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
 using Helpers.Events;
 using Inventory;
-using LevelConstruct.Interactable.ItemInteractables;
 using Manager.Global;
 using Michsky.MUIP;
 using MoreMountains.Feedbacks;
@@ -262,8 +261,10 @@ namespace SharedUI.IGUI
                 var instance = Instantiate(prefab, holdPoint.position, holdPoint.rotation);
                 placeObjectFeedbacks?.PlayFeedbacks();
                 var itemPicker = instance.GetComponent<ItemPicker>();
-                var statefulItemPicker = instance.GetComponent<IStatefulItemPicker>();
-                if (statefulItemPicker != null) statefulItemPicker.SetStateToDefault();
+                itemPicker.OnPlacedByPlayer();
+
+                // var statefulItemPicker = instance.GetComponent<IStatefulItemPicker>();
+                // if (statefulItemPicker != null) statefulItemPicker.SetStateToDefault();
                 itemPicker.uniqueID = Guid.NewGuid().ToString();
                 propsItemHold.SetItem(instance);
                 MyUIEvent.Trigger(UIType.InGameUI, UIActionType.Close);

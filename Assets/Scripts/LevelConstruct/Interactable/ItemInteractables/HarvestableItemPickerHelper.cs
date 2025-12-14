@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Dirigible.Input;
 using Events;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
 using FirstPersonPlayer.Tools.ItemObjectTypes.CompositeObjects;
@@ -46,6 +47,11 @@ namespace LevelConstruct.Interactable.ItemInteractables
         [SerializeField] MMFeedbacks loopedInteractionFeedbacks;
         [SerializeField] MMFeedbacks startInteractionFeedbacks;
 
+#if UNITY_EDITOR
+        [ValueDropdown(nameof(GetAllRewiredActions))]
+#endif
+        public int interactActionId;
+
         [SerializeField] MeshRenderer coreMeshRenderer;
 
         [FormerlySerializedAs("rhizomicCoreState")]
@@ -80,6 +86,8 @@ namespace LevelConstruct.Interactable.ItemInteractables
         public float timeToDissolve = 2.0f;
 
         OuterCoreItemObject.CoreReactivity _coreReactivity;
+
+        bool _initialized;
         ItemPicker.ItemPicker _itemPicker;
 
         int _numInnerCoresHarvested;
@@ -90,11 +98,15 @@ namespace LevelConstruct.Interactable.ItemInteractables
         void Awake()
         {
             _itemPicker = gameObject.GetComponent<ItemPicker.ItemPicker>();
+
+            // ✅ Subscribe to the placed event
+            if (_itemPicker != null) _itemPicker.placedByPlayerEvent.AddListener(OnPlacedByPlayer);
         }
 
         void Start()
         {
-            StartCoroutine(InitializeAfterStateManagerLoaded());
+            if (!_initialized)
+                StartCoroutine(InitializeAfterStateManagerLoaded());
         }
 
         void OnEnable()
@@ -148,7 +160,7 @@ namespace LevelConstruct.Interactable.ItemInteractables
             // For example: disallow picking until DetachedFresh or later
             return harvestableState == HarvestableState.Undetatched
                    || harvestableState ==
-                   HarvestableState.Dissolved;
+                   HarvestableState.Dissolved || harvestableState == HarvestableState.Picked;
         }
         // ✅ Add this method to handle the events
         public void OnMMEvent(GatedHarvestableInteractionEvent eventType)
@@ -228,6 +240,13 @@ namespace LevelConstruct.Interactable.ItemInteractables
                 }
             }
         }
+#if UNITY_EDITOR
+        public IEnumerable<ValueDropdownItem<int>> GetAllRewiredActions()
+        {
+            return AllRewiredActions.GetAllRewiredActions();
+        }
+
+#endif
 
         IEnumerator InitializeAfterStateManagerLoaded()
         {
@@ -262,6 +281,7 @@ namespace LevelConstruct.Interactable.ItemInteractables
             {
                 // Saved state exists, use it
                 stateToApply = savedState;
+                _stateManager.SetState(_itemPicker.uniqueID, stateToApply);
             }
             else
             {
@@ -270,8 +290,28 @@ namespace LevelConstruct.Interactable.ItemInteractables
                 _stateManager.SetState(_itemPicker.uniqueID, DefaultState);
             }
 
+            if (stateToApply == HarvestableState.Undetatched)
+            {
+                _itemPicker.actionText = "To Pick Up";
+            }
+            else if (stateToApply == HarvestableState.HadCatalystApplied)
+            {
+                _itemPicker.actionId = interactActionId;
+                _itemPicker.actionText = "To Apply Solvent";
+            }
+            else if (stateToApply == HarvestableState.Dissolved)
+            {
+                // no action needed
+            }
+            else if (stateToApply == HarvestableState.Picked)
+            {
+                _itemPicker.actionId = interactActionId;
+                _itemPicker.actionText = "To Apply Catalyst";
+            }
+
             // Apply the correct state
             ApplyMaterials(stateToApply);
+            _initialized = true;
         }
 
         void AdvanceState(HarvestableState newState)
@@ -401,6 +441,25 @@ namespace LevelConstruct.Interactable.ItemInteractables
 
                 // StartCoroutine(WaitThenResetDissolver());
             }
+        }
+
+        public void OnPlacedByPlayer()
+        {
+            _stateManager = StatefulPickableManager.Instance;
+            _stateManager.SetState(_itemPicker.UniqueID, HarvestableState.Picked);
+
+            // ✅ Update the action text for the Picked state
+            _itemPicker.actionId = interactActionId;
+            _itemPicker.actionText = "To Apply Catalyst";
+
+            // ✅ Update the internal state variable
+            harvestableState = HarvestableState.Picked;
+
+            // ✅ Mark as initialized so the coroutine doesn't run and overwrite our settings
+            _initialized = true;
+
+            Debug.Log(
+                $"[HarvestableItemPickerHelper] OnPlacedByPlayer: Setting state to Picked for {_itemPicker.UniqueID}");
         }
 
         // TODO: Where was this used?

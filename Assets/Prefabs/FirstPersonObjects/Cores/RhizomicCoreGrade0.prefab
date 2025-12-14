@@ -2015,8 +2015,9 @@ MonoBehaviour:
   solventAppliedFeedback: {fileID: 8552902630907348053}
   loopedInteractionFeedbacks: {fileID: 9108768166072274358}
   startInteractionFeedbacks: {fileID: 0}
+  interactActionId: 43
   coreMeshRenderer: {fileID: 955907503469043765}
-  harvestableState: 0
+  harvestableState: 3
   DefaultState: 0
   undetatchedMaterial: {fileID: 2100000, guid: 8142d95039b31ab46936fdedc8f6c94a, type: 2}
   detachedFreshMaterial: {fileID: 2100000, guid: 8142d95039b31ab46936fdedc8f6c94a, type: 2}
@@ -2071,6 +2072,22 @@ MonoBehaviour:
     UnkonwnName: Unknown Item
   onPickFeedbacks: {fileID: 1291187103501579518}
   canBeMoved: 1
+  placedByPlayerEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8188415770384522473}
+        m_TargetAssemblyTypeName: LevelConstruct.Interactable.ItemInteractables.HarvestableItemPickerHelper,
+          Assembly-CSharp
+        m_MethodName: OnPlacedByPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1810324693896116022
 MonoBehaviour:
   m_ObjectHideFlags: 0

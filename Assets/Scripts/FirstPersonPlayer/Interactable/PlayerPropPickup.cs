@@ -166,8 +166,9 @@ namespace FirstPersonPlayer.Interactable
                 var instance = Instantiate(prefab, holdPoint.position, holdPoint.rotation);
                 placeObjectFeedbacks?.PlayFeedbacks();
                 var itemPicker = instance.GetComponent<ItemPicker>();
+                itemPicker.OnPlacedByPlayer();
                 var statefulItemPicker = instance.GetComponent<IStatefulItemPicker>();
-                if (statefulItemPicker != null) statefulItemPicker.SetStateToDefault();
+                // if (statefulItemPicker != null) statefulItemPicker.SetStateToDefault();
                 itemPicker.uniqueID = Guid.NewGuid().ToString();
 
                 // Set the item in hold point

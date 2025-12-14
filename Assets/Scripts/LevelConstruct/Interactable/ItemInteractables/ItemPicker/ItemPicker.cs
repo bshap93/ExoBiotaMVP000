@@ -80,6 +80,8 @@ namespace LevelConstruct.Interactable.ItemInteractables.ItemPicker
         [Header("Restoration")] [SerializeField]
         bool canBeMoved = true; // Set false for items that shouldn't be pickable/movable
 
+        public UnityEvent placedByPlayerEvent;
+
         List<string> _chemsFound;
 
         SceneObjectData _data;
@@ -737,6 +739,10 @@ namespace LevelConstruct.Interactable.ItemInteractables.ItemPicker
                 unknownShortBlurb,
                 unknownName
             );
+        }
+        public void OnPlacedByPlayer()
+        {
+            placedByPlayerEvent?.Invoke();
         }
 
 #if UNITY_EDITOR

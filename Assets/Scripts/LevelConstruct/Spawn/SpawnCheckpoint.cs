@@ -7,7 +7,6 @@ using Sirenix.OdinInspector;
 using Structs;
 using UnityEngine;
 using UnityEngine.Serialization;
-using Utilities.Static;
 #if UNITY_EDITOR
 using UnityEditorInternal;
 #endif
@@ -37,8 +36,8 @@ namespace LevelConstruct.Spawn
             if (string.IsNullOrEmpty(playerPawnTag)) return;
             if (!other.CompareTag(playerPawnTag)) return;
 
-            if (SpawnSystem.CurrentSpawn.SpawnPointId == point.Id)
-                Debug.Log("Checkpoint Reached");
+            // if (SpawnSystem.CurrentSpawn.SpawnPointId == point.Id)
+            //     Debug.Log("Checkpoint Reached");
 
             var globalSettingsMgr = GlobalSettingsManager.Instance;
             if (globalSettingsMgr == null)
@@ -48,10 +47,8 @@ namespace LevelConstruct.Spawn
             }
 
             if (!globalSettingsMgr.AutoSaveAtCheckpoints)
-            {
-                Debug.Log("[SpawnCheckpoint] Autosave at the checkpoint is disabled in Global Settings.");
+                // Debug.Log("[SpawnCheckpoint] Autosave at the checkpoint is disabled in Global Settings.");
                 return;
-            }
 
             if (!useAsAutoSavePoint)
             {
