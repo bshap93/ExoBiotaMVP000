@@ -282,10 +282,10 @@ namespace FirstPersonPlayer.Tools
         public static PlayerEquipment GetWithActiveToolOrRight()
         {
             if (InstanceRight?.CurrentRuntimeTool != null) return InstanceRight;
-            if (InstanceLeft?.CurrentRuntimeTool != null) return InstanceLeft;
-            return InstanceRight ?? InstanceLeft;
+            // if (InstanceLeft?.CurrentRuntimeTool != null) return InstanceLeft;
+            // return InstanceRight ?? InstanceLeft;
+            return InstanceRight;
         }
-
         // Example tool-type query
         public static PlayerEquipment GetWithToolType(Type runtimeType)
         {

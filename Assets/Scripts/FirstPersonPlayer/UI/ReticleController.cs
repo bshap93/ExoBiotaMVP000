@@ -33,6 +33,7 @@ namespace FirstPersonPlayer.UI
             var targetState = defaultState;
 
             var activePE = PlayerEquipment.GetWithActiveToolOrRight();
+
             currentTool = activePE?.CurrentRuntimeTool;
 
 
@@ -45,6 +46,16 @@ namespace FirstPersonPlayer.UI
                 {
                     if (valueCollider.CompareTag("DiggerChunk")) return;
 
+                    if (currentTool != null && currentTool.CanInteractWithObject(valueCollider.gameObject))
+                    {
+                        IRuntimeToolUseableState.reticleSprite =
+                            currentTool.GetReticleForTool(valueCollider.gameObject);
+
+                        targetState = IRuntimeToolUseableState;
+                        ApplyReticleState(targetState);
+                        return;
+                    }
+
                     var interactable = valueCollider.GetComponent<IInteractable>();
                     if (interactable != null)
                     {
@@ -53,12 +64,12 @@ namespace FirstPersonPlayer.UI
                         return;
                     }
 
-                    if (currentTool != null && currentTool.CanInteractWithObject(valueCollider.gameObject))
+                    if (currentTool != null && !currentTool.CanInteractWithObject(valueCollider.gameObject))
                     {
-                        IRuntimeToolUseableState.reticleSprite =
+                        IRuntimeToolUnuseableState.reticleSprite =
                             currentTool.GetReticleForTool(valueCollider.gameObject);
 
-                        targetState = IRuntimeToolUseableState;
+                        targetState = IRuntimeToolUnuseableState;
                         ApplyReticleState(targetState);
                         return;
                     }
