@@ -76,19 +76,26 @@ namespace LevelConstruct.Interactable
             var nameToShow = GetName();
             var iconToShow = GetIcon();
             var shortToShow = ShortBlurb();
+            var actionIconToShow = GetActionIcon();
             Data = new SceneObjectData(
                 nameToShow,
                 iconToShow,
                 shortToShow,
-                ExaminationManager.Instance?.iconRepository.ladderIcon,
+                actionIconToShow,
                 GetActionText()
             );
 
             BillboardEvent.Trigger(Data, BillboardEventType.Show);
+            if (actionId != 0)
+                ControlsHelpEvent.Trigger(
+                    ControlHelpEventType.Show, actionId, additionalInfoText: "to " + GetActionText()
+                );
+
             return true;
         }
         public bool OnHoverStay(GameObject go)
         {
+            ControlsHelpEvent.Trigger(ControlHelpEventType.ShowIfNothingElseShowing, actionId);
             return true;
         }
         public bool OnHoverEnd(GameObject go)

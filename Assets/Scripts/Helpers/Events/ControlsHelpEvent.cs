@@ -8,7 +8,8 @@ namespace Helpers.Events
         Show,
         Hide,
         ShowUseThenHide,
-        ShowThenHide
+        ShowThenHide,
+        ShowIfNothingElseShowing
     }
 
     public struct ControlsHelpEvent

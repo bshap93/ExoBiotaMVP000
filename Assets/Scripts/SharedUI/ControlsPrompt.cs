@@ -30,6 +30,7 @@ namespace SharedUI
         bool _blockNewOpenRequests;
 
         CanvasGroup _canvasRenderer;
+        bool _isShowingAControlsPrompt;
 
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -55,68 +56,17 @@ namespace SharedUI
 
         public void OnMMEvent(ControlsHelpEvent eventType)
         {
+            if (eventType.EventType == ControlHelpEventType.ShowIfNothingElseShowing)
+            {
+                if (_isShowingAControlsPrompt) return;
+
+                ShowAppropriatePrompt(eventType);
+                return;
+            }
+
             if (eventType.EventType == ControlHelpEventType.Show)
             {
-                if (!_blockNewOpenRequests)
-                {
-                    var datum = defaultKeyboardSchemeSet.GetDatumByActionId(eventType.ActionId);
-
-                    if (string.IsNullOrEmpty(eventType.AdditionalInfoText))
-                        additionInfoText.text = eventType.AdditionalInfoText;
-
-                    if (datum.PromptIcon != null && datum.PromptText != null &&
-                        eventType.ToolIcon != null)
-                    {
-                        SetPromptElements(datum.PromptIcon, datum.PromptText);
-                        // additionInfoText.text = eventType.AdditionalInstruction;
-                        with.text = "with";
-                        toolIcon.enabled = true;
-                        toolIcon.sprite = eventType.ToolIcon;
-                        Show();
-                    }
-                    else if (datum.PromptIcon != null && datum.PromptText != null &&
-                             !string.IsNullOrEmpty(eventType.AdditionalInfoText)
-                            )
-                    {
-                        SetPromptElements(datum.PromptIcon, datum.PromptText);
-                        additionInfoText.text = eventType.AdditionalInfoText;
-                        with.text = "";
-                        toolIcon.enabled = false;
-                        Show();
-                    }
-                    else if (datum.PromptIcon != null && datum.PromptText != null && datum.AdditionalContext != null)
-                    {
-                        SetPromptElements(datum.PromptIcon, datum.PromptText);
-                        additionInfoText.text = datum.AdditionalContext;
-                        with.text = "";
-                        toolIcon.enabled = false;
-                        Show();
-                    }
-
-
-                    else if (datum.PromptIcon != null && datum.PromptText != null)
-                    {
-                        SetPromptElements(datum.PromptIcon, datum.PromptText);
-                        with.text = "";
-                        toolIcon.enabled = false;
-                        Show();
-                    }
-                    else if (datum.PromptText != null)
-                    {
-                        SetPromptTextOnly(datum.PromptText);
-                        with.text = "";
-                        toolIcon.enabled = false;
-                        Show();
-                    }
-                    else if (datum.PromptIcon != null)
-                    {
-                        SetPromptImageOnly(datum.PromptIcon);
-                        with.text = "";
-                        toolIcon.enabled = false;
-                        Show();
-                    }
-                }
-                // Debug.LogError("No promt data was available, Do not show");
+                ShowAppropriatePrompt(eventType);
             }
             else if (eventType.EventType == ControlHelpEventType.Hide)
             {
@@ -169,6 +119,68 @@ namespace SharedUI
                     Show();
             }
         }
+        void ShowAppropriatePrompt(ControlsHelpEvent eventType)
+        {
+            if (!_blockNewOpenRequests)
+            {
+                var datum = defaultKeyboardSchemeSet.GetDatumByActionId(eventType.ActionId);
+
+                if (string.IsNullOrEmpty(eventType.AdditionalInfoText))
+                    additionInfoText.text = eventType.AdditionalInfoText;
+
+                if (datum.PromptIcon != null && datum.PromptText != null &&
+                    eventType.ToolIcon != null)
+                {
+                    SetPromptElements(datum.PromptIcon, datum.PromptText);
+                    // additionInfoText.text = eventType.AdditionalInstruction;
+                    with.text = "with";
+                    toolIcon.enabled = true;
+                    toolIcon.sprite = eventType.ToolIcon;
+                    Show();
+                }
+                else if (datum.PromptIcon != null && datum.PromptText != null &&
+                         !string.IsNullOrEmpty(eventType.AdditionalInfoText)
+                        )
+                {
+                    SetPromptElements(datum.PromptIcon, datum.PromptText);
+                    additionInfoText.text = eventType.AdditionalInfoText;
+                    with.text = "";
+                    toolIcon.enabled = false;
+                    Show();
+                }
+                else if (datum.PromptIcon != null && datum.PromptText != null && datum.AdditionalContext != null)
+                {
+                    SetPromptElements(datum.PromptIcon, datum.PromptText);
+                    additionInfoText.text = datum.AdditionalContext;
+                    with.text = "";
+                    toolIcon.enabled = false;
+                    Show();
+                }
+
+
+                else if (datum.PromptIcon != null && datum.PromptText != null)
+                {
+                    SetPromptElements(datum.PromptIcon, datum.PromptText);
+                    with.text = "";
+                    toolIcon.enabled = false;
+                    Show();
+                }
+                else if (datum.PromptText != null)
+                {
+                    SetPromptTextOnly(datum.PromptText);
+                    with.text = "";
+                    toolIcon.enabled = false;
+                    Show();
+                }
+                else if (datum.PromptIcon != null)
+                {
+                    SetPromptImageOnly(datum.PromptIcon);
+                    with.text = "";
+                    toolIcon.enabled = false;
+                    Show();
+                }
+            }
+        }
 
         IEnumerator ShowUseThenHide()
         {
@@ -212,6 +224,7 @@ namespace SharedUI
         public void Show()
         {
             _canvasRenderer.alpha = 1;
+            _isShowingAControlsPrompt = true;
         }
 
         public void UnsetPromptImage()
@@ -228,6 +241,7 @@ namespace SharedUI
         public void Hide()
         {
             _canvasRenderer.alpha = 0;
+            _isShowingAControlsPrompt = false;
         }
     }
 }
