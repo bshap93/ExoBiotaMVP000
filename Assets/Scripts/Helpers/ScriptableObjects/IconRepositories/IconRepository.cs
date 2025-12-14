@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Helpers.ScriptableObjects
+namespace Helpers.ScriptableObjects.IconRepositories
 {
     [CreateAssetMenu(fileName = "IconRepository", menuName = "Scriptable Objects/Helpers/IconRepository", order = 0)]
     public class IconRepository : ScriptableObject
@@ -29,5 +29,7 @@ namespace Helpers.ScriptableObjects
         public Sprite addLiquidSampleIcon;
         public Sprite mediStatHubIcon;
         public Sprite mediStatHubRestIcon;
+        public Sprite ladderIcon;
+        public Sprite climbIcon;
     }
 }

@@ -93,7 +93,7 @@ Material:
     - _Metallic3: 0
     - _NormalScale0: 2
     - _NormalScale1: 0.4
-    - _NormalScale2: 1
+    - _NormalScale2: 1.4
     - _NormalScale3: 3
     - _NumLayersCount: 1
     - _Smoothness0: 0.16

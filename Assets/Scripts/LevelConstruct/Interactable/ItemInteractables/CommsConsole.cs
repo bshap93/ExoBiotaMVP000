@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using Events;
-using FirstPersonPlayer.Interface;
 using Helpers.Events;
 using Helpers.Events.Dialog;
 using Helpers.Events.Tutorial;
@@ -20,7 +19,7 @@ namespace LevelConstruct.Interactable.ItemInteractables
     [RequireComponent(typeof(MeshCollider))]
     [RequireComponent(typeof(HighlightEffectController))]
     [DisallowMultipleComponent]
-    public class CommsConsole : ActionConsole, IInteractable, MMEventListener<SpontaneousTriggerEvent>
+    public class CommsConsole : ActionConsole, MMEventListener<SpontaneousTriggerEvent>
     {
         [SerializeField] string defaultNPCId;
         [SerializeField] string consoleAutomatedNPCId;
@@ -57,6 +56,26 @@ namespace LevelConstruct.Interactable.ItemInteractables
         {
             base.OnDisable();
             this.MMEventStopListening();
+        }
+        public void OnMMEvent(SpontaneousTriggerEvent eventType)
+        {
+            if (eventType.UniqueID == uniqueID)
+            {
+                if (eventType.EventType == SpontaneousTriggerEventType.Triggered)
+                {
+                    if (currentConsoleState == ActionConsoleState.PoweredOn)
+                        SetConsoleToHailPlayerState();
+                }
+                else if (eventType.EventType == SpontaneousTriggerEventType.Silenced)
+                {
+                    if (currentConsoleState == ActionConsoleState.HailingPlayer)
+                    {
+                        if (_priorConsoleState == ActionConsoleState.PoweredOn)
+                            SetConsoleToPoweredOnState();
+                        else if (_priorConsoleState == ActionConsoleState.LacksPower) SetConsoleToLacksPowerState();
+                    }
+                }
+            }
         }
 
         public override void Interact()
@@ -114,26 +133,6 @@ namespace LevelConstruct.Interactable.ItemInteractables
         public override void OnInteractionStart()
         {
             MainTutorialBitEvent.Trigger(null, MainTutorialBitEventType.HideOptionalTutorialBit);
-        }
-        public void OnMMEvent(SpontaneousTriggerEvent eventType)
-        {
-            if (eventType.UniqueID == uniqueID)
-            {
-                if (eventType.EventType == SpontaneousTriggerEventType.Triggered)
-                {
-                    if (currentConsoleState == ActionConsoleState.PoweredOn)
-                        SetConsoleToHailPlayerState();
-                }
-                else if (eventType.EventType == SpontaneousTriggerEventType.Silenced)
-                {
-                    if (currentConsoleState == ActionConsoleState.HailingPlayer)
-                    {
-                        if (_priorConsoleState == ActionConsoleState.PoweredOn)
-                            SetConsoleToPoweredOnState();
-                        else if (_priorConsoleState == ActionConsoleState.LacksPower) SetConsoleToLacksPowerState();
-                    }
-                }
-            }
         }
 
         public void InitiateOtherFunctions()

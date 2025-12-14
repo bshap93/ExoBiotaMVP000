@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Helpers.Events;
 using Helpers.Interfaces;
-using Helpers.ScriptableObjects;
+using Helpers.ScriptableObjects.IconRepositories;
 using MoreMountains.Tools;
 using UnityEngine;
 using UnityEngine.Serialization;

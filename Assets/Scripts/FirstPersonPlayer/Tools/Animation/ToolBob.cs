@@ -1,23 +1,25 @@
-﻿using Lightbug.CharacterControllerPro.Core;
+﻿using Helpers.Events;
+using Lightbug.CharacterControllerPro.Core;
 using MoreMountains.Feedbacks;
+using MoreMountains.Tools;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace FirstPersonPlayer.Tools.Animation
 {
-    public class ToolBob : MonoBehaviour
+    public class ToolBob : MonoBehaviour, MMEventListener<LoadedManagerEvent>
     {
         public float swayAmount = 0.01f;
         public float swaySpeed = 6f;
         public float bumpStrength = 0.015f;
 
         [FormerlySerializedAs("_fpPlayerCharacter")] [SerializeField]
-        private CharacterActor fpPlayerCharacter;
+        CharacterActor fpPlayerCharacter;
 
-        private MMSpringFloat _bobSpring;
-        private Vector3 _initialLocalPosition;
+        MMSpringFloat _bobSpring;
+        Vector3 _initialLocalPosition;
 
-        private void Update()
+        void Update()
         {
             if (fpPlayerCharacter == null) return;
 
@@ -35,21 +37,30 @@ namespace FirstPersonPlayer.Tools.Animation
             transform.localPosition = _initialLocalPosition + offset;
         }
 
-        private void OnEnable()
+        void OnEnable()
         {
-            Initialize();
+            this.MMEventStartListening();
+        }
+        void OnDisable()
+        {
+            this.MMEventStopListening();
+        }
+        public void OnMMEvent(LoadedManagerEvent eventType)
+        {
+            if (eventType.ManagerType == ManagerType.All)
+                Initialize();
         }
 
-        private void Initialize()
+        void Initialize()
         {
             _initialLocalPosition = transform.localPosition;
 
             if (fpPlayerCharacter == null)
-                fpPlayerCharacter = GetComponentInParent<CharacterActor>();
+                fpPlayerCharacter = FindFirstObjectByType<CharacterActor>();
 
             if (fpPlayerCharacter == null)
             {
-                Debug.LogError("ToolBob: CharacterActor not found in parent hierarchy.");
+                Debug.LogWarning("ToolBob: CharacterActor not found in parent hierarchy.");
                 return;
             }
 
@@ -59,6 +70,7 @@ namespace FirstPersonPlayer.Tools.Animation
                 Damping = 0.4f,
                 Frequency = 5f
             };
+
             _bobSpring.SetInitialValue(0f);
         }
     }

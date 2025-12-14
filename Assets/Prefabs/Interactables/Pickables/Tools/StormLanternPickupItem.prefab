@@ -239,10 +239,10 @@ MonoBehaviour:
         Persistent: 0
         DoNotPlayIfClipAlreadyPlaying: 0
         StopSoundOnFeedbackStop: 0
-        Fade: 0
-        FadeInitialVolume: 0
-        FadeDuration: 1
-        FadeTween:
+        FadeIn: 0
+        FadeInInitialVolume: 0
+        FadeInDuration: 1
+        FadeInTween:
           MMTweenDefinitionType: 0
           MMTweenCurve: 9
           Curve:
@@ -271,6 +271,39 @@ MonoBehaviour:
             m_RotationOrder: 4
           Initialized: 0
           ConditionPropertyName: Fade
+          EnumConditionPropertyName: 
+          EnumConditions: 0000000000000000000000000000000000000000000000000000000000000000
+        FadeOutOnStop: 0
+        FadeOutDuration: 1
+        FadeOutTween:
+          MMTweenDefinitionType: 0
+          MMTweenCurve: 9
+          Curve:
+            serializedVersion: 2
+            m_Curve:
+            - serializedVersion: 3
+              time: 0
+              value: 0
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 1
+              value: 1
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          Initialized: 0
+          ConditionPropertyName: FadeOutOnStop
           EnumConditionPropertyName: 
           EnumConditions: 0000000000000000000000000000000000000000000000000000000000000000
         SoloSingleTrack: 0
@@ -484,7 +517,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7069834, y: 0, z: 0, w: 0.7072302}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.003472, y: 4.0978956, z: 1.0000277}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8854941520339226006}
@@ -836,7 +869,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0986de822ecb4835bfb249feaeb7996f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetID: 
+  targetID: 4b26e54d-0812-4df5-a1ae-bd91b9ca1867
   seeThroughDuration: 5
   onScanned:
     m_PersistentCalls:
@@ -854,10 +887,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ab61beb303f4cc2af9de8675f8c712c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueID: 
+  uniqueID: e1a938a7-b565-42e4-9e6d-b6ebe0fe1bd1
   actionId: 97
-  actionText: or E to Pick
+  actionText: to Pick
   quantity: 1
+  interactionDistance: 2
   onItemPicked:
     m_PersistentCalls:
       m_Calls: []
@@ -872,7 +906,7 @@ MonoBehaviour:
     Name: Storm Lantern
     ShortBlurb: A Gas Powered Lantern common in the Mines of Sheol
     FullDescription: 
-    IdentificationMode: 1
+    IdentificationMode: 0
     UnknownIcon: {fileID: 21300448, guid: 99cbc473450af4147999e9e68398877b, type: 3}
     UnknownShortBlurb: 
     UnkonwnName: Unknown Item

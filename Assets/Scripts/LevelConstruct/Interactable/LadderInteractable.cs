@@ -1,18 +1,23 @@
+using System;
 using System.Collections.Generic;
 using Dirigible.Input;
 using FirstPersonPlayer;
 using FirstPersonPlayer.Interface;
 using Helpers.Events;
 using Lightbug.CharacterControllerPro.Core;
+using Manager;
 using MoreMountains.Feedbacks;
+using SharedUI.Interface;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Utilities.Interface;
 
 namespace LevelConstruct.Interactable
 {
-    public class LadderInteractable : MonoBehaviour, IInteractable
+    public class LadderInteractable : MonoBehaviour, IInteractable, IHoverable, IBillboardable, IRequiresUniqueID
     {
+        public string uniqueID;
         [SerializeField] MMFeedbacks climbLadderFeedbacks;
         [SerializeField] string actionMessage = "Climb the Ladder?";
         [SerializeField] string actionTitle = "Ladder Climb";
@@ -30,7 +35,10 @@ namespace LevelConstruct.Interactable
         bool _initialized;
         float _lastTriggerTime;
         GameObject _player01;
+
         TeleportPlayer _teleportPlayer;
+        protected SceneObjectData Data;
+
 
         void OnTriggerEnter(Collider other)
         {
@@ -42,6 +50,57 @@ namespace LevelConstruct.Interactable
 
             _lastTriggerTime = Time.time;
             InitiateClimb();
+        }
+        public string GetName()
+        {
+            return "Ladder";
+        }
+        public Sprite GetIcon()
+        {
+            return ExaminationManager.Instance?.iconRepository.ladderIcon;
+        }
+        public string ShortBlurb()
+        {
+            return "Interact to climb the ladder.";
+        }
+        public Sprite GetActionIcon()
+        {
+            return ExaminationManager.Instance?.iconRepository.climbIcon;
+        }
+        public string GetActionText()
+        {
+            return "Climb";
+        }
+        public bool OnHoverStart(GameObject go)
+        {
+            var nameToShow = GetName();
+            var iconToShow = GetIcon();
+            var shortToShow = ShortBlurb();
+            Data = new SceneObjectData(
+                nameToShow,
+                iconToShow,
+                shortToShow,
+                ExaminationManager.Instance?.iconRepository.ladderIcon,
+                GetActionText()
+            );
+
+            BillboardEvent.Trigger(Data, BillboardEventType.Show);
+            return true;
+        }
+        public bool OnHoverStay(GameObject go)
+        {
+            return true;
+        }
+        public bool OnHoverEnd(GameObject go)
+        {
+            if (Data == null) Data = SceneObjectData.Empty();
+            BillboardEvent.Trigger(Data, BillboardEventType.Hide);
+
+            if (actionId != 0)
+                ControlsHelpEvent.Trigger(
+                    ControlHelpEventType.Hide, actionId);
+
+            return true;
         }
 
 
@@ -79,6 +138,15 @@ namespace LevelConstruct.Interactable
         public float GetInteractionDistance()
         {
             return interactionDistance;
+        }
+        public string UniqueID => uniqueID;
+        public void SetUniqueID()
+        {
+            uniqueID = Guid.NewGuid().ToString();
+        }
+        public bool IsUniqueIDEmpty()
+        {
+            return string.IsNullOrEmpty(uniqueID);
         }
         public void OnInteractionEnd()
         {

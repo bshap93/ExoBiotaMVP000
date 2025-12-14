@@ -131,7 +131,7 @@ namespace LevelConstruct.Interactable.ItemInteractables
         {
             if (Data == null) Data = SceneObjectData.Empty();
             BillboardEvent.Trigger(Data, BillboardEventType.Hide);
-            BillboardEvent.Trigger(Data, BillboardEventType.Hide);
+            // BillboardEvent.Trigger(Data, BillboardEventType.Hide);
             if (actionId != 0)
                 ControlsHelpEvent.Trigger(
                     ControlHelpEventType.Hide, actionId);
