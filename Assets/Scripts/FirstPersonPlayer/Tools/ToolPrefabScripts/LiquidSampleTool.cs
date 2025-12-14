@@ -26,6 +26,9 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
     {
         [SerializeField] LiquidSampleToolObject liquidSampleToolObject;
         [SerializeField] Sprite defaultReticleForTool;
+        [SerializeField] Sprite reticleForInabilityToSample;
+
+        [SerializeField] string[] tagsWhichShouldShowInabilityReticle;
 
         [SerializeField] float sightRange = 10f;
         [SerializeField] LayerMask organismLayerMask;
@@ -234,6 +237,13 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
         public Sprite GetReticleForTool(GameObject colliderGameObject)
         {
+            // Check if the object has a tag that should show inability reticle
+            if (tagsWhichShouldShowInabilityReticle != null)
+                foreach (var tag in tagsWhichShouldShowInabilityReticle)
+                    if (colliderGameObject.CompareTag(tag))
+                        return reticleForInabilityToSample;
+
+            // Default to the normal reticle
             return defaultReticleForTool;
         }
 

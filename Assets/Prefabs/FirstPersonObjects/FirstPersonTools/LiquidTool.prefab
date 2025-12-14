@@ -1463,6 +1463,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   liquidSampleToolObject: {fileID: 11400000, guid: c025b3858770ba04dab70861622bf384, type: 2}
   defaultReticleForTool: {fileID: 21300000, guid: 59b7b837c86f30c419fed2ae19c8aed2, type: 3}
+  reticleForInabilityToSample: {fileID: 0}
+  tagsWhichShouldShowInabilityReticle:
+  - OreNode
   sightRange: 10
   organismLayerMask:
     serializedVersion: 2

@@ -19,6 +19,7 @@ namespace FirstPersonPlayer.UI
         public ReticleState scannerState;
         public ReticleState scannerNotCalibratedState;
         public ReticleState IRuntimeToolUseableState;
+        public ReticleState IRuntimeToolUnuseableState; // Add this for red/inability reticle
 
 
         [Header("Reticle UI")] public Image reticle;
@@ -37,14 +38,14 @@ namespace FirstPersonPlayer.UI
 
             if (hit.HasValue)
             {
-                var collider = hit.Value.collider;
+                var valueCollider = hit.Value.collider;
 
                 // Priority 1: Interactables
                 if (!terrainBlocking)
                 {
-                    if (collider.CompareTag("DiggerChunk")) return;
+                    if (valueCollider.CompareTag("DiggerChunk")) return;
 
-                    var interactable = collider.GetComponent<IInteractable>();
+                    var interactable = valueCollider.GetComponent<IInteractable>();
                     if (interactable != null)
                     {
                         targetState = interactableState;
@@ -52,9 +53,11 @@ namespace FirstPersonPlayer.UI
                         return;
                     }
 
-                    if (currentTool != null && currentTool.CanInteractWithObject(collider.gameObject))
+                    if (currentTool != null && currentTool.CanInteractWithObject(valueCollider.gameObject))
                     {
-                        IRuntimeToolUseableState.reticleSprite = currentTool.GetReticleForTool(collider.gameObject);
+                        IRuntimeToolUseableState.reticleSprite =
+                            currentTool.GetReticleForTool(valueCollider.gameObject);
+
                         targetState = IRuntimeToolUseableState;
                         ApplyReticleState(targetState);
                         return;

@@ -2946,6 +2946,7 @@ MonoBehaviour:
   scannerState: {fileID: 11400000, guid: 209ab6a5f1dfa8246b1b5b5935ce89e2, type: 2}
   scannerNotCalibratedState: {fileID: 11400000, guid: 1c3b8735b81b33346b1ead4524e89a3e, type: 2}
   IRuntimeToolUseableState: {fileID: 11400000, guid: b5d325d60431dc14eadf15c94bdb08bd, type: 2}
+  IRuntimeToolUnuseableState: {fileID: 11400000, guid: 590c37daae62ccc48a7edbdeb4d4952e, type: 2}
   reticle: {fileID: 5856290160171683435}
 --- !u!225 &8937467482024840972
 CanvasGroup:
@@ -6747,6 +6748,7 @@ MonoBehaviour:
   crouch: 0
   useEquipped: 0
   dropPropOrHold: 0
+  dropPropOrHoldDown: 0
   pause: 0
   leftHandToggle: 0
   pickablePick: 0
