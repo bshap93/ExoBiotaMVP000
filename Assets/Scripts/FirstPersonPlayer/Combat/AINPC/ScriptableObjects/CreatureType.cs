@@ -13,5 +13,6 @@ namespace FirstPersonPlayer.Combat.AINPC.ScriptableObjects
         public CreatureAnimationSet animationSet;
         [FormerlySerializedAs("enemyName")] public string creatureName;
         [FormerlySerializedAs("vfxSet")] public CreatureEffectsAndFeedbacks effectsAndFeedbacks;
+        [Header("Combat Settings")] public float wasHitCooldownTime = 0.5f;
     }
 }

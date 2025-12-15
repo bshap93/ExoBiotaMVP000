@@ -1,4 +1,5 @@
-﻿using Animancer;
+﻿using System.Collections;
+using Animancer;
 using FirstPersonPlayer.Combat.AINPC.ScriptableObjects;
 using FirstPersonPlayer.Combat.Player.ScriptableObjects;
 using Helpers.Events.Combat;
@@ -24,6 +25,8 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
         public bool destroyAfterDeath = true;
 
         public bool isDead;
+
+        public string blackboardWasHitKey = "WasHit";
 
 
         [SerializeField] float attackStartupTime = 0.35f; // wind-up before it hits
@@ -110,6 +113,12 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
                         break;
                 }
         }
+        IEnumerator CooldownAfterWasHit()
+        {
+            // blackboard.SetVariableValue(blackboardWasHitKey, true);
+            yield return new WaitForSeconds(creatureType.wasHitCooldownTime);
+            blackboard.SetVariableValue(blackboardWasHitKey, false);
+        }
         public void ProcessAttackDamage(PlayerToolAttack playerAttack)
         {
             var attributeManager = AttributesManager.Instance;
@@ -131,6 +140,9 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
                 }
 
                 damageAmount *= playerStrengthMultiplier;
+
+                blackboard.SetVariableValue("wasHit", true);
+                // StartCoroutine(CooldownAfterWasHit());
 
                 if (playerAttack.damageType == AttackDamageType.BasicHit)
                     meleeHitFeedbacksBasic?.PlayFeedbacks();
@@ -169,6 +181,12 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
 
             if (destroyAfterDeath)
                 Destroy(gameObject, 2f);
+        }
+        public void PlayHitAnimation(AnimationClip value)
+        {
+            HitState = animancerComponent.Play(value);
+
+            HitState.Events(this).OnEnd = () => { };
         }
     }
 }
