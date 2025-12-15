@@ -9,6 +9,7 @@ using Helpers.Events.Status;
 using Manager;
 using MoreMountains.Feedbacks;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 {
@@ -18,7 +19,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         [Tooltip("Tags this hatchet is allowed to affect (e.g., BioObstacle, Vegetation).")]
         public string[] allowedTags;
         // No cost if swing didn't make contact
-        public float staminaCostPerConnectingSwing = 1f;
+        [FormerlySerializedAs("staminaCostPerConnectingSwing")]
+        public float baseStaminaCostPerConnectingSwing = 1f;
 
 
         [Tooltip("Number of seconds between swings.")]
@@ -31,11 +33,27 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         [SerializeField] Sprite defaultReticleForTool;
 
 
-        [SerializeField] protected float LastSwingTime = -999f;
+        [FormerlySerializedAs("LastSwingTime")] [SerializeField]
+        protected float lastSwingTime = -999f;
+
+        float StaminaCostPerConnectingSwing
+        {
+            get
+            {
+                var attrMgr = AttributesManager.Instance;
+                if (attrMgr == null) return baseStaminaCostPerConnectingSwing;
+
+                var agility = attrMgr.Agility;
+                var reduction = agilityReductionFactor * agility; // Example: 0.05
+                var finalCost = baseStaminaCostPerConnectingSwing * (1f - reduction);
+
+                return Mathf.Max(0.1f, finalCost); // Ensure a minimum cost
+            }
+        }
 
         public override void Use()
         {
-            if (PlayerMutableStatsManager.Instance.CurrentStamina < staminaCostPerConnectingSwing)
+            if (PlayerMutableStatsManager.Instance.CurrentStamina < StaminaCostPerConnectingSwing)
             {
                 // Not enough stamina
                 AlertEvent.Trigger(
@@ -124,7 +142,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 // SpawnFxForConnectingHit(hit.point, hit.normal);
                 PlayerStatsEvent.Trigger(
                     PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
-                    staminaCostPerConnectingSwing);
+                    StaminaCostPerConnectingSwing);
             }
             else if (go.TryGetComponent<MyOreNode>(out var oreNode))
             {
@@ -172,7 +190,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 enemyController.ProcessAttackDamage(playerAttack);
                 PlayerStatsEvent.Trigger(
                     PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
-                    staminaCostPerConnectingSwing);
+                    StaminaCostPerConnectingSwing);
             }
             else
             {
@@ -187,8 +205,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         public override void PerformToolAction()
         {
             swingCooldown -= agilityCooldownSecondsReducePerPoint * (attributesManager.Agility - 1);
-            if (Time.time < LastSwingTime + swingCooldown) return;
-            LastSwingTime = Time.time;
+            if (Time.time < lastSwingTime + swingCooldown) return;
+            lastSwingTime = Time.time;
 
             if (useMultipleSwings && AnimController.currentToolAnimationSet != null)
             {

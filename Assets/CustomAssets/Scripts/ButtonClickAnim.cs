@@ -134,6 +134,7 @@ namespace CustomAssets.Scripts
 
         public void Interact()
         {
+            if (!CanInteract()) return;
             if (playerInput == null) return;
             if (linkedElevator == null) return;
 
@@ -155,26 +156,41 @@ namespace CustomAssets.Scripts
         }
         public bool CanInteract()
         {
-            return true;
+            if (linkedElevator == null) return true;
+
+            var isMoving = linkedElevator.IsMoving();
+
+            if (isMoving)
+                AlertEvent.Trigger(
+                    AlertReason.InvalidAction, "The elevator is currently moving.", "Cannot Interact");
+
+            // Prevent interaction while elevator is moving
+            return !linkedElevator.IsMoving();
         }
+
         public bool IsInteractable()
         {
             return true;
         }
+
         public void OnFocus()
         {
         }
+
         public void OnUnfocus()
         {
         }
+
         public float GetInteractionDistance()
         {
             return interactionDistance;
         }
+
         public void OnMMEvent(SceneEvent eventType)
         {
             if (eventType.EventType == SceneEventType.PlayerPawnLoaded) Initialize();
         }
+
         public void OnInteractionEnd()
         {
         }

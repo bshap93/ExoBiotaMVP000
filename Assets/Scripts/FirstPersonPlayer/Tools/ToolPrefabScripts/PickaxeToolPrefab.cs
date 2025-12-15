@@ -9,6 +9,7 @@ using LevelConstruct.Highlighting;
 using Manager;
 using MoreMountains.Feedbacks;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 {
@@ -20,7 +21,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         public float highlighingRange;
 
         // No cost if swing didn't make contact
-        public float staminaCostPerConnectingSwing = 1f;
+        [FormerlySerializedAs("staminaCostPerConnectingSwing")] [SerializeField]
+        float baseStaminaCostPerConnectingSwing = 1f;
 
         [SerializeField] Sprite defaultReticleForTool;
 
@@ -44,9 +46,23 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
         bool _hasValidHit;
 
-        RaycastHit _pendingHit;
+        float _lastSwingTime = -999f;
 
-        protected float LastSwingTime = -999f;
+        RaycastHit _pendingHit;
+        float StaminaPerConnectingSwing
+        {
+            get
+            {
+                var attrMgr = AttributesManager.Instance;
+                if (attrMgr == null) return baseStaminaCostPerConnectingSwing;
+
+                var agility = attrMgr.Agility;
+                var reduction = agilityReductionFactor * agility; // Example: 0.05
+                var finalCost = baseStaminaCostPerConnectingSwing * (1f - reduction);
+
+                return Mathf.Max(0.1f, finalCost); // Ensure a minimum cost
+            }
+        }
 
 
         void Update()
@@ -101,7 +117,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
         public override void Use()
         {
-            if (PlayerMutableStatsManager.Instance.CurrentStamina < staminaCostPerConnectingSwing)
+            if (PlayerMutableStatsManager.Instance.CurrentStamina < StaminaPerConnectingSwing)
             {
                 // Not enough stamina
                 AlertEvent.Trigger(
@@ -211,7 +227,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
                 PlayerStatsEvent.Trigger(
                     PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
-                    staminaCostPerConnectingSwing);
+                    StaminaPerConnectingSwing);
 
                 // SpawnFxForConnectingHit(hit.point, hit.normal);
                 return;
@@ -224,7 +240,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                     minable.MinableMineHit();
                     PlayerStatsEvent.Trigger(
                         PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
-                        staminaCostPerConnectingSwing);
+                        StaminaPerConnectingSwing);
                 }
 
             if (go.TryGetComponent<IFleshyObject>(out var fleshyObject))
@@ -248,9 +264,9 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
             // miningCooldown -= agilityCooldownSecondsReducePerPoint * attributesManager.Agility;
             // Check cooldown first
-            if (Time.time < LastSwingTime + effectiveCooldown) return;
+            if (Time.time < _lastSwingTime + effectiveCooldown) return;
 
-            LastSwingTime = Time.time; // ← Move this up here
+            _lastSwingTime = Time.time; // ← Move this up here
 
             // IMMEDIATELY raycast to capture target
             _hasValidHit = Physics.Raycast(
@@ -269,7 +285,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             //     if (!CanInteractWithObject(targetGo)) return; // Not valid - don't waste swing
             // }
 
-            LastSwingTime = Time.time;
+            _lastSwingTime = Time.time;
             PlaySwingSequence();
         }
 

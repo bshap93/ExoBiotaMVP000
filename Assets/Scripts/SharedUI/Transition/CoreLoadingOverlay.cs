@@ -9,12 +9,22 @@ namespace SharedUI.Transition
         MMEventListener<SceneTransitionUIEvent>, MMEventListener<ModeLoadEvent>
     {
         [SerializeField] CanvasGroup loadingOverlayCanvasGroup;
+        [SerializeField] bool startVisible = true;
 
         void Start()
         {
-            loadingOverlayCanvasGroup.alpha = 0;
-            loadingOverlayCanvasGroup.interactable = false;
-            loadingOverlayCanvasGroup.blocksRaycasts = false;
+            if (startVisible)
+            {
+                loadingOverlayCanvasGroup.alpha = 1;
+                loadingOverlayCanvasGroup.interactable = true;
+                loadingOverlayCanvasGroup.blocksRaycasts = true;
+            }
+            else
+            {
+                loadingOverlayCanvasGroup.alpha = 0;
+                loadingOverlayCanvasGroup.interactable = false;
+                loadingOverlayCanvasGroup.blocksRaycasts = false;
+            }
         }
 
         void OnEnable()

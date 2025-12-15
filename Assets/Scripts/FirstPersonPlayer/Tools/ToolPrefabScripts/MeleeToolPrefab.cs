@@ -37,6 +37,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         [Tooltip("Fallback delay if using beginUseAnimation (legacy mode).")]
         public float defaultHitDelay = 0.2f;
 
+        [SerializeField] protected float agilityReductionFactor = 0.05f;
 
         public GameObject ineffectualDebrisEffectPrefab;
 

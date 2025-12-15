@@ -25,5 +25,6 @@ namespace OWPData.ScriptableObjects
 
         public float sprintStaminaDrainPerSecond;
         public float baseStaminaRestorePerSecond;
+        public float staminaReductionReducePerPoint;
     }
 }

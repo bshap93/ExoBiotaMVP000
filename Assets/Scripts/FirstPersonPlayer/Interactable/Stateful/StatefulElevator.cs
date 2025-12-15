@@ -392,6 +392,11 @@ namespace FirstPersonPlayer.Interactable.Stateful
             return true;
         }
 
+        public bool IsMoving()
+        {
+            return !movetimer.IsDone;
+        }
+
         [Serializable]
         public class ObjectiveToCompleteOnTravelingToFloor
         {

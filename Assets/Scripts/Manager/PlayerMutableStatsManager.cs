@@ -49,6 +49,7 @@ namespace Manager
 
         [SerializeField] PlayerStatsSheet defaultPlayerStatsSheet;
         [SerializeField] PlayerStatsBars playerStatsBars;
+        [SerializeField] AttributesManager attributesManager;
 
         [Header("Feedbacks")] [SerializeField] MMFeedbacks thresholdChangesFeedbacks;
         [SerializeField] MMFeedbacks restoreHealthFeedbacks;
@@ -106,7 +107,11 @@ namespace Manager
         public static PlayerMutableStatsManager Instance { get; private set; }
         // public int CurrentCU => Mathf.FloorToInt(CurrentContamination / ContaminationPointsPerCU);
         // public float CurrentCUFraction => CurrentContamination % ContaminationPointsPerCU / ContaminationPointsPerCU;
-        public float SprintStaminaDrainPerSecond => defaultPlayerStatsSheet.sprintStaminaDrainPerSecond;
+        // public float SprintStaminaDrainPerSecond => defaultPlayerStatsSheet.sprintStaminaDrainPerSecond;
+        public float SprintStaminaDrainPerSecond =>
+            defaultPlayerStatsSheet.sprintStaminaDrainPerSecond -
+            (attributesManager.Agility - 1) * defaultPlayerStatsSheet.staminaReductionReducePerPoint;
+
 
         void Awake()
         {
