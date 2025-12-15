@@ -671,6 +671,7 @@ namespace Manager
             {
                 damage *= eventTypeAttack.critMultiplier;
                 hitWithCriticalMeleeFeedbacks?.PlayFeedbacks();
+                PlayerDamageEvent.Trigger(PlayerDamageEvent.DamageTypes.Melee, PlayerDamageEvent.HitTypes.CriticalHit);
             }
             else
             {
@@ -678,9 +679,15 @@ namespace Manager
                 {
                     case NPCAttackType.Melee:
                         hitWithMeleeFeedbacks?.PlayFeedbacks();
+                        PlayerDamageEvent.Trigger(
+                            PlayerDamageEvent.DamageTypes.Melee, PlayerDamageEvent.HitTypes.Normal);
+
                         break;
                     case NPCAttackType.Ranged:
                         hitWithProjectileFeedbacks?.PlayFeedbacks();
+                        PlayerDamageEvent.Trigger(
+                            PlayerDamageEvent.DamageTypes.Ranged, PlayerDamageEvent.HitTypes.Normal);
+
                         break;
                 }
             }
