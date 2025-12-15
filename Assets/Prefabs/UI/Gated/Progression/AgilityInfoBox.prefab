@@ -30,8 +30,8 @@ PrefabInstance:
         melee weapons or tools faster.
 
 
-        You don''t immediately lose permanent
-        stamina when sprinting, fighting, or using tools.'
+        You don''t lose stamina as quickly
+        when sprinting, fighting, or using tools.'
       objectReference: {fileID: 0}
     - target: {fileID: 9079788085922262693, guid: 72943cefab58d95468d0dd164b8ff297, type: 3}
       propertyPath: m_Pivot.x
