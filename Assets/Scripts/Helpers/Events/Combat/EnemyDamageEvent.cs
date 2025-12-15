@@ -10,8 +10,10 @@ namespace Helpers.Events.Combat
         CriticalHitDamage,
         Missed,
         Healed,
-        Blocked
+        Blocked,
+        Death
     }
+
 
     public struct EnemyDamageEvent
     {

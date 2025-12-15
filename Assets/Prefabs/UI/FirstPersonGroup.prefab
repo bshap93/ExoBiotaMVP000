@@ -208,9 +208,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d17a546deafb314a80c2b7ca38809f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyNameText: {fileID: 0}
-  enemyHealthBar: {fileID: 0}
+  canvasGroup: {fileID: 2945254145453667824}
+  enemyNameText: {fileID: 2269739845646073735}
+  enemyHealthBar: {fileID: 7909700573761406564}
+  infoBarDeathFeedbacks: {fileID: 0}
   hitEnemyFeedbacks: {fileID: 0}
+  criticalHitEnemyFeedbacks: {fileID: 0}
+  epsilon: 0.001
+  fadeInOnDamageDuration: 0.1
+  fadeOutOnTimeoutDuration: 0.3
+  visibleDurationAfterDamageDealt: 10
 --- !u!1 &930475059758189381
 GameObject:
   m_ObjectHideFlags: 0

@@ -157,6 +157,12 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
                 CreatureStateEventType.SetNewCreatureState, uniqueID,
                 CreatureStateManager.CreatureState.ShouldBeDestroyed);
 
+            movementLoopFeedbacks?.StopFeedbacks();
+
+            EnemyDamageEvent.Trigger(
+                0f, currentHealth, maxHealth,
+                DamageEventType.Death, creatureType.creatureName);
+
             deathFeedbacks?.PlayFeedbacks();
             if (deathParticlesPrefab != null)
                 Instantiate(deathParticlesPrefab, transform.position + Vector3.up * 0.5f, Quaternion.identity);

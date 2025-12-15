@@ -12,6 +12,7 @@ namespace SharedUI.HUD
         [SerializeField] CanvasGroup canvasGroup;
         [SerializeField] TMP_Text enemyNameText;
         [SerializeField] MMProgressBar enemyHealthBar;
+        [Header("Feedbacks")] [SerializeField] MMFeedbacks infoBarDeathFeedbacks;
         [SerializeField] MMFeedbacks hitEnemyFeedbacks;
         [SerializeField] MMFeedbacks criticalHitEnemyFeedbacks;
         [Header("Update")] [Tooltip("Minimum absolute change before we push a UI update")] [SerializeField]
@@ -20,8 +21,13 @@ namespace SharedUI.HUD
         [SerializeField] float fadeOutOnTimeoutDuration = 0.3f;
         [SerializeField] float visibleDurationAfterDamageDealt = 5f;
 
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         Tween _fadeTween;
+
+        bool _isVisible;
+
+        float _timeSinceLastDamageDealt;
 
         void Awake()
         {
@@ -36,6 +42,14 @@ namespace SharedUI.HUD
                 canvasGroup.interactable = false;
                 canvasGroup.blocksRaycasts = false;
             }
+        }
+
+        void Update()
+        {
+            if (!_isVisible) return;
+            _timeSinceLastDamageDealt += Time.deltaTime;
+
+            if (_timeSinceLastDamageDealt >= visibleDurationAfterDamageDealt) FadeOut(fadeOutOnTimeoutDuration);
         }
         void OnEnable()
         {
@@ -57,6 +71,7 @@ namespace SharedUI.HUD
                 FadeIn(fadeInOnDamageDuration);
                 TryUpdateBar(ref eventType.LastHealth, eventType.CurrentHealth, 0f, eventType.MaxHealth);
                 hitEnemyFeedbacks?.PlayFeedbacks();
+                _timeSinceLastDamageDealt = 0f;
             }
 
             if (eventType.EventType == DamageEventType.CriticalHitDamage)
@@ -64,11 +79,22 @@ namespace SharedUI.HUD
                 FadeIn(fadeInOnDamageDuration);
                 TryUpdateBar(ref eventType.LastHealth, eventType.CurrentHealth, 0f, eventType.MaxHealth);
                 criticalHitEnemyFeedbacks?.PlayFeedbacks();
+                _timeSinceLastDamageDealt = 0f;
+            }
+            else if (eventType.EventType == DamageEventType.Death)
+            {
+                infoBarDeathFeedbacks?.PlayFeedbacks();
+                FadeOut(fadeOutOnTimeoutDuration);
+                ResetBar();
             }
             else
             {
                 Debug.Log("Nothing for now beyond damage dealt");
             }
+        }
+
+        void ResetBar()
+        {
         }
 
         void TryUpdateBar(ref float last, float current, float min, float max)
@@ -87,7 +113,9 @@ namespace SharedUI.HUD
 
         public void FadeIn(float duration)
         {
+            if (_isVisible && canvasGroup.alpha >= 1) return;
             _fadeTween?.Kill();
+            _isVisible = true;
 
             canvasGroup.interactable = false;
             canvasGroup.blocksRaycasts = false;
@@ -104,7 +132,9 @@ namespace SharedUI.HUD
 
         public void FadeOut(float duration)
         {
+            if (!_isVisible) return;
             _fadeTween?.Kill();
+            _isVisible = false;
 
             canvasGroup.interactable = false;
             canvasGroup.blocksRaycasts = false;
