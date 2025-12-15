@@ -272,7 +272,7 @@ GameObject:
   - component: {fileID: 4708156467586441352}
   - component: {fileID: 3529041535913392325}
   - component: {fileID: 4417933328211588917}
-  m_Layer: 8
+  m_Layer: 20
   m_Name: OppositeSidePressurePlate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
