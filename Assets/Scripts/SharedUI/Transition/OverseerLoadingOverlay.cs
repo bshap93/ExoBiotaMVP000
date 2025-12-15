@@ -22,6 +22,12 @@ namespace SharedUI.Transition
                 loadingOverlayCanvasGroup.blocksRaycasts = false;
             }
         }
-        
+
+        public void ShowLoadingOverlay()
+        {
+            loadingOverlayCanvasGroup.alpha = 1;
+            loadingOverlayCanvasGroup.interactable = true;
+            loadingOverlayCanvasGroup.blocksRaycasts = true;
+        }
     }
 }
