@@ -1,5 +1,5 @@
 using Domains.Player.Events;
-using Domains.UI_Global.UIUpdaters;
+using FirstPersonPlayer.UI;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
 using ScriptableObjects;
@@ -18,7 +18,7 @@ namespace Domains.Player.Scripts
         public static float InitialCharacterHealth;
 
         // Add flag to prevent multiple death triggers
-        private static bool isDead;
+        static bool isDead;
         public HealthBarUpdater healthBarUpdater;
 
         public MMFeedbacks lavaDamageFeedbacks;
@@ -27,11 +27,11 @@ namespace Domains.Player.Scripts
 
         public bool immuneToDamage;
 
-        private CharacterStatProfile _characterStatProfile;
+        CharacterStatProfile _characterStatProfile;
 
-        private string _savePath;
+        string _savePath;
 
-        private void Awake()
+        void Awake()
         {
             if (healthBarUpdater == null)
             {
@@ -42,13 +42,14 @@ namespace Domains.Player.Scripts
 
             _characterStatProfile =
                 Resources.Load<CharacterStatProfile>(CharacterResourcePaths.CharacterStatProfileFilePath);
+
             if (_characterStatProfile != null)
                 InitialCharacterHealth = _characterStatProfile.InitialMaxHealth;
             else
                 Debug.LogError("CharacterStatProfile not set in PlayerHealthManager");
         }
 
-        private void Start()
+        void Start()
         {
             _savePath = GetSaveFilePath();
 
@@ -62,12 +63,12 @@ namespace Domains.Player.Scripts
         }
 
 
-        private void OnEnable()
+        void OnEnable()
         {
             this.MMEventStartListening();
         }
 
-        private void OnDisable()
+        void OnDisable()
         {
             this.MMEventStopListening();
         }
@@ -202,7 +203,7 @@ namespace Domains.Player.Scripts
         }
 
 
-        private static string GetSaveFilePath()
+        static string GetSaveFilePath()
         {
             return SaveFileName;
         }

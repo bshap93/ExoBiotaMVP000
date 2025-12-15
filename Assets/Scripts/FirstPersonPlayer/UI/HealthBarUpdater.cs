@@ -5,23 +5,23 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Domains.UI_Global.UIUpdaters
+namespace FirstPersonPlayer.UI
 {
     public class HealthBarUpdater : MonoBehaviour, MMEventListener<HealthEvent>, MMEventListener<PlayerStatusEvent>
     {
-        [SerializeField] private Slider healthBarSlider;
-        [SerializeField] private TMP_Text healthPercentageText;
+        [SerializeField] Slider healthBarSlider;
+        [SerializeField] TMP_Text healthPercentageText;
 
-        private float _currentHealth;
-        private float _maxHealth;
+        float _currentHealth;
+        float _maxHealth;
 
-        private void Start()
+        void Start()
         {
             Initialize();
         }
 
         // Update every frame to catch any changes from different sources
-        private void Update()
+        void Update()
         {
             // Check if values are out of sync and update if needed
             if (_currentHealth != PlayerHealthManager.HealthPoints ||
@@ -33,13 +33,13 @@ namespace Domains.UI_Global.UIUpdaters
             }
         }
 
-        private void OnEnable()
+        void OnEnable()
         {
             this.MMEventStartListening<HealthEvent>();
             this.MMEventStartListening<PlayerStatusEvent>();
         }
 
-        private void OnDisable()
+        void OnDisable()
         {
             this.MMEventStopListening<HealthEvent>();
             this.MMEventStopListening<PlayerStatusEvent>();
@@ -92,7 +92,7 @@ namespace Domains.UI_Global.UIUpdaters
             UpdateBar();
         }
 
-        private void UpdateBar()
+        void UpdateBar()
         {
             if (_maxHealth <= 0) _maxHealth = 1; // Prevent division by zero
 

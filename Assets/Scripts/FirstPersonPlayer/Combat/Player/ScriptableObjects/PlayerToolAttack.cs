@@ -26,7 +26,7 @@ namespace FirstPersonPlayer.Combat.Player.ScriptableObjects
         public string displayName;
         public float rawDamage;
         [Range(0f, 1f)] public float critChance;
-        public float critMultiplier = 1f;
+        public float critMultiplier = 1.2f;
         public AttackDamageType damageType;
         public float rawKnockbackForce;
         public bool causesBleeding;

@@ -35,8 +35,9 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
         [SerializeField] NavMeshAgent navMeshAgent;
         [SerializeField] HighlightEffect highlightEffect;
 
-        [SerializeField] MMFeedbacks meleeHitFeedbacksBasic;
+        [Header("Feedbacks")] [SerializeField] MMFeedbacks meleeHitFeedbacksBasic;
         [SerializeField] MMFeedbacks meleeHitFeedbacksHeavy;
+        [SerializeField] MMFeedbacks critDamageFeedbacks;
 
         [SerializeField] GameObject deathParticlesPrefab;
         [SerializeField] MMFeedbacks deathFeedbacks;
@@ -115,18 +116,34 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
             var damageAmount = playerAttack.rawDamage;
             var attackType = playerAttack.attackType;
 
+            var isCriticalHit = Random.value <= playerAttack.critChance;
+
             if (attackType == PlayerAttackType.Melee)
             {
                 // Placeholder for strength stat for player
                 var playerStrength = attributeManager.Strength;
                 // Provisional damage scaling based on player strength
                 var playerStrengthMultiplier = 1f + (playerStrength - 1) * 0.5f;
+                if (isCriticalHit)
+                {
+                    damageAmount *= playerAttack.critMultiplier;
+                    critDamageFeedbacks?.PlayFeedbacks();
+                }
+
                 damageAmount *= playerStrengthMultiplier;
 
                 if (playerAttack.damageType == AttackDamageType.BasicHit)
                     meleeHitFeedbacksBasic?.PlayFeedbacks();
                 else if (playerAttack.damageType == AttackDamageType.HeavyHit) meleeHitFeedbacksHeavy?.PlayFeedbacks();
             }
+
+            var eventType = isCriticalHit
+                ? DamageEventType.CriticalHitDamage
+                : DamageEventType.DealtDamage;
+
+            EnemyDamageEvent.Trigger(
+                currentHealth - damageAmount, currentHealth, maxHealth,
+                eventType, creatureType.creatureName);
 
             currentHealth -= damageAmount;
             highlightEffect.HitFX();
