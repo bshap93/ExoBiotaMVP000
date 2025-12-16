@@ -297,7 +297,7 @@ namespace Manager.DialogueScene
             return new[]
             {
                 "FabricatorClancy", "ScientistHypolita", "ShadyCoreTrafficker", "None", "ScienceShopRobot",
-                "VitalSystems",
+                "VitalSystems", "RunnerMandy",
                 // Consoles
                 "Mine01GrottoSanctumConsole", "Mine01GrottoNookConsole",
                 // Aliens

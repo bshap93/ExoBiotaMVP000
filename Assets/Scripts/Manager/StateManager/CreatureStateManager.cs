@@ -78,7 +78,6 @@ namespace Manager.StateManager
             if (string.IsNullOrEmpty(uniqueId)) return;
 
             _creatureStates[uniqueId] = state;
-            Debug.Log("Creature " + uniqueId + " set to state " + state);
             MarkDirty();
             ConditionalSave();
         }

@@ -35,7 +35,11 @@ namespace Dirigible.Interactable
             if (_interactionBlocked)
                 return;
 
-            if (interact) PerformInteraction();
+            if (interact)
+            {
+                PerformInteraction();
+                Debug.Log("Dirigible interaction triggered via Update.");
+            }
         }
 
         void OnCollisionEnter(Collision collision)
@@ -43,19 +47,19 @@ namespace Dirigible.Interactable
             if (collision.gameObject.CompareTag("SemiPhysicalBoundary"))
                 // Don't trigger crash feedbacks for SemiPhysicalBoundary collisions
                 return;
-            
+
             // Get the relative speed at impact
-            float crashSpeed = collision.relativeVelocity.magnitude;
+            var crashSpeed = collision.relativeVelocity.magnitude;
 
             // Convert it to a 0–1 range so you can feed it to MMFeedbacks
             // Adjust maxSpeedThreshold to tune sensitivity
-            float maxSpeedThreshold = 50f; // change depending on your game's physics scale
-            float crashIntensity = Mathf.Clamp01(crashSpeed / maxSpeedThreshold);
+            var maxSpeedThreshold = 50f; // change depending on your game's physics scale
+            var crashIntensity = Mathf.Clamp01(crashSpeed / maxSpeedThreshold);
 
             // Optionally ignore trivial bumps
             if (crashIntensity < 0.1f)
                 return;
-            
+
             dirigibleCrashFeedbacks?.PlayFeedbacks(transform.position, crashIntensity);
 
             // foreach (var contact in collision.contacts)
@@ -116,7 +120,6 @@ namespace Dirigible.Interactable
                 if (dirigibleInteractable != null)
                 {
                     dirigibleInteractable.Interact();
-                    Debug.Log($"Interacted with {dirigibleInteractableCollider.name}");
                     return; // Exit after the first interaction
                 }
 

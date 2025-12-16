@@ -57,7 +57,8 @@ namespace Helpers.Events
         ElevatorSceneChangePermission,
         DoorLocked,
         PlayTestEndYesOrNo,
-        BreakableToolIneffective
+        BreakableToolIneffective,
+        InRangeOfOverworldNPCDirect
     }
 
     [Serializable]

@@ -129,11 +129,7 @@ namespace SharedUI
             var locationId = eventType.LocationId;
 
             var locationDefiniton = DockManager.Instance.locationTable.GetLocationDefinition(locationId);
-            if (locationDefiniton == null)
-            {
-                Debug.LogWarning($"No location definition found for {locationId}");
-                return;
-            }
+            if (locationDefiniton == null) return;
 
             if (eventType.LocationActionType == LocationActionType.RetreatFrom)
                 if (dockId == locationDefiniton.dockId)

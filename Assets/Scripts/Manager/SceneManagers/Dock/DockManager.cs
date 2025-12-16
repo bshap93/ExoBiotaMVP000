@@ -160,7 +160,7 @@ namespace Manager.SceneManagers.Dock
             return new[]
             {
                 "ScienceSettlementDock", "Mine01Dock", "ClarasOutpostDock", "CoreTraffickerDock", "Mine01aDock",
-                "ThreeJaneMineDock"
+                "ThreeJaneMineDock", "WreckedRunnerSiteNonDock"
             };
         }
 
@@ -182,7 +182,8 @@ namespace Manager.SceneManagers.Dock
             {
                 "DirigibleLocation_Mine01", "DirigibleLocation_Science001", "HouseNPC001", "Laboratory001",
                 "MineLocation01", "CoreTraderStorefront", "Test", "Core", "DirigibleLocation_Trader001",
-                "TraderShopSciencePost", "MineLocation01a", "DirigibleLocation_Mine01a", "MineLocationThreeJane"
+                "TraderShopSciencePost", "MineLocation01a", "DirigibleLocation_Mine01a", "MineLocationThreeJane",
+                "WreckedRunnerSite_OverworldTile01"
             };
         }
 

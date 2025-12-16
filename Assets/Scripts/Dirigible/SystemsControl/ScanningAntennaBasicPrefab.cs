@@ -88,15 +88,9 @@ namespace Dirigible.SystemsControl
 
 
                 GamePOIEvent.Trigger(uniqueId, GamePOIEventType.POIWasAreaScanned, null);
-
-                Debug.Log("Scan hit: " + poi?.name);
             });
 
-            scan.OnScanEnd.AddListener(_ =>
-            {
-                ScannerEvent.Trigger(ScannerEventType.ScanEnded);
-                Debug.Log("[GamePOIManager] Scan end triggered.");
-            });
+            scan.OnScanEnd.AddListener(_ => { ScannerEvent.Trigger(ScannerEventType.ScanEnded); });
         }
 
         public void Unequip()

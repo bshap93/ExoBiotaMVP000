@@ -22,6 +22,7 @@ namespace OWPData.ScriptableObjects
         [FormerlySerializedAs("LocationName")] public string locationName;
         public LocationType locationType;
 
+
         [FormerlySerializedAs("doorDefinition")] [CanBeNull]
         public DoorDefinition doorRequirement; // optional
 

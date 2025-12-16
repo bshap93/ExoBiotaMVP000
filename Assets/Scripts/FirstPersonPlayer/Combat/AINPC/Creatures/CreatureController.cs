@@ -71,7 +71,6 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
             {
                 var creatureState = creatureStateManager.GetCreatureState(uniqueID);
 
-                Debug.Log("Creating creature state " + creatureState);
                 if (creatureState == CreatureStateManager.CreatureState.None) creatureState = initialCreatureState;
 
                 if (creatureState == CreatureStateManager.CreatureState.HasBeenInitialized)

@@ -1,11 +1,10 @@
 using Dirigible.Interactable;
-using Events;
 using Helpers.Events;
 using HighlightPlus;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 
-namespace Dirigible
+namespace Dirigible.HighlightTriggers
 {
     [RequireComponent(typeof(HighlightEffect))]
     public class DockHighlightTrigger : MonoBehaviour
