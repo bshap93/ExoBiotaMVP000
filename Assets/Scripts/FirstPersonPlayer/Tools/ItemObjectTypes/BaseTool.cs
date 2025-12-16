@@ -14,5 +14,6 @@ namespace FirstPersonPlayer.Tools.ItemObjectTypes
         [FormerlySerializedAs("Cooldown")] public float cooldown; // optional, leave 0 to ignore
 
         public ToolAnimationSet toolAnimationSet;
+        public bool hasObjectivesEquipping;
     }
 }

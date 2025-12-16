@@ -1037,6 +1037,7 @@ MonoBehaviour:
   playerInteraction: {fileID: 8398371441896539530}
   animancerRightArmController: {fileID: 9152139957155839416}
   emptyHandEnabled: 1
+  equipObjectivesArray: []
 --- !u!1 &1624486304171400185
 GameObject:
   m_ObjectHideFlags: 0
@@ -3982,6 +3983,10 @@ MonoBehaviour:
   playerInteraction: {fileID: 8398371441896539530}
   animancerRightArmController: {fileID: 0}
   emptyHandEnabled: 0
+  equipObjectivesArray:
+  - objectiveToCompleteId: EquipLanternWithLMB
+    onEventEquipment: 0
+    toolScriptableObjectId: StormLantern
 --- !u!1 &3750213407553565153
 GameObject:
   m_ObjectHideFlags: 0
@@ -8283,7 +8288,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cinemachineCamera: {fileID: 1414968888590080101}
-  dOTweenAnimation: {fileID: 2904328107672960218}
 --- !u!1 &8777451718982072502
 GameObject:
   m_ObjectHideFlags: 0

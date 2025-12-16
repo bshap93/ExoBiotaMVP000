@@ -1,13 +1,15 @@
+using System;
 using Animancer;
 using Helpers.Events;
 using Helpers.Events.Triggering;
 using Manager;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Utilities.Interface;
 
 namespace Helpers.Collider
 {
-    public class ColliderSpontaneousEventTrigger : MonoBehaviour
+    public class ColliderSpontaneousEventTrigger : MonoBehaviour, IRequiresUniqueID
     {
         public UnityEvent sceneAction;
         [FormerlySerializedAs("TargetUniqueID")]
@@ -65,6 +67,15 @@ namespace Helpers.Collider
             if (setNotTriggerableOnExit)
                 TriggerColliderEvent.Trigger(
                     targetUniqueID, TriggerColliderEventType.SetTriggerable, false, TriggerColliderType.Spontaneous);
+        }
+        public string UniqueID => targetUniqueID;
+        public void SetUniqueID()
+        {
+            targetUniqueID = Guid.NewGuid().ToString();
+        }
+        public bool IsUniqueIDEmpty()
+        {
+            return string.IsNullOrEmpty(targetUniqueID);
         }
     }
 }

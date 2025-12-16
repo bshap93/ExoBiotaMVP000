@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Events;
 using FirstPersonPlayer.Interactable;
 using FirstPersonPlayer.Tools.Interface;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
@@ -59,6 +60,9 @@ namespace FirstPersonPlayer.Tools
         public AnimancerRightArmController animancerRightArmController;
 
         public bool emptyHandEnabled;
+
+        [FormerlySerializedAs("EquipObjectivesArray")]
+        public EquipObjectives[] equipObjectivesArray;
 
         BaseTool _currentTool;
 
@@ -340,7 +344,17 @@ namespace FirstPersonPlayer.Tools
 
             if (CurrentRuntimeTool is IToolAnimationControl animControl) animControl.OnEquipped();
 
+            if (CurrentToolSo != null)
+                if (CurrentToolSo.hasObjectivesEquipping)
+                    foreach (var equipObjective in equipObjectivesArray)
+                        if (equipObjective.toolScriptableObjectId == CurrentToolSo.ItemID)
+                            if (equipObjective.onEventEquipment == EquipObjectives.OnEvent.OnEquip)
+                                ObjectiveEvent.Trigger(
+                                    equipObjective.objectiveToCompleteId, ObjectiveEventType.ObjectiveCompleted
+                                );
+
             var fb = CurrentRuntimeTool.GetEquipFeedbacks();
+
             fb?.PlayFeedbacks();
             _nextUseTime = 0f;
         }
@@ -377,6 +391,15 @@ namespace FirstPersonPlayer.Tools
 
                 animancerRightArmController.currentToolAnimationSet = null;
             }
+
+            if (CurrentToolSo != null)
+                if (CurrentToolSo.hasObjectivesEquipping)
+                    foreach (var equipObjective in equipObjectivesArray)
+                        if (equipObjective.toolScriptableObjectId == CurrentToolSo.ItemID)
+                            if (equipObjective.onEventEquipment == EquipObjectives.OnEvent.OnUnequip)
+                                ObjectiveEvent.Trigger(
+                                    equipObjective.objectiveToCompleteId, ObjectiveEventType.ObjectiveCompleted
+                                );
 
 
             CurrentToolSo = null;
@@ -433,5 +456,23 @@ namespace FirstPersonPlayer.Tools
                 yield return new ValueDropdownItem<int>(action.name, action.id);
         }
 #endif
+
+        [Serializable]
+        public class EquipObjectives
+        {
+            [Serializable]
+            public enum OnEvent
+            {
+                OnEquip,
+                OnUnequip
+            }
+
+            [FormerlySerializedAs("ObjectiveToCompleteId")]
+            public string objectiveToCompleteId;
+            [FormerlySerializedAs("OnEventEquipment")]
+            public OnEvent onEventEquipment;
+            [FormerlySerializedAs("ToolScriptableObjectId")]
+            public string toolScriptableObjectId;
+        }
     }
 }
