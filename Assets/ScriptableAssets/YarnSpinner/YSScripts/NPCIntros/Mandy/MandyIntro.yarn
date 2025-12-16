@@ -1,4 +1,27 @@
 title: MandyEntryPointDefault
 ---
-Mandy: Hello. Todo chat continue.
+Mandy: Hello, kind sir. As you can see, I'm in a bit of a jam here.
+Mandy: I'm real close to home, just a kilometer due east.
+-> I see that. I could see the smoke as I passed by.
+-> You're Fulmen's associate? 
+    <<jump ChangeTheSubjectAbtFulmen>>
+<<if $dexterity > 1>>
+    -> I can fix this pretty quickly. May I?
+        <<jump IFixOverworldMandyHoverbike>>
+<<elseif $dirigibleTowingLevel > 2>> 
+    -> I can tow you with my dirigible back to Fulmen's outpost.
+    -> My dirigible can tow you and your things. I just need to know what your cargo is.
+        Mandy: Just forget it, I'm fine for now.
+        <<jump End02>>
+<<endif>>
+===
+
+title: ChangeTheSubjectAbtFulmen
+---
+Mandy: By all means.
+===
+
+title: IFixOverworldMandyHoverbike
+---
+Mandy: Much obliged, strange.
 ===
