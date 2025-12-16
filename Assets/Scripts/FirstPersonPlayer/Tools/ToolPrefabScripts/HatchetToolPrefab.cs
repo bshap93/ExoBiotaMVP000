@@ -36,7 +36,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         [FormerlySerializedAs("LastSwingTime")] [SerializeField]
         protected float lastSwingTime = -999f;
 
-        float StaminaCostPerConnectingSwing
+        float StaminaCostPerNormalConnectingSwing
         {
             get
             {
@@ -53,7 +53,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
         public override void Use()
         {
-            if (PlayerMutableStatsManager.Instance.CurrentStamina < StaminaCostPerConnectingSwing)
+            if (PlayerMutableStatsManager.Instance.CurrentStamina < StaminaCostPerNormalConnectingSwing)
             {
                 // Not enough stamina
                 AlertEvent.Trigger(
@@ -142,7 +142,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 // SpawnFxForConnectingHit(hit.point, hit.normal);
                 PlayerStatsEvent.Trigger(
                     PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
-                    StaminaCostPerConnectingSwing);
+                    StaminaCostPerNormalConnectingSwing);
             }
             else if (go.TryGetComponent<MyOreNode>(out var oreNode))
             {
@@ -190,7 +190,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 enemyController.ProcessAttackDamage(playerAttack);
                 PlayerStatsEvent.Trigger(
                     PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
-                    StaminaCostPerConnectingSwing);
+                    StaminaCostPerNormalConnectingSwing);
             }
             else
             {
