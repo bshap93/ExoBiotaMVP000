@@ -1,16 +1,18 @@
+using System;
 using UnityEngine;
+using Utilities.Interface;
 
-public class HarvestingTableInteractable : MonoBehaviour
+public class HarvestingTableInteractable : MonoBehaviour, IRequiresUniqueID
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public string harvestingTableId;
 
-    // Update is called once per frame
-    void Update()
+    public string UniqueID => harvestingTableId;
+    public void SetUniqueID()
     {
-        
+        harvestingTableId = Guid.NewGuid().ToString();
+    }
+    public bool IsUniqueIDEmpty()
+    {
+        return string.IsNullOrEmpty(harvestingTableId);
     }
 }
