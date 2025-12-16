@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Animancer;
+using DG.Tweening;
 using FirstPersonPlayer.Combat.AINPC.ScriptableObjects;
 using FirstPersonPlayer.Combat.Player.ScriptableObjects;
 using Helpers.Events.Combat;
@@ -11,6 +13,7 @@ using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.AI;
 using Utilities.Interface;
+using Random = UnityEngine.Random;
 
 namespace FirstPersonPlayer.Combat.AINPC.Creatures
 {
@@ -26,7 +29,7 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
 
         public bool isDead;
 
-        public string blackboardWasHitKey = "WasHit";
+        public string blackboardWasHitKey = "wasHit";
 
 
         [SerializeField] float attackStartupTime = 0.35f; // wind-up before it hits
@@ -46,6 +49,8 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
         [SerializeField] MMFeedbacks deathFeedbacks;
 
         [SerializeField] MMFeedbacks movementLoopFeedbacks;
+
+        Tween _hitTween;
 
         protected AnimancerState AttackState;
         protected AnimancerState DeathState;
@@ -77,6 +82,12 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
 
                 OnDeath();
             }
+        }
+
+        void PlayHitTween(Func<Transform, Tween> buildTween, bool killPrevious = true)
+        {
+            if (killPrevious) _hitTween?.Kill();
+            _hitTween = buildTween(transform);
         }
 
 
@@ -145,8 +156,21 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
                 // StartCoroutine(CooldownAfterWasHit());
 
                 if (playerAttack.damageType == AttackDamageType.BasicHit)
+                {
                     meleeHitFeedbacksBasic?.PlayFeedbacks();
-                else if (playerAttack.damageType == AttackDamageType.HeavyHit) meleeHitFeedbacksHeavy?.PlayFeedbacks();
+                    PlayHitTween(t => t.DOPunchPosition(
+                        new Vector3(creatureType.meleeAttackShakeIntensity, 0f, creatureType.meleeAttackShakeIntensity),
+                        creatureType.meleeAttackShakeDuration));
+                }
+                else if (playerAttack.damageType == AttackDamageType.HeavyHit)
+                {
+                    meleeHitFeedbacksHeavy?.PlayFeedbacks();
+                    PlayHitTween(t => t.DOShakePosition(
+                        creatureType.meleeAttackShakeDuration,
+                        new Vector3(
+                            creatureType.heavyMeleeAttackShakeIntensity, 0f,
+                            creatureType.heavyMeleeAttackShakeIntensity))); // or still punch
+                }
             }
 
             var eventType = isCriticalHit
@@ -156,6 +180,8 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
             EnemyDamageEvent.Trigger(
                 currentHealth - damageAmount, currentHealth, maxHealth,
                 eventType, creatureType.creatureName);
+
+            blackboard.SetVariableValue(blackboardWasHitKey, true);
 
             currentHealth -= damageAmount;
             highlightEffect.HitFX();

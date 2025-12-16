@@ -6798,7 +6798,7 @@ MonoBehaviour:
   slopeLimit: 55
   stableLayerMask:
     serializedVersion: 2
-    m_Bits: 524287
+    m_Bits: 17301503
   allowCharactersAsStableSurfaces: 1
   preventUnstableClimbing: 1
   preventBadSteps: 1

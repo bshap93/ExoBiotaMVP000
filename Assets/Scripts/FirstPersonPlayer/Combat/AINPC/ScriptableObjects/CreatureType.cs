@@ -14,5 +14,8 @@ namespace FirstPersonPlayer.Combat.AINPC.ScriptableObjects
         [FormerlySerializedAs("enemyName")] public string creatureName;
         [FormerlySerializedAs("vfxSet")] public CreatureEffectsAndFeedbacks effectsAndFeedbacks;
         [Header("Combat Settings")] public float wasHitCooldownTime = 0.5f;
+        public float meleeAttackShakeIntensity = 0.12f;
+        public float heavyMeleeAttackShakeIntensity = 0.15f;
+        public float meleeAttackShakeDuration = 0.3f;
     }
 }

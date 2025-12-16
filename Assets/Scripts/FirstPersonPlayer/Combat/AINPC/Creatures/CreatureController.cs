@@ -17,7 +17,7 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
 
         [SerializeField] protected Blackboard blackboard;
         [SerializeField] protected AnimancerComponent animancerComponent;
-        [SerializeField] protected CreatureType creatureType;
+        [SerializeField] public CreatureType creatureType;
         public CreatureStateManager.CreatureState initialCreatureState;
 
         // CreatureStateManager.CreatureState _currentCreatureState;

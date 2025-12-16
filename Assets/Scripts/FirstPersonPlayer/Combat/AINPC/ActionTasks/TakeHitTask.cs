@@ -8,15 +8,14 @@ namespace FirstPersonPlayer.Combat.AINPC.ActionTasks
     public class TakeHitTask : ActionTask
     {
         public readonly BBParameter<AnimationClip> HitAnimationClip = null;
-        public readonly BBParameter<float> HitDelay = 0.5f;
+        public readonly BBParameter<float> HitDelay = 0.3f;
         public readonly BBParameter<MMFeedbacks> HitFeedbacks = null;
 
         EnemyController _controller;
 
-        bool _hasBeenHit;
-        bool _inCooldown;
-        
-        float timer;
+        bool _reactionStarted;
+
+        float _timer;
 
         protected override string OnInit()
         {
@@ -26,23 +25,28 @@ namespace FirstPersonPlayer.Combat.AINPC.ActionTasks
 
         protected override void OnExecute()
         {
-            timer = HitDelay.value;
-            _hasBeenHit = false;
-            _inCooldown = false;
-            _controller.PlayHitAnimation(HitAnimationClip.value);
+            _reactionStarted = false;
+            _timer = HitDelay.value;
+            if (HitAnimationClip.value != null)
+                _controller.PlayHitAnimation(HitAnimationClip.value);
+
             HitFeedbacks.value?.PlayFeedbacks();
+
+            _reactionStarted = true;
         }
-        
+
         protected override void OnUpdate()
         {
-            timer -= Time.deltaTime;
+            if (!_reactionStarted) return;
 
-            // Delay phase
-            if (!_hasBeenHit && timer <= 0f)
-            {
-                _hasBeenHit = true;
-            }
+            _timer -= Time.deltaTime;
 
+            if (_timer <= 0f) EndAction(true);
+        }
+
+        protected override void OnStop()
+        {
+            HitFeedbacks.value?.StopFeedbacks();
         }
     }
 }

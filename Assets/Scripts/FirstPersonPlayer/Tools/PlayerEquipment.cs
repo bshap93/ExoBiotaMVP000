@@ -392,15 +392,15 @@ namespace FirstPersonPlayer.Tools
                 animancerRightArmController.currentToolAnimationSet = null;
             }
 
-            if (CurrentToolSo != null)
-                if (CurrentToolSo.hasObjectivesEquipping)
-                    foreach (var equipObjective in equipObjectivesArray)
-                        if (equipObjective.toolScriptableObjectId == CurrentToolSo.ItemID)
-                            if (equipObjective.onEventEquipment == EquipObjectives.OnEvent.OnUnequip)
-                                ObjectiveEvent.Trigger(
-                                    equipObjective.objectiveToCompleteId, ObjectiveEventType.ObjectiveCompleted
-                                );
-
+            // if (CurrentToolSo != null)
+            //     if (CurrentToolSo.hasObjectivesEquipping)
+            //         foreach (var equipObjective in equipObjectivesArray)
+            //             if (equipObjective.toolScriptableObjectId == CurrentToolSo.ItemID)
+            //                 if (equipObjective.onEventEquipment == EquipObjectives.OnEvent.OnUnequip)
+            //                     ObjectiveEvent.Trigger(
+            //                         equipObjective.objectiveToCompleteId, ObjectiveEventType.ObjectiveCompleted
+            //                     );
+            //
 
             CurrentToolSo = null;
             _nextUseTime = 0f;

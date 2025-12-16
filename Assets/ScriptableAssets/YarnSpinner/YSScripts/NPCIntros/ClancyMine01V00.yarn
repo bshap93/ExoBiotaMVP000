@@ -21,6 +21,8 @@ title: ClancyMine01V00Reiterate
 ---
 <<complete_objective DialogueCommands "ContactClancy002">>
 Clancy: Should be a good number of organisms to sample in this particular cavern.
+<<add_objective DialogueCommands "TakeSamplesLiquidV00">>
+<<activate_objective DialogueCommands "TakeSamplesLiquidV00">>
 Clancy: Need any help? <Help>
 -> Yes, please.
    <<jump SamplingHelp>> 

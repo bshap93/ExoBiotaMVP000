@@ -1,4 +1,3 @@
-using System;
 using FirstPersonPlayer.Tools.Interface;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
 using Helpers.Events;
@@ -104,7 +103,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         }
         public MMFeedbacks GetUnequipFeedbacks()
         {
-            throw new NotImplementedException();
+            return equippedFeedbacks;
         }
 
         public int GetCurrentTextureIndex()
