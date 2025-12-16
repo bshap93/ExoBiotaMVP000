@@ -281,6 +281,12 @@ namespace Manager.DialogueScene
 
             var locationType = DockManager.Instance.currentLocationType;
             var locationId = DockManager.Instance.currentLocationId;
+            if (DockManager.Instance.currentDockInteractable == null)
+            {
+                Debug.LogWarning("Current dock interactable is null.");
+                return;
+            }
+
             var cameraTrasform = DockManager.Instance.currentDockInteractable.overviewCameraTarget;
 
 
@@ -297,7 +303,7 @@ namespace Manager.DialogueScene
             return new[]
             {
                 "FabricatorClancy", "ScientistHypolita", "ShadyCoreTrafficker", "None", "ScienceShopRobot",
-                "VitalSystems", "RunnerMandy",
+                "VitalSystems", "WreckedRunnerNPC",
                 // Consoles
                 "Mine01GrottoSanctumConsole", "Mine01GrottoNookConsole",
                 // Aliens

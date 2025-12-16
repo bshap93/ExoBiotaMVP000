@@ -1,11 +1,10 @@
 ﻿using System;
 using Manager.SceneManagers.Dock;
 using Overview.OverviewMode.ScriptableObjectDefinitions;
-using OWPData.ScriptableObjects;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace ScriptableObjects
+namespace OWPData.ScriptableObjects
 {
     [CreateAssetMenu(
         fileName = "DockDefinitionLocationTable",

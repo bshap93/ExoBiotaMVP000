@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using Dirigible.Input;
 using Dirigible.Interface;
-using Events;
+using Helpers.Events;
+using Helpers.Events.Dialog;
 using Lightbug.Utilities;
 using Manager.SceneManagers.Dock;
 using Objectives;
@@ -63,13 +64,13 @@ namespace Dirigible.Interactable
             Debug.Log("DirigibleNonDockNPCInteractable: Interact called.");
             var nodeToUse = GetAppropriateStartNode();
             if (nodeToUse.IsNullOrWhiteSpace())
-                OverviewLocationEvent.Trigger(
-                    LocationType.NpcResidence, LocationActionType.Approach, locationId,
-                    cameraAnchorTransform, defaultStartNode);
+                FirstPersonDialogueEvent.Trigger(
+                    FirstPersonDialogueEventType.StartDialogue, npcDefinition.npcId, defaultStartNode);
             else
-                OverviewLocationEvent.Trigger(
-                    LocationType.NpcResidence, LocationActionType.Approach, locationId,
-                    cameraAnchorTransform, nodeToUse);
+                FirstPersonDialogueEvent.Trigger(
+                    FirstPersonDialogueEventType.StartDialogue, npcDefinition.npcId, nodeToUse);
+
+            MyUIEvent.Trigger(UIType.Any, UIActionType.Open);
         }
         public void OnInteractionStart()
         {
