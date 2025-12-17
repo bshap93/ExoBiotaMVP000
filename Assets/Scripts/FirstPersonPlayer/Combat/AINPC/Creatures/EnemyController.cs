@@ -163,7 +163,9 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
                 ? DamageEventType.CriticalHitDamage
                 : DamageEventType.DealtDamage;
 
-            var finalDamage = playerAttack.rawDamage * playerAttack.damageMultiplier * chargeMultiplier;
+            // var finalDamage = playerAttack.rawDamage * playerAttack.damageMultiplier * chargeMultiplier;
+            var finalDamage = damageAmount * playerAttack.damageMultiplier * chargeMultiplier;
+
 
             EnemyDamageEvent.Trigger(
                 currentHealth - finalDamage, currentHealth, maxHealth,

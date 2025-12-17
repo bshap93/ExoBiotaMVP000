@@ -214,6 +214,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         public override void PerformToolAction()
         {
             if (attributesManager == null) attributesManager = AttributesManager.Instance;
+
             swingCooldown -= agilityCooldownSecondsReducePerPoint * (attributesManager.Agility - 1);
             if (Time.time < lastSwingTime + swingCooldown) return;
             lastSwingTime = Time.time;
