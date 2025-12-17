@@ -215,9 +215,24 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         {
             if (attributesManager == null) attributesManager = AttributesManager.Instance;
 
-            swingCooldown -= agilityCooldownSecondsReducePerPoint * (attributesManager.Agility - 1);
-            if (Time.time < lastSwingTime + swingCooldown) return;
+            var effectiveCooldown =
+                swingCooldown - agilityCooldownSecondsReducePerPoint * (attributesManager.Agility - 1);
+
+            // Check cooldown
+            if (Time.time < lastSwingTime + effectiveCooldown)
+                return;
+
+            // swingCooldown -= agilityCooldownSecondsReducePerPoint * (attributesManager.Agility - 1);
+            // if (Time.time < lastSwingTime + swingCooldown) return;
             lastSwingTime = Time.time;
+
+            // Ensure AnimController is not playing an action before starting a new one
+            if (AnimController.IsPlayingAction())
+            {
+                Debug.LogWarning("HatchetToolPrefab: Attempted to swing while action is already playing!");
+                return;
+            }
+
 
             if (useMultipleSwings && AnimController.currentToolAnimationSet != null)
             {
@@ -226,11 +241,41 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             else
             {
                 // Fallback to legacy single animation mode
-                AnimController.PlayToolUseOneShot();
-                StartCoroutine(ApplyHitAfterDelay(defaultHitDelay));
+                if (AnimController.currentToolAnimationSet?.beginUseAnimation != null)
+                {
+                    var layer = AnimController.animancerComponent.Layers[1];
+                    var state = layer.Play(
+                        AnimController.currentToolAnimationSet.beginUseAnimation,
+                        AnimController.defaultTransitionDuration
+                    );
+
+                    layer.Weight = 1f;
+
+                    // Set action state to prevent movement interruption
+                    AnimController.SetActionState(state);
+
+                    state.Events(this).Clear();
+                    state.Events(this).OnEnd = () =>
+                    {
+                        layer.Weight = 0f;
+                        AnimController.ClearActionState();
+                        AnimController.ReturnToLocomotion();
+                    };
+
+                    StartCoroutine(ApplyHitAfterDelay(defaultHitDelay));
+                }
             }
 
             _playerEquipment.NotifyToolUsed();
+        }
+
+        public void CancelCharge()
+        {
+            if (isCharging)
+            {
+                ResetCharge();
+                AnimController.ForceStopAction();
+            }
         }
 
 

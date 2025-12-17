@@ -25,6 +25,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
         [SerializeField] protected AttributesManager attributesManager;
         [SerializeField] protected float agilityCooldownSecondsReducePerPoint;
+        [SerializeField] protected float heavyAttackSpeedModifier = 0.8f;
 
         [SerializeField] CanBeAreaScannedType detectableType = CanBeAreaScannedType.BasicBioScanner;
 
@@ -209,7 +210,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 // CRITICAL: Set action state BEFORE any delays
                 AnimController.SetActionState(state);
 
-                state.Speed = 0.5f;
+                state.Speed = heavyAttackSpeedModifier;
                 state.Events(this).Clear();
 
                 state.Events(this).OnEnd = () =>

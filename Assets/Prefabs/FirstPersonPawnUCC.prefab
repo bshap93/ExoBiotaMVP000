@@ -5722,6 +5722,7 @@ MonoBehaviour:
   animancerComponent: {fileID: 726400461300103764}
   defaultTransitionDuration: 0.25
   locomotionTransitionDuration: 0.15
+  heavyAttackSpeedModifier: 1
 --- !u!1 &6360253695837798188
 GameObject:
   m_ObjectHideFlags: 0

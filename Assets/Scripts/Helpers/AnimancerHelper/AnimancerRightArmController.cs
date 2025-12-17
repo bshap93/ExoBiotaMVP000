@@ -15,6 +15,9 @@ namespace Helpers.AnimancerHelper
 
         [Tooltip("Transition duration for locomotion changes (idle/walk/run)")]
         public float locomotionTransitionDuration = 0.15f;
+
+        [Tooltip("Speed modifier for heavy attack animations")]
+        public float heavyAttackSpeedModifier = 0.8f;
         AnimancerState _currentActionState;
 
         LocomotionState _currentLocoMode = LocomotionState.Idle;
@@ -68,22 +71,58 @@ namespace Helpers.AnimancerHelper
             _currentActionState = null;
         }
 
+        /// <summary>
+        ///     Force clear the action state (use with caution)
+        /// </summary>
+        /// Check if still neeeded
+        public void ForceStopAction()
+        {
+            if (_currentActionState != null && _currentActionState.IsValid()) _currentActionState.Stop();
+
+            ClearActionState();
+
+            var toolLayer = animancerComponent.Layers[1];
+            toolLayer.Weight = 0f;
+
+            ReturnToLocomotion();
+        }
+
         public void PlayHeavyAttack()
         {
             if (currentToolAnimationSet?.heavySwingAnimation == null) return;
-
-            var state = animancerComponent.Play(
+            var layer = animancerComponent.Layers[1];
+            var state = layer.Play(
                 currentToolAnimationSet.heavySwingAnimation,
                 defaultTransitionDuration
             );
 
-            state.Speed = 0.5f;
+            layer.Weight = 1f;
+
+            // CRITICAL: Set action state FIRST
+            SetActionState(state);
+
+            state.Speed = heavyAttackSpeedModifier;
+            state.Events(this).Clear();
 
             state.Events(this).OnEnd = () =>
             {
+                layer.Weight = 0f;
+                ClearActionState();
                 ReturnToLocomotion();
-                // onComplete
             };
+
+            // var state = animancerComponent.Play(
+            //     currentToolAnimationSet.heavySwingAnimation,
+            //     defaultTransitionDuration
+            // );
+            //
+            // state.Speed = 0.5f;
+            //
+            // state.Events(this).OnEnd = () =>
+            // {
+            //     ReturnToLocomotion();
+            //     // onComplete
+            // };
         }
 
 
@@ -327,7 +366,24 @@ namespace Helpers.AnimancerHelper
         /// </summary>
         public bool IsPlayingAction()
         {
-            return _currentActionState != null && _currentActionState.IsPlaying;
+            // return _currentActionState != null && _currentActionState.IsPlaying;
+            // More robust check - ensure state exists, is playing, and hasn't finished
+            if (_currentActionState == null)
+                return false;
+
+            // Check if state is still valid and playing
+            if (!_currentActionState.IsValid())
+                return false;
+
+            // Check if animation is actually playing (not just queued)
+            if (!_currentActionState.IsPlaying)
+                return false;
+
+            // Additional check: if time >= length, it's done
+            if (_currentActionState.Time >= _currentActionState.Length - 0.01f)
+                return false;
+
+            return true;
         }
         /// <summary>
         ///     Stop all animations
