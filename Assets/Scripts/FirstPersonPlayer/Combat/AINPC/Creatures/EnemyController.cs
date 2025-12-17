@@ -106,7 +106,7 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
 
                 damageAmount *= playerStrengthMultiplier;
 
-                blackboard.SetVariableValue("wasHit", true);
+
                 // StartCoroutine(CooldownAfterWasHit());
 
                 if (playerAttack.damageType == MeleeToolPrefab.HitType.Normal)
@@ -115,10 +115,15 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
                     PlayHitTween(t => t.DOPunchPosition(
                         new Vector3(creatureType.meleeAttackShakeIntensity, 0f, creatureType.meleeAttackShakeIntensity),
                         creatureType.meleeAttackShakeDuration));
+
+                    blackboard.SetVariableValue("wasHit", true);
+                    Debug.Log("Normal Hit registered on " + creatureType.creatureName);
                 }
                 else if (playerAttack.damageType == MeleeToolPrefab.HitType.Heavy)
                 {
                     meleeHitFeedbacksHeavy?.PlayFeedbacks();
+                    blackboard.SetVariableValue("wasHitHeavy", true);
+                    Debug.Log("Heavy Hit registered on " + creatureType.creatureName);
                     PlayHitTween(t => t.DOShakePosition(
                         creatureType.meleeAttackShakeDuration,
                         new Vector3(
@@ -135,11 +140,11 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
                 currentHealth - damageAmount, currentHealth, maxHealth,
                 eventType, creatureType.creatureName);
 
-            blackboard.SetVariableValue(blackboardWasHitKey, true);
+            // blackboard.SetVariableValue(blackboardWasHitKey, true);
+            // Debug.Log("Fallback hit registered on " + creatureType.creatureName);
 
             currentHealth -= damageAmount;
             highlightEffect.HitFX();
-            Debug.Log("Enemy took " + damageAmount + " damage. Current health: " + currentHealth);
         }
 
         public virtual void OnDeath()

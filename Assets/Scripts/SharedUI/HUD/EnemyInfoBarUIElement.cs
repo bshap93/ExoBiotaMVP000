@@ -87,10 +87,6 @@ namespace SharedUI.HUD
                 FadeOut(fadeOutOnTimeoutDuration);
                 ResetBar();
             }
-            else
-            {
-                Debug.Log("Nothing for now beyond damage dealt");
-            }
         }
 
         void ResetBar()

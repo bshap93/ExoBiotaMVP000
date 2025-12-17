@@ -85,12 +85,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 }
 
                 PerformToolAction();
-                Debug.Log("Performing normal tool action.");
                 ChargeToolEvent.Trigger(ChargeToolEventType.Release);
             }
             else if (ChargeTimeElapsed >= timeToFullCharge && ToolIsHeldInChargePosition)
             {
-                Debug.Log("Charge Time Elapsed: " + ChargeTimeElapsed);
                 if (PlayerMutableStatsManager.Instance.CurrentStamina < StaminaCostPerHeavyConnectingSwing)
                 {
                     // Not enough stamina
@@ -116,7 +114,6 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
                 PerformPartiallyChargedToolAction();
                 ChargeToolEvent.Trigger(ChargeToolEventType.Release);
-                Debug.Log("Performing partially charged tool action.");
             }
 
             // PerformToolAction();
@@ -231,8 +228,6 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 }
 
                 var playerAttack = DetermineCorrectPlayerToolAttack(hitType);
-
-                Debug.Log("Player attack was determined as: " + playerAttack.AttackID);
 
 
                 // Spawn VFX with proper cleanup

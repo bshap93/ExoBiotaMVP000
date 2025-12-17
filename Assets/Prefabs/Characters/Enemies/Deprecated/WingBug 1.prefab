@@ -2796,7 +2796,7 @@ GameObject:
   - component: {fileID: 6635484483439299060}
   - component: {fileID: 7435913732507689560}
   m_Layer: 27
-  m_Name: WingBug
+  m_Name: WingBug 1
   m_TagString: EnemyNPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
