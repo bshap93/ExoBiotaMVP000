@@ -105,7 +105,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             if (tagsWhichShouldShowInabilityReticle != null)
                 foreach (var tagName in tagsWhichShouldShowInabilityReticle)
                     if (colliderGameObject.CompareTag(tagName))
-                        return reticleForInabilityToSample;
+                        return reticleForInabilityToHit;
 
             // Default to the normal reticle
             return defaultReticleForTool;

@@ -20,7 +20,7 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
     [RequireComponent(typeof(AssignPlayerToBT))]
     [RequireComponent(typeof(EnemyBlackboardSync))]
     [DisallowMultipleComponent]
-    public class EnemyController : CreatureController, IRequiresUniqueID
+    public class EnemyController : CreatureController, IRequiresUniqueID, IDamageable
     {
         public float currentHealth;
         public float maxHealth;
@@ -83,53 +83,6 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
                 OnDeath();
             }
         }
-
-        void PlayHitTween(Func<Transform, Tween> buildTween, bool killPrevious = true)
-        {
-            if (killPrevious) _hitTween?.Kill();
-            _hitTween = buildTween(transform);
-        }
-
-
-        public void StartAttack()
-        {
-            if (IsAttacking) return;
-
-            IsAttacking = true;
-
-            hitBoxColliderMouth.Activate();
-
-
-            AttackState = animancerComponent.Play(creatureType.animationSet.attackAnimation);
-
-
-            AttackState.Events(this).OnEnd = () => { FinishAttack(); };
-        }
-
-        public void FinishAttack()
-        {
-            IsAttacking = false;
-            hitBoxColliderMouth.Deactivate();
-        }
-        public void OnHitPlayer(Collider other, AttackUsed attackUsed)
-        {
-            if (other.CompareTag("FirstPersonPlayer"))
-                switch (attackUsed)
-                {
-                    case AttackUsed.Primary:
-                        NPCAttackEvent.Trigger(creatureType.attacksProfile.primaryAttack);
-                        break;
-                    case AttackUsed.Secondary:
-                        NPCAttackEvent.Trigger(creatureType.attacksProfile.secondaryAttack);
-                        break;
-                }
-        }
-        IEnumerator CooldownAfterWasHit()
-        {
-            // blackboard.SetVariableValue(blackboardWasHitKey, true);
-            yield return new WaitForSeconds(creatureType.wasHitCooldownTime);
-            blackboard.SetVariableValue(blackboardWasHitKey, false);
-        }
         public void ProcessAttackDamage(PlayerToolAttack playerAttack)
         {
             var attributeManager = AttributesManager.Instance;
@@ -188,7 +141,7 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
             Debug.Log("Enemy took " + damageAmount + " damage. Current health: " + currentHealth);
         }
 
-        protected virtual void OnDeath()
+        public virtual void OnDeath()
         {
             navMeshAgent.isStopped = true;
             CreatureStateEvent.Trigger(
@@ -213,6 +166,53 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
             HitState = animancerComponent.Play(value);
 
             HitState.Events(this).OnEnd = () => { };
+        }
+
+        public void PlayHitTween(Func<Transform, Tween> buildTween, bool killPrevious = true)
+        {
+            if (killPrevious) _hitTween?.Kill();
+            _hitTween = buildTween(transform);
+        }
+
+
+        public void StartAttack()
+        {
+            if (IsAttacking) return;
+
+            IsAttacking = true;
+
+            hitBoxColliderMouth.Activate();
+
+
+            AttackState = animancerComponent.Play(creatureType.animationSet.attackAnimation);
+
+
+            AttackState.Events(this).OnEnd = () => { FinishAttack(); };
+        }
+
+        public void FinishAttack()
+        {
+            IsAttacking = false;
+            hitBoxColliderMouth.Deactivate();
+        }
+        public void OnHitPlayer(Collider other, AttackUsed attackUsed)
+        {
+            if (other.CompareTag("FirstPersonPlayer"))
+                switch (attackUsed)
+                {
+                    case AttackUsed.Primary:
+                        NPCAttackEvent.Trigger(creatureType.attacksProfile.primaryAttack);
+                        break;
+                    case AttackUsed.Secondary:
+                        NPCAttackEvent.Trigger(creatureType.attacksProfile.secondaryAttack);
+                        break;
+                }
+        }
+        IEnumerator CooldownAfterWasHit()
+        {
+            // blackboard.SetVariableValue(blackboardWasHitKey, true);
+            yield return new WaitForSeconds(creatureType.wasHitCooldownTime);
+            blackboard.SetVariableValue(blackboardWasHitKey, false);
         }
     }
 }

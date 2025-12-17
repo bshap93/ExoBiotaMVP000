@@ -1,8 +1,10 @@
 ﻿using System;
 using FirstPersonPlayer.Tools.Interface;
+using Helpers.Events;
 using Manager;
 using MoreMountains.Feedbacks;
 using UnityEngine;
+using Utilities.Interface;
 
 namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 {
@@ -11,17 +13,16 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         [Header("Sword Settings")] [Tooltip("Tags this sword is allowed to affect (e.g., BioObstacle, Vegetation).")]
         public string[] allowedTags;
         public float baseStaminaCostPerConnectingSwing = 1.5f;
-        
+
         [Tooltip("Number of seconds between swings.")]
         public float swingCooldown = 0.8f;
 
         public int swordPower = 1;
-        
+
         [SerializeField] Sprite defaultReticleForTool;
-        
-        [SerializeField]
-        protected float lastSwingTime = -999f;
-        
+
+        [SerializeField] protected float lastSwingTime = -999f;
+
         float StaminaCostPerNormalConnectingSwing
         {
             get
@@ -36,21 +37,66 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 return Mathf.Max(0.1f, finalCost); // Ensure a minimum cost
             }
         }
+        public override void Use()
+        {
+            if (PlayerMutableStatsManager.Instance.CurrentStamina < StaminaCostPerNormalConnectingSwing)
+            {
+                // Not enough stamina
+                AlertEvent.Trigger(
+                    AlertReason.NotEnoughStamina, "Not enough stamina to use pickaxe.", "Insufficient Stamina");
+
+                return;
+            }
+
+            if (attributesManager == null) attributesManager = AttributesManager.Instance;
+
+            PerformToolAction();
+        }
+        public override bool CanInteractWithObject(GameObject target)
+        {
+            if (target == null) return false;
+
+            // Component gate
+            if (target.TryGetComponent<IDamageable>(out _)) return true;
+
+            // Tag gate
+            if (allowedTags != null && allowedTags.Length > 0)
+            {
+                var t = target.tag;
+                for (var i = 0; i < allowedTags.Length; i++)
+                    if (!string.IsNullOrEmpty(allowedTags[i]) && t == allowedTags[i])
+                        return true;
+            }
+
+            return false;
+        }
         public override void Initialize(PlayerEquipment owner)
         {
-            throw new NotImplementedException();
+            mainCamera = Camera.main;
+            AnimController = owner.animancerRightArmController;
         }
         public override Sprite GetReticleForTool(GameObject colliderGameObject)
         {
-            throw new NotImplementedException();
+            // Check if the object has a tag that should show inability reticle
+            if (tagsWhichShouldShowInabilityReticle != null)
+                foreach (var tagName in tagsWhichShouldShowInabilityReticle)
+                    if (colliderGameObject.CompareTag(tagName))
+                        return reticleForInabilityToHit;
+
+            // Default to the normal reticle
+            return defaultReticleForTool;
         }
         public override MMFeedbacks GetEquipFeedbacks()
         {
-            throw new NotImplementedException();
+            return equipFeedbacks;
         }
         public override MMFeedbacks GetUnequipFeedbacks()
         {
-            throw new NotImplementedException();
+            return unequippedFeedbacks;
+        }
+        public override void Unequip()
+        {
+            // no-op for now
         }
         public override void ApplyHit()
         {

@@ -13,7 +13,7 @@ namespace FirstPersonPlayer.Combat.AINPC.ActionTasks
         public readonly BBParameter<float> AttackDelay = 0.2f;
         public readonly BBParameter<float> CooldownAfterAttack = 0.5f;
 
-        EnemyController _controller;
+        EnemyController _enemyController;
         bool _hasAttacked;
         bool _inCooldown;
 
@@ -26,8 +26,8 @@ namespace FirstPersonPlayer.Combat.AINPC.ActionTasks
         //Return null if init was successfull. Return an error string otherwise
         protected override string OnInit()
         {
-            _controller = agent.GetComponent<EnemyController>();
-            return _controller ? null : "EnemyController component not found on the agent.";
+            _enemyController = agent.GetComponent<EnemyController>();
+            return _enemyController ? null : "EnemyController component not found on the agent.";
         }
 
         //This is called once each time the task is enabled.
@@ -49,12 +49,12 @@ namespace FirstPersonPlayer.Combat.AINPC.ActionTasks
             // Delay phase
             if (!_hasAttacked && timer <= 0f)
             {
-                _controller.StartAttack();
+                _enemyController.StartAttack();
                 _hasAttacked = true;
             }
 
             // Wait for attack to finish
-            if (_hasAttacked && !_inCooldown && !_controller.IsAttacking)
+            if (_hasAttacked && !_inCooldown && !_enemyController.IsAttacking)
             {
                 timer = CooldownAfterAttack.value;
                 _inCooldown = true;

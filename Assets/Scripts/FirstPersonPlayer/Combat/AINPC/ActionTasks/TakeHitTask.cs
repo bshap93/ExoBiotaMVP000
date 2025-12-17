@@ -11,7 +11,7 @@ namespace FirstPersonPlayer.Combat.AINPC.ActionTasks
         public readonly BBParameter<float> HitDelay = 0.3f;
         public readonly BBParameter<MMFeedbacks> HitFeedbacks = null;
 
-        EnemyController _controller;
+        EnemyController _enemyController;
 
         bool _reactionStarted;
 
@@ -19,8 +19,8 @@ namespace FirstPersonPlayer.Combat.AINPC.ActionTasks
 
         protected override string OnInit()
         {
-            _controller = agent.GetComponent<EnemyController>();
-            return _controller ? null : "EnemyController component not found on the agent.";
+            _enemyController = agent.GetComponent<EnemyController>();
+            return _enemyController ? null : "EnemyController component not found on the agent.";
         }
 
         protected override void OnExecute()
@@ -28,7 +28,7 @@ namespace FirstPersonPlayer.Combat.AINPC.ActionTasks
             _reactionStarted = false;
             _timer = HitDelay.value;
             if (HitAnimationClip.value != null)
-                _controller.PlayHitAnimation(HitAnimationClip.value);
+                _enemyController.PlayHitAnimation(HitAnimationClip.value);
 
             HitFeedbacks.value?.PlayFeedbacks();
 
