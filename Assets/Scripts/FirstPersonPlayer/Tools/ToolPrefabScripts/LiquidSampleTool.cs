@@ -34,6 +34,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         [SerializeField] LayerMask organismLayerMask;
         [SerializeField] bool showHighlights = true;
 
+        [SerializeField] bool toolIsUsedOnRelease;
+
 
         [SerializeField] CanBeAreaScannedType detectableType = CanBeAreaScannedType.BasicBioScanner;
 
@@ -246,6 +248,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             // Default to the normal reticle
             return defaultReticleForTool;
         }
+        public bool ToolIsUsedOnRelease()
+        {
+            return toolIsUsedOnRelease;
+        }
 
         public bool CanAbortAction()
         {
@@ -264,6 +270,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         public MMFeedbacks GetUnequipFeedbacks()
         {
             return unequippedFeedbacks;
+        }
+        public void ChargeUse()
+        {
+            throw new NotImplementedException();
         }
 
         // IToolAnimationControl implementation

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using CompassNavigatorPro;
 using Domains.Gameplay.Equipment.Events;
 using FirstPersonPlayer.Minable;
@@ -36,6 +37,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         [SerializeField] MMFeedbacks duringExaminationFB;
 
         [SerializeField] bool includeDisabledPOIs = true;
+        [SerializeField] bool toolIsUsedOnRelease;
 
         [SerializeField] MMFeedbacks equippedFeedbacks;
         [SerializeField] MMFeedbacks unequippedFeedbacks;
@@ -184,6 +186,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         {
             return defaultReticleForTool;
         }
+        public bool ToolIsUsedOnRelease()
+        {
+            return toolIsUsedOnRelease;
+        }
 
         public bool CanAbortAction()
         {
@@ -202,6 +208,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         public MMFeedbacks GetUnequipFeedbacks()
         {
             return unequippedFeedbacks;
+        }
+        public void ChargeUse()
+        {
+            throw new NotImplementedException();
         }
 
         bool CanScannerExamineItem(InventoryItem item)

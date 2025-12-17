@@ -1,4 +1,5 @@
-﻿using FirstPersonPlayer.Tools.Animation;
+﻿using System;
+using FirstPersonPlayer.Tools.Animation;
 using FirstPersonPlayer.Tools.Interface;
 using FirstPersonPlayer.Tools.ItemObjectTypes.CompositeObjects;
 using Helpers.Events.ManagerEvents;
@@ -17,6 +18,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Container
     public abstract class ApplicatorToolPrefab : MonoBehaviour, IRuntimeTool
     {
         public float toolUsingRange = 5f;
+
+        public bool toolIsUsedOnRelease;
 
         public MMFeedbacks effectFeedback;
         public GameObject effectVFXPrefab;
@@ -41,6 +44,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Container
         }
         public abstract bool CanInteractWithObject(GameObject colliderGameObject);
         public abstract Sprite GetReticleForTool(GameObject colliderGameObject);
+        public bool ToolIsUsedOnRelease()
+        {
+            return toolIsUsedOnRelease;
+        }
 
         public abstract bool CanAbortAction();
 
@@ -50,6 +57,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Container
             return detectableType;
         }
         public abstract MMFeedbacks GetUnequipFeedbacks();
+        public void ChargeUse()
+        {
+            throw new NotImplementedException();
+        }
 
 
         public abstract void PerformToolAction();

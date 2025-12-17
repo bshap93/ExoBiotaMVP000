@@ -21,6 +21,8 @@ namespace FirstPersonPlayer.Tools.Interface
 
         Sprite GetReticleForTool(GameObject colliderGameObject);
 
+        bool ToolIsUsedOnRelease();
+
         bool CanAbortAction();
 
         MMFeedbacks GetEquipFeedbacks();
@@ -30,5 +32,6 @@ namespace FirstPersonPlayer.Tools.Interface
 
         //MMFeedbacks GetUseToolFeedbacks();
         MMFeedbacks GetUnequipFeedbacks();
+        void ChargeUse();
     }
 }

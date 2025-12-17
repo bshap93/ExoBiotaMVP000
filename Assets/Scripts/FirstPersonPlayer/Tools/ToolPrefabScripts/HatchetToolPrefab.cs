@@ -66,6 +66,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
             PerformToolAction();
         }
+        public override void ChargeUse()
+        {
+            StartChargePullbackAnimation();
+        }
 
 
         public override void Initialize(PlayerEquipment owner)
@@ -118,6 +122,27 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         public override MMFeedbacks GetUnequipFeedbacks()
         {
             return unequippedFeedbacks;
+        }
+
+        public void StartChargePullbackAnimation()
+        {
+            if (AnimController.animancerComponent == null) return;
+
+            var layer = AnimController.animancerComponent.Layers[1];
+
+            var state = layer.Play(AnimController.currentToolAnimationSet.beginUseAnimation);
+            layer.Weight = 1f;
+
+            AnimController.SetActionState(state);
+
+            state.Events(this).Clear();
+
+            state.Events(this).OnEnd = () =>
+            {
+                // layer.Weight = 0f;
+                // AnimController.ClearActionState();
+                // AnimController.ReturnToLocomotion();
+            };
         }
 
 

@@ -28,6 +28,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         {
             throw new NotImplementedException();
         }
+        public bool ToolIsUsedOnRelease()
+        {
+            throw new NotImplementedException();
+        }
         public bool CanAbortAction()
         {
             throw new NotImplementedException();
@@ -41,6 +45,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             throw new NotImplementedException();
         }
         public MMFeedbacks GetUnequipFeedbacks()
+        {
+            throw new NotImplementedException();
+        }
+        public void ChargeUse()
         {
             throw new NotImplementedException();
         }

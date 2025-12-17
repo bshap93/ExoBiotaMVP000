@@ -218,7 +218,16 @@ namespace FirstPersonPlayer.Tools
                     _nextUseTime = Time.time + CurrentToolSo.cooldown;
             }
 
-            if (useButtonHeld) CurrentRuntimeTool.Use();
+            if (CurrentRuntimeTool.ToolIsUsedOnRelease())
+            {
+                if (useButtonHeld) CurrentRuntimeTool.ChargeUse();
+
+                if (justReleased) CurrentRuntimeTool.Use();
+            }
+            else if (useButtonHeld)
+            {
+                CurrentRuntimeTool.Use();
+            }
 
             if (justReleased)
                 // Notify tool that use stopped (for animation control)

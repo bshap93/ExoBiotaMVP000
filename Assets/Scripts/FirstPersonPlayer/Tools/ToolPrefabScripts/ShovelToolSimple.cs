@@ -1,3 +1,4 @@
+using System;
 using Digger.Modules.Core.Sources;
 using Digger.Modules.Runtime.Sources;
 using FirstPersonPlayer.Interactable;
@@ -86,6 +87,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         {
             return defaultReticleForTool;
         }
+        public bool ToolIsUsedOnRelease()
+        {
+            throw new NotImplementedException();
+        }
 
         public bool CanAbortAction()
         {
@@ -104,6 +109,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         public MMFeedbacks GetUnequipFeedbacks()
         {
             return unequippedFeedbacks;
+        }
+        public void ChargeUse()
+        {
+            throw new NotImplementedException();
         }
 
         public bool CanInteractWithTextureIndex(int index)

@@ -1033,8 +1033,10 @@ MonoBehaviour:
   swing02HitDelay: 0.4
   swing03HitDelay: 0.4
   defaultHitDelay: 0.4
+  useOnRelease: 1
+  agilityReductionFactor: 0.05
   ineffectualDebrisEffectPrefab: {fileID: 761645417365632772, guid: d930383bf4b2ce64d95f23bedbd942db, type: 3}
-  reticleForInabilityToSample: {fileID: 0}
+  reticleForInabilityToHit: {fileID: 0}
   tagsWhichShouldShowInabilityReticle:
   - MiscRigidOrganism
   equipFeedbacks: {fileID: 2658347934427604760}
@@ -1049,11 +1051,11 @@ MonoBehaviour:
     m_Bits: 134348799
   allowedTags:
   - HackableBioStructure
-  staminaCostPerConnectingSwing: 2.5
+  baseStaminaCostPerConnectingSwing: 2.5
   swingCooldown: 1.2
   hatchetPower: 1
   defaultReticleForTool: {fileID: 21300000, guid: 85b809804a98b954dbc107053cc51dfb, type: 3}
-  LastSwingTime: -999
+  lastSwingTime: -999
 --- !u!114 &4098584162942740169
 MonoBehaviour:
   m_ObjectHideFlags: 0

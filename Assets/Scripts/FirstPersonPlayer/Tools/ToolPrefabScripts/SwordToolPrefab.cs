@@ -52,6 +52,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
             PerformToolAction();
         }
+        public override void ChargeUse()
+        {
+            throw new NotImplementedException();
+        }
         public override bool CanInteractWithObject(GameObject target)
         {
             if (target == null) return false;

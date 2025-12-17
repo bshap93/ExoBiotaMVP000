@@ -1,3 +1,4 @@
+using System;
 using FirstPersonPlayer.Tools.Interface;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
 using Helpers.Events;
@@ -26,8 +27,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         [SerializeField] MMFeedbacks equippedFeedbacks;
 
 
-        bool isLanternOn; // State to track if the lantern is on
-        LightSourceToolItemObject lightSourceToolItemObject;
+        bool _isLanternOn; // State to track if the lantern is on
+        LightSourceToolItemObject _lightSourceToolItemObject;
 
         public void Initialize(PlayerEquipment owner)
         {
@@ -53,24 +54,24 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                         "StormLanternLightTool: stormLanternPointLight is not assigned and could not be found in children.");
             }
 
-            if (lightSourceToolItemObject == null)
-                lightSourceToolItemObject = owner.CurrentToolSo as LightSourceToolItemObject;
+            if (_lightSourceToolItemObject == null)
+                _lightSourceToolItemObject = owner.CurrentToolSo as LightSourceToolItemObject;
 
-            LightEvent.Trigger(lightSourceToolItemObject != null ? LightEventType.TurnOn : LightEventType.TurnOff);
+            LightEvent.Trigger(_lightSourceToolItemObject != null ? LightEventType.TurnOn : LightEventType.TurnOff);
         }
 
         public void Use()
         {
             // Toggle the lantern light on or off
-            isLanternOn = !isLanternOn;
-            stormLanternPointLight.enabled = isLanternOn;
-            if (isLanternOn)
+            _isLanternOn = !_isLanternOn;
+            stormLanternPointLight.enabled = _isLanternOn;
+            if (_isLanternOn)
                 switchOnFB?.PlayFeedbacks();
             else
                 switchOffFB?.PlayFeedbacks();
 
             toggleStormLanternFeedback?.PlayFeedbacks();
-            LightEvent.Trigger(isLanternOn ? LightEventType.TurnOn : LightEventType.TurnOff);
+            LightEvent.Trigger(_isLanternOn ? LightEventType.TurnOn : LightEventType.TurnOff);
         }
 
         public void Unequip()
@@ -85,6 +86,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         public Sprite GetReticleForTool(GameObject colliderGameObject)
         {
             return null;
+        }
+        public bool ToolIsUsedOnRelease()
+        {
+            return false;
         }
 
         public bool CanAbortAction()
@@ -104,6 +109,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         public MMFeedbacks GetUnequipFeedbacks()
         {
             return equippedFeedbacks;
+        }
+        public void ChargeUse()
+        {
+            throw new NotImplementedException();
         }
 
         public int GetCurrentTextureIndex()

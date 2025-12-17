@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Domains.Gameplay.Mining.Scripts;
 using Feedbacks.Interface;
 using FirstPersonPlayer.Interactable;
@@ -129,6 +130,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             if (attributesManager == null) attributesManager = AttributesManager.Instance;
 
             PerformToolAction();
+        }
+        public override void ChargeUse()
+        {
+            throw new NotImplementedException();
         }
 
         public override void Unequip()

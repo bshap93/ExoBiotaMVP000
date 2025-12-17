@@ -37,6 +37,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         [Tooltip("Fallback delay if using beginUseAnimation (legacy mode).")]
         public float defaultHitDelay = 0.2f;
 
+        public bool useOnRelease;
+
         [SerializeField] protected float agilityReductionFactor = 0.05f;
 
         public GameObject ineffectualDebrisEffectPrefab;
@@ -78,6 +80,9 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             PerformToolAction();
         }
 
+        public abstract void ChargeUse();
+
+
         public virtual void Unequip()
         {
         }
@@ -88,6 +93,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         }
 
         public abstract Sprite GetReticleForTool(GameObject colliderGameObject);
+        public bool ToolIsUsedOnRelease()
+        {
+            return useOnRelease;
+        }
 
         public bool CanAbortAction()
         {
@@ -96,6 +105,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
         public abstract MMFeedbacks GetEquipFeedbacks();
         public abstract MMFeedbacks GetUnequipFeedbacks();
+
         public CanBeAreaScannedType GetDetectableType()
         {
             return detectableType;
