@@ -11,7 +11,7 @@ namespace Utilities.Interface
 
         public void OnDeath();
 
-        public void ProcessAttackDamage(PlayerToolAttack playerAttack);
+        public void ProcessAttackDamage(PlayerToolAttack playerAttack, float chargeMultiplier);
 
         void PlayHitTween(Func<Transform, Tween> buildTween, bool killPrevious = true);
     }

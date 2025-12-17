@@ -83,7 +83,40 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
                 OnDeath();
             }
         }
-        public void ProcessAttackDamage(PlayerToolAttack playerAttack)
+
+        public virtual void OnDeath()
+        {
+            navMeshAgent.isStopped = true;
+            CreatureStateEvent.Trigger(
+                CreatureStateEventType.SetNewCreatureState, uniqueID,
+                CreatureStateManager.CreatureState.ShouldBeDestroyed);
+
+            movementLoopFeedbacks?.StopFeedbacks();
+
+            EnemyDamageEvent.Trigger(
+                0f, currentHealth, maxHealth,
+                DamageEventType.Death, creatureType.creatureName);
+
+            deathFeedbacks?.PlayFeedbacks();
+            if (deathParticlesPrefab != null)
+                Instantiate(deathParticlesPrefab, transform.position + Vector3.up * 0.5f, Quaternion.identity);
+
+            if (destroyAfterDeath)
+                Destroy(gameObject, 2f);
+        }
+        public void PlayHitAnimation(AnimationClip value)
+        {
+            HitState = animancerComponent.Play(value);
+
+            HitState.Events(this).OnEnd = () => { };
+        }
+
+        public void PlayHitTween(Func<Transform, Tween> buildTween, bool killPrevious = true)
+        {
+            if (killPrevious) _hitTween?.Kill();
+            _hitTween = buildTween(transform);
+        }
+        public void ProcessAttackDamage(PlayerToolAttack playerAttack, float chargeMultiplier)
         {
             var attributeManager = AttributesManager.Instance;
             var damageAmount = playerAttack.rawDamage;
@@ -130,48 +163,17 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
                 ? DamageEventType.CriticalHitDamage
                 : DamageEventType.DealtDamage;
 
+            var finalDamage = playerAttack.rawDamage * playerAttack.damageMultiplier * chargeMultiplier;
+
             EnemyDamageEvent.Trigger(
-                currentHealth - damageAmount, currentHealth, maxHealth,
+                currentHealth - finalDamage, currentHealth, maxHealth,
                 eventType, creatureType.creatureName);
 
             blackboard.SetVariableValue(blackboardWasHitKey, true);
 
-            currentHealth -= damageAmount;
+            currentHealth -= finalDamage;
             highlightEffect.HitFX();
-            Debug.Log("Enemy took " + damageAmount + " damage. Current health: " + currentHealth);
-        }
-
-        public virtual void OnDeath()
-        {
-            navMeshAgent.isStopped = true;
-            CreatureStateEvent.Trigger(
-                CreatureStateEventType.SetNewCreatureState, uniqueID,
-                CreatureStateManager.CreatureState.ShouldBeDestroyed);
-
-            movementLoopFeedbacks?.StopFeedbacks();
-
-            EnemyDamageEvent.Trigger(
-                0f, currentHealth, maxHealth,
-                DamageEventType.Death, creatureType.creatureName);
-
-            deathFeedbacks?.PlayFeedbacks();
-            if (deathParticlesPrefab != null)
-                Instantiate(deathParticlesPrefab, transform.position + Vector3.up * 0.5f, Quaternion.identity);
-
-            if (destroyAfterDeath)
-                Destroy(gameObject, 2f);
-        }
-        public void PlayHitAnimation(AnimationClip value)
-        {
-            HitState = animancerComponent.Play(value);
-
-            HitState.Events(this).OnEnd = () => { };
-        }
-
-        public void PlayHitTween(Func<Transform, Tween> buildTween, bool killPrevious = true)
-        {
-            if (killPrevious) _hitTween?.Kill();
-            _hitTween = buildTween(transform);
+            Debug.Log("Enemy took " + finalDamage + " damage. Current health: " + currentHealth);
         }
 
 

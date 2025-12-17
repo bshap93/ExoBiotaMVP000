@@ -203,7 +203,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             return false;
         }
 
-        public override void ApplyHit()
+        public override void ApplyHit(float chargeMultiplier)
         {
             // Use the stored hit from when button was pressed
 

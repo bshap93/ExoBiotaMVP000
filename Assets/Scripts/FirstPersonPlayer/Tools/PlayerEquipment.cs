@@ -6,6 +6,7 @@ using Events;
 using FirstPersonPlayer.Interactable;
 using FirstPersonPlayer.Tools.Interface;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
+using FirstPersonPlayer.Tools.ToolPrefabScripts;
 using FirstPersonPlayer.UI;
 using Helpers.AnimancerHelper;
 using Helpers.ScriptableObjects.Animation;
@@ -192,6 +193,12 @@ namespace FirstPersonPlayer.Tools
             }
         }
 
+        public void NotifyToolUsed()
+        {
+            if (CurrentToolSo != null && CurrentToolSo.cooldown > 0f)
+                _nextUseTime = Time.time + CurrentToolSo.cooldown;
+        }
+
         void HandleToolInput(bool useButtonHeld)
         {
             if (CurrentRuntimeTool == null || CurrentToolSo == null)
@@ -203,22 +210,30 @@ namespace FirstPersonPlayer.Tools
             var justPressed = useButtonHeld && !_wasUseButtonHeldLastFrame;
             var justReleased = !useButtonHeld && _wasUseButtonHeldLastFrame;
 
-            if (justPressed)
+
+            if (CurrentRuntimeTool is MeleeToolPrefab meleeToolPrefab && meleeToolPrefab.supportsChargeAttack)
             {
-                if (CurrentToolSo.cooldown > 0f && Time.time < _nextUseTime)
+                if (justPressed)
                 {
-                    _wasUseButtonHeldLastFrame = useButtonHeld;
-                    return;
+                    if (CurrentToolSo.cooldown > 0f && Time.time < _nextUseTime)
+                    {
+                        _wasUseButtonHeldLastFrame = useButtonHeld;
+                        return;
+                    }
+
+                    // Notify tool that use started (for animation control)
+                    if (CurrentRuntimeTool is IToolAnimationControl animControl) animControl.OnUseStarted();
                 }
 
-                // Notify tool that use started (for animation control)
-                if (CurrentRuntimeTool is IToolAnimationControl animControl) animControl.OnUseStarted();
-
-                if (CurrentToolSo.cooldown > 0f)
-                    _nextUseTime = Time.time + CurrentToolSo.cooldown;
+                meleeToolPrefab.HandleChargeInput(useButtonHeld, justReleased);
+            }
+            else
+            {
+                // ---- LEGACY PATH (non-charge tools) ----
+                if (useButtonHeld)
+                    CurrentRuntimeTool.Use();
             }
 
-            if (useButtonHeld) CurrentRuntimeTool.Use();
 
             if (justReleased)
                 // Notify tool that use stopped (for animation control)

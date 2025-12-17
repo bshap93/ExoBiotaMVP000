@@ -98,7 +98,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         {
             // no-op for now
         }
-        public override void ApplyHit()
+        public override void ApplyHit(float chargeMultiplier)
         {
             throw new NotImplementedException();
         }

@@ -37,6 +37,7 @@ namespace FirstPersonPlayer.Combat.Player.ScriptableObjects
         [Range(0f, 1f)] public float chanceToCauseStagger;
 
         public PlayerAttackType attackType;
+        public float damageMultiplier;
         public string AttackID => name;
     }
 }

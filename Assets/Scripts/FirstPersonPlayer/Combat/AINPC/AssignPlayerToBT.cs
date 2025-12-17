@@ -12,7 +12,7 @@ namespace FirstPersonPlayer.Combat.AINPC
 
         void Start()
         {
-            Invoke(nameof(Assign), 0.1f);
+            Invoke(nameof(Assign), 0.5f);
         }
 
         void Assign()

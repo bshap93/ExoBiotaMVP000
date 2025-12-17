@@ -68,6 +68,24 @@ namespace Helpers.AnimancerHelper
             _currentActionState = null;
         }
 
+        public void PlayHeavyAttack()
+        {
+            if (currentToolAnimationSet?.heavySwingAnimation == null) return;
+
+            var state = animancerComponent.Play(
+                currentToolAnimationSet.heavySwingAnimation,
+                defaultTransitionDuration
+            );
+
+            state.Speed = 0.5f;
+
+            state.Events(this).OnEnd = () =>
+            {
+                ReturnToLocomotion();
+                // onComplete
+            };
+        }
+
 
         enum LocomotionState
         {

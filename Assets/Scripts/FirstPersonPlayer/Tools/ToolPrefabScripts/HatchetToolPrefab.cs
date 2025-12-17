@@ -22,7 +22,6 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         [FormerlySerializedAs("staminaCostPerConnectingSwing")]
         public float baseStaminaCostPerConnectingSwing = 1f;
 
-
         [Tooltip("Number of seconds between swings.")]
         public float swingCooldown = 0.6f;
 
@@ -35,6 +34,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
         [FormerlySerializedAs("LastSwingTime")] [SerializeField]
         protected float lastSwingTime = -999f;
+
+        PlayerEquipment _playerEquipment;
 
         float StaminaCostPerNormalConnectingSwing
         {
@@ -70,6 +71,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
         public override void Initialize(PlayerEquipment owner)
         {
+            _playerEquipment = owner;
             mainCamera = Camera.main;
             AnimController = owner.animancerRightArmController;
         }
@@ -121,7 +123,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         }
 
 
-        public override void ApplyHit()
+        public override void ApplyHit(float chargeMultiplier)
         {
             if (!mainCamera) mainCamera = Camera.main;
             if (!mainCamera) return;
@@ -187,7 +189,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 }
 
 
-                enemyController.ProcessAttackDamage(playerAttack);
+                enemyController.ProcessAttackDamage(playerAttack, chargeMultiplier);
                 PlayerStatsEvent.Trigger(
                     PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
                     StaminaCostPerNormalConnectingSwing);
@@ -199,6 +201,13 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 SpawnFxForIneffectualHit(hit.point, hit.normal);
                 hitRockFeedbacks?.PlayFeedbacks();
             }
+        }
+
+        protected override void ReleaseChargedAttack()
+        {
+            base.ReleaseChargedAttack();
+
+            _playerEquipment.NotifyToolUsed();
         }
 
 
@@ -218,6 +227,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 AnimController.PlayToolUseOneShot();
                 StartCoroutine(ApplyHitAfterDelay(defaultHitDelay));
             }
+
+            _playerEquipment.NotifyToolUsed();
         }
 
 

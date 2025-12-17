@@ -3,6 +3,7 @@ using System.Collections;
 using FirstPersonPlayer.Combat.Player.ScriptableObjects;
 using FirstPersonPlayer.Tools.Interface;
 using Helpers.AnimancerHelper;
+using Helpers.Events.Combat;
 using Helpers.Events.ManagerEvents;
 using Helpers.ScriptableObjects.Animation;
 using Manager;
@@ -16,6 +17,11 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
     {
         [FormerlySerializedAs("ToolAttackProfile")]
         public PlayerToolAttackProfile toolAttackProfile;
+
+        [Header("Charge Attack Settings")] [SerializeField]
+        public bool supportsChargeAttack = true;
+        [SerializeField] protected float timeToFullCharge = 1.25f;
+        [SerializeField] protected float minChargeToBoost = 0.25f;
 
         [SerializeField] protected AttributesManager attributesManager;
         [SerializeField] protected float agilityCooldownSecondsReducePerPoint;
@@ -36,6 +42,9 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
         [Tooltip("Fallback delay if using beginUseAnimation (legacy mode).")]
         public float defaultHitDelay = 0.2f;
+
+        [Tooltip("Delay in seconds before hit is applied for Heavy Hit animation.")]
+        public float heavyHitDelay = 0.6f;
 
         [SerializeField] protected float agilityReductionFactor = 0.05f;
 
@@ -61,10 +70,13 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         [Tooltip("Optional physics mask to limit what raycast can hit.")]
         public LayerMask hitMask = ~0;
 
-
         protected AnimancerRightArmController AnimController;
 
+        protected float currentChargeTime;
+
         protected int CurrentSwingIndex; // Track which swing we're on
+        protected bool isCharging;
+        protected bool isFullyCharged;
         protected RaycastHit LastHit;
 
         // protected float LastTimeOfEffect = -999f;
@@ -101,6 +113,62 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             return detectableType;
         }
 
+        public void HandleChargeInput(bool held, bool released)
+        {
+            if (!supportsChargeAttack) return;
+
+            if (held)
+            {
+                isCharging = true;
+                currentChargeTime += Time.deltaTime;
+
+                if (currentChargeTime >= timeToFullCharge)
+                {
+                    currentChargeTime = timeToFullCharge;
+                    isFullyCharged = true;
+                }
+
+                UpdateChargeUI(currentChargeTime / timeToFullCharge);
+            }
+
+
+            // Handle release on the release frame
+            if (released && isCharging)
+            {
+                ReleaseChargedAttack();
+                ResetCharge();
+            }
+        }
+
+        protected virtual void ResetCharge()
+        {
+            isCharging = false;
+            isFullyCharged = false;
+            currentChargeTime = 0f;
+            ChargeWeaponEvent.Trigger(0f, ChargeWeaponEventType.CancelCharging);
+        }
+        void UpdateChargeUI(float charge01)
+        {
+            ChargeWeaponEvent.Trigger(charge01, ChargeWeaponEventType.UpdateCharge);
+        }
+
+        protected virtual void ReleaseChargedAttack()
+        {
+            var charge01 = currentChargeTime / timeToFullCharge;
+
+            if (isFullyCharged)
+                PerformHeavyAttack();
+            else if (charge01 >= minChargeToBoost)
+                PerformChargedLightAttack(charge01);
+            else
+                PerformToolAction();
+
+
+            ChargeWeaponEvent.Trigger(1f, ChargeWeaponEventType.ChargeRelease);
+
+            ResetCharge();
+        }
+
         /// <summary>
         ///     Spawns VFX at hit point with automatic cleanup
         /// </summary>
@@ -122,6 +190,24 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 return toolAttackProfile.heavyAttack;
 
             return null;
+        }
+
+        protected virtual void PerformHeavyAttack()
+        {
+            var attack = DetermineCorrectPlayerToolAttack(AttackDamageType.HeavyHit);
+            AnimController.PlayHeavyAttack();
+            StartCoroutine(ApplyHitAfterDelay(heavyHitDelay));
+        }
+
+        protected virtual void PerformChargedLightAttack(float charge01)
+        {
+            var attack = DetermineCorrectPlayerToolAttack(AttackDamageType.BasicHit);
+
+            var chargeMultiplier = Mathf.Lerp(1f, 1.35f, charge01);
+
+
+            AnimController.PlayToolUseOneShot();
+            StartCoroutine(ApplyHitAfterDelay(defaultHitDelay, chargeMultiplier));
         }
 
 
@@ -243,16 +329,16 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             CurrentSwingIndex = (CurrentSwingIndex + 1) % Mathf.Max(1, availableSwings);
         }
 
-        protected virtual IEnumerator ApplyHitAfterDelay(float delay)
+        protected virtual IEnumerator ApplyHitAfterDelay(float delay, float chargeMultiplier = 1f)
         {
             // Wait for the specified delay to sync with animation
             yield return new WaitForSeconds(delay);
 
             // Perform the actual hit detection and application
-            ApplyHit();
+            ApplyHit(chargeMultiplier);
         }
 
-        public abstract void ApplyHit();
+        public abstract void ApplyHit(float chargeMultiplier);
 
         public abstract void PerformToolAction();
     }
