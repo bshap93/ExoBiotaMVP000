@@ -52,7 +52,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
             PerformToolAction();
         }
-        public override void ChargeUse()
+        public override void ChargeUse(bool justPressed)
         {
             throw new NotImplementedException();
         }

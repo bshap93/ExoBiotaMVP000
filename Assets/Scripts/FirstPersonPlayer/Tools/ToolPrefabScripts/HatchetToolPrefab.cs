@@ -4,6 +4,7 @@ using FirstPersonPlayer.Interactable;
 using FirstPersonPlayer.Minable;
 using FirstPersonPlayer.Tools.Interface;
 using Helpers.Events;
+using Helpers.Events.Combat;
 using Helpers.Events.Status;
 using Manager;
 using MoreMountains.Feedbacks;
@@ -85,6 +86,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
                 PerformToolAction();
                 Debug.Log("Performing normal tool action.");
+                ChargeToolEvent.Trigger(ChargeToolEventType.Release);
             }
             else if (ChargeTimeElapsed >= timeToFullCharge && ToolIsHeldInChargePosition)
             {
@@ -99,6 +101,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 }
 
                 PerformHeavyChargedToolAction();
+                ChargeToolEvent.Trigger(ChargeToolEventType.Release);
             }
             else if (ToolIsHeldInChargePosition)
             {
@@ -112,6 +115,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 }
 
                 PerformPartiallyChargedToolAction();
+                ChargeToolEvent.Trigger(ChargeToolEventType.Release);
                 Debug.Log("Performing partially charged tool action.");
             }
 

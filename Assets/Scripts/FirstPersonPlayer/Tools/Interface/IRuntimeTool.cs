@@ -32,6 +32,6 @@ namespace FirstPersonPlayer.Tools.Interface
 
         //MMFeedbacks GetUseToolFeedbacks();
         MMFeedbacks GetUnequipFeedbacks();
-        void ChargeUse();
+        void ChargeUse(bool justPressed = false);
     }
 }

@@ -1024,6 +1024,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74821b393212fae43aa90348649fe128, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pullbackQuicknessFactor: 1
   toolAttackProfile: {fileID: 11400000, guid: e3251e058139a894684eb6a3a27f2856, type: 2}
   attributesManager: {fileID: 0}
   agilityCooldownSecondsReducePerPoint: 0
@@ -1054,11 +1055,13 @@ MonoBehaviour:
   allowedTags:
   - HackableBioStructure
   baseStaminaCostPerConnectingSwing: 2.5
+  baseStaminaCostPerHeavyConnectingSwing: 2
   normalSwingCooldown: 1.2
   fromHeldUpChargedSwingCooldown: 0.3
   hatchetPower: 1
   defaultReticleForTool: {fileID: 21300000, guid: 85b809804a98b954dbc107053cc51dfb, type: 3}
   lastSwingTime: -999
+  heavySwingDownFactor: 1.2
 --- !u!114 &4098584162942740169
 MonoBehaviour:
   m_ObjectHideFlags: 0

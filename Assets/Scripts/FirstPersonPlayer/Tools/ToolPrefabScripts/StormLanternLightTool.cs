@@ -110,7 +110,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         {
             return equippedFeedbacks;
         }
-        public void ChargeUse()
+        public void ChargeUse(bool justPressed)
         {
             throw new NotImplementedException();
         }

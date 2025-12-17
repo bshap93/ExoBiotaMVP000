@@ -3,6 +3,7 @@ using System.Collections;
 using FirstPersonPlayer.Combat.Player.ScriptableObjects;
 using FirstPersonPlayer.Tools.Interface;
 using Helpers.AnimancerHelper;
+using Helpers.Events.Combat;
 using Helpers.Events.ManagerEvents;
 using Helpers.ScriptableObjects.Animation;
 using Manager;
@@ -20,6 +21,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             Normal,
             Heavy
         }
+
+        [SerializeField] protected float pullbackQuicknessFactor = 1f;
 
         [FormerlySerializedAs("ToolAttackProfile")]
         public PlayerToolAttackProfile toolAttackProfile;
@@ -120,10 +123,14 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             return detectableType;
         }
 
-        public virtual void ChargeUse()
+        public virtual void ChargeUse(bool justPressed)
         {
             StartChargePullbackAnimation();
             ChargeTimeElapsed += Time.deltaTime;
+
+            ChargeToolEvent.Trigger(
+                ChargeToolEventType.Update,
+                ChargeTimeElapsed / timeToFullCharge);
         }
 
         /// <summary>
@@ -267,6 +274,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             var layer = AnimController.animancerComponent.Layers[1];
 
             var state = layer.Play(AnimController.currentToolAnimationSet.beginUseAnimation);
+            state.Speed *= pullbackQuicknessFactor;
             layer.Weight = 1f;
 
             AnimController.SetActionState(state);
@@ -276,6 +284,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             state.Events(this).OnEnd = () =>
             {
                 ToolIsHeldInChargePosition = true;
+                ChargeToolEvent.Trigger(ChargeToolEventType.Start, ChargeTimeElapsed / timeToFullCharge);
                 // layer.Weight = 0f;
                 // AnimController.ClearActionState();
                 // AnimController.ReturnToLocomotion();

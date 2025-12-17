@@ -57,7 +57,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Container
             return detectableType;
         }
         public abstract MMFeedbacks GetUnequipFeedbacks();
-        public void ChargeUse()
+        public void ChargeUse(bool justPressed)
         {
             throw new NotImplementedException();
         }

@@ -48,7 +48,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         {
             throw new NotImplementedException();
         }
-        public void ChargeUse()
+        public void ChargeUse(bool justPressed)
         {
             throw new NotImplementedException();
         }

@@ -1,6 +1,7 @@
 using System.Collections;
 using Domains.Gameplay.Equipment.Events;
 using Helpers.Events;
+using Helpers.Events.Combat;
 using MoreMountains.Tools;
 using UnityEngine;
 
@@ -8,32 +9,36 @@ using UnityEngine;
 
 namespace FirstPersonPlayer.UI
 {
-    public class ProgressBarBlue : MonoBehaviour, MMEventListener<EquipmentEvent>, MMEventListener<BioSampleEvent>, MMEventListener<ScannerEvent>
+    public class ProgressBarBlue : MonoBehaviour, MMEventListener<EquipmentEvent>,
+        MMEventListener<BioSampleEvent>, MMEventListener<ScannerEvent>,
+        MMEventListener<ChargeToolEvent>
     {
         [SerializeField] protected MMProgressBar cooldownProgressBar;
         [SerializeField] protected CanvasGroup cooldownCanvasGroup;
 
-        private Coroutine _running;
+        Coroutine _running;
 
-        private void OnEnable()
+        void OnEnable()
         {
             this.MMEventStartListening<BioSampleEvent>();
             this.MMEventStartListening<EquipmentEvent>();
             this.MMEventStartListening<ScannerEvent>();
+            this.MMEventStartListening<ChargeToolEvent>();
         }
 
-        private void OnDisable()
+        void OnDisable()
         {
             this.MMEventStopListening<BioSampleEvent>();
             this.MMEventStopListening<EquipmentEvent>();
             this.MMEventStopListening<ScannerEvent>();
+            this.MMEventStopListening<ChargeToolEvent>();
         }
 
         public void OnMMEvent(BioSampleEvent e)
         {
             switch (e.EventType)
             {
-                case BioSampleEventType.Abort: 
+                case BioSampleEventType.Abort:
                     StopAndHide();
                     break;
 
@@ -54,13 +59,50 @@ namespace FirstPersonPlayer.UI
                     break;
             }
         }
+        public void OnMMEvent(ChargeToolEvent eventType)
+        {
+            switch (eventType.EventType)
+            {
+                case ChargeToolEventType.Start:
+                    if (cooldownProgressBar != null)
+                    {
+                        cooldownCanvasGroup.alpha = 1f;
+                        cooldownProgressBar.UpdateBar01(eventType.FractionCharged);
+                    }
+
+                    break;
+                case ChargeToolEventType.Update:
+                    if (cooldownProgressBar != null)
+                        // cooldownCanvasGroup.alpha = 1f;
+                        cooldownProgressBar.UpdateBar01(eventType.FractionCharged);
+
+                    break;
+                case ChargeToolEventType.Release:
+                    StopAndHide();
+                    break;
+                case ChargeToolEventType.Cancel:
+                    StopAndHide();
+                    break;
+            }
+        }
 
         public void OnMMEvent(EquipmentEvent eventType)
         {
             StopAndHide();
         }
 
-        private void StopAndHide()
+        public void OnMMEvent(ScannerEvent eventType)
+        {
+            if (eventType.ScannerEventType == ScannerEventType.ExaminationStart)
+            {
+                if (_running != null) StopCoroutine(_running);
+                _running = StartCoroutine(ShowCooldownBarCoroutine(eventType.Duration));
+            }
+
+            if (eventType.ScannerEventType == ScannerEventType.ExaminationEnd) StopAndHide();
+        }
+
+        void StopAndHide()
         {
             if (_running != null)
             {
@@ -103,20 +145,6 @@ namespace FirstPersonPlayer.UI
         public void ResetCooldownBar()
         {
             if (cooldownProgressBar) cooldownProgressBar.UpdateBar01(0f);
-        }
-
-        public void OnMMEvent(ScannerEvent eventType)
-        {
-            if (eventType.ScannerEventType == ScannerEventType.ExaminationStart)
-            {
-                if (_running != null) StopCoroutine(_running);
-                _running = StartCoroutine(ShowCooldownBarCoroutine(eventType.Duration));
-            }
-
-            if (eventType.ScannerEventType == ScannerEventType.ExaminationEnd)
-            {
-                StopAndHide();
-            }
         }
     }
 }

@@ -218,9 +218,10 @@ namespace FirstPersonPlayer.Tools
                     _nextUseTime = Time.time + CurrentToolSo.cooldown;
             }
 
+
             if (CurrentRuntimeTool.ToolIsUsedOnRelease())
             {
-                if (useButtonHeld) CurrentRuntimeTool.ChargeUse();
+                if (useButtonHeld) CurrentRuntimeTool.ChargeUse(justPressed);
 
                 if (justReleased) CurrentRuntimeTool.Use();
             }
