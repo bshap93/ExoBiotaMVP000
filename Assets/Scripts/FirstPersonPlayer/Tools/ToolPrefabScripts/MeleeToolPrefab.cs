@@ -195,19 +195,76 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         protected virtual void PerformHeavyAttack()
         {
             var attack = DetermineCorrectPlayerToolAttack(AttackDamageType.HeavyHit);
-            AnimController.PlayHeavyAttack();
-            StartCoroutine(ApplyHitAfterDelay(heavyHitDelay));
+
+            // Play animation and set action state immediately
+            if (AnimController.currentToolAnimationSet?.heavySwingAnimation != null)
+            {
+                var layer = AnimController.animancerComponent.Layers[1];
+                var state = layer.Play(
+                    AnimController.currentToolAnimationSet.heavySwingAnimation,
+                    AnimController.defaultTransitionDuration);
+
+                layer.Weight = 1f;
+
+                // CRITICAL: Set action state BEFORE any delays
+                AnimController.SetActionState(state);
+
+                state.Speed = 0.5f;
+                state.Events(this).Clear();
+
+                state.Events(this).OnEnd = () =>
+                {
+                    layer.Weight = 0f;
+                    AnimController.ClearActionState();
+                    AnimController.ReturnToLocomotion();
+                };
+
+                // Now start the hit delay coroutine
+                StartCoroutine(ApplyHitAfterDelay(heavyHitDelay));
+            }
+
+            // AnimController.PlayHeavyAttack();
+            // StartCoroutine(ApplyHitAfterDelay(heavyHitDelay));
         }
 
         protected virtual void PerformChargedLightAttack(float charge01)
         {
             var attack = DetermineCorrectPlayerToolAttack(AttackDamageType.BasicHit);
-
             var chargeMultiplier = Mathf.Lerp(1f, 1.35f, charge01);
+            if (useMultipleSwings && AnimController.currentToolAnimationSet != null)
+            {
+                PlaySwingSequence(chargeMultiplier);
+            }
+            else
+            {
+                // Fallback: play animation with proper action state tracking
+                if (AnimController.currentToolAnimationSet?.beginUseAnimation != null)
+                {
+                    var layer = AnimController.animancerComponent.Layers[1];
+                    var state = layer.Play(
+                        AnimController.currentToolAnimationSet.beginUseAnimation,
+                        AnimController.defaultTransitionDuration);
+
+                    layer.Weight = 1f;
+
+                    // Set action state immediately
+                    AnimController.SetActionState(state);
+
+                    state.Events(this).Clear();
+                    state.Events(this).OnEnd = () =>
+                    {
+                        layer.Weight = 0f;
+                        AnimController.ClearActionState();
+                        AnimController.ReturnToLocomotion();
+                    };
+
+                    StartCoroutine(ApplyHitAfterDelay(defaultHitDelay, chargeMultiplier));
+                }
+            }
 
 
-            AnimController.PlayToolUseOneShot();
-            StartCoroutine(ApplyHitAfterDelay(defaultHitDelay, chargeMultiplier));
+            // AnimController.PlayToolUseOneShot();
+            // StartCoroutine(ApplyHitAfterDelay(defaultHitDelay, chargeMultiplier));
         }
 
 
@@ -223,7 +280,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             }
         }
 
-        public virtual void PlaySwingSequence()
+        public virtual void PlaySwingSequence(float chargeMultiplier = 1f)
         {
             var animSet = AnimController.currentToolAnimationSet;
             AnimationClip swingClip = null;
@@ -267,16 +324,38 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 PlaySwingAnimation(swingClip);
 
                 // Start coroutine with the appropriate delay
-                StartCoroutine(ApplyHitAfterDelay(hitDelay));
+                StartCoroutine(ApplyHitAfterDelay(hitDelay, chargeMultiplier));
 
                 // Advance to next swing (with wrap-around)
                 AdvanceSwingIndex(animSet);
             }
             else
             {
+                // No swing animations available, use legacy mode with charge
+                if (AnimController.currentToolAnimationSet?.beginUseAnimation != null)
+                {
+                    var layer = AnimController.animancerComponent.Layers[1];
+                    var state = layer.Play(
+                        AnimController.currentToolAnimationSet.beginUseAnimation,
+                        AnimController.defaultTransitionDuration);
+
+                    layer.Weight = 1f;
+
+                    AnimController.SetActionState(state);
+
+                    state.Events(this).Clear();
+                    state.Events(this).OnEnd = () =>
+                    {
+                        layer.Weight = 0f;
+                        AnimController.ClearActionState();
+                        AnimController.ReturnToLocomotion();
+                    };
+
+                    StartCoroutine(ApplyHitAfterDelay(defaultHitDelay, chargeMultiplier));
+                }
                 // No swing animations available, use legacy mode
-                AnimController.PlayToolUseOneShot();
-                StartCoroutine(ApplyHitAfterDelay(defaultHitDelay));
+                // AnimController.PlayToolUseOneShot();
+                // StartCoroutine(ApplyHitAfterDelay(defaultHitDelay, chargeMultiplier));
             }
         }
 

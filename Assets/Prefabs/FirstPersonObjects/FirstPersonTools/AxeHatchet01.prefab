@@ -1025,7 +1025,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toolAttackProfile: {fileID: 11400000, guid: e3251e058139a894684eb6a3a27f2856, type: 2}
-  supportsChargeAttack: 1
+  supportsChargeAttack: 0
   timeToFullCharge: 1.25
   minChargeToBoost: 0.25
   attributesManager: {fileID: 0}
