@@ -49,7 +49,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 if (attrMgr == null) return baseStaminaCostPerConnectingSwing;
 
                 var agility = attrMgr.Agility;
-                var reduction = agilityReductionFactor * agility; // Example: 0.05
+                var reduction = agilityReductionFactor * (agility - 1); // Example: 0.05
                 var finalCost = baseStaminaCostPerConnectingSwing * (1f - reduction);
 
                 return Mathf.Max(0.1f, finalCost); // Ensure a minimum cost
@@ -63,7 +63,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 var attrMgr = AttributesManager.Instance;
                 if (attrMgr == null) return baseStaminaCostPerHeavyConnectingSwing;
                 var agility = attrMgr.Agility;
-                var reduction = agilityReductionFactor * agility; // Example: 0.05
+                var reduction = agilityReductionFactor * (agility - 1); // Example: 0.05
                 var finalCost = baseStaminaCostPerHeavyConnectingSwing * (1f - reduction);
 
                 return Mathf.Max(0.1f, finalCost); // Ensure a minimum cost
@@ -73,6 +73,22 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         public override void Use()
         {
             if (attributesManager == null) attributesManager = AttributesManager.Instance;
+
+            // If button released while pullback animation is still playing
+            if (ChargeTimeElapsed > 0f && !ToolIsHeldInChargePosition)
+            {
+                // Cancel the pullback and return to idle
+                // var layer = AnimController.animancerComponent.Layers[1];
+                // layer.Weight = 0f;
+                // AnimController.ClearActionState();
+                // AnimController.ReturnToLocomotion();
+                PerformToolAction();
+
+                ChargeTimeElapsed = 0f;
+                ChargeToolEvent.Trigger(ChargeToolEventType.Release);
+                return;
+            }
+
             if (!ToolIsHeldInChargePosition)
             {
                 if (PlayerMutableStatsManager.Instance.CurrentStamina < StaminaCostPerNormalConnectingSwing)
@@ -85,6 +101,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 }
 
                 PerformToolAction();
+
                 ChargeToolEvent.Trigger(ChargeToolEventType.Release);
             }
             else if (ChargeTimeElapsed >= timeToFullCharge && ToolIsHeldInChargePosition)
@@ -240,9 +257,22 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
 
                 enemyController.ProcessAttackDamage(playerAttack);
-                PlayerStatsEvent.Trigger(
-                    PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
-                    StaminaCostPerNormalConnectingSwing);
+                if (hitType == HitType.Heavy)
+                {
+                    PlayerStatsEvent.Trigger(
+                        PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
+                        StaminaCostPerHeavyConnectingSwing);
+
+                    Debug.Log("Stamina decreased by: " + StaminaCostPerHeavyConnectingSwing);
+                }
+                else
+                {
+                    PlayerStatsEvent.Trigger(
+                        PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
+                        StaminaCostPerNormalConnectingSwing);
+
+                    Debug.Log("Stamina decreased by: " + StaminaCostPerNormalConnectingSwing);
+                }
             }
             else
             {

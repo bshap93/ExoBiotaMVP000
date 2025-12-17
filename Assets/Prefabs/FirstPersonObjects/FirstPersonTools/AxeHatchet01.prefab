@@ -1055,7 +1055,7 @@ MonoBehaviour:
   allowedTags:
   - HackableBioStructure
   baseStaminaCostPerConnectingSwing: 2.5
-  baseStaminaCostPerHeavyConnectingSwing: 2
+  baseStaminaCostPerHeavyConnectingSwing: 5
   normalSwingCooldown: 1.2
   fromHeldUpChargedSwingCooldown: 0.3
   hatchetPower: 1
