@@ -4,6 +4,7 @@ using Animancer;
 using DG.Tweening;
 using FirstPersonPlayer.Combat.AINPC.ScriptableObjects;
 using FirstPersonPlayer.Combat.Player.ScriptableObjects;
+using FirstPersonPlayer.Tools.ToolPrefabScripts;
 using Helpers.Events.Combat;
 using Helpers.Events.NPCs;
 using HighlightPlus;
@@ -108,14 +109,14 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
                 blackboard.SetVariableValue("wasHit", true);
                 // StartCoroutine(CooldownAfterWasHit());
 
-                if (playerAttack.damageType == AttackDamageType.BasicHit)
+                if (playerAttack.damageType == MeleeToolPrefab.HitType.Normal)
                 {
                     meleeHitFeedbacksBasic?.PlayFeedbacks();
                     PlayHitTween(t => t.DOPunchPosition(
                         new Vector3(creatureType.meleeAttackShakeIntensity, 0f, creatureType.meleeAttackShakeIntensity),
                         creatureType.meleeAttackShakeDuration));
                 }
-                else if (playerAttack.damageType == AttackDamageType.HeavyHit)
+                else if (playerAttack.damageType == MeleeToolPrefab.HitType.Heavy)
                 {
                     meleeHitFeedbacksHeavy?.PlayFeedbacks();
                     PlayHitTween(t => t.DOShakePosition(

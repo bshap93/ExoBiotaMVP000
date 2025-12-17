@@ -28,6 +28,7 @@ namespace Helpers.ScriptableObjects.Animation
         public AudioClip beginUseAudioClip;
         public AudioClip duringUseLoopAudioClip;
         public AudioClip endUseAudioClip;
+        public AudioClip endHeavyUseAudioClip;
 
         [Header("Tools with Use Pattern like Hatchet")]
         public AnimationClip swing01Animation;

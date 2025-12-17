@@ -1,6 +1,5 @@
 using Feedbacks.Interface;
 using FirstPersonPlayer.Combat.AINPC.Creatures;
-using FirstPersonPlayer.Combat.Player.ScriptableObjects;
 using FirstPersonPlayer.Interactable;
 using FirstPersonPlayer.Minable;
 using FirstPersonPlayer.Tools.Interface;
@@ -22,9 +21,13 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         [FormerlySerializedAs("staminaCostPerConnectingSwing")]
         public float baseStaminaCostPerConnectingSwing = 1f;
 
+        public float baseStaminaCostPerHeavyConnectingSwing = 2f;
 
-        [Tooltip("Number of seconds between swings.")]
-        public float swingCooldown = 0.6f;
+
+        [FormerlySerializedAs("swingCooldown")] [Tooltip("Number of seconds between swings.")]
+        public float normalSwingCooldown = 0.6f;
+
+        public float fromHeldUpChargedSwingCooldown = 0.3f;
 
 
         [Tooltip("Tool power sent to HatchetBreakable (compares to its hardness).")]
@@ -35,6 +38,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
         [FormerlySerializedAs("LastSwingTime")] [SerializeField]
         protected float lastSwingTime = -999f;
+        public float heavySwingDownFactor = 1.2f;
 
         float StaminaCostPerNormalConnectingSwing
         {
@@ -51,24 +55,67 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             }
         }
 
+        float StaminaCostPerHeavyConnectingSwing
+        {
+            get
+            {
+                var attrMgr = AttributesManager.Instance;
+                if (attrMgr == null) return baseStaminaCostPerHeavyConnectingSwing;
+                var agility = attrMgr.Agility;
+                var reduction = agilityReductionFactor * agility; // Example: 0.05
+                var finalCost = baseStaminaCostPerHeavyConnectingSwing * (1f - reduction);
+
+                return Mathf.Max(0.1f, finalCost); // Ensure a minimum cost
+            }
+        }
+
         public override void Use()
         {
-            if (PlayerMutableStatsManager.Instance.CurrentStamina < StaminaCostPerNormalConnectingSwing)
+            if (attributesManager == null) attributesManager = AttributesManager.Instance;
+            if (!ToolIsHeldInChargePosition)
             {
-                // Not enough stamina
-                AlertEvent.Trigger(
-                    AlertReason.NotEnoughStamina, "Not enough stamina to use pickaxe.", "Insufficient Stamina");
+                if (PlayerMutableStatsManager.Instance.CurrentStamina < StaminaCostPerNormalConnectingSwing)
+                {
+                    // Not enough stamina
+                    AlertEvent.Trigger(
+                        AlertReason.NotEnoughStamina, "Not enough stamina to use pickaxe.", "Insufficient Stamina");
 
-                return;
+                    return;
+                }
+
+                PerformToolAction();
+                Debug.Log("Performing normal tool action.");
+            }
+            else if (ChargeTimeElapsed >= timeToFullCharge && ToolIsHeldInChargePosition)
+            {
+                Debug.Log("Charge Time Elapsed: " + ChargeTimeElapsed);
+                if (PlayerMutableStatsManager.Instance.CurrentStamina < StaminaCostPerHeavyConnectingSwing)
+                {
+                    // Not enough stamina
+                    AlertEvent.Trigger(
+                        AlertReason.NotEnoughStamina, "Not enough stamina to use pickaxe.", "Insufficient Stamina");
+
+                    return;
+                }
+
+                PerformHeavyChargedToolAction();
+            }
+            else if (ToolIsHeldInChargePosition)
+            {
+                if (PlayerMutableStatsManager.Instance.CurrentStamina < StaminaCostPerNormalConnectingSwing)
+                {
+                    // Not enough stamina
+                    AlertEvent.Trigger(
+                        AlertReason.NotEnoughStamina, "Not enough stamina to use pickaxe.", "Insufficient Stamina");
+
+                    return;
+                }
+
+                PerformPartiallyChargedToolAction();
+                Debug.Log("Performing partially charged tool action.");
             }
 
-            if (attributesManager == null) attributesManager = AttributesManager.Instance;
-
-            PerformToolAction();
-        }
-        public override void ChargeUse()
-        {
-            StartChargePullbackAnimation();
+            // PerformToolAction();
         }
 
 
@@ -124,29 +171,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             return unequippedFeedbacks;
         }
 
-        public void StartChargePullbackAnimation()
-        {
-            if (AnimController.animancerComponent == null) return;
 
-            var layer = AnimController.animancerComponent.Layers[1];
-
-            var state = layer.Play(AnimController.currentToolAnimationSet.beginUseAnimation);
-            layer.Weight = 1f;
-
-            AnimController.SetActionState(state);
-
-            state.Events(this).Clear();
-
-            state.Events(this).OnEnd = () =>
-            {
-                // layer.Weight = 0f;
-                // AnimController.ClearActionState();
-                // AnimController.ReturnToLocomotion();
-            };
-        }
-
-
-        public override void ApplyHit()
+        public override void ApplyHit(HitType hitType = HitType.Normal)
         {
             if (!mainCamera) mainCamera = Camera.main;
             if (!mainCamera) return;
@@ -162,7 +188,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             if (go.TryGetComponent<IBreakable>(out var breakable))
             {
                 // hardness/HP handled inside component
-                breakable.ApplyHit(hatchetPower, hit.point, hit.normal);
+                breakable.ApplyHit(hatchetPower, hit.point, hit.normal, hitType);
 
                 // SpawnFxForConnectingHit(hit.point, hit.normal);
                 PlayerStatsEvent.Trigger(
@@ -200,7 +226,9 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                     return;
                 }
 
-                var playerAttack = DetermineCorrectPlayerToolAttack(AttackDamageType.BasicHit);
+                var playerAttack = DetermineCorrectPlayerToolAttack(hitType);
+
+                Debug.Log("Player attack was determined as: " + playerAttack.AttackID);
 
 
                 // Spawn VFX with proper cleanup
@@ -229,19 +257,94 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
         public override void PerformToolAction()
         {
-            swingCooldown -= agilityCooldownSecondsReducePerPoint * (attributesManager.Agility - 1);
-            if (Time.time < lastSwingTime + swingCooldown) return;
+            normalSwingCooldown -= agilityCooldownSecondsReducePerPoint * (attributesManager.Agility - 1);
+            if (Time.time < lastSwingTime + normalSwingCooldown) return;
             lastSwingTime = Time.time;
+
 
             if (useMultipleSwings && AnimController.currentToolAnimationSet != null)
             {
                 PlaySwingSequence();
+                ToolIsHeldInChargePosition = false;
             }
             else
             {
                 // Fallback to legacy single animation mode
                 AnimController.PlayToolUseOneShot();
-                StartCoroutine(ApplyHitAfterDelay(defaultHitDelay));
+                ToolIsHeldInChargePosition = false;
+                StartCoroutine(ApplyNormalHitAfterDelay(defaultHitDelay));
+            }
+
+            ChargeTimeElapsed = 0f;
+            ToolIsHeldInChargePosition = false;
+        }
+        public override void PerformPartiallyChargedToolAction()
+        {
+            var ratioNormalCooldownToCharged =
+                fromHeldUpChargedSwingCooldown / normalSwingCooldown;
+
+            // Cooldown is still reduced by agility but less because player is starting from held-up position
+            fromHeldUpChargedSwingCooldown -= ratioNormalCooldownToCharged * agilityCooldownSecondsReducePerPoint *
+                                              (attributesManager.Agility - 1);
+
+            PlayDownFromHeldUpSwingAnimation();
+            ChargeTimeElapsed = 0f;
+            ToolIsHeldInChargePosition = false;
+        }
+
+        public override void PerformHeavyChargedToolAction()
+        {
+            var ratioNormalCooldownToCharged =
+                fromHeldUpChargedSwingCooldown / normalSwingCooldown;
+
+            // Cooldown is still reduced by agility but less because player is starting from held-up position
+            fromHeldUpChargedSwingCooldown -= ratioNormalCooldownToCharged * agilityCooldownSecondsReducePerPoint *
+                                              (attributesManager.Agility - 1);
+
+            PlayHeavyDownFromHeldUpSwingAnimation();
+            ChargeTimeElapsed = 0f;
+            ToolIsHeldInChargePosition = false;
+        }
+
+        public void PlayHeavyDownFromHeldUpSwingAnimation()
+        {
+            var animSet = AnimController.currentToolAnimationSet;
+            AnimationClip downFromHeldUpSwingClip = null;
+            AudioClip downFromHeldUpSwingAudioCLip = null;
+            var hitDelay = swingDownHitDelay * heavySwingDownFactor;
+
+            downFromHeldUpSwingClip = animSet.endUseAnimation;
+            downFromHeldUpSwingAudioCLip = animSet.endHeavyUseAudioClip;
+
+            if (downFromHeldUpSwingAudioCLip != null)
+                StartCoroutine(PlaySoundAfterDelay(downFromHeldUpSwingAudioCLip, hitDelay / 2f));
+
+            if (downFromHeldUpSwingClip != null)
+            {
+                PlaySwingAnimation(downFromHeldUpSwingClip);
+
+                StartCoroutine(ApplyHeavyHitAfterDelay(hitDelay));
+            }
+        }
+
+        public void PlayDownFromHeldUpSwingAnimation()
+        {
+            var animSet = AnimController.currentToolAnimationSet;
+            AnimationClip downFromHeldUpSwingClip = null;
+            AudioClip downFromHeldUpSwingAudioCLip = null;
+            var hitDelay = swingDownHitDelay;
+
+            downFromHeldUpSwingClip = animSet.endUseAnimation;
+            downFromHeldUpSwingAudioCLip = animSet.endUseAudioClip;
+
+            if (downFromHeldUpSwingAudioCLip != null)
+                StartCoroutine(PlaySoundAfterDelay(downFromHeldUpSwingAudioCLip, swingDownHitDelay / 2f));
+
+            if (downFromHeldUpSwingClip != null)
+            {
+                PlaySwingAnimation(downFromHeldUpSwingClip);
+
+                StartCoroutine(ApplyNormalHitAfterDelay(swingDownHitDelay));
             }
         }
 

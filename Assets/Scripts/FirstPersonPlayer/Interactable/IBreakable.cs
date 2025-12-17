@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using FirstPersonPlayer.Tools.ToolPrefabScripts;
 using UnityEngine;
 
 namespace FirstPersonPlayer.Interactable
@@ -6,7 +7,8 @@ namespace FirstPersonPlayer.Interactable
     public interface IBreakable
     {
         bool CanBeDamagedBy(int toolPower, int strength);
-        void ApplyHit(int toolPower, Vector3 hitPoint, Vector3 hitNormal);
+        void ApplyHit(int toolPower, Vector3 hitPoint, Vector3 hitNormal,
+            MeleeToolPrefab.HitType hitType = MeleeToolPrefab.HitType.Normal);
         IEnumerator InitializeAfterDestructableManager();
     }
 }

@@ -208,7 +208,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             return false;
         }
 
-        public override void ApplyHit()
+        public override void ApplyHit(HitType hitType = HitType.Normal)
         {
             // Use the stored hit from when button was pressed
 
@@ -255,7 +255,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             }
             else if (go.TryGetComponent<BreakableStoneBarrier>(out var breakableStone))
             {
-                breakableStone.ApplyHit(pickaxePower, hit.point, hit.normal);
+                breakableStone.ApplyHit(pickaxePower, hit.point, hit.normal, hitType);
                 hitRockFeedbacks?.PlayFeedbacks();
             }
             else if (go.CompareTag("MiscRigidOrganism"))
@@ -292,6 +292,14 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
             _lastSwingTime = Time.time;
             PlaySwingSequence();
+        }
+        public override void PerformPartiallyChargedToolAction()
+        {
+            throw new NotImplementedException();
+        }
+        public override void PerformHeavyChargedToolAction()
+        {
+            throw new NotImplementedException();
         }
 
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FirstPersonPlayer.Interface;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
+using FirstPersonPlayer.Tools.ToolPrefabScripts;
 using Helpers.Events;
 using Helpers.Events.Domains.Player.Events;
 using Helpers.Events.Gated;
@@ -133,9 +134,10 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
         {
             return toolPower >= hardness;
         }
-        public void ApplyHit(int toolPower, Vector3 hitPoint, Vector3 hitNormal)
+        public void ApplyHit(int toolPower, Vector3 hitPoint, Vector3 hitNormal,
+            MeleeToolPrefab.HitType hitType = MeleeToolPrefab.HitType.Normal)
         {
-            ApplyHatchetHit(toolPower, hitPoint, hitNormal);
+            ApplyHatchetHit(toolPower, hitPoint, hitNormal, hitType);
         }
         public List<string> HasToolForInteractionInInventory()
         {
@@ -500,11 +502,11 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
 
             // Skip the incremental hits; just perform the full break logic
             _hitCount = defaultHitsToBreak;
-            ApplyHatchetHit(hardness, transform.position, transform.up);
+            ApplyHatchetHit(hardness, transform.position, transform.up, MeleeToolPrefab.HitType.Normal);
         }
 
 
-        void ApplyHatchetHit(int toolPower, Vector3 hitPoint, Vector3 hitNormal)
+        void ApplyHatchetHit(int toolPower, Vector3 hitPoint, Vector3 hitNormal, MeleeToolPrefab.HitType hitType)
         {
             var attrMgr = AttributesManager.Instance;
             // Prevent breaking if already broken

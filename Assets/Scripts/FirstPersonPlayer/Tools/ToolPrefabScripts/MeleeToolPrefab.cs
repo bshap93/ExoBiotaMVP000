@@ -7,6 +7,7 @@ using Helpers.Events.ManagerEvents;
 using Helpers.ScriptableObjects.Animation;
 using Manager;
 using MoreMountains.Feedbacks;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -14,6 +15,12 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 {
     public abstract class MeleeToolPrefab : MonoBehaviour, IRuntimeTool
     {
+        public enum HitType
+        {
+            Normal,
+            Heavy
+        }
+
         [FormerlySerializedAs("ToolAttackProfile")]
         public PlayerToolAttackProfile toolAttackProfile;
 
@@ -36,6 +43,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
         [Tooltip("Fallback delay if using beginUseAnimation (legacy mode).")]
         public float defaultHitDelay = 0.2f;
+
+        public float swingDownHitDelay = 0.1f;
 
         public bool useOnRelease;
 
@@ -63,24 +72,24 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         [Tooltip("Optional physics mask to limit what raycast can hit.")]
         public LayerMask hitMask = ~0;
 
+        [ShowIf("useOnRelease")] public float timeToFullCharge = 1.5f;
+
 
         protected AnimancerRightArmController AnimController;
+
+        protected float ChargeTimeElapsed;
 
         protected int CurrentSwingIndex; // Track which swing we're on
         protected RaycastHit LastHit;
 
         // protected float LastTimeOfEffect = -999f;
 
+        protected bool ToolIsHeldInChargePosition;
+
 
         public abstract void Initialize(PlayerEquipment owner);
 
-        public virtual void Use()
-        {
-            if (attributesManager == null) attributesManager = AttributesManager.Instance;
-            PerformToolAction();
-        }
-
-        public abstract void ChargeUse();
+        public abstract void Use();
 
 
         public virtual void Unequip()
@@ -111,6 +120,12 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             return detectableType;
         }
 
+        public virtual void ChargeUse()
+        {
+            StartChargePullbackAnimation();
+            ChargeTimeElapsed += Time.deltaTime;
+        }
+
         /// <summary>
         ///     Spawns VFX at hit point with automatic cleanup
         /// </summary>
@@ -123,13 +138,17 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         }
 
 
-        protected PlayerToolAttack DetermineCorrectPlayerToolAttack(AttackDamageType attackType)
+        protected PlayerToolAttack DetermineCorrectPlayerToolAttack(HitType attackType)
         {
-            if (attackType == AttackDamageType.BasicHit)
+            if (attackType == HitType.Normal)
                 return toolAttackProfile.basicAttack;
 
-            if (attackType == AttackDamageType.HeavyHit)
+            if (attackType == HitType.Heavy)
+
+            {
+                Debug.Log("Heavy attack selected");
                 return toolAttackProfile.heavyAttack;
+            }
 
             return null;
         }
@@ -191,7 +210,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 PlaySwingAnimation(swingClip);
 
                 // Start coroutine with the appropriate delay
-                StartCoroutine(ApplyHitAfterDelay(hitDelay));
+                StartCoroutine(ApplyNormalHitAfterDelay(hitDelay));
 
                 // Advance to next swing (with wrap-around)
                 AdvanceSwingIndex(animSet);
@@ -200,9 +219,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             {
                 // No swing animations available, use legacy mode
                 AnimController.PlayToolUseOneShot();
-                StartCoroutine(ApplyHitAfterDelay(defaultHitDelay));
+                StartCoroutine(ApplyNormalHitAfterDelay(defaultHitDelay));
             }
         }
+
 
         protected IEnumerator PlaySoundAfterDelay(AudioClip clip, float delay)
         {
@@ -240,6 +260,28 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             };
         }
 
+        public void StartChargePullbackAnimation()
+        {
+            if (AnimController.animancerComponent == null) return;
+
+            var layer = AnimController.animancerComponent.Layers[1];
+
+            var state = layer.Play(AnimController.currentToolAnimationSet.beginUseAnimation);
+            layer.Weight = 1f;
+
+            AnimController.SetActionState(state);
+
+            state.Events(this).Clear();
+
+            state.Events(this).OnEnd = () =>
+            {
+                ToolIsHeldInChargePosition = true;
+                // layer.Weight = 0f;
+                // AnimController.ClearActionState();
+                // AnimController.ReturnToLocomotion();
+            };
+        }
+
 
         protected virtual void AdvanceSwingIndex(ToolAnimationSet animSet)
         {
@@ -253,7 +295,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             CurrentSwingIndex = (CurrentSwingIndex + 1) % Mathf.Max(1, availableSwings);
         }
 
-        protected virtual IEnumerator ApplyHitAfterDelay(float delay)
+        protected virtual IEnumerator ApplyNormalHitAfterDelay(float delay)
         {
             // Wait for the specified delay to sync with animation
             yield return new WaitForSeconds(delay);
@@ -262,8 +304,22 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             ApplyHit();
         }
 
-        public abstract void ApplyHit();
+
+        protected virtual IEnumerator ApplyHeavyHitAfterDelay(float delay)
+        {
+            // Wait for the specified delay to sync with animation
+            yield return new WaitForSeconds(delay);
+
+            // Perform the actual hit detection and application
+            ApplyHit(HitType.Heavy);
+        }
+
+        public abstract void ApplyHit(HitType hitType = HitType.Normal);
 
         public abstract void PerformToolAction();
+
+        public abstract void PerformPartiallyChargedToolAction();
+
+        public abstract void PerformHeavyChargedToolAction();
     }
 }

@@ -313,8 +313,6 @@ namespace SharedUI.IGUI
             // _sourceInventory.EquipItem(_item, _sourceIndex);
             MMInventoryEvent.Trigger(
                 MMInventoryEventType.EquipRequest, null, _item.TargetInventoryName, _item, 1, _sourceIndex, "Player1");
-
-            Debug.Log($"Equip attempt '{_item.ItemName}' from '{_sourceInventory.name}[{_sourceIndex}]'");
         }
 
         void UnequipViaMM()

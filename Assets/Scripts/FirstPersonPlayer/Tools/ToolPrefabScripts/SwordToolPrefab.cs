@@ -102,11 +102,19 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         {
             // no-op for now
         }
-        public override void ApplyHit()
+        public override void ApplyHit(HitType hitType = HitType.Normal)
         {
             throw new NotImplementedException();
         }
         public override void PerformToolAction()
+        {
+            throw new NotImplementedException();
+        }
+        public override void PerformPartiallyChargedToolAction()
+        {
+            throw new NotImplementedException();
+        }
+        public override void PerformHeavyChargedToolAction()
         {
             throw new NotImplementedException();
         }

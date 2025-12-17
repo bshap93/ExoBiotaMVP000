@@ -1,4 +1,5 @@
 ﻿using System;
+using FirstPersonPlayer.Tools.ToolPrefabScripts;
 using UnityEngine;
 
 namespace FirstPersonPlayer.Combat.Player.ScriptableObjects
@@ -10,12 +11,6 @@ namespace FirstPersonPlayer.Combat.Player.ScriptableObjects
         Ranged
     }
 
-    [Serializable]
-    public enum AttackDamageType
-    {
-        BasicHit,
-        HeavyHit
-    }
 
     [CreateAssetMenu(
         fileName = "PlayerToolAttackProfile",
@@ -27,7 +22,7 @@ namespace FirstPersonPlayer.Combat.Player.ScriptableObjects
         public float rawDamage;
         [Range(0f, 1f)] public float critChance;
         public float critMultiplier = 1.2f;
-        public AttackDamageType damageType;
+        public MeleeToolPrefab.HitType damageType;
         public float rawKnockbackForce;
         public bool causesBleeding;
         // showif

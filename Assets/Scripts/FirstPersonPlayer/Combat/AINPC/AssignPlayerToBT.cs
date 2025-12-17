@@ -50,8 +50,6 @@ namespace FirstPersonPlayer.Combat.AINPC
             // Assign THIS instead of the root
             blackboard.SetVariableValue("playerTransform", movingPawn);
             blackboard.SetVariableValue("capsule", capsuleScaler.gameObject);
-
-            Debug.Log("Assigned moving player pawn: " + movingPawn.name);
         }
     }
 }
