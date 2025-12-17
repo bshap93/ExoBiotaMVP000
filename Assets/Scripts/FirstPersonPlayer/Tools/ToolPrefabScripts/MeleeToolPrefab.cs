@@ -125,7 +125,9 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
         public virtual void ChargeUse(bool justPressed)
         {
-            StartChargePullbackAnimation();
+            // Only start animation on initial press
+            if (justPressed) StartChargePullbackAnimation();
+
             ChargeTimeElapsed += Time.deltaTime;
 
             ChargeToolEvent.Trigger(
