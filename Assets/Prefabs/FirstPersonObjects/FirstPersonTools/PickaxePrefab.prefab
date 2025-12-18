@@ -976,6 +976,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6138dc3ff0e4e3c8065059b47926f88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pullbackQuicknessFactor: 1
   toolAttackProfile: {fileID: 11400000, guid: e3251e058139a894684eb6a3a27f2856, type: 2}
   attributesManager: {fileID: 0}
   agilityCooldownSecondsReducePerPoint: 0.04
@@ -985,9 +986,11 @@ MonoBehaviour:
   swing02HitDelay: 0.5
   swing03HitDelay: 0.22
   defaultHitDelay: 0.4
+  swingDownHitDelay: 0.1
+  useOnRelease: 0
   agilityReductionFactor: 0.05
   ineffectualDebrisEffectPrefab: {fileID: 761645417365632772, guid: 21ccbcc231cc6f745aee9b82f260dc79, type: 3}
-  reticleForInabilityToSample: {fileID: 0}
+  reticleForInabilityToHit: {fileID: 0}
   tagsWhichShouldShowInabilityReticle: []
   equipFeedbacks: {fileID: 5697828116582486340}
   unequippedFeedbacks: {fileID: 6348381471594586437}
@@ -999,6 +1002,7 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 16777215
+  timeToFullCharge: 1.5
   miningCooldown: 1
   hardnessCanBreak: 2
   highlighingRange: 5

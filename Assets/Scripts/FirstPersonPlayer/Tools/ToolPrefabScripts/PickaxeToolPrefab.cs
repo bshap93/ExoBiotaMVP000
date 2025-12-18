@@ -217,6 +217,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             if (!hit.collider) return;
             var go = hit.collider.gameObject;
 
+
             if (!_hasValidHit)
             {
                 SpawnFxForIneffectualHit(hit.point, hit.normal);
@@ -230,9 +231,6 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 // hardness/HP handled inside component
                 breakable.ApplyHit(pickaxePower, hit.point, hit.normal);
 
-                PlayerStatsEvent.Trigger(
-                    PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
-                    StaminaPerConnectingSwing);
 
                 // SpawnFxForConnectingHit(hit.point, hit.normal);
                 return;
@@ -241,12 +239,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             var minable = go.GetComponent<IMinable>();
             if (minable != null)
                 if (minable.GetHardness() <= hardnessCanBreak)
-                {
                     minable.MinableMineHit();
-                    PlayerStatsEvent.Trigger(
-                        PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
-                        StaminaPerConnectingSwing);
-                }
+
 
             if (go.TryGetComponent<IFleshyObject>(out var fleshyObject))
             {
@@ -283,14 +277,12 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 QueryTriggerInteraction.Ignore
             );
 
-            // // Validate target BEFORE starting animation
-            // if (_hasValidHit)
-            // {
-            //     var targetGo = _pendingHit.collider.gameObject;
-            //     if (!CanInteractWithObject(targetGo)) return; // Not valid - don't waste swing
-            // }
 
             _lastSwingTime = Time.time;
+            PlayerStatsEvent.Trigger(
+                PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
+                StaminaPerConnectingSwing);
+
             PlaySwingSequence();
         }
         public override void PerformPartiallyChargedToolAction()

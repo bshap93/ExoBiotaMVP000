@@ -209,9 +209,9 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 breakable.ApplyHit(hatchetPower, hit.point, hit.normal, hitType);
 
                 // SpawnFxForConnectingHit(hit.point, hit.normal);
-                PlayerStatsEvent.Trigger(
-                    PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
-                    StaminaCostPerNormalConnectingSwing);
+                // PlayerStatsEvent.Trigger(
+                //     PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
+                //     StaminaCostPerNormalConnectingSwing);
             }
             else if (go.TryGetComponent<MyOreNode>(out var oreNode))
             {
@@ -258,21 +258,15 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
                 enemyController.ProcessAttackDamage(playerAttack);
                 if (hitType == HitType.Heavy)
-                {
-                    PlayerStatsEvent.Trigger(
-                        PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
-                        StaminaCostPerHeavyConnectingSwing);
-
+                    // PlayerStatsEvent.Trigger(
+                    //     PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
+                    //     StaminaCostPerHeavyConnectingSwing);
                     Debug.Log("Stamina decreased by: " + StaminaCostPerHeavyConnectingSwing);
-                }
                 else
-                {
-                    PlayerStatsEvent.Trigger(
-                        PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
-                        StaminaCostPerNormalConnectingSwing);
-
+                    // PlayerStatsEvent.Trigger(
+                    //     PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
+                    //     StaminaCostPerNormalConnectingSwing);
                     Debug.Log("Stamina decreased by: " + StaminaCostPerNormalConnectingSwing);
-                }
             }
             else
             {
@@ -290,6 +284,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             if (Time.time < lastSwingTime + normalSwingCooldown) return;
             lastSwingTime = Time.time;
 
+
+            PlayerStatsEvent.Trigger(
+                PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
+                StaminaCostPerNormalConnectingSwing);
 
             if (useMultipleSwings && AnimController.currentToolAnimationSet != null)
             {
@@ -316,6 +314,11 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             fromHeldUpChargedSwingCooldown -= ratioNormalCooldownToCharged * agilityCooldownSecondsReducePerPoint *
                                               (attributesManager.Agility - 1);
 
+            PlayerStatsEvent.Trigger(
+                PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
+                StaminaCostPerNormalConnectingSwing);
+
+
             PlayDownFromHeldUpSwingAnimation();
             ChargeTimeElapsed = 0f;
             ToolIsHeldInChargePosition = false;
@@ -329,6 +332,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             // Cooldown is still reduced by agility but less because player is starting from held-up position
             fromHeldUpChargedSwingCooldown -= ratioNormalCooldownToCharged * agilityCooldownSecondsReducePerPoint *
                                               (attributesManager.Agility - 1);
+
+            PlayerStatsEvent.Trigger(
+                PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
+                StaminaCostPerHeavyConnectingSwing);
 
             PlayHeavyDownFromHeldUpSwingAnimation();
             ChargeTimeElapsed = 0f;
@@ -344,6 +351,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
             downFromHeldUpSwingClip = animSet.endUseAnimation;
             downFromHeldUpSwingAudioCLip = animSet.endHeavyUseAudioClip;
+
 
             if (downFromHeldUpSwingAudioCLip != null)
                 StartCoroutine(PlaySoundAfterDelay(downFromHeldUpSwingAudioCLip, hitDelay / 2f));
