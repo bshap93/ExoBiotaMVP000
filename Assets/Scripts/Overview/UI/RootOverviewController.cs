@@ -4,6 +4,7 @@ using Dirigible.Interactable;
 using Dirigible.Interface;
 using Events;
 using FirstPersonPlayer.Interface;
+using FirstPersonPlayer.Tools.ItemObjectTypes;
 using FirstPersonPlayer.UI;
 using FirstPersonPlayer.UI.LocationButtonBase;
 using MoreMountains.Tools;
@@ -162,8 +163,14 @@ namespace Overview.UI
                     continue;
                 }
 
+                KeyItemObject keyItemObject;
+                if (dockLocation.LocationDefinition.isUnlockingKeyItem)
+                    keyItemObject = dockLocation.LocationDefinition.keyItemToUnlock;
+                else keyItemObject = null;
+
                 if (interactable is MineOverviewModeLocation mineLocation)
-                    mineLocation.Initialize(spawnPointId, sceneName, dockLocation.LocationDefinition.GetMineName());
+                    mineLocation.Initialize(
+                        spawnPointId, sceneName, dockLocation.LocationDefinition.GetMineName(), keyItemObject);
             }
 
             EmphasizeLocationsRelevantToActiveObjectives();

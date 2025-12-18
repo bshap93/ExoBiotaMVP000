@@ -2,7 +2,6 @@
 using Dirigible.Input;
 using FirstPersonPlayer.Interactable.Doors;
 using FirstPersonPlayer.Interface;
-using Helpers.Events;
 using Michsky.MUIP;
 using Objectives;
 using Objectives.ScriptableObjects;
@@ -112,23 +111,23 @@ namespace FirstPersonPlayer.UI.LocationButtonBase
             }
         }
 
-        protected bool RequireAccessPass()
-        {
-            if (access == null) return true; // no requirement
-            if (access.CanOpen())
-            {
-                access.MarkOpenedIfPermanent();
-                return true;
-            }
-
-            // TODO: plug your “LOCKED” UI/audio here
-            Debug.Log("Locked: missing key(s)");
-            AlertEvent.Trigger(
-                AlertReason.KeyAccessDenied,
-                "Your inserts lack the requisite permissions to enter this door.", "Digital Key Not Foudnd");
-
-            return false;
-        }
+        // protected bool RequireAccessPass()
+        // {
+        //     if (access == null) return true; // no requirement
+        //     if (access.CanOpen())
+        //     {
+        //         access.MarkOpenedIfPermanent();
+        //         return true;
+        //     }
+        //
+        //     // TODO: plug your “LOCKED” UI/audio here
+        //     Debug.Log("Locked: missing key(s)");
+        //     AlertEvent.Trigger(
+        //         AlertReason.KeyAccessDenied,
+        //         "Your inserts lack the requisite permissions to enter this door.", "Digital Key Not Foudnd");
+        //
+        //     return false;
+        // }
 
         public virtual void HideCanvasGroup()
         {

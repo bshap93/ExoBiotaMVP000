@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Events;
-using FirstPersonPlayer.Interactable.Doors.ScriptableObjects;
+using FirstPersonPlayer.Tools.ItemObjectTypes;
 using JetBrains.Annotations;
 using Manager;
 using Manager.DialogueScene;
@@ -23,17 +23,17 @@ namespace OWPData.ScriptableObjects
         public LocationType locationType;
 
 
-        [FormerlySerializedAs("doorDefinition")] [CanBeNull]
-        public DoorDefinition doorRequirement; // optional
-
-        [ValueDropdown("GetLocationIdOptions")]
+        [FormerlySerializedAs("doorDefinition")] [CanBeNull] [ValueDropdown("GetLocationIdOptions")]
         public string locationId;
 
         [ValueDropdown("GetNpcIdOptions")] public string npcInResidenceId;
 
         [ValueDropdown("GetDockIdOptions")] public string dockId;
 
-        public string payload;
+        [FormerlySerializedAs("IsUnlockingKeyItem")] [Header("Unlocking Key Item")] [ToggleLeft]
+        public bool isUnlockingKeyItem;
+        [ShowIf("isUnlockingKeyItem")] public
+            KeyItemObject keyItemToUnlock;
 
         [ValueDropdown("GetSceneOptions")] public string sceneName;
 

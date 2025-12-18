@@ -104,9 +104,12 @@ Fulmen: Come back here. I'll reward you nicely for the Cores you find and the fa
     <<add_objective DialogueCommands "InstallNewRTGInGenerator">>
     <<activate_objective DialogueCommands "InstallNewRTGInGenerator">>
     <<give_player_item DialogueCommands "RTGNuclearBattery" 1>>
+
     <<set $traffickerGaveJob001 = true>>
-    -> Ok, I'll be off.
-        Fulmen: Yeah, ok friend.
+,    -> Ok, I'll be off.
+        Fulmen: Yeah, ok friend. Here's the key for the outer door.
+        <<give_player_item DialogueCommands "OverworldMineAshpoolKey">>
+        <<jump End02>>
     -> Anything I should know?
         <<jump QuestionAboutChokedCaverns>>
 
@@ -117,6 +120,7 @@ title: QuestionAboutChokedCaverns
 Fulmen: Yeah, it's pretty contaminated these days.
 Fulmen: But not to worry! My facility has a decontamination tank.
 Fulmen: Move fast and don't hang around, you'll be fine.
+<<give_player_item DialogueCommands "OverworldMineAshpoolKey">>
 -> Thanks...
 ===
 

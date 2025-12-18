@@ -1,6 +1,4 @@
-﻿using Overview.Locations.Anchor;
-
-namespace Overview.Locations
+﻿namespace Overview.Locations.Anchor
 {
     public class MineAnchorObject : LocationAnchorObject
     {

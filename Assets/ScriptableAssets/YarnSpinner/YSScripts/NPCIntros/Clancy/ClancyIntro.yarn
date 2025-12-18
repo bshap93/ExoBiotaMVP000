@@ -91,7 +91,7 @@ Clancy: It's easy enough to use. Just jab into the organisms with the needle end
 <<complete_objective DialogueCommands "TalkToClancy">>
 Clancy: It's not dangerous if you're careful. I appreciate your help.
 <<add_objective DialogueCommands "GoToScienceMine">>
-// <<give_player_keyaccess DialogueCommands "ScienceMineDoorKey">>
+<<give_player_item  DialogueCommands "OverworldMine01Key">>
 <<"mark_poi_as_having_new_content" DialogueCommands "d8d892a8-829f-4f24-a1c4-740cf2df7f6a">>
 
 <<set $scanQuestGiven = true>>
