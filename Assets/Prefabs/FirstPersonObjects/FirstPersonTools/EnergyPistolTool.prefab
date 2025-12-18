@@ -526,8 +526,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7224965040485342991}
   - component: {fileID: 4167925171455490004}
+  - component: {fileID: 6004346210032996363}
+  - component: {fileID: 5111565783594610731}
   m_Layer: 0
-  m_Name: EnergyPistol
+  m_Name: EnergyPistolTool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -541,8 +543,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8548384196625345297}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.028686501, y: -0.99957603, z: 0.00014329089, w: -0.0049929474}
-  m_LocalPosition: {x: 0.76584625, y: 0.67920005, z: 0.14421844}
+  m_LocalRotation: {x: 0.12813067, y: -0.5953616, z: -0.5257736, w: 0.5938765}
+  m_LocalPosition: {x: 0.191, y: -0.12, z: -0.048}
   m_LocalScale: {x: 13.775, y: 13.775001, z: 13.775}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -550,8 +552,9 @@ Transform:
   - {fileID: 8470933665179116043}
   - {fileID: 5058753164861763335}
   - {fileID: 4519986680482262185}
+  - {fileID: 3044257727786208642}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -180.572, z: -3.288}
+  m_LocalEulerAnglesHint: {x: -28.285, y: -432.94598, z: -61.936}
 --- !u!114 &4167925171455490004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -564,10 +567,82 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 888fd78171304d0fa2382097b205a3f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slider: {fileID: 0}
-  frontEmitter: {fileID: 0}
-  cell: {fileID: 0}
-  trigger: {fileID: 0}
+  toolIsUsedOnRelease: 0
+  mainCamera: {fileID: 0}
+  slider: {fileID: 2377398794245283647}
+  frontEmitter: {fileID: 9216353233692022764}
+  cell: {fileID: 1139952630932523565}
+  trigger: {fileID: 6202962702271140677}
+  pistolToolObject: {fileID: 11400000, guid: b498fa52ccacfda429d72238db32d69c, type: 2}
+--- !u!114 &6004346210032996363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8548384196625345297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 633c0a639da84a19ae1982b756946699, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnToolUseAction:
+    m_PersistentCalls:
+      m_Calls: []
+  toolType: 0
+  toolIteration: 0
+--- !u!65 &5111565783594610731
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8548384196625345297}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.005, y: 0.018, z: 0.029}
+  m_Center: {x: 0, y: 0.003, z: 0}
+--- !u!1 &8997130615086568050
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3044257727786208642}
+  m_Layer: 0
+  m_Name: ProjectileRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3044257727786208642
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8997130615086568050}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.0053500007, z: -0.01295}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7224965040485342991}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9101934860284986260
 GameObject:
   m_ObjectHideFlags: 0

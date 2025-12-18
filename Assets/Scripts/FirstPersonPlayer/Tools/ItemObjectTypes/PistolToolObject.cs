@@ -8,6 +8,7 @@ namespace FirstPersonPlayer.Tools.ItemObjectTypes
         order = 0)]
     public class PistolToolObject : BaseTool
     {
+        public Sprite defaultReticle;
         public override bool Equip(string playerID)
         {
             MMInventoryEvent.Trigger(

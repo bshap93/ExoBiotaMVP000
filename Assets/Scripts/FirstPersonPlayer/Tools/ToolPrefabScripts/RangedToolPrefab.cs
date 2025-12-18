@@ -9,8 +9,14 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 {
     public abstract class RangedToolPrefab : MonoBehaviour, IRuntimeTool
     {
+        [SerializeField] protected bool toolIsUsedOnRelease;
+
+        [Header("References")] public Camera mainCamera;
         protected AnimancerRightArmController AnimancerRightArmController;
+        protected AnimancerRightArmController AnimController;
         protected RaycastHit LastHit;
+
+
         public abstract void Initialize(PlayerEquipment owner);
         public void Use()
         {
@@ -24,13 +30,11 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         {
             throw new NotImplementedException();
         }
-        public Sprite GetReticleForTool(GameObject colliderGameObject)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract Sprite GetReticleForTool(GameObject colliderGameObject);
+
         public bool ToolIsUsedOnRelease()
         {
-            throw new NotImplementedException();
+            return toolIsUsedOnRelease;
         }
         public bool CanAbortAction()
         {

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using FirstPersonPlayer.Tools.ItemObjectTypes;
 using UnityEngine;
 
 namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
@@ -9,17 +9,23 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
         [SerializeField] GameObject frontEmitter;
         [SerializeField] GameObject cell;
         [SerializeField] GameObject trigger;
+        [SerializeField] PistolToolObject pistolToolObject;
         public override void Initialize(PlayerEquipment owner)
         {
-            throw new NotImplementedException();
+            mainCamera = Camera.main;
+            AnimController = owner.animancerRightArmController;
+        }
+        public override Sprite GetReticleForTool(GameObject colliderGameObject)
+        {
+            return pistolToolObject.defaultReticle;
         }
         public override void PerformToolAction()
         {
-            throw new NotImplementedException();
+            Debug.Log("Shooting pistol");
         }
         public override void ApplyHit()
         {
-            throw new NotImplementedException();
+            Debug.Log("Pistol hit applied");
         }
     }
 }
