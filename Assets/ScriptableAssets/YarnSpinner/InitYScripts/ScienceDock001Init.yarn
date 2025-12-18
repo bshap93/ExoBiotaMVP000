@@ -16,9 +16,11 @@
 
 <<declare $geneticistHypolitaGreeted = false>>
 
-<<declare $dexterity = 1>>
-<<declare $agility = 1>>
-<<declare $mentalToughness = 1>>
-<<declare $strength = 1>> 
-<<declare $bioticLevel = 1>>
+<<declare $helpedMandy = false>>
+
+// <<declare $dexterity = 1>>
+// <<declare $agility = 1>>
+// <<declare $mentalToughness = 1>>
+// <<declare $strength = 1>> 
+// <<declare $bioticLevel = 1>>
 ===

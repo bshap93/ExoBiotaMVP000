@@ -58,7 +58,8 @@ namespace Helpers.Events
         DoorLocked,
         PlayTestEndYesOrNo,
         BreakableToolIneffective,
-        InRangeOfOverworldNPCDirect
+        InRangeOfOverworldNPCDirect,
+        CurrencyGained
     }
 
     [Serializable]

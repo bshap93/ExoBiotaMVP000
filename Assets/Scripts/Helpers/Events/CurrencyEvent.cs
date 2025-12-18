@@ -1,6 +1,6 @@
 ﻿using MoreMountains.Tools;
 
-namespace Domains.Player.Events
+namespace Helpers.Events
 {
     public enum CurrencyEventType
     {

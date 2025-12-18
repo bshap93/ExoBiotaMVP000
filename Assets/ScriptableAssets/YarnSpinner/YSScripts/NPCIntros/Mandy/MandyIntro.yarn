@@ -1,18 +1,25 @@
 title: MandyEntryPointDefault
 ---
-Mandy: Hello, kind sir. As you can see, I'm in a bit of a jam here.
-Mandy: I'm real close to home, just a kilometer due east.
--> I see that. I could see the smoke as I passed by.
--> You're Fulmen's associate? 
-    <<jump ChangeTheSubjectAbtFulmen>>
-<<if $dexterity > 1>>
-    -> I can fix this pretty quickly. May I?
-        <<jump IFixOverworldMandyHoverbike>>
-// <<elseif $dirigibleTowingLevel > 2>> 
-//     -> I can tow you with my dirigible back to Fulmen's outpost.
-//     -> My dirigible can tow you and your things. I just need to know what your cargo is.
-//         Mandy: Just forget it, I'm fine for now.
-//         <<jump End02>>
+<<if !$helpedMandy>>
+    Mandy: Hello, kind sir. As you can see, I'm in a bit of a jam here.
+    Mandy: I'm real close to home, just a kilometer due east.
+    -> I see that. I could see the smoke as I passed by.
+    -> You're Fulmen's associate? 
+        <<jump ChangeTheSubjectAbtFulmen>>
+    <<if get_dexterity() > 1>>
+        -> I can fix this pretty quickly. May I? (Use DEXTERITY to fix the vehicle)
+            <<jump IFixOverworldMandyHoverbike>>
+    // <<elseif $dirigibleTowingLevel > 2>> 
+    //     -> I can tow you with my dirigible back to Fulmen's outpost.
+    //     -> My dirigible can tow you and your things. I just need to know what your cargo is.
+    //         Mandy: Just forget it, I'm fine for now.
+    //         <<jump End02>>
+    <<endif>>
+    -> I can't help you just now. (Dexterity Skill too Low, and Airship payload at maximum) Is there someone I can contact? Your employer?
+    Mandy: My employer, yes... Fulmen, that bastard. Oh, he knows I'm stranded here. He's too 'busy'. Says I need to figure my own shit out.
+    -> Well, ok, you don't seem to be in immediate distress. I'll be back if I find a way to help you.
+<<else>>
+    Mandy: Thanks again, friend.
 <<endif>>
 ===
 
@@ -23,5 +30,7 @@ Mandy: By all means.
 
 title: IFixOverworldMandyHoverbike
 ---
-Mandy: Much obliged, strange.
+Mandy: Much obliged, stranger. Here is something for your trouble.
+<<give_player_money DialogueCommands 400.0>>
+<<set $helpedMandy = true>>
 ===

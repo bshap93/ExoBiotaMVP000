@@ -5,6 +5,7 @@ using Helpers.Events.Progression;
 using Helpers.Interfaces;
 using Helpers.StaticHelpers;
 using MoreMountains.Tools;
+using OWPData.ScriptableObjects;
 using SharedUI.Progression;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -17,6 +18,8 @@ namespace Manager
         const float baseCost = 20f; // cost for first level
         const float growth = 1.4f; // how fast it scales
         public bool autoSave;
+
+        [SerializeField] PlayerStatsSheet playerStatsSheet;
 
         public bool overrideAttributesOnLoad;
         [ShowIf("overrideAttributesOnLoad")] [SerializeField]

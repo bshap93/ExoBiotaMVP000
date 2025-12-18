@@ -125,6 +125,21 @@ namespace Manager.DialogueScene.DialogueCommands
         //     }
         // }
 
+        // ----------- Currency commands ----------
+
+        [YarnCommand("give_player_money")]
+        public void GivePlayerMoney(float amount)
+        {
+            CurrencyEvent.Trigger(CurrencyEventType.AddCurrency, amount);
+            AlertEvent.Trigger(AlertReason.CurrencyGained, "You gained $" + amount.ToString("F2"), "Currency Gained");
+        }
+
+        [YarnCommand("try_remove_player_money")]
+        public void TryRemovePlayerMoney(float amount)
+        {
+            CurrencyEvent.Trigger(CurrencyEventType.RemoveCurrency, amount);
+        }
+
         // ----------- Objectives commands ----------
 
         [YarnCommand("add_objective")]
