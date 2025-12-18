@@ -38,6 +38,7 @@ namespace LevelConstruct.Interactable.ItemInteractables
         }
 
 
+
         [Header("Objective Progression")] [SerializeField]
         ObjectiveObject objectiveProgressOnCatalyst;
         [SerializeField] ObjectiveObject objectiveProgressOnSolvent;
@@ -485,14 +486,15 @@ namespace LevelConstruct.Interactable.ItemInteractables
                 if (details == null) continue; // Skip null entries
 
                 // Match state to interaction type
-                if (harvestableState == HarvestableState.Undetatched &&
-                    details.harvestableInteractionType == HarvestableInteractionType.CatalyzeWithCatalyst)
-                {
-                    Debug.Log("[HarvestableItemPickerHelper] Returning Catalyst details for Undetached state");
-                    return details;
-                }
+                // if (harvestableState == HarvestableState.Undetatched &&
+                //     details.harvestableInteractionType == HarvestableInteractionType.CatalyzeWithCatalyst)
+                // {
+                //     Debug.Log("[HarvestableItemPickerHelper] Returning Catalyst details for Undetached state");
+                //     return details;
+                // }
 
-                if (harvestableState == HarvestableState.HadCatalystApplied &&
+                if ((harvestableState == HarvestableState.Undetatched || harvestableState == HarvestableState.Picked ||
+                     harvestableState == HarvestableState.HadCatalystApplied) &&
                     details.harvestableInteractionType == HarvestableInteractionType.DissolveWithSolvent)
                 {
                     Debug.Log("[HarvestableItemPickerHelper] Returning Solvent details for CatalystApplied state");
