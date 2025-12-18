@@ -10,9 +10,12 @@ namespace FirstPersonPlayer.Combat.AINPC
 
         public List<GameObject> patrolWaypoints;
 
+        public float delay = 0.5f;
+
+
         void Start()
         {
-            Invoke(nameof(Assign), 0.1f);
+            Invoke(nameof(Assign), delay);
         }
 
 

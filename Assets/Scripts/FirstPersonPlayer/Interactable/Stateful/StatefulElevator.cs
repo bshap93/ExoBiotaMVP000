@@ -76,6 +76,7 @@ namespace FirstPersonPlayer.Interactable.Stateful
 
 
         public GameObject frontalBarrier;
+        public GameObject entranceBarriers;
 
         // [FormerlySerializedAs("startAtTop")]
         // [Tooltip("Should the elevator start at the top position (EndPoint) when the scene loads?")]
@@ -128,6 +129,7 @@ namespace FirstPersonPlayer.Interactable.Stateful
                 }
 
                 frontalBarrier.SetActive(false);
+                entranceBarriers.SetActive(false);
             }
         }
 
@@ -182,6 +184,7 @@ namespace FirstPersonPlayer.Interactable.Stateful
             elevatorTravelFB?.PlayFeedbacks();
 
             frontalBarrier.SetActive(true);
+            entranceBarriers.SetActive(true);
 
 
             DOTween.Kill(elevatorScriptObject.transform); // prevent overlapping tweens
@@ -222,6 +225,7 @@ namespace FirstPersonPlayer.Interactable.Stateful
             elevatorTravelFB?.PlayFeedbacks();
 
             frontalBarrier.SetActive(true);
+            entranceBarriers.SetActive(true);
 
             //Debug.Log("Button Elevator Clicked");
             // TweenXYZ.Add(
