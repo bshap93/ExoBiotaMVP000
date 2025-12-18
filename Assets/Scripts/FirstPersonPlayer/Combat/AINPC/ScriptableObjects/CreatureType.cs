@@ -17,5 +17,7 @@ namespace FirstPersonPlayer.Combat.AINPC.ScriptableObjects
         public float meleeAttackShakeIntensity = 0.12f;
         public float heavyMeleeAttackShakeIntensity = 0.15f;
         public float meleeAttackShakeDuration = 0.3f;
+
+        public float maxHealth;
     }
 }
