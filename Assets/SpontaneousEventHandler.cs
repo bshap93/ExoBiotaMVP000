@@ -1,5 +1,6 @@
 using System;
 using Helpers.Events;
+using Helpers.Events.Inventory;
 using Helpers.Events.Machinery;
 using MoreMountains.Tools;
 using UnityEngine;
@@ -36,11 +37,34 @@ public class SpontaneousEventHandler : MonoBehaviour,
             case "ElevatorEvent":
                 HandleElevatorEvent(eventName, e);
                 break;
+            case "ItemPickerEvent":
+                HandleItemPickerEvent(eventName, e);
+                break;
+            case "ControlsHelpEvent":
+                HandleControlsHelpEvent(eventName, e);
+                break;
 
             // future-proofing
             // case "DoorEvent":
             // case "PowerGridEvent":
         }
+    }
+
+    void HandleControlsHelpEvent(string eventTypeName, SpontaneousTriggerEvent e)
+    {
+        if (!Enum.TryParse(eventTypeName, out ControlHelpEventType controlsHelpEventType))
+        {
+            Debug.LogWarning(
+                $"[SpontaneousEventHandler] Unknown ControlsHelpEventType: {eventTypeName}");
+
+            return;
+        }
+
+
+        ControlsHelpEvent.Trigger(
+            controlsHelpEventType,
+            e.IntParameter
+        );
     }
 
     void HandleElevatorEvent(string eventName, SpontaneousTriggerEvent e)
@@ -57,6 +81,22 @@ public class SpontaneousEventHandler : MonoBehaviour,
             e.UniqueID,
             elevatorEventType,
             e.IntParameter
+        );
+    }
+
+    void HandleItemPickerEvent(string eventName, SpontaneousTriggerEvent e)
+    {
+        if (!Enum.TryParse(eventName, out ItemPickerEvent.ItemPickerEventType itemPickerEventType))
+        {
+            Debug.LogWarning(
+                $"[SpontaneousEventHandler] Unknown ItemPickerEventType: {eventName}");
+
+            return;
+        }
+
+        ItemPickerEvent.Trigger(
+            itemPickerEventType,
+            e.UniqueID
         );
     }
 }

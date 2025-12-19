@@ -10,6 +10,7 @@ using FirstPersonPlayer.Tools.ToolPrefabScripts;
 using Gameplay.Events;
 using Helpers.Events;
 using Helpers.Events.Gated;
+using Helpers.Events.Inventory;
 using Inventory;
 using LevelConstruct.Highlighting;
 using Manager;
@@ -38,7 +39,7 @@ namespace LevelConstruct.Interactable.ItemInteractables.ItemPicker
     [RequireComponent(typeof(Collider))]
     [ExecuteInEditMode]
     public class ItemPicker : MonoBehaviour, IInteractable, IBillboardable, IExaminable, IHoverable,
-        MMEventListener<LoadedManagerEvent>, IRequiresUniqueID
+        MMEventListener<LoadedManagerEvent>, IRequiresUniqueID, MMEventListener<ItemPickerEvent>
     {
         const string DefaultActionText = "Pick Item";
         public string uniqueID;
@@ -86,6 +87,8 @@ namespace LevelConstruct.Interactable.ItemInteractables.ItemPicker
 
         SceneObjectData _data;
 
+        HighlightEffectController _highlightEffectController;
+
         bool _interactionComplete;
 
         // bool _isBeingDestroyed;
@@ -114,6 +117,7 @@ namespace LevelConstruct.Interactable.ItemInteractables.ItemPicker
         {
             _trigger = GetComponent<HighlightTrigger>();
             _statefulPicker = GetComponent<IStatefulItemPicker>();
+            _highlightEffectController = GetComponent<HighlightEffectController>();
         }
 
         void Reset()
@@ -144,13 +148,15 @@ namespace LevelConstruct.Interactable.ItemInteractables.ItemPicker
 
         void OnEnable()
         {
-            this.MMEventStartListening();
+            this.MMEventStartListening<ItemPickerEvent>();
+            this.MMEventStartListening<LoadedManagerEvent>();
             if (_trigger == null) return;
         }
 
         void OnDisable()
         {
-            this.MMEventStopListening();
+            this.MMEventStopListening<ItemPickerEvent>();
+            this.MMEventStopListening<LoadedManagerEvent>();
             if (_trigger == null) return;
         }
 
@@ -399,6 +405,12 @@ namespace LevelConstruct.Interactable.ItemInteractables.ItemPicker
         public bool IsUniqueIDEmpty()
         {
             return string.IsNullOrEmpty(uniqueID);
+        }
+        public void OnMMEvent(ItemPickerEvent eventType)
+        {
+            if (eventType.EventType == ItemPickerEvent.ItemPickerEventType.TriggerHighlight)
+                if (eventType.ItemPickerUniqueID == uniqueID)
+                    _highlightEffectController.SetHighlighted(true);
         }
         public void OnMMEvent(LoadedManagerEvent eventType)
         {

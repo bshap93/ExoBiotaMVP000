@@ -23,6 +23,8 @@ title: ClancyMine01V00Reiterate
 Clancy: Should be a good number of organisms to sample in this particular cavern.
 <<add_objective DialogueCommands "TakeSamplesLiquidV00">>
 <<activate_objective DialogueCommands "TakeSamplesLiquidV00">>
+<<add_objective DialogueCommands "PickupSampleGun">>
+<<activate_objective DialogueCommands "PickupSampleGun">>
 Clancy: Need any help? <Help>
 -> Yes, please.
    <<jump SamplingHelp>> 
