@@ -1,0 +1,44 @@
+title: IncomprehensibleGreeting
+---
+Sheolite Warden: Hail, stone breaker. It is my purpose to treat with those such as you.
+<<if get_biotic_level() < 2 >>
+    <<jump End02>>
+<<endif>>
+Sheolite Warden: I represent the stone-folders, or Sheolites as you would say. 
+Sheolite Warden: I am warden of this sector of stone. To what end do you now enter our domain?
+-> I'm exploring the area where my sister was last seen. I humbly ask your permission to examine the area.
+    <<jump PolitelyAsksToExplore>>
+-> What is it to you? I can go where I please.
+    <<jump ImpolitelyAddressesSheoliteWarden>>
+===
+
+title: PolitelyAsksToExplore
+---
+Sheolite Warden: I see no reason to prevent it. The danger is to you, I fear. We stone-folders do not fear such as you.
+-> What kind of dangers?
+Sheolite Warden: We share this domain with beasts, as you might describe them. They do not threaten us.
+Sheolite Warden: They are low-beings but we share a sort of common simplistic pidgin. 
+Sheolite Warden: It must be learned but I haven't the time to teach you now. Some day perhaps.
+-> I understand, warden. I do not hold you responsible for my safety.
+Sheolite Warden: Very well. I grant you limited passage through our domain. Perhaps I shall see you soon.
+<<jump EndPlaytest >>
+===
+
+title: ImpolitelyAddressesSheoliteWarden
+---
+Sheolite Warden: You cannot. I control entry in this domain. I must know your purpose.
+-> I seek my sister who was last seen in this area.
+Sheolite Warden: I see. Do you ask for forgiveness?
+-> I am sorry for my rudeness. I humbly ask your permission to examine the area.
+    <<jump PolitelyAsksToExplore>>
+-> Go to hell, fucking squid thing...
+    <<jump End02>>
+===
+
+
+title: EndPlaytest
+---
+-> END THE PLAYTEST
+    <<end_playtest DialogueCommands>>
+    -> End Dialogue
+===

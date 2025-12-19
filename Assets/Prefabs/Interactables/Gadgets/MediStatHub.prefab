@@ -408,9 +408,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ca48a0e82b846da941f762af54f56a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  consoleType: {fileID: 0}
-  actionId: 0
-  uniqueID: 20f949b7-0a7b-42f1-8169-65e983c20c9c
+  consoleType: {fileID: 11400000, guid: 6d2770145db2b484893edd8cc931c29c, type: 2}
+  actionId: 43
+  uniqueID: 
   interactionDistance: 2
   currentConsoleState: 0
   openAnimation: {fileID: 0}
@@ -660,7 +660,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0986de822ecb4835bfb249feaeb7996f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetID: 09cfaeda-5649-4891-9c69-a04189c541a7
+  targetID: 
   seeThroughDuration: 5
   onScanned:
     m_PersistentCalls:

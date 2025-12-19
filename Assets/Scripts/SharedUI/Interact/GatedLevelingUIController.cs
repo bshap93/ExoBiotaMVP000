@@ -1,4 +1,5 @@
-﻿using FirstPersonPlayer.UI.InventoryListView;
+﻿using System;
+using FirstPersonPlayer.UI.InventoryListView;
 using Helpers.Events;
 using Helpers.Events.Gated;
 using Helpers.Events.Progression;
@@ -16,13 +17,23 @@ namespace SharedUI.Interact
     public class GatedLevelingUIController : MonoBehaviour, MMEventListener<MyUIEvent>, MMEventListener<XPEvent>,
         MMEventListener<AttrPendingBuyEvent>, MMEventListener<InnerCoreXPEvent>
     {
+        [Serializable]
+        public enum MediStatType
+        {
+            Standard,
+            Infected
+        }
+
         [SerializeField] InnerCoresDisplay innerCoresDisplay;
+
+        [SerializeField] MediStatType mediStatType = MediStatType.Standard;
 
         [Header(" Attribute Setters ")] [SerializeField]
         AttributePointSetter dexteritySetter;
         [SerializeField] AttributePointSetter mentalToughnessSetter;
         [SerializeField] AttributePointSetter agilitySetter;
         [SerializeField] AttributePointSetter strengthSetter;
+        [SerializeField] AttributePointSetter exobioticSetter;
         [Header("Individual UI Elements")] [SerializeField]
         TMP_Text totalUnusedXPText;
         [SerializeField] WaitWhileInteractingOverlay waitOverlay;
@@ -42,10 +53,12 @@ namespace SharedUI.Interact
 
         int _initialAgility;
         int _initialDexterity;
+        int _initialExobiotic;
         int _initialMentalToughness;
         int _initialStrength;
         int _pendingNewAgility;
         int _pendingNewDexterity;
+        int _pendingNewExobiotic;
         int _pendingNewMentalToughness;
         int _pendingNewStrength;
 
@@ -121,6 +134,15 @@ namespace SharedUI.Interact
                         strengthSetter.Initialize(eventType.AttrLevelTarget, _pendingNewUnusedXP);
                         strengthSetter.canDecrease = true;
                         break;
+                    case AttributeType.Exobiotic:
+                        if (mediStatType == MediStatType.Infected)
+                        {
+                            _pendingNewExobiotic = eventType.AttrLevelTarget;
+                            exobioticSetter.Initialize(eventType.AttrLevelTarget, _pendingNewUnusedXP);
+                            exobioticSetter.canDecrease = true;
+                        }
+
+                        break;
                 }
             }
             else if (eventType.PendingBuyEventType == PendingBuyEventType.DecreasePendingAttribute)
@@ -138,6 +160,9 @@ namespace SharedUI.Interact
                         break;
                     case AttributeType.Strength:
                         if (eventType.AttrLevelTarget < _initialStrength) return;
+                        break;
+                    case AttributeType.Exobiotic:
+                        if (eventType.AttrLevelTarget < _initialExobiotic) return;
                         break;
                 }
 
@@ -169,6 +194,15 @@ namespace SharedUI.Interact
                         strengthSetter.Initialize(eventType.AttrLevelTarget, _pendingNewUnusedXP);
                         strengthSetter.canDecrease = eventType.AttrLevelTarget >= _initialStrength;
                         break;
+                    case AttributeType.Exobiotic:
+                        if (mediStatType == MediStatType.Infected)
+                        {
+                            _pendingNewExobiotic = eventType.AttrLevelTarget;
+                            exobioticSetter.Initialize(eventType.AttrLevelTarget, _pendingNewUnusedXP);
+                            exobioticSetter.canDecrease = eventType.AttrLevelTarget >= _initialExobiotic;
+                        }
+
+                        break;
                 }
             }
         }
@@ -185,7 +219,14 @@ namespace SharedUI.Interact
         }
         public void OnMMEvent(MyUIEvent eventType)
         {
-            if (eventType.uiType == UIType.LevelingUI)
+            if (eventType.uiType == UIType.LevelingUIInfected && mediStatType == MediStatType.Infected)
+            {
+                if (eventType.uiActionType == UIActionType.Open)
+                    Show();
+                else if (eventType.uiActionType == UIActionType.Close) Hide();
+            }
+
+            if (eventType.uiType == UIType.LevelingUI && mediStatType == MediStatType.Standard)
             {
                 if (eventType.uiActionType == UIActionType.Open)
                     Show();
@@ -234,11 +275,13 @@ namespace SharedUI.Interact
             _initialDexterity = attributeManager.Dexterity;
             _initialMentalToughness = attributeManager.MentalToughness;
             _initialStrength = attributeManager.Strength;
+            _initialExobiotic = attributeManager.Exobiotic;
 
             _pendingNewAgility = _initialAgility;
             _pendingNewDexterity = _initialDexterity;
             _pendingNewMentalToughness = _initialMentalToughness;
             _pendingNewStrength = _initialStrength;
+            _pendingNewExobiotic = _initialExobiotic;
 
             cancelButton.onClick.RemoveAllListeners();
             cancelButton.onClick.AddListener(() => { CancelLeveling(); });
@@ -253,13 +296,17 @@ namespace SharedUI.Interact
             mentalToughnessSetter.Initialize(attributeManager.MentalToughness, _pendingNewUnusedXP);
             agilitySetter.Initialize(attributeManager.Agility, _pendingNewUnusedXP);
             strengthSetter.Initialize(attributeManager.Strength, _pendingNewUnusedXP);
+            if (exobioticSetter != null) exobioticSetter.Initialize(attributeManager.Exobiotic, _pendingNewUnusedXP);
         }
 
         void CancelLeveling()
         {
             // Logic to cancel attribute point changes
             Debug.Log("Canceled attribute point changes.");
-            MyUIEvent.Trigger(UIType.LevelingUI, UIActionType.Close);
+            if (mediStatType == MediStatType.Infected)
+                MyUIEvent.Trigger(UIType.LevelingUIInfected, UIActionType.Close);
+            else if (mediStatType == MediStatType.Standard)
+                MyUIEvent.Trigger(UIType.LevelingUI, UIActionType.Close);
 
             _currentUnusedXP = AttributesManager.Instance.CurrentUnusedXP;
             _pendingNewUnusedXP = _currentUnusedXP;
@@ -271,6 +318,8 @@ namespace SharedUI.Interact
             _pendingNewMentalToughness = _initialMentalToughness;
             _initialStrength = AttributesManager.Instance.Strength;
             _pendingNewStrength = _initialStrength;
+            _initialExobiotic = AttributesManager.Instance.Exobiotic;
+            _pendingNewExobiotic = _initialExobiotic;
 
             GatedInteractionManager.Instance.isActiveGui = false;
         }
@@ -281,7 +330,8 @@ namespace SharedUI.Interact
             if (_pendingNewDexterity == _initialDexterity &&
                 _pendingNewMentalToughness == _initialMentalToughness &&
                 _pendingNewAgility == _initialAgility &&
-                _pendingNewStrength == _initialStrength)
+                _pendingNewStrength == _initialStrength && _pendingNewExobiotic == _initialExobiotic)
+
             {
                 AlertEvent.Trigger(
                     AlertReason.Test, "No attribute changes to commit.", "Leveling");
@@ -291,14 +341,19 @@ namespace SharedUI.Interact
 
             Debug.Log("Committed attribute point changes.");
 
-            MyUIEvent.Trigger(UIType.LevelingUI, UIActionType.Close);
+            if (mediStatType == MediStatType.Infected)
+                MyUIEvent.Trigger(UIType.LevelingUIInfected, UIActionType.Close);
+            else if (mediStatType == MediStatType.Standard)
+                MyUIEvent.Trigger(UIType.LevelingUI, UIActionType.Close);
+
             // MyUIEvent.Trigger(UIType.WaitWhileInteracting, UIActionType.Open);
             // waitOverlay.Show("Applying Attribute Augments");
             AttributesManager.Instance.ApplyPendingAttributeChanges(
                 _pendingNewDexterity,
                 _pendingNewMentalToughness,
                 _pendingNewAgility,
-                _pendingNewStrength);
+                _pendingNewStrength,
+                _pendingNewExobiotic);
 
             AttributesManager.Instance.ApplyPendingUnusedXP(_pendingNewUnusedXP);
 
@@ -310,7 +365,7 @@ namespace SharedUI.Interact
                 mentalToughness = _pendingNewMentalToughness,
                 agility = _pendingNewAgility,
                 strength = _pendingNewStrength,
-                exobiotic = AttributesManager.Instance.Exobiotic
+                exobiotic = _pendingNewExobiotic
             };
 
             GatedLevelingEvent.Trigger(GatedInteractionEventType.CompleteInteraction, newAttrValues);

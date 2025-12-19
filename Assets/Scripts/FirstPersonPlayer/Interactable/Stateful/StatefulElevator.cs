@@ -128,8 +128,11 @@ namespace FirstPersonPlayer.Interactable.Stateful
                     elevatorTravelFB?.StopFeedbacks();
                 }
 
-                frontalBarrier.SetActive(false);
-                entranceBarriers.SetActive(false);
+                if (frontalBarrier != null)
+                    frontalBarrier.SetActive(false);
+
+                if (entranceBarriers != null)
+                    entranceBarriers.SetActive(false);
             }
         }
 
@@ -202,8 +205,11 @@ namespace FirstPersonPlayer.Interactable.Stateful
             startTravelFeedbacks?.PlayFeedbacks();
             elevatorTravelFB?.PlayFeedbacks();
 
-            frontalBarrier.SetActive(true);
-            entranceBarriers.SetActive(true);
+            if (frontalBarrier != null)
+                frontalBarrier.SetActive(true);
+
+            if (entranceBarriers != null)
+                entranceBarriers.SetActive(true);
 
 
             DOTween.Kill(elevatorScriptObject.transform); // prevent overlapping tweens
@@ -243,8 +249,11 @@ namespace FirstPersonPlayer.Interactable.Stateful
             startTravelFeedbacks?.PlayFeedbacks();
             elevatorTravelFB?.PlayFeedbacks();
 
-            frontalBarrier.SetActive(true);
-            entranceBarriers.SetActive(true);
+            if (frontalBarrier != null)
+                frontalBarrier.SetActive(true);
+
+            if (entranceBarriers != null)
+                entranceBarriers.SetActive(true);
 
             //Debug.Log("Button Elevator Clicked");
             // TweenXYZ.Add(

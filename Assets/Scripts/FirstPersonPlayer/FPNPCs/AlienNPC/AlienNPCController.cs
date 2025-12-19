@@ -3,6 +3,7 @@ using FirstPersonPlayer.Interface;
 using Helpers.Events;
 using Helpers.Events.Dialog;
 using Lightbug.Utilities;
+using Manager;
 using Manager.DialogueScene;
 using MoreMountains.Feedbacks;
 using Overview.NPC;
@@ -26,6 +27,7 @@ namespace FirstPersonPlayer.FPNPCs.AlienNPC
             string npcId;
 
         [SerializeField] float interactDistanceOverride = 5f;
+        [SerializeField] int exobioticLanguageThreshold = 2;
 
         [SerializeField] string defaultStartNode;
         [SerializeField] MMFeedbacks startDialogueFeedback;
@@ -46,12 +48,26 @@ namespace FirstPersonPlayer.FPNPCs.AlienNPC
         {
             if (!CanInteract()) return;
 
+            var attributeMgr = AttributesManager.Instance;
+            if (attributeMgr == null)
+            {
+                Debug.LogError("AttributesManager instance not found.");
+                return;
+            }
+
+            var exobioticAttrLevel = attributeMgr.Exobiotic;
+
+
             if (npcDefinition.nativeLanguage == LanguageType.ModernGalactic)
                 DialoguePresentationEvent.Trigger(
                     DialoguePresentationEventType.ChangeFontsOfNPCSide, LanguageType.ModernGalactic);
             else if (npcDefinition.nativeLanguage == LanguageType.Sheolite)
-                DialoguePresentationEvent.Trigger(
-                    DialoguePresentationEventType.ChangeFontsOfNPCSide, LanguageType.Sheolite);
+                if (exobioticAttrLevel >= exobioticLanguageThreshold)
+                    DialoguePresentationEvent.Trigger(
+                        DialoguePresentationEventType.ChangeFontsOfNPCSide, LanguageType.ModernGalactic);
+                else
+                    DialoguePresentationEvent.Trigger(
+                        DialoguePresentationEventType.ChangeFontsOfNPCSide, LanguageType.Sheolite);
 
 
             var nodeToUse = GetAppropriateDialogueNode();

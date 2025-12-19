@@ -24,14 +24,15 @@ namespace Helpers.Events
         MachineInteractChoice,
         RestTimeSetAmount,
         InfoLogTablet,
-        LevelingUI
+        LevelingUI,
+        LevelingUIInfected
     }
 
     public enum UIActionType
     {
         Open,
         Close,
-        Update,
+        Update
         // Toggle
     }
 

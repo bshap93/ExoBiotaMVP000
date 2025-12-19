@@ -3545,8 +3545,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d587ea0930b47baa39930eebdd6823e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uniqueID: 
+  blackboard: {fileID: 0}
   animancerComponent: {fileID: 3630283722626017367}
+  creatureType: {fileID: 11400000, guid: da59ae8e795f15044a7d655fbc665d51, type: 2}
+  initialCreatureState: 0
+  secondsBeforeSettingShouldBeDestroyed: 5
+  appearsOnlyOnce: 0
+  doesNotImmediatelyNeedToMove: 0
   npcId: Sheollite001
+  interactDistanceOverride: 5
+  exobioticLanguageThreshold: 2
   defaultStartNode: IncomprehensibleGreeting
   startDialogueFeedback: {fileID: 5156653486714241807}
   initialState: 0

@@ -42,6 +42,14 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
             if (doesNotImmediatelyNeedToMove)
                 return;
 
+            if (creatureType.animationSet.moveAnimation == null)
+            {
+                Debug.Log(
+                    $"CreatureType {creatureType.name} does not have a move animation assigned in its AnimationSet.");
+
+                return;
+            }
+
             MoveState = animancerComponent.States.GetOrCreate(creatureType.animationSet.moveAnimation);
             MoveState.Speed = 1f;
             MoveState.Time = 0f;

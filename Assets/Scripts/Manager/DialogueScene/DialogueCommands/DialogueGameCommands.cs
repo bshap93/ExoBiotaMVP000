@@ -297,6 +297,17 @@ namespace Manager.DialogueScene.DialogueCommands
                 Debug.LogWarning($"emit_dialogue_event: unknown type '{type}'");
         }
 
+        [YarnCommand("end_playtest")]
+        public void EndPlaytest()
+        {
+            AlertEvent.Trigger(
+                AlertReason.PlayTestEndYesOrNo, "Will you end the playtest here? No additional content.",
+                "End Playtest", AlertType.ChoiceModal, onConfirm:
+                () => { Application.Quit(); },
+                onCancel:
+                () => { Application.Quit(); });
+        }
+
         [YarnCommand("initiate_trade")]
         public void InitiateTrade(string npcId)
         {

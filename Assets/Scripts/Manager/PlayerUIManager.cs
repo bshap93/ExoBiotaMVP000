@@ -74,6 +74,7 @@ namespace Manager
                              eventType.uiType == UIType.BreakableInteractChoice ||
                              eventType.uiType == UIType.MachineInteractChoice ||
                              eventType.uiType == UIType.LevelingUI ||
+                             eventType.uiType == UIType.LevelingUIInfected ||
                              eventType.uiType == UIType.WaitWhileInteracting)
                         gatedUIIsOpen = true;
 
@@ -87,6 +88,7 @@ namespace Manager
                              eventType.uiType == UIType.BreakableInteractChoice ||
                              eventType.uiType == UIType.MachineInteractChoice ||
                              eventType.uiType == UIType.LevelingUI ||
+                             eventType.uiType == UIType.LevelingUIInfected ||
                              eventType.uiType == UIType.WaitWhileInteracting)
                         gatedUIIsOpen = false;
 

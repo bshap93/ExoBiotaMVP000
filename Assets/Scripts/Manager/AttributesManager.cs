@@ -338,12 +338,13 @@ namespace Manager
             }
         }
         public void ApplyPendingAttributeChanges(int pendingNewDexterity, int pendingNewMentalToughness,
-            int pendingNewAgility, int pendingNewStrength)
+            int pendingNewAgility, int pendingNewStrength, int pendingNewExobiotic)
         {
             _dexterity = pendingNewDexterity;
             _mentalToughness = pendingNewMentalToughness;
             _agility = pendingNewAgility;
             _strength = pendingNewStrength;
+            _exobiotic = pendingNewExobiotic;
 
             MarkDirty();
         }

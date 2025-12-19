@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 1263683169993371429}
   - component: {fileID: 1962305870993542759}
   - component: {fileID: 2370855262272522866}
-  - component: {fileID: 9112016082031334150}
   - component: {fileID: 5380786093562833484}
   - component: {fileID: 6527816318005221869}
+  - component: {fileID: 7899502676021154605}
   m_Layer: 8
   m_Name: SyringePickable
   m_TagString: Untagged
@@ -342,28 +342,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   targetDuration: 3
---- !u!64 &9112016082031334150
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 595722799074564570}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 8792650997898098326, guid: a5619f2271edf374f8c73409aac9f969, type: 3}
 --- !u!54 &5380786093562833484
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -433,6 +411,27 @@ MonoBehaviour:
   placedByPlayerEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!65 &7899502676021154605
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595722799074564570}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.033333868, y: 0.21899366, z: 0.2009718}
+  m_Center: {x: -0.0005277246, y: -0.014734987, z: 0.09991606}
 --- !u!1 &3730294277842699162
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,7 +442,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2026526431543346430}
   - component: {fileID: 7354936467320198324}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: OnPick
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -50,7 +50,7 @@ namespace FirstPersonPlayer.Interactable.MediStat
         public override void OnInteractionStart()
         {
         }
-        void AlertWhyCant()
+        protected void AlertWhyCant()
         {
             if (currentConsoleState == ActionConsoleState.Broken)
                 AlertEvent.Trigger(
