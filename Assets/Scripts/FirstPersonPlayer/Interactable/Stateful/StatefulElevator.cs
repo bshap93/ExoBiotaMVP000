@@ -9,6 +9,7 @@ using FirstPersonPlayer.ScriptableObjects;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
 using Helpers.Events;
 using Helpers.Events.Machine;
+using Helpers.Events.Machinery;
 using Inventory;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
@@ -20,7 +21,8 @@ using Utilities.Interface;
 
 namespace FirstPersonPlayer.Interactable.Stateful
 {
-    public class StatefulElevator : MonoBehaviour, IRequiresUniqueID, MMEventListener<SceneEvent>
+    public class StatefulElevator : MonoBehaviour, IRequiresUniqueID, MMEventListener<SceneEvent>,
+        MMEventListener<ElevatorEvent>
     {
         [Serializable]
         public enum ElevatorMovementState
@@ -93,6 +95,9 @@ namespace FirstPersonPlayer.Interactable.Stateful
         public ObjectiveToCompleteOnTravelingToFloor[] ObjectivesToCompleteOnTravelingToFloor;
 
         readonly EasyTimer movetimer = new();
+        int _overrideFloor;
+
+        bool _overrideKeyed;
 
 
         // bool _isAtBottom;
@@ -109,12 +114,7 @@ namespace FirstPersonPlayer.Interactable.Stateful
             else
                 elevatorScriptObject.transform.localPosition = elevatorPoints[startAtIndex].localPosition;
 
-            // if (startAtBottom)
-            //     elevatorScriptObject.transform.localPosition = startingPoint.transform.localPosition;
-            // else
-            //     elevatorScriptObject.transform.localPosition = endingPoint.transform.localPosition;
-
-            // IsAtBottom = !startAtBottom;
+            _overrideKeyed = false;
         }
         void FixedUpdate()
         {
@@ -135,12 +135,14 @@ namespace FirstPersonPlayer.Interactable.Stateful
 
         void OnEnable()
         {
-            this.MMEventStartListening();
+            this.MMEventStartListening<SceneEvent>();
+            this.MMEventStartListening<ElevatorEvent>();
         }
 
         void OnDisable()
         {
-            this.MMEventStopListening();
+            this.MMEventStopListening<SceneEvent>();
+            this.MMEventStopListening<ElevatorEvent>();
         }
 
         public string UniqueID => elevatorUniqueID;
@@ -151,6 +153,16 @@ namespace FirstPersonPlayer.Interactable.Stateful
         public bool IsUniqueIDEmpty()
         {
             return string.IsNullOrEmpty(elevatorUniqueID);
+        }
+
+        public void OnMMEvent(ElevatorEvent eventType)
+        {
+            if (eventType.ElevatorUniqueID != UniqueID) return;
+            if (eventType.ElevatorEventType == ElevatorEventType.SetNextFloor)
+            {
+                _overrideKeyed = true;
+                _overrideFloor = eventType.TargetFloor;
+            }
         }
 
         public void OnMMEvent(SceneEvent eventType)
@@ -326,7 +338,28 @@ namespace FirstPersonPlayer.Interactable.Stateful
                             ? elevatorTypeInfo.floorSprites[floorWhichGoingToTriggersSceneChange]
                             : elevatorTypeInfo.defaultFloorSprite;
 
-                        var indexOfDestination = currentState.currentFloor + 1;
+                        int indexOfDestination;
+                        if (_overrideKeyed)
+                        {
+                            if (_overrideFloor > currentState.currentFloor &&
+                                _overrideFloor < elevatorTypeInfo.numberOfFloors)
+                            {
+                                indexOfDestination = _overrideFloor;
+                            }
+                            else
+                            {
+                                AlertEvent.Trigger(
+                                    AlertReason.ElevatorIssue, "Invalid floor override requested.",
+                                    "Elevator Issue");
+
+                                indexOfDestination = currentState.currentFloor + 1;
+                            }
+                        }
+                        else
+                        {
+                            indexOfDestination = currentState.currentFloor + 1;
+                        }
+
                         if (doesElevatorLeadToSceneChange && indexOfDestination == floorWhichGoingToTriggersSceneChange)
                             AlertEvent.Trigger(
                                 AlertReason.ElevatorSceneChangePermission,

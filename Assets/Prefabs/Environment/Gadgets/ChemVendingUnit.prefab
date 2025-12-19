@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3564406772656398876}
   - component: {fileID: 2184100331933885552}
   - component: {fileID: 2111995249958973258}
+  - component: {fileID: 706396920083449385}
   m_Layer: 0
   m_Name: ChemVendingUnit
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 805218047175792231}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.6818955, z: -0, w: 0.73144966}
+  m_LocalRotation: {x: 0, y: -0.68189627, z: 0, w: 0.7314489}
   m_LocalPosition: {x: 108.946, y: 0.208, z: 150.973}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -339,6 +340,27 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   targetDuration: 3
+--- !u!65 &706396920083449385
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 805218047175792231}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.2532057, y: 1.8204806, z: 1.8895754}
+  m_Center: {x: 0, y: 0.9102433, z: 0}
 --- !u!1001 &6694001213827115932
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Helpers.Events;
 using Manager.DialogueScene;
 using Sirenix.OdinInspector;
@@ -12,6 +13,7 @@ namespace Objectives.ScriptableObjects
         order = 1)]
     public class ObjectiveObject : ScriptableObject
     {
+        [Serializable]
         public enum TriggersOnObjectiveLifecycleEvent
         {
             OnAdd,
@@ -37,8 +39,6 @@ namespace Objectives.ScriptableObjects
         public bool shouldBeMadeActiveOnAdd = true;
 
         public List<ObjectiveObject> prerequisiteObjectives;
-        
-        
 
 
         [Header("NPC Linking")] [ValueDropdown("GetNpcIdOptions", IsUniqueList = true)]
