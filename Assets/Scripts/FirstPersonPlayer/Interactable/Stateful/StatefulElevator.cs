@@ -22,7 +22,7 @@ using Utilities.Interface;
 namespace FirstPersonPlayer.Interactable.Stateful
 {
     public class StatefulElevator : MonoBehaviour, IRequiresUniqueID, MMEventListener<SceneEvent>,
-        MMEventListener<ElevatorEvent>
+        MMEventListener<ElevatorEvent>, MMEventListener<SpontaneousTriggerEvent>
     {
         [Serializable]
         public enum ElevatorMovementState
@@ -137,12 +137,14 @@ namespace FirstPersonPlayer.Interactable.Stateful
         {
             this.MMEventStartListening<SceneEvent>();
             this.MMEventStartListening<ElevatorEvent>();
+            this.MMEventStartListening<SpontaneousTriggerEvent>();
         }
 
         void OnDisable()
         {
             this.MMEventStopListening<SceneEvent>();
             this.MMEventStopListening<ElevatorEvent>();
+            this.MMEventStopListening<SpontaneousTriggerEvent>();
         }
 
         public string UniqueID => elevatorUniqueID;
@@ -162,12 +164,17 @@ namespace FirstPersonPlayer.Interactable.Stateful
             {
                 _overrideKeyed = true;
                 _overrideFloor = eventType.TargetFloor;
+                Debug.Log("Received ElevatorEvent to go to floor " + eventType.TargetFloor);
             }
         }
 
         public void OnMMEvent(SceneEvent eventType)
         {
             if (eventType.EventType == SceneEventType.PlayerPawnLoaded) Initialize();
+        }
+
+        public void OnMMEvent(SpontaneousTriggerEvent eventType)
+        {
         }
 
         bool IsAtBottom()
@@ -371,6 +378,8 @@ namespace FirstPersonPlayer.Interactable.Stateful
 
                         else
                             ElevatorGoDown(indexOfDestination);
+
+                        _overrideKeyed = false;
                     }
                     else
                     {

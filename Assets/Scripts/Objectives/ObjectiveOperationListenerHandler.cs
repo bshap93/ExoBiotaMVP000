@@ -1,12 +1,9 @@
-using System;
-using Animancer;
 using Events;
 using Helpers.Events.Gated;
 using Helpers.Events.Status;
 using MoreMountains.Tools;
 using Objectives.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Objectives
 {
@@ -16,7 +13,6 @@ namespace Objectives
         [SerializeField] ObjectiveObject objectiveToCompleteWhenGatedLevelingEventOccurs;
         [SerializeField] ObjectiveObject objectiveToCompleteWhenDecontaminationTakesPlace;
 
-        public ActionOnObjectiveOperation[] ActionOnObjectiveOperations;
         ObjectivesManager _objectivesManager;
 
         void Awake()
@@ -51,17 +47,6 @@ namespace Objectives
             if (eventType.ChangeType == PlayerStatsEvent.PlayerStatChangeType.Decrease &&
                 eventType.StatType == PlayerStatsEvent.PlayerStat.CurrentContamination)
                 _objectivesManager.CompleteObjective(objectiveToCompleteWhenDecontaminationTakesPlace.objectiveId);
-        }
-
-        [Serializable]
-        public class ActionOnObjectiveOperation
-        {
-            [FormerlySerializedAs("ActionToPerform")]
-            public UnityEvent actionToPerform;
-            [FormerlySerializedAs("ObjectiveIdToActUpon")]
-            public string objectiveIdToActUpon;
-            [FormerlySerializedAs("TriggerEvent")]
-            public ObjectiveObject.TriggersOnObjectiveLifecycleEvent triggerEvent;
         }
     }
 }
