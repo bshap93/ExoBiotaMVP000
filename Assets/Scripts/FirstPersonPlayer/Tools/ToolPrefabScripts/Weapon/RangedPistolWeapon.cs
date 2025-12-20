@@ -1,35 +1,74 @@
-﻿using DG.Tweening;
+﻿using System.Collections;
+using DG.Tweening;
+using FirstPersonPlayer.Combat.AINPC.Creatures;
+using FirstPersonPlayer.Combat.Player.ScriptableObjects;
+using FirstPersonPlayer.Interactable;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
 using Helpers.AnimancerHelper;
+using Helpers.Events;
+using Helpers.Events.Status;
+using Manager;
+using MoreMountains.Feedbacks;
 using UnityEngine;
 
 namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
 {
     public class RangedPistolWeapon : RangedToolPrefab
     {
-        [SerializeField] GameObject physicalRoot;
+        [Header("Pistol Components")] [SerializeField]
+        GameObject physicalRoot;
         [SerializeField] GameObject slider;
         [SerializeField] GameObject frontEmitter;
         [SerializeField] GameObject cell;
         [SerializeField] GameObject trigger;
-        [SerializeField] float cooldownTime = 0.5f;
 
-        [SerializeField] Transform muzzlePosition;
-        [SerializeField] PistolToolObject pistolToolObject;
+        [Header("Shooting Settings")] [SerializeField]
+        float cooldownTime = 0.5f;
+        [SerializeField] float range = 50f;
+        [SerializeField] LayerMask hitMask = ~0;
 
+        [Header("Combat Settings")] [SerializeField]
+        PlayerToolAttackProfile attackProfile;
+        [SerializeField] float energyCostPerShot = 5f;
+        [SerializeField] bool requiresEnergy = true;
+
+        [Header("Visual Effects")] [SerializeField]
+        Transform muzzlePosition;
+        [SerializeField] GameObject muzzleFlashPrefab;
+        [SerializeField] GameObject hitSparksPrefab;
+        [SerializeField] GameObject missSparksPrefab;
+        [SerializeField] LineRenderer beamLineRenderer;
+        [SerializeField] float beamDuration = 0.1f;
+        [SerializeField] Color beamColor = Color.cyan;
+        GameObject _muzzleFlashInstance;
+        ParticleSystem[] _muzzleParticles;
+
+        [Header("Feedbacks")] [SerializeField] MMFeedbacks shootFeedbacks;
+        [SerializeField] MMFeedbacks hitFeedbacks;
+        [SerializeField] MMFeedbacks missFeedbacks;
+
+        [Header("Scriptable Object Reference")] [SerializeField]
+        PistolToolObject pistolToolObject;
 
         Vector3 _initialLocalPos;
         bool _readyToFire = true;
-
         float _timeSinceLastUse;
 
         void Awake()
         {
             _initialLocalPos = physicalRoot.transform.localPosition;
-
             AnimController = FindFirstObjectByType<AnimancerRightArmController>();
-        }
 
+            // Setup beam renderer if present
+            if (beamLineRenderer != null)
+            {
+                beamLineRenderer.enabled = false;
+                beamLineRenderer.startColor = beamColor;
+                beamLineRenderer.endColor = beamColor;
+                beamLineRenderer.startWidth = 0.05f;
+                beamLineRenderer.endWidth = 0.02f;
+            }
+        }
 
         void Update()
         {
@@ -47,7 +86,6 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
 
         public void OnUseStarted()
         {
-            // Play begin -> during sequence when starting to sample
             if (AnimController != null && AnimController.currentToolAnimationSet != null &&
                 AnimController.currentToolAnimationSet.beginUseAnimation != null)
                 AnimController.PlayToolUseSequence();
@@ -57,17 +95,53 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
         {
             if (!_readyToFire) return;
 
+            // Check energy cost
+            if (requiresEnergy && !HasSufficientEnergy())
+            {
+                AlertEvent.Trigger(
+                    AlertReason.NotEnoughStamina,
+                    "Not enough energy to fire weapon.",
+                    "Insufficient Energy");
+
+                return;
+            }
+
+            // Consume energy
+            if (requiresEnergy)
+                PlayerStatsEvent.Trigger(
+                    PlayerStatsEvent.PlayerStat.CurrentStamina,
+                    PlayerStatsEvent.PlayerStatChangeType.Decrease,
+                    energyCostPerShot);
+
+            // Visual and audio feedback
             AnimateRecoil();
             OnUseStarted();
+            shootFeedbacks?.PlayFeedbacks();
+
+            // Spawn muzzle flash
+            if (muzzleFlashPrefab != null && muzzlePosition != null)
+            {
+                var flash = Instantiate(muzzleFlashPrefab, muzzlePosition.position, muzzlePosition.rotation);
+                Destroy(flash, 1f);
+            }
+
+            // Apply hit after short delay for animation sync
+            StartCoroutine(ApplyHitAfterDelay(0.05f));
 
             _readyToFire = false;
             _timeSinceLastUse = 0f;
         }
+
+        IEnumerator ApplyHitAfterDelay(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            ApplyHit();
+        }
+
         void AnimateRecoil()
         {
-            physicalRoot.transform.DOKill(); // prevent stacking
+            physicalRoot.transform.DOKill();
             physicalRoot.transform.localPosition = _initialLocalPos;
-
             physicalRoot.transform.DOPunchPosition(
                 new Vector3(0, 0, 0.001f),
                 0.15f,
@@ -82,7 +156,87 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
 
         public override void ApplyHit()
         {
-            Debug.Log("Pistol hit applied");
+            if (!mainCamera) mainCamera = Camera.main;
+            if (!mainCamera) return;
+
+            var ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
+            var didHit = Physics.Raycast(ray, out var hit, range, hitMask, QueryTriggerInteraction.Ignore);
+
+            var endPoint = didHit ? hit.point : ray.GetPoint(range);
+
+            // Draw energy beam
+            if (beamLineRenderer != null) StartCoroutine(DrawBeam(muzzlePosition.position, endPoint));
+
+            if (didHit)
+                ProcessHit(hit);
+            else
+                missFeedbacks?.PlayFeedbacks();
+        }
+
+        void ProcessHit(RaycastHit hit)
+        {
+            var go = hit.collider.gameObject;
+
+            // Hit enemy NPC
+            if (go.CompareTag("EnemyNPC"))
+            {
+                var enemyController = go.GetComponentInParent<EnemyController>();
+                if (enemyController != null)
+                {
+                    // Spawn hit VFX
+                    var vfx = enemyController.GetEffectsAndFeedbacks().basicHitVFX;
+                    SpawnHitVFX(vfx, hit.point, hit.normal);
+
+                    // Apply damage
+                    var attack = attackProfile?.basicAttack;
+                    if (attack != null) enemyController.ProcessAttackDamage(attack);
+
+                    hitFeedbacks?.PlayFeedbacks();
+                    Debug.Log($"Energy pistol hit enemy: {enemyController.name}");
+                }
+            }
+            // Hit breakable object
+            else if (go.TryGetComponent<IBreakable>(out var breakable))
+            {
+                breakable.ApplyHit(1, hit.point, hit.normal);
+                SpawnHitVFX(hitSparksPrefab, hit.point, hit.normal);
+                hitFeedbacks?.PlayFeedbacks();
+            }
+            // Hit generic surface
+            else
+            {
+                SpawnHitVFX(hitSparksPrefab, hit.point, hit.normal);
+                hitFeedbacks?.PlayFeedbacks();
+            }
+        }
+
+        IEnumerator DrawBeam(Vector3 start, Vector3 end)
+        {
+            if (beamLineRenderer == null) yield break;
+
+            beamLineRenderer.enabled = true;
+            beamLineRenderer.SetPosition(0, start);
+            beamLineRenderer.SetPosition(1, end);
+
+            yield return new WaitForSeconds(beamDuration);
+
+            beamLineRenderer.enabled = false;
+        }
+
+        void SpawnHitVFX(GameObject vfxPrefab, Vector3 position, Vector3 normal)
+        {
+            if (vfxPrefab == null) return;
+
+            var vfxInstance = Instantiate(vfxPrefab, position, Quaternion.LookRotation(normal));
+            Destroy(vfxInstance, 2f);
+        }
+
+        bool HasSufficientEnergy()
+        {
+            var statsManager = PlayerMutableStatsManager.Instance;
+            if (statsManager == null) return true;
+
+            return statsManager.CurrentStamina >= energyCostPerShot;
         }
     }
 }
