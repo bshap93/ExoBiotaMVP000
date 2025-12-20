@@ -40,8 +40,6 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
         [SerializeField] LineRenderer beamLineRenderer;
         [SerializeField] float beamDuration = 0.1f;
         [SerializeField] Color beamColor = Color.cyan;
-        GameObject _muzzleFlashInstance;
-        ParticleSystem[] _muzzleParticles;
 
         [Header("Feedbacks")] [SerializeField] MMFeedbacks shootFeedbacks;
         [SerializeField] MMFeedbacks hitFeedbacks;
@@ -51,6 +49,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
         PistolToolObject pistolToolObject;
 
         Vector3 _initialLocalPos;
+        GameObject _muzzleFlashInstance;
+        ParticleSystem[] _muzzleParticles;
         bool _readyToFire = true;
         float _timeSinceLastUse;
 
@@ -59,7 +59,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
             _initialLocalPos = physicalRoot.transform.localPosition;
             AnimController = FindFirstObjectByType<AnimancerRightArmController>();
 
-            // Setup beam renderer if present
+            // Setup beam renderer
             if (beamLineRenderer != null)
             {
                 beamLineRenderer.enabled = false;
@@ -67,6 +67,19 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
                 beamLineRenderer.endColor = beamColor;
                 beamLineRenderer.startWidth = 0.05f;
                 beamLineRenderer.endWidth = 0.02f;
+            }
+
+            // Setup persistent muzzle flash (Hovl style)
+            if (muzzleFlashPrefab != null && muzzlePosition != null)
+            {
+                _muzzleFlashInstance = Instantiate(muzzleFlashPrefab, muzzlePosition.position, muzzlePosition.rotation);
+                _muzzleFlashInstance.transform.SetParent(muzzlePosition);
+                _muzzleParticles = _muzzleFlashInstance.GetComponentsInChildren<ParticleSystem>();
+
+                // Stop all particles initially
+                foreach (var ps in _muzzleParticles)
+                    if (ps.isPlaying)
+                        ps.Stop();
             }
         }
 
@@ -76,6 +89,12 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
                 _timeSinceLastUse += Time.deltaTime;
             else
                 _readyToFire = true;
+        }
+
+        void OnDestroy()
+        {
+            // Clean up persistent muzzle flash
+            if (_muzzleFlashInstance != null) Destroy(_muzzleFlashInstance);
         }
 
         public override void Initialize(PlayerEquipment owner)
@@ -118,18 +137,23 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
             OnUseStarted();
             shootFeedbacks?.PlayFeedbacks();
 
-            // Spawn muzzle flash
-            if (muzzleFlashPrefab != null && muzzlePosition != null)
-            {
-                var flash = Instantiate(muzzleFlashPrefab, muzzlePosition.position, muzzlePosition.rotation);
-                Destroy(flash, 1f);
-            }
+            // Play muzzle flash particles (Hovl style)
+            PlayMuzzleFlash();
 
             // Apply hit after short delay for animation sync
             StartCoroutine(ApplyHitAfterDelay(0.05f));
 
             _readyToFire = false;
             _timeSinceLastUse = 0f;
+        }
+
+        void PlayMuzzleFlash()
+        {
+            if (_muzzleParticles == null || _muzzleParticles.Length == 0) return;
+
+            foreach (var ps in _muzzleParticles)
+                if (ps != null)
+                    ps.Play();
         }
 
         IEnumerator ApplyHitAfterDelay(float delay)
