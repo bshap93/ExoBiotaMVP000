@@ -12,6 +12,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         [SerializeField] protected bool toolIsUsedOnRelease;
 
         [Header("References")] public Camera mainCamera;
+
+        [SerializeField] protected MMFeedbacks equipFeedbacks;
         protected AnimancerRightArmController AnimancerRightArmController;
         protected AnimancerRightArmController AnimController;
         protected RaycastHit LastHit;
@@ -24,8 +26,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         }
         public void Unequip()
         {
-            throw new NotImplementedException();
         }
+
         public bool CanInteractWithObject(GameObject colliderGameObject)
         {
             throw new NotImplementedException();
@@ -42,7 +44,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         }
         public MMFeedbacks GetEquipFeedbacks()
         {
-            throw new NotImplementedException();
+            return equipFeedbacks;
         }
         public CanBeAreaScannedType GetDetectableType()
         {
@@ -50,7 +52,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         }
         public MMFeedbacks GetUnequipFeedbacks()
         {
-            throw new NotImplementedException();
+            return equipFeedbacks;
         }
         public void ChargeUse(bool justPressed)
         {

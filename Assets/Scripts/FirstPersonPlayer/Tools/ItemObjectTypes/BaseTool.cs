@@ -15,5 +15,6 @@ namespace FirstPersonPlayer.Tools.ItemObjectTypes
 
         public ToolAnimationSet toolAnimationSet;
         public bool hasObjectivesEquipping;
+        [Header("Arm Visibility")] public bool hidesArmWhenEquipped;
     }
 }

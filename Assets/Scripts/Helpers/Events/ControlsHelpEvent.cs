@@ -16,7 +16,6 @@ namespace Helpers.Events
     {
         static ControlsHelpEvent _e;
         public int ActionId;
-        //public Sprite Icon;
         public ControlHelpEventType EventType;
         public string AdditionalInstruction;
         public string AdditionalInfoText;

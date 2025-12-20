@@ -34,9 +34,9 @@ namespace FirstPersonPlayer.Tools
         public bool autoEquipLightSourceInLeftHand;
 
 #if UNITY_EDITOR
-        [ValueDropdown(nameof(GetAllRewiredActions))]
+        [FormerlySerializedAs("ActionId")] [ValueDropdown(nameof(GetAllRewiredActions))]
 #endif
-        public int ActionId;
+        public int actionId;
 
 
         public MoreMountains.InventoryEngine.Inventory equipmentInventory; // Reference to the player's inventory
@@ -46,7 +46,12 @@ namespace FirstPersonPlayer.Tools
 
         [SerializeField] ToolAnimationSet emptyHandAnimationSet;
 
-        public Transform toolAnchor;
+        [FormerlySerializedAs("toolAnchor")] public Transform primaryToolAnchor;
+
+        // Used for tools that are Right handed but not to be held in Arm Hand
+        public Transform secondaryToolAnchor;
+
+        public GameObject rightArmGameObject;
 
         [FormerlySerializedAs("ProgressBarBlue")]
         public ProgressBarBlue progressBarBlue;
@@ -328,13 +333,35 @@ namespace FirstPersonPlayer.Tools
                 return;
             }
 
+            GameObject myGameObject;
 
-            var go = Instantiate(tool.FPToolPrefab, toolAnchor, false);
-            CurrentRuntimeTool = go.GetComponent<IRuntimeTool>();
+            if (tool.hidesArmWhenEquipped && hand == Hand.Right)
+            {
+                myGameObject = Instantiate(tool.FPToolPrefab, secondaryToolAnchor, false);
+                if (rightArmGameObject != null) rightArmGameObject.SetActive(false);
+            }
+            else if (hand == Hand.Right)
+            {
+                myGameObject = Instantiate(tool.FPToolPrefab, primaryToolAnchor, false);
+                if (rightArmGameObject != null) rightArmGameObject.SetActive(true);
+                animancerRightArmController.currentToolAnimationSet = tool.toolAnimationSet;
+                animancerRightArmController.UpdateAnimationSet();
+                Debug.Log("Right hand tool instantiated at secondary anchor");
+            }
+            else
+            {
+                myGameObject = Instantiate(tool.FPToolPrefab, primaryToolAnchor, false);
+                animancerRightArmController.currentToolAnimationSet = tool.toolAnimationSet;
+                animancerRightArmController.UpdateAnimationSet();
+                Debug.Log("Left hand tool instantiated at primary anchor");
+            }
+
+            // var go = Instantiate(tool.FPToolPrefab, primaryToolAnchor, false);
+            CurrentRuntimeTool = myGameObject.GetComponent<IRuntimeTool>();
             if (CurrentRuntimeTool == null)
             {
                 Debug.LogWarning($"[{name}] {tool.name}'s prefab doesn't implement IRuntimeTool.");
-                Destroy(go);
+                Destroy(myGameObject);
                 return;
             }
 
@@ -342,13 +369,12 @@ namespace FirstPersonPlayer.Tools
             CurrentToolSo = tool;
 
 
-            if (hand == Hand.Right && animancerRightArmController != null)
-            {
-                animancerRightArmController.gameObject.SetActive(true);
-
-                animancerRightArmController.currentToolAnimationSet = tool.toolAnimationSet;
-                animancerRightArmController.UpdateAnimationSet();
-            }
+            // if (hand == Hand.Right && animancerRightArmController != null)
+            // {
+            //     // animancerRightArmController.gameObject.SetActive(true);
+            //
+            //
+            // }
 
             CurrentRuntimeTool.Initialize(this);
 
@@ -387,6 +413,7 @@ namespace FirstPersonPlayer.Tools
             CurrentRuntimeTool = null;
             if (hand == Hand.Right && animancerRightArmController != null)
             {
+                if (rightArmGameObject != null) rightArmGameObject.SetActive(true);
                 if (emptyHandEnabled)
                 {
                     animancerRightArmController.currentToolAnimationSet = emptyHandAnimationSet;

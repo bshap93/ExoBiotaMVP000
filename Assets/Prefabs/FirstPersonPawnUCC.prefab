@@ -1025,12 +1025,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoEquipLightSourceInLeftHand: 0
-  ActionId: 43
+  actionId: 43
   equipmentInventory: {fileID: 0}
   hand: 0
   equipmentInventoryName: EquippedItemInventory
   emptyHandAnimationSet: {fileID: 11400000, guid: 1d8b743d361c71f4089034c7bb42d9a7, type: 2}
-  toolAnchor: {fileID: 2662368972192962333}
+  primaryToolAnchor: {fileID: 2662368972192962333}
+  secondaryToolAnchor: {fileID: 8659367383444788419}
+  rightArmGameObject: {fileID: 6346514436920703999}
   progressBarBlue: {fileID: 5670279102535128969}
   rewiredInput: {fileID: 351313098125393770}
   terrainLayerDetector: {fileID: 5969745365844593951}
@@ -3971,12 +3973,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoEquipLightSourceInLeftHand: 1
-  ActionId: 91
+  actionId: 91
   equipmentInventory: {fileID: 0}
   hand: 1
   equipmentInventoryName: LEquipmentInventory
   emptyHandAnimationSet: {fileID: 0}
-  toolAnchor: {fileID: 6277036191868191584}
+  primaryToolAnchor: {fileID: 6277036191868191584}
+  secondaryToolAnchor: {fileID: 0}
+  rightArmGameObject: {fileID: 0}
   progressBarBlue: {fileID: 5670279102535128969}
   rewiredInput: {fileID: 351313098125393770}
   terrainLayerDetector: {fileID: 5969745365844593951}
@@ -5678,7 +5682,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6346514436920703999}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: d295001cef50f7b4cb352112402c9792, type: 3}
   m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
