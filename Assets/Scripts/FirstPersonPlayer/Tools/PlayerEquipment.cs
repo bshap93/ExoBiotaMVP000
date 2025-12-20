@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Events;
 using FirstPersonPlayer.Interactable;
+using FirstPersonPlayer.Tools.Animation;
 using FirstPersonPlayer.Tools.Interface;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
 using FirstPersonPlayer.UI;
@@ -338,6 +339,12 @@ namespace FirstPersonPlayer.Tools
             if (tool.hidesArmWhenEquipped && hand == Hand.Right)
             {
                 myGameObject = Instantiate(tool.FPToolPrefab, secondaryToolAnchor, false);
+                var toolBob = myGameObject.GetComponent<ToolBob>();
+                if (toolBob != null)
+                {
+                    toolBob.enabled = true;
+                    toolBob.Initialize();
+                }
                 if (rightArmGameObject != null) rightArmGameObject.SetActive(false);
             }
             else if (hand == Hand.Right)

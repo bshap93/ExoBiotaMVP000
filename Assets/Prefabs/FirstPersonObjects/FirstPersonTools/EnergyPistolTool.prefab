@@ -1176,7 +1176,7 @@ GameObject:
   - component: {fileID: 4167925171455490004}
   - component: {fileID: 6004346210032996363}
   - component: {fileID: 5111565783594610731}
-  - component: {fileID: 2138730536778626536}
+  - component: {fileID: 1295171853767322749}
   m_Layer: 0
   m_Name: EnergyPistolTool
   m_TagString: Untagged
@@ -1192,15 +1192,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8548384196625345297}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0028977313, y: -0.9986987, z: 0.040553603, w: -0.030787453}
-  m_LocalPosition: {x: 0.102, y: -0.171, z: 0.345}
-  m_LocalScale: {x: 10.900544, y: 10.900544, z: 10.900544}
+  m_LocalRotation: {x: -0.0019246768, y: -0.9976736, z: 0.040611412, w: -0.05472117}
+  m_LocalPosition: {x: 0.10215192, y: -0.1646594, z: 0.34450543}
+  m_LocalScale: {x: 8.780933, y: 8.780933, z: 8.780933}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2853434696352234537}
   - {fileID: 1598849801271643148}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 4.656, y: -543.524, z: 0.189}
+  m_LocalEulerAnglesHint: {x: 4.66, y: -546.28, z: -0.035}
 --- !u!114 &4167925171455490004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1262,7 +1262,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.005, y: 0.018, z: 0.029}
   m_Center: {x: 0, y: 0.003, z: 0}
---- !u!114 &2138730536778626536
+--- !u!114 &1295171853767322749
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1271,10 +1271,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8548384196625345297}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 134fde2b8c784c53af6d30c69b098d1a, type: 3}
+  m_Script: {fileID: 11500000, guid: a94487db647843938789383c84510678, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swayAmount: 0.05
+  swayAmount: 0.01
   swaySpeed: 6
   bumpStrength: 0.015
   fpPlayerCharacter: {fileID: 0}

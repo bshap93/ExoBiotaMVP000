@@ -51,7 +51,7 @@ namespace FirstPersonPlayer.Tools.Animation
                 Initialize();
         }
 
-        void Initialize()
+        public virtual void Initialize()
         {
             _initialLocalPosition = transform.localPosition;
 
