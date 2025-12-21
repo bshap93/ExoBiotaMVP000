@@ -934,8 +934,8 @@ MonoBehaviour:
   secondsBeforeSettingShouldBeDestroyed: 5
   appearsOnlyOnce: 0
   doesNotImmediatelyNeedToMove: 0
-  currentHealth: 25
-  maxHealth: 25
+  currentHealth: 50
+  maxHealth: 50
   destroyAfterDeath: 1
   isDead: 0
   blackboardWasHitKey: wasHit

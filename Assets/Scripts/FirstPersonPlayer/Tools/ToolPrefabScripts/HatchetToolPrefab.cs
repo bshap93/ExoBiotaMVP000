@@ -107,6 +107,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                     AlertEvent.Trigger(
                         AlertReason.NotEnoughStamina, "Not enough stamina to use pickaxe.", "Insufficient Stamina");
 
+
                     return;
                 }
 
@@ -253,14 +254,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
                 enemyController.ProcessAttackDamage(playerAttack);
                 if (hitType == HitType.Heavy)
-                    // PlayerStatsEvent.Trigger(
-                    //     PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
-                    //     StaminaCostPerHeavyConnectingSwing);
+
                     Debug.Log("Stamina decreased by: " + StaminaCostPerHeavyConnectingSwing);
                 else
-                    // PlayerStatsEvent.Trigger(
-                    //     PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,
-                    //     StaminaCostPerNormalConnectingSwing);
+
                     Debug.Log("Stamina decreased by: " + StaminaCostPerNormalConnectingSwing);
             }
             else

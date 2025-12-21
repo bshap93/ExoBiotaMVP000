@@ -409,8 +409,8 @@ MonoBehaviour:
   secondsBeforeSettingShouldBeDestroyed: 5
   appearsOnlyOnce: 0
   doesNotImmediatelyNeedToMove: 0
-  currentHealth: 20
-  maxHealth: 20
+  currentHealth: 40
+  maxHealth: 40
   destroyAfterDeath: 1
   isDead: 0
   blackboardWasHitKey: wasHit
@@ -422,6 +422,8 @@ MonoBehaviour:
   meleeHitFeedbacksBasic: {fileID: 5983199619757488847}
   meleeHitFeedbacksHeavy: {fileID: 6595388916148046013}
   critDamageFeedbacks: {fileID: 0}
+  rangedHitFeedbacksBasic: {fileID: 0}
+  rangedHitFeedbacksHeavy: {fileID: 0}
   deathParticlesPrefab: {fileID: 4388822532763854086, guid: 5514859c85bdcae4b83d6d596975acbf, type: 3}
   deathFeedbacks: {fileID: 7321883237721820996}
   movementLoopFeedbacks: {fileID: 0}
@@ -438,6 +440,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blackboard: {fileID: 861584139712555597}
+  delay: 0.5
 --- !u!95 &7986580475463989932
 Animator:
   serializedVersion: 7

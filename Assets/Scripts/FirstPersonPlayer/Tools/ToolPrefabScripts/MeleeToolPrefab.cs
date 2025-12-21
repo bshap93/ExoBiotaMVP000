@@ -275,6 +275,20 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             };
         }
 
+        public void ReturnToLocomotionImmediately()
+        {
+            if (AnimController.animancerComponent == null) return;
+
+            var layer = AnimController.animancerComponent.Layers[1];
+            layer.Weight = 0f;
+
+            // Clear action state so locomotion can resume
+            AnimController.ClearActionState();
+
+            // Return to locomotion safely
+            AnimController.ReturnToLocomotion();
+        }
+
         public void StartChargePullbackAnimation()
         {
             if (AnimController.animancerComponent == null) return;
