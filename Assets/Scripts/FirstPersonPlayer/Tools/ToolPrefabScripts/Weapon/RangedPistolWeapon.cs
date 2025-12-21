@@ -10,6 +10,7 @@ using Helpers.Events.Status;
 using Manager;
 using MoreMountains.Feedbacks;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
 {
@@ -41,8 +42,15 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
         [SerializeField] float beamDuration = 0.1f;
         [SerializeField] Color beamColor = Color.cyan;
 
+        [Header("Recoil Settings")] [SerializeField]
+        float recoilBackComponent = 0.001f;
+        [SerializeField] float recoilBackDuration = 0.15f;
+        [SerializeField] int recoilBackVibrato = 8;
+        [SerializeField] float recoilBackElasticity = 0.4f;
+
         [Header("Feedbacks")] [SerializeField] MMFeedbacks shootFeedbacks;
-        [SerializeField] MMFeedbacks hitFeedbacks;
+        [FormerlySerializedAs("hitFeedbacks")] [SerializeField]
+        MMFeedbacks nonLocalHitFeedbacks;
         [SerializeField] MMFeedbacks missFeedbacks;
 
         [Header("Scriptable Object Reference")] [SerializeField]
@@ -134,6 +142,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
 
             // Visual and audio feedback
             AnimateRecoil();
+            AnimateSlideOutAndBack();
+            AnimateFrontEmitterOutAndBack();
             OnUseStarted();
             shootFeedbacks?.PlayFeedbacks();
 
@@ -167,10 +177,34 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
             physicalRoot.transform.DOKill();
             physicalRoot.transform.localPosition = _initialLocalPos;
             physicalRoot.transform.DOPunchPosition(
-                new Vector3(0, 0, 0.001f),
-                0.15f,
-                8,
-                0.4f);
+                new Vector3(0, 0, recoilBackComponent),
+                recoilBackDuration,
+                recoilBackVibrato,
+                recoilBackElasticity);
+        }
+
+        public void AnimateSlideOutAndBack()
+        {
+            if (slider == null) return;
+
+            var originalPos = slider.transform.localPosition;
+            var slideOutPos = originalPos + new Vector3(0, 0, 0.2f);
+
+            slider.transform.DOKill();
+            slider.transform.localPosition = originalPos;
+            slider.transform.DOLocalMove(slideOutPos, 0.1f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutSine);
+        }
+
+        void AnimateFrontEmitterOutAndBack()
+        {
+            if (frontEmitter == null) return;
+
+            var originalPos = frontEmitter.transform.localPosition;
+            var slideOutPos = originalPos + new Vector3(0, 0, -0.2f);
+
+            frontEmitter.transform.DOKill();
+            frontEmitter.transform.localPosition = originalPos;
+            frontEmitter.transform.DOLocalMove(slideOutPos, 0.2f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutSine);
         }
 
         public override Sprite GetReticleForTool(GameObject colliderGameObject)
@@ -209,13 +243,13 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
                 {
                     // Spawn hit VFX
                     var vfx = enemyController.GetEffectsAndFeedbacks().basicHitVFX;
-                    SpawnHitVFX(vfx, hit.point, hit.normal);
+                    SpawnHitFX(vfx, hit.point, hit.normal);
 
                     // Apply damage
                     var attack = attackProfile?.basicAttack;
                     if (attack != null) enemyController.ProcessAttackDamage(attack);
 
-                    hitFeedbacks?.PlayFeedbacks();
+                    nonLocalHitFeedbacks?.PlayFeedbacks();
                     Debug.Log($"Energy pistol hit enemy: {enemyController.name}");
                 }
             }
@@ -223,14 +257,14 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
             else if (go.TryGetComponent<IBreakable>(out var breakable))
             {
                 breakable.ApplyHit(1, hit.point, hit.normal);
-                SpawnHitVFX(hitSparksPrefab, hit.point, hit.normal);
-                hitFeedbacks?.PlayFeedbacks();
+                SpawnHitFX(hitSparksPrefab, hit.point, hit.normal);
+                nonLocalHitFeedbacks?.PlayFeedbacks();
             }
             // Hit generic surface
             else
             {
-                SpawnHitVFX(hitSparksPrefab, hit.point, hit.normal);
-                hitFeedbacks?.PlayFeedbacks();
+                SpawnHitFX(hitSparksPrefab, hit.point, hit.normal);
+                nonLocalHitFeedbacks?.PlayFeedbacks();
             }
         }
 
@@ -247,11 +281,13 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
             beamLineRenderer.enabled = false;
         }
 
-        void SpawnHitVFX(GameObject vfxPrefab, Vector3 position, Vector3 normal)
+        void SpawnHitFX(GameObject vfxPrefab, Vector3 position, Vector3 normal)
         {
             if (vfxPrefab == null) return;
 
             var vfxInstance = Instantiate(vfxPrefab, position, Quaternion.LookRotation(normal));
+            var vfxFeedbacks = vfxInstance.GetComponent<MMFeedbacks>();
+            vfxFeedbacks?.PlayFeedbacks();
             Destroy(vfxInstance, 2f);
         }
 
