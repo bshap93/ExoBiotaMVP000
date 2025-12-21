@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4519986680482262185}
   - component: {fileID: 8263402621011083926}
   - component: {fileID: 7642450776302983345}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wires
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 3202295905760422053}
   - component: {fileID: 4559767179386416981}
   - component: {fileID: 7146289928434219155}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 2869575765295564213}
   - component: {fileID: 2562731330396705467}
   - component: {fileID: 1933131972555037963}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Slide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 8470933665179116043}
   - component: {fileID: 6257321621612787561}
   - component: {fileID: 3926716757546703528}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Internals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -355,7 +355,7 @@ GameObject:
   - component: {fileID: 244302012438713728}
   - component: {fileID: 3600273265639527541}
   - component: {fileID: 6396074026747566973}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -444,7 +444,7 @@ GameObject:
   - component: {fileID: 2713831643641346466}
   - component: {fileID: 6849506967057427055}
   - component: {fileID: 3782482556683506972}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EnergyPistolPickable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -790,7 +790,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5058753164861763335}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MovingParts
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -827,7 +827,7 @@ GameObject:
   - component: {fileID: 8175415536600389747}
   - component: {fileID: 4712318530938120267}
   - component: {fileID: 9179603186079701737}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FrontEmitter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -913,6 +913,10 @@ PrefabInstance:
     - target: {fileID: 5294847876711491803, guid: ce45033d39aff534ba6214474ecf104e, type: 3}
       propertyPath: m_Name
       value: Cell
+      objectReference: {fileID: 0}
+    - target: {fileID: 5294847876711491803, guid: ce45033d39aff534ba6214474ecf104e, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7607181529938289786, guid: ce45033d39aff534ba6214474ecf104e, type: 3}
       propertyPath: m_LocalPosition.x

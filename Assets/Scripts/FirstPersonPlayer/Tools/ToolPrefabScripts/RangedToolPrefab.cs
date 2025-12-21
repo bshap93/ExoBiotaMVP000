@@ -30,7 +30,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
         public bool CanInteractWithObject(GameObject colliderGameObject)
         {
-            throw new NotImplementedException();
+            return true;
         }
         public abstract Sprite GetReticleForTool(GameObject colliderGameObject);
 

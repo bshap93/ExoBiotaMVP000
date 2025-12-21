@@ -55,6 +55,7 @@ PrefabInstance:
         mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"canSeeLayerMask":{"_value":{"value":3849},"_name":"canSeeLayerMask","_id":"0106f851-426a-4fa6-bbc3-f32066e603c5","$type":"NodeCanvas.Framework.Variable`1[[UnityEngine.LayerMask,
         UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},"wasHit":{"_name":"wasHit","_id":"836ecea2-dd5d-4ec8-aaf0-15e0a3963b78","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
         mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"wasHitHeavy":{"_name":"wasHitHeavy","_id":"34ecdc95-a637-4043-a5b1-f197d18e03d5","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
+        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"pursuitSpeed":{"_value":2.0,"_name":"pursuitSpeed","_id":"06bca8e9-f571-44dd-9b28-d3bf23ec9899","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
         mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}}}'
       objectReference: {fileID: 0}
     - target: {fileID: 7767747225889926531, guid: bbf1e8492c699de4b813b85187e63f2b, type: 3}
