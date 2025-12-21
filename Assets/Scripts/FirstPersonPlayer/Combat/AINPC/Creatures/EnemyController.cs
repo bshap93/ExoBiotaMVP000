@@ -46,6 +46,9 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
         [SerializeField] MMFeedbacks meleeHitFeedbacksHeavy;
         [SerializeField] MMFeedbacks critDamageFeedbacks;
 
+        [SerializeField] MMFeedbacks rangedHitFeedbacksBasic;
+        [SerializeField] MMFeedbacks rangedHitFeedbacksHeavy;
+
         [SerializeField] GameObject deathParticlesPrefab;
         [SerializeField] MMFeedbacks deathFeedbacks;
 
@@ -129,6 +132,41 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
                         new Vector3(
                             creatureType.heavyMeleeAttackShakeIntensity, 0f,
                             creatureType.heavyMeleeAttackShakeIntensity))); // or still punch
+                }
+            }
+            else if (attackType == PlayerAttackType.Ranged)
+            {
+                var playerDexterity = attributeManager.Dexterity;
+                var playerDexterityMultiplier = 1f + (playerDexterity - 1) * 0.5f;
+                if (isCriticalHit)
+                {
+                    damageAmount *= playerAttack.critMultiplier;
+                    critDamageFeedbacks?.PlayFeedbacks();
+                }
+
+                damageAmount *= playerDexterityMultiplier;
+
+                if (playerAttack.damageType == MeleeToolPrefab.HitType.Normal)
+                {
+                    rangedHitFeedbacksBasic?.PlayFeedbacks();
+                    PlayHitTween(t => t.DOPunchPosition(
+                        new Vector3(
+                            creatureType.rangedAttackShakeIntensity, 0f, creatureType.rangedAttackShakeIntensity),
+                        creatureType.rangedAttackShakeDuration));
+
+                    blackboard.SetVariableValue("wasHit", true);
+                    Debug.Log("Ranged Normal Hit registered on " + creatureType.creatureName);
+                }
+                else if (playerAttack.damageType == MeleeToolPrefab.HitType.Heavy)
+                {
+                    rangedHitFeedbacksHeavy?.PlayFeedbacks();
+                    blackboard.SetVariableValue("wasHitHeavy", true);
+                    Debug.Log("Ranged Heavy Hit registered on " + creatureType.creatureName);
+                    PlayHitTween(t => t.DOShakePosition(
+                        creatureType.rangedAttackShakeDuration,
+                        new Vector3(
+                            creatureType.heavyRangedAttackShakeIntensity, 0f,
+                            creatureType.heavyRangedAttackShakeIntensity))); // or still punch
                 }
             }
 

@@ -48,6 +48,15 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
         [SerializeField] int recoilBackVibrato = 8;
         [SerializeField] float recoilBackElasticity = 0.4f;
 
+        [Header("Accuracy Settings")] [Tooltip("Maximum spread angle in degrees at Dexterity 1")] [SerializeField]
+        float maxSpreadAngle = 5f;
+        [Tooltip("Minimum spread angle in degrees at max Dexterity")] [SerializeField]
+        float minSpreadAngle = 0.5f;
+        [Tooltip("Dexterity level for perfect accuracy (0 spread)")] [SerializeField]
+        int perfectAccuracyDexterity = 20;
+        [Tooltip("Show debug lines for shot trajectory")] [SerializeField]
+        bool debugAccuracy;
+
         [Header("Feedbacks")] [SerializeField] MMFeedbacks shootFeedbacks;
         [FormerlySerializedAs("hitFeedbacks")] [SerializeField]
         MMFeedbacks nonLocalHitFeedbacks;
@@ -212,12 +221,63 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
             return pistolToolObject.defaultReticle;
         }
 
+        float CalculateSpreadAngle()
+        {
+            var attributesManager = AttributesManager.Instance;
+            if (attributesManager == null) return maxSpreadAngle;
+
+            var dexterity = attributesManager.Dexterity;
+
+            // At Dexterity 1: maxSpreadAngle
+            // At perfectAccuracyDexterity: minSpreadAngle
+            // Linear interpolation
+            var t = Mathf.Clamp01((float)(dexterity - 1) / (perfectAccuracyDexterity - 1));
+            var spread = Mathf.Lerp(maxSpreadAngle, minSpreadAngle, t);
+
+            if (debugAccuracy) Debug.Log($"[Pistol] Dex: {dexterity}, Spread: {spread:F2}°");
+
+            return spread;
+        }
+
+        Vector3 ApplySpread(Vector3 direction, float spreadAngle)
+        {
+            // Convert angle to radians
+            var spreadRad = spreadAngle * Mathf.Deg2Rad;
+
+            // Random point in a circle (uniform distribution)
+            var randomCircle = Random.insideUnitCircle * Mathf.Tan(spreadRad);
+
+            // Create perpendicular vectors to the aim direction
+            var right = Vector3.Cross(direction, Vector3.up).normalized;
+            if (right.magnitude < 0.1f) // Handle edge case when aiming straight up/down
+                right = Vector3.Cross(direction, Vector3.forward).normalized;
+
+            var up = Vector3.Cross(right, direction).normalized;
+
+            // Apply spread
+            var spreadDirection = direction + right * randomCircle.x + up * randomCircle.y;
+            return spreadDirection.normalized;
+        }
+
+
         public override void ApplyHit()
         {
             if (!mainCamera) mainCamera = Camera.main;
             if (!mainCamera) return;
 
-            var ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
+            // NEW: Calculate spread and apply it
+            var spreadAngle = CalculateSpreadAngle();
+            var baseDirection = mainCamera.transform.forward;
+            var spreadDirection = ApplySpread(baseDirection, spreadAngle);
+            var ray = new Ray(mainCamera.transform.position, spreadDirection);
+            // Plus debug visualization
+            if (debugAccuracy)
+            {
+                Debug.DrawRay(mainCamera.transform.position, baseDirection * range, Color.green, 1f);
+                Debug.DrawRay(mainCamera.transform.position, spreadDirection * range, Color.red, 1f);
+            }
+
+            // var ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
             var didHit = Physics.Raycast(ray, out var hit, range, hitMask, QueryTriggerInteraction.Ignore);
 
             var endPoint = didHit ? hit.point : ray.GetPoint(range);

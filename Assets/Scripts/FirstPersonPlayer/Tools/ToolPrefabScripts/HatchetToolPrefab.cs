@@ -77,11 +77,6 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             // If button released while pullback animation is still playing
             if (ChargeTimeElapsed > 0f && !ToolIsHeldInChargePosition)
             {
-                // Cancel the pullback and return to idle
-                // var layer = AnimController.animancerComponent.Layers[1];
-                // layer.Weight = 0f;
-                // AnimController.ClearActionState();
-                // AnimController.ReturnToLocomotion();
                 PerformToolAction();
 
                 ChargeTimeElapsed = 0f;
@@ -297,9 +292,9 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             else
             {
                 // Fallback to legacy single animation mode
-                AnimController.PlayToolUseOneShot();
+                AnimController.PlayToolUseOneShot(speedMultiplier: swingSpeedMultiplier);
                 ToolIsHeldInChargePosition = false;
-                StartCoroutine(ApplyNormalHitAfterDelay(defaultHitDelay));
+                StartCoroutine(ApplyNormalHitAfterDelay(defaultHitDelay / swingSpeedMultiplier));
             }
 
             ChargeTimeElapsed = 0f;
@@ -347,7 +342,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             var animSet = AnimController.currentToolAnimationSet;
             AnimationClip downFromHeldUpSwingClip = null;
             AudioClip downFromHeldUpSwingAudioCLip = null;
-            var hitDelay = swingDownHitDelay * heavySwingDownFactor;
+            var hitDelay = swingDownHitDelay * heavySwingDownFactor / swingSpeedMultiplier;
 
             downFromHeldUpSwingClip = animSet.endUseAnimation;
             downFromHeldUpSwingAudioCLip = animSet.endHeavyUseAudioClip;
@@ -369,19 +364,19 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             var animSet = AnimController.currentToolAnimationSet;
             AnimationClip downFromHeldUpSwingClip = null;
             AudioClip downFromHeldUpSwingAudioCLip = null;
-            var hitDelay = swingDownHitDelay;
+            var hitDelay = swingDownHitDelay / swingSpeedMultiplier;
 
             downFromHeldUpSwingClip = animSet.endUseAnimation;
             downFromHeldUpSwingAudioCLip = animSet.endUseAudioClip;
 
             if (downFromHeldUpSwingAudioCLip != null)
-                StartCoroutine(PlaySoundAfterDelay(downFromHeldUpSwingAudioCLip, swingDownHitDelay / 2f));
+                StartCoroutine(PlaySoundAfterDelay(downFromHeldUpSwingAudioCLip, hitDelay / 2f));
 
             if (downFromHeldUpSwingClip != null)
             {
                 PlaySwingAnimation(downFromHeldUpSwingClip);
 
-                StartCoroutine(ApplyNormalHitAfterDelay(swingDownHitDelay));
+                StartCoroutine(ApplyNormalHitAfterDelay(hitDelay));
             }
         }
 

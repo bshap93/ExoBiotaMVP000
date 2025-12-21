@@ -252,7 +252,7 @@ namespace Helpers.AnimancerHelper
         /// <summary>
         ///     Play a one-shot tool use animation (begin and end together)
         /// </summary>
-        public void PlayToolUseOneShot(Action onComplete = null)
+        public void PlayToolUseOneShot(Action onComplete = null, float speedMultiplier = 1f)
         {
             if (currentToolAnimationSet?.beginUseAnimation == null) return;
 
@@ -260,6 +260,8 @@ namespace Helpers.AnimancerHelper
                 currentToolAnimationSet.beginUseAnimation,
                 defaultTransitionDuration
             );
+
+            state.Speed = speedMultiplier;
 
             state.Events(this).OnEnd = () =>
             {

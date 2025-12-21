@@ -345,6 +345,7 @@ namespace FirstPersonPlayer.Tools
                     toolBob.enabled = true;
                     toolBob.Initialize();
                 }
+
                 if (rightArmGameObject != null) rightArmGameObject.SetActive(false);
             }
             else if (hand == Hand.Right)
@@ -358,8 +359,12 @@ namespace FirstPersonPlayer.Tools
             else
             {
                 myGameObject = Instantiate(tool.FPToolPrefab, primaryToolAnchor, false);
-                animancerRightArmController.currentToolAnimationSet = tool.toolAnimationSet;
-                animancerRightArmController.UpdateAnimationSet();
+                if (animancerRightArmController != null && tool.toolAnimationSet != null)
+                {
+                    animancerRightArmController.currentToolAnimationSet = tool.toolAnimationSet;
+                    animancerRightArmController.UpdateAnimationSet();
+                }
+
                 Debug.Log("Left hand tool instantiated at primary anchor");
             }
 

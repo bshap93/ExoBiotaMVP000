@@ -2,6 +2,7 @@
 using System.Collections;
 using FirstPersonPlayer.Combat.Player.ScriptableObjects;
 using FirstPersonPlayer.Tools.Interface;
+using FirstPersonPlayer.Tools.ItemObjectTypes;
 using Helpers.AnimancerHelper;
 using Helpers.Events.Combat;
 using Helpers.Events.ManagerEvents;
@@ -32,6 +33,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
         [SerializeField] CanBeAreaScannedType detectableType = CanBeAreaScannedType.BasicBioScanner;
 
+        [SerializeField] RightHandEquippableTool rightHandEquippableTool;
+
         [Header("Swing Animation Settings")] [Tooltip("Use multiple swing animations that alternate?")]
         public bool useMultipleSwings = true;
 
@@ -43,6 +46,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
         [Tooltip("Delay in seconds before hit is applied for Swing 03 animation (if used).")]
         public float swing03HitDelay = 0.22f;
+
+        [SerializeField] protected float swingSpeedMultiplier = 1f;
 
         [Tooltip("Fallback delay if using beginUseAnimation (legacy mode).")]
         public float defaultHitDelay = 0.2f;
@@ -180,24 +185,24 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             var animSet = AnimController.currentToolAnimationSet;
             AnimationClip swingClip = null;
             AudioClip swingSound = null;
-            var hitDelay = defaultHitDelay;
+            var hitDelay = defaultHitDelay / swingSpeedMultiplier;
 
             // Determine which swing to use based on current index
             switch (CurrentSwingIndex)
             {
                 case 0:
                     swingClip = animSet.swing01Animation;
-                    hitDelay = swing01HitDelay;
+                    hitDelay = swing01HitDelay / swingSpeedMultiplier;
                     swingSound = animSet.swing01AudioClip;
                     break;
                 case 1:
                     swingClip = animSet.swing02Animation;
-                    hitDelay = swing02HitDelay;
+                    hitDelay = swing02HitDelay / swingSpeedMultiplier;
                     swingSound = animSet.swing02AudioClip;
                     break;
                 case 2:
                     swingClip = animSet.swing03Animation;
-                    hitDelay = swing03HitDelay;
+                    hitDelay = swing03HitDelay / swingSpeedMultiplier;
                     swingSound = animSet.swing03AudioClip;
                     break;
             }
@@ -228,7 +233,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             {
                 // No swing animations available, use legacy mode
                 AnimController.PlayToolUseOneShot();
-                StartCoroutine(ApplyNormalHitAfterDelay(defaultHitDelay));
+                StartCoroutine(ApplyNormalHitAfterDelay(defaultHitDelay / swingSpeedMultiplier));
             }
         }
 
@@ -247,6 +252,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
             // Play swing on Layer 1
             var state = layer.Play(clip, AnimController.defaultTransitionDuration);
+            state.Speed = swingSpeedMultiplier;
             layer.Weight = 1f;
 
             // Mark this as the active action animation
