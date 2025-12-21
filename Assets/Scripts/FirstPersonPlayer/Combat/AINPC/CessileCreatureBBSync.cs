@@ -26,6 +26,9 @@ namespace FirstPersonPlayer.Combat.AINPC
         {
             // Keep blackboard values synchronized
             _bb.SetVariableValue("currentHealth", _creatureController.currentHealth);
+            // _bb.SetVariableValue("gasReleased", _creatureController.gasReleased);
+            // _bb.SetVariableValue("hazardActive", _creatureController.hazardActive);
+            // _bb.SetVariableValue("playerInsideInner", _creatureController.playerInsideInner);
         }
     }
 }

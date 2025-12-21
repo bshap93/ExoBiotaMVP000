@@ -22,5 +22,8 @@ namespace FirstPersonPlayer.Combat.AINPC.ScriptableObjects
         public float rangedAttackShakeIntensity;
         public float rangedAttackShakeDuration;
         public float heavyRangedAttackShakeIntensity;
+        public Sprite actionIcon;
+        public string shortDescription;
+        public Sprite creatureIcon;
     }
 }
