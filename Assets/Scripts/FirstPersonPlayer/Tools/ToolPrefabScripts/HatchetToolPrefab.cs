@@ -122,6 +122,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                     AlertEvent.Trigger(
                         AlertReason.NotEnoughStamina, "Not enough stamina to use pickaxe.", "Insufficient Stamina");
 
+
                     return;
                 }
 
@@ -183,6 +184,34 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         public override MMFeedbacks GetUnequipFeedbacks()
         {
             return unequippedFeedbacks;
+        }
+
+        void AbortChargeAndReset()
+        {
+            // Stop the current animation state and clear events
+            if (AnimController?.animancerComponent != null)
+            {
+                var layer = AnimController.animancerComponent.Layers[1];
+
+                // Get the current state and clear all events to prevent OnEnd from firing
+                if (layer.CurrentState != null) layer.CurrentState.Events(this).Clear();
+
+                // Disable the layer
+                layer.Weight = 0f;
+            }
+
+            // Clear action state
+            AnimController?.ClearActionState();
+
+            // Reset charge state
+            ChargeTimeElapsed = 0f;
+            ToolIsHeldInChargePosition = false;
+
+            // Trigger release event
+            ChargeToolEvent.Trigger(ChargeToolEventType.Release);
+
+            // Return to locomotion
+            AnimController?.ReturnToLocomotion();
         }
 
 

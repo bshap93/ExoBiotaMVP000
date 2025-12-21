@@ -313,6 +313,31 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             };
         }
 
+        public void ReverseChargePullbackAnimation()
+        {
+            if (AnimController.animancerComponent == null) return;
+
+            var layer = AnimController.animancerComponent.Layers[1];
+
+            var state = layer.Play(AnimController.currentToolAnimationSet.beginUseAnimation);
+            state.Speed *= -pullbackQuicknessFactor; // Reverse playback
+            layer.Weight = 1f;
+
+            AnimController.SetActionState(state);
+
+            state.Events(this).Clear();
+
+            state.Events(this).OnEnd = () =>
+            {
+                ToolIsHeldInChargePosition = false;
+                ChargeTimeElapsed = 0f;
+                ChargeToolEvent.Trigger(ChargeToolEventType.Cancel);
+                layer.Weight = 0f;
+                AnimController.ClearActionState();
+                AnimController.ReturnToLocomotion();
+            };
+        }
+
 
         protected virtual void AdvanceSwingIndex(ToolAnimationSet animSet)
         {

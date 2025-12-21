@@ -1029,7 +1029,7 @@ MonoBehaviour:
   attributesManager: {fileID: 0}
   agilityCooldownSecondsReducePerPoint: 0
   detectableType: 0
-  rightHandEquippableTool: {fileID: 0}
+  rightHandEquippableTool: {fileID: 11400000, guid: 65b3c94fbf4855643ae0eaf2d87b603d, type: 2}
   useMultipleSwings: 1
   swing01HitDelay: 0.65
   swing02HitDelay: 0.4
@@ -1037,7 +1037,7 @@ MonoBehaviour:
   swingSpeedMultiplier: 1.5
   defaultHitDelay: 0.4
   swingDownHitDelay: 0.3
-  useOnRelease: 1
+  useOnRelease: 0
   agilityReductionFactor: 0.05
   ineffectualDebrisEffectPrefab: {fileID: 761645417365632772, guid: d930383bf4b2ce64d95f23bedbd942db, type: 3}
   reticleForInabilityToHit: {fileID: 0}

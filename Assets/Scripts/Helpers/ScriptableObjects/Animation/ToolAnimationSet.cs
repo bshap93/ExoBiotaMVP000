@@ -23,6 +23,7 @@ namespace Helpers.ScriptableObjects.Animation
         public AnimationClip duringUseAnimationLoopable;
         [FormerlySerializedAs("EndUseAnimation")]
         public AnimationClip endUseAnimation;
+        public AnimationClip blockAnimationClip;
 
         [Header("Audio for Tools with Use Pattern like Sampler")]
         public AudioClip beginUseAudioClip;
