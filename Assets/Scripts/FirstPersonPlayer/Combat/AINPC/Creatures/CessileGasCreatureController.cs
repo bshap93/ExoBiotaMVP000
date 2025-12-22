@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Animancer;
 using DG.Tweening;
 using FirstPersonPlayer.Combat.Player.ScriptableObjects;
@@ -163,6 +164,64 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
             if (data == null) data = SceneObjectData.Empty();
             BillboardEvent.Trigger(data, BillboardEventType.Hide);
             return true;
+        }
+        public void StartPuffGas()
+        {
+            if (IsPuffingGas) return;
+
+            IsPuffingGas = true;
+
+            ReleaseGas();
+
+
+            PuffGasState = animancerComponent.Play(creatureType.animationSet.attackAnimation);
+
+            PuffGasState.Events(this).OnEnd = () => { FinishPuffGas(); };
+        }
+
+        void ReleaseGas()
+        {
+            _gasReleased = true;
+            releaseFeedbacks?.PlayFeedbacks();
+
+            if (smoke)
+            {
+                smoke.gameObject.SetActive(true);
+                smoke.Smoke(); // starts fade-in → active lifetime → fade-out → Cleanup
+                StartCoroutine(TrackSmokeLife()); // flips _hazardActive true while smoke.IsAlive()
+            }
+            else
+            {
+                // Failsafe: if no smoke reference, still mark hazard active for a short window
+                _hazardActive = true;
+                StartCoroutine(StopHazardNextFrame());
+            }
+        }
+
+        IEnumerator StopHazardNextFrame()
+        {
+            yield return null;
+            _hazardActive = false;
+        }
+
+        IEnumerator TrackSmokeLife()
+        {
+            // Wait one frame so InteractiveSmoke.Init() runs
+            yield return null;
+
+            // Consider the cloud hazardous as long as InteractiveSmoke reports alive.
+            // (Init sets isAlive=true; Cleanup sets isAlive=false). :contentReference[oaicite:1]{index=1}
+            _hazardActive = smoke && smoke.IsAlive();
+            while (smoke && smoke.IsAlive())
+                yield return null;
+
+            _hazardActive = false;
+            _playerInsideInner = false;
+        }
+
+        public void FinishPuffGas()
+        {
+            IsPuffingGas = false;
         }
     }
 }

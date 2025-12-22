@@ -125,32 +125,6 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
             return "Toxic Cloud";
         }
 
-        // --- Inner trigger: burst once on entry (only while smoke is alive) ---
-        void OnTriggerEnterInner(Collider other)
-        {
-            if (!_hazardActive) return;
-            if (!other.CompareTag("Player")) return;
-
-            // One-time burst on first entry while alive
-            if (!_playerInsideInner)
-            {
-                _playerInsideInner = true;
-                PlayerStatsEvent.Trigger(
-                    PlayerStatsEvent.PlayerStat.CurrentContamination,
-                    PlayerStatsEvent.PlayerStatChangeType.Increase,
-                    contaminationOnEnter);
-            }
-        }
-
-        // Helper for child trigger forwarding (see note below)
-        public void NotifyInnerEnter(Collider other)
-        {
-            OnTriggerEnterInner(other);
-        }
-        public void NotifyInnerExit(Collider other)
-        {
-            if (other.CompareTag("Player")) _playerInsideInner = false;
-        }
 
         void ReleaseGas()
         {
