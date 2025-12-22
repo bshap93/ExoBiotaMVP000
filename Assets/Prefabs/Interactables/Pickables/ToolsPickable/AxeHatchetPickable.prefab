@@ -380,7 +380,7 @@ GameObject:
   - component: {fileID: 8425715041330262823}
   - component: {fileID: 2137311080758979808}
   m_Layer: 8
-  m_Name: Axe_02_Pickup
+  m_Name: AxeHatchetPickable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -720,7 +720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0986de822ecb4835bfb249feaeb7996f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetID: 0fa021a3-693c-4ebf-ac13-1dddc96cab26
+  targetID: 
   seeThroughDuration: 5
   onScanned:
     m_PersistentCalls:
@@ -765,10 +765,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ab61beb303f4cc2af9de8675f8c712c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueID: 6df2d920-adc2-4ba2-8fe9-bb8921db6c20
+  uniqueID: 
   actionId: 97
   actionText: Pickup
   quantity: 1
+  interactionDistance: 2
   onItemPicked:
     m_PersistentCalls:
       m_Calls: []
@@ -789,3 +790,6 @@ MonoBehaviour:
     UnkonwnName: Unknown Item
   onPickFeedbacks: {fileID: 0}
   canBeMoved: 1
+  placedByPlayerEvent:
+    m_PersistentCalls:
+      m_Calls: []
