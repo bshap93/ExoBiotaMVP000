@@ -261,7 +261,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             }
             else if (go.CompareTag("EnemyNPC"))
             {
-                var enemyController = go.GetComponentInParent<EnemyController>();
+                var enemyController = go.GetComponentInParent<CreatureController>();
 
                 if (enemyController == null)
                 {

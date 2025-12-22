@@ -219,9 +219,12 @@ MonoBehaviour:
         Owner: {fileID: 7569503658196812541}
         DebugActive: 0
         Source: 0
-        Sfx: {fileID: 8300000, guid: d4212c1686a187d41a892a0f27a38153, type: 3}
+        Sfx: {fileID: 0}
         AudioResourceToPlay: {fileID: 0}
-        RandomSfx: []
+        RandomSfx:
+        - {fileID: 8300000, guid: 00cb8c1d9f8b07241861e8e25657be3d, type: 3}
+        - {fileID: 8300000, guid: c0ace19d68c07b943bda1fb5c6ebacc0, type: 3}
+        - {fileID: 8300000, guid: d4212c1686a187d41a892a0f27a38153, type: 3}
         SequentialOrder: 0
         SequentialOrderHoldLast: 0
         SequentialOrderHoldCooldownDuration: 2

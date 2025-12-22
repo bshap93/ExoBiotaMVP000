@@ -298,19 +298,19 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
             // Hit enemy NPC
             if (go.CompareTag("EnemyNPC"))
             {
-                var enemyController = go.GetComponentInParent<EnemyController>();
-                if (enemyController != null)
+                var creatureController = go.GetComponentInParent<CreatureController>();
+                if (creatureController != null)
                 {
                     // Spawn hit VFX
-                    var vfx = enemyController.GetEffectsAndFeedbacks().basicHitVFX;
+                    var vfx = creatureController.GetEffectsAndFeedbacks().basicHitVFX;
                     SpawnHitFX(vfx, hit.point, hit.normal);
 
                     // Apply damage
                     var attack = attackProfile?.basicAttack;
-                    if (attack != null) enemyController.ProcessAttackDamage(attack);
+                    if (attack != null) creatureController.ProcessAttackDamage(attack);
 
                     nonLocalHitFeedbacks?.PlayFeedbacks();
-                    Debug.Log($"Energy pistol hit enemy: {enemyController.name}");
+                    Debug.Log($"Energy pistol hit enemy: {creatureController.name}");
                 }
             }
             // Hit breakable object

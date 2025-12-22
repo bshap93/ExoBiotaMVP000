@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using Animancer;
 using DG.Tweening;
-using FirstPersonPlayer.Combat.Player.ScriptableObjects;
 using Helpers.Events;
 using Helpers.Events.Combat;
 using Helpers.Events.NPCs;
-using HighlightPlus;
+using Helpers.Events.Status;
 using Manager.StateManager;
 using MoreMountains.Feedbacks;
 using OccaSoftware.ResponsiveSmokes.Runtime;
@@ -26,46 +24,49 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
         public InteractiveSmoke smoke;
         public Collider gasAreaCollider;
 
+        [SerializeField] GameObject undestroyedModelObject;
+        [SerializeField] GameObject destroyedModelObject;
+
         [Header("Main Settings")] [SerializeField]
         bool destroyAfterDeath;
 
         public float detectionRadius;
         [FormerlySerializedAs("lethalRadius")] public float contaminateRadius;
-        public float gasReleaseCooldown = 8f;
 
         [Header("Contamination")] public float contaminationOnEnter = 6f;
         public float contaminationPerSecond = 2f;
 
         [Header("Feedbacks")] [SerializeField] MMFeedbacks releaseFeedbacks;
-        [SerializeField] MMFeedbacks deathFeedbacks;
+
 
         [Header("Death Effects")] [SerializeField]
         GameObject deathParticlesPrefab;
-        [SerializeField] GameObject deadCreatureModelPrefab;
 
-
-        public float currentHealth;
-        public float maxHealth;
+        // public float currentHealth;
+        // public float maxHealth;
 
         public bool isDead;
         public string blackboardWasHitKey = "wasHit";
 
         [SerializeField] float attackStartupTime = 0.35f; // wind-up before it hits
 
-        [SerializeField] HighlightEffect highlightEffect;
 
         bool _gasReleased;
-        bool _hazardActive; // true while smoke.IsAlive()
+        bool _hasAppliedBurstContamination; // NEW: track if burst contamination was applied
+
+        Tween _hitTween;
+        // bool _hazardActive; // true while smoke.IsAlive()
         bool _playerInsideInner; // track inner-zone entry for burst
 
-        protected SceneObjectData data;
+        Transform _playerTransform;
 
+
+        protected SceneObjectData Data;
         protected AnimancerState DeathState;
-
-
         protected AnimancerState PuffGasState;
 
         public bool IsPuffingGas { get; private set; }
+        public bool HazardActive { get; set; }
 
         protected override void Awake()
         {
@@ -76,6 +77,40 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
 
         void Update()
         {
+            // NEW: Apply contamination while hazard is active and player is in gas area
+            if (HazardActive && _playerTransform && gasAreaCollider)
+            {
+                var playerInGasArea = gasAreaCollider.bounds.Contains(_playerTransform.position);
+
+                if (playerInGasArea)
+                {
+                    // Apply burst contamination on first entry
+                    if (!_hasAppliedBurstContamination)
+                    {
+                        PlayerStatsEvent.Trigger(
+                            PlayerStatsEvent.PlayerStat.CurrentContamination,
+                            PlayerStatsEvent.PlayerStatChangeType.Increase,
+                            contaminationOnEnter);
+
+                        _hasAppliedBurstContamination = true;
+                    }
+
+                    // Apply continuous contamination
+                    PlayerStatsEvent.Trigger(
+                        PlayerStatsEvent.PlayerStat.CurrentContamination,
+                        PlayerStatsEvent.PlayerStatChangeType.Increase,
+                        contaminationPerSecond * Time.deltaTime);
+                }
+            }
+
+
+            if (HazardActive && (!smoke || !smoke.IsAlive()))
+            {
+                HazardActive = false;
+                _hasAppliedBurstContamination = false;
+            }
+
+
             if (IsPuffingGas) return;
 
             if (!IdleState.IsPlaying) animancerComponent.Play(IdleState);
@@ -90,6 +125,22 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
                 }
 
                 OnDeath();
+            }
+        }
+        // NEW: Track player entering/exiting trigger
+        void OnTriggerEnter(Collider other)
+        {
+            if (!other.CompareTag("Player") && !other.CompareTag("FirstPersonPlayer")) return;
+            _playerTransform = other.transform;
+        }
+
+        void OnTriggerExit(Collider other)
+        {
+            if (!other.CompareTag("Player") && !other.CompareTag("FirstPersonPlayer")) return;
+            if (other.transform == _playerTransform)
+            {
+                _playerTransform = null;
+                _hasAppliedBurstContamination = false;
             }
         }
         public string GetName()
@@ -123,25 +174,122 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
                 CreatureStateManager.CreatureState.ShouldBeDestroyed);
 
             EnemyDamageEvent.Trigger(0f, currentHealth, maxHealth, DamageEventType.Death, creatureType.creatureName);
+            blackboard.SetVariableValue("isDead", true);
+            Debug.Log(creatureType.creatureName + " has died.");
 
+            if (deathFeedbacks != null) deathFeedbacks.enabled = true;
             deathFeedbacks?.PlayFeedbacks();
-            if (deathParticlesPrefab != null)
-                Instantiate(deathParticlesPrefab, transform.position + Vector3.up * 0.5f, Quaternion.identity);
+            // if (deathParticlesPrefab != null)
+            //     Instantiate(deathParticlesPrefab, transform.position + Vector3.up * 0.5f, Quaternion.identity);
 
-            if (destroyAfterDeath)
-                Destroy(gameObject, 2f);
+            undestroyedModelObject.SetActive(false);
+            destroyedModelObject.SetActive(true);
         }
-        public void ProcessAttackDamage(PlayerToolAttack playerAttack)
-        {
-            throw new NotImplementedException();
-        }
-        public void PlayHitTween(Func<Transform, Tween> buildTween, bool killPrevious = true)
-        {
-            throw new NotImplementedException();
-        }
+        // public void ProcessAttackDamage(PlayerToolAttack playerAttack)
+        // {
+        //     var attributeManager = AttributesManager.Instance;
+        //     var damageAmount = playerAttack.rawDamage;
+        //     var attackType = playerAttack.attackType;
+        //
+        //     var isCriticalHit = Random.value <= playerAttack.critChance;
+        //
+        //     if (attackType == PlayerAttackType.Melee)
+        //     {
+        //         // Placeholder for strength stat for player
+        //         var playerStrength = attributeManager.Strength;
+        //         // Provisional damage scaling based on player strength
+        //         var playerStrengthMultiplier = 1f + (playerStrength - 1) * 0.5f;
+        //         if (isCriticalHit)
+        //         {
+        //             damageAmount *= playerAttack.critMultiplier;
+        //             critDamageFeedbacks?.PlayFeedbacks();
+        //         }
+        //
+        //         damageAmount *= playerStrengthMultiplier;
+        //
+        //
+        //         // StartCoroutine(CooldownAfterWasHit());
+        //
+        //         if (playerAttack.damageType == MeleeToolPrefab.HitType.Normal)
+        //         {
+        //             meleeHitFeedbacksBasic?.PlayFeedbacks();
+        //             PlayHitTween(t => t.DOPunchPosition(
+        //                 new Vector3(creatureType.meleeAttackShakeIntensity, 0f, creatureType.meleeAttackShakeIntensity),
+        //                 creatureType.meleeAttackShakeDuration));
+        //
+        //             blackboard.SetVariableValue("wasHit", true);
+        //             Debug.Log("Normal Hit registered on " + creatureType.creatureName);
+        //         }
+        //         else if (playerAttack.damageType == MeleeToolPrefab.HitType.Heavy)
+        //         {
+        //             meleeHitFeedbacksHeavy?.PlayFeedbacks();
+        //             blackboard.SetVariableValue("wasHitHeavy", true);
+        //             Debug.Log("Heavy Hit registered on " + creatureType.creatureName);
+        //             PlayHitTween(t => t.DOShakePosition(
+        //                 creatureType.meleeAttackShakeDuration,
+        //                 new Vector3(
+        //                     creatureType.heavyMeleeAttackShakeIntensity, 0f,
+        //                     creatureType.heavyMeleeAttackShakeIntensity))); // or still punch
+        //         }
+        //     }
+        //     else if (attackType == PlayerAttackType.Ranged)
+        //     {
+        //         var playerDexterity = attributeManager.Dexterity;
+        //         var playerDexterityMultiplier = 1f + (playerDexterity - 1) * 0.5f;
+        //         if (isCriticalHit)
+        //         {
+        //             damageAmount *= playerAttack.critMultiplier;
+        //             critDamageFeedbacks?.PlayFeedbacks();
+        //         }
+        //
+        //         damageAmount *= playerDexterityMultiplier;
+        //
+        //         if (playerAttack.damageType == MeleeToolPrefab.HitType.Normal)
+        //         {
+        //             rangedHitFeedbacksBasic?.PlayFeedbacks();
+        //             PlayHitTween(t => t.DOPunchPosition(
+        //                 new Vector3(
+        //                     creatureType.rangedAttackShakeIntensity, 0f, creatureType.rangedAttackShakeIntensity),
+        //                 creatureType.rangedAttackShakeDuration));
+        //
+        //             blackboard.SetVariableValue("wasHit", true);
+        //             Debug.Log("Ranged Normal Hit registered on " + creatureType.creatureName);
+        //         }
+        //         else if (playerAttack.damageType == MeleeToolPrefab.HitType.Heavy)
+        //         {
+        //             rangedHitFeedbacksHeavy?.PlayFeedbacks();
+        //             blackboard.SetVariableValue("wasHitHeavy", true);
+        //             Debug.Log("Ranged Heavy Hit registered on " + creatureType.creatureName);
+        //             PlayHitTween(t => t.DOShakePosition(
+        //                 creatureType.rangedAttackShakeDuration,
+        //                 new Vector3(
+        //                     creatureType.heavyRangedAttackShakeIntensity, 0f,
+        //                     creatureType.heavyRangedAttackShakeIntensity))); // or still punch
+        //         }
+        //     }
+        //
+        //     var eventType = isCriticalHit
+        //         ? DamageEventType.CriticalHitDamage
+        //         : DamageEventType.DealtDamage;
+        //
+        //     EnemyDamageEvent.Trigger(
+        //         currentHealth - damageAmount, currentHealth, maxHealth,
+        //         eventType, creatureType.creatureName);
+        //
+        //     // blackboard.SetVariableValue(blackboardWasHitKey, true);
+        //     // Debug.Log("Fallback hit registered on " + creatureType.creatureName);
+        //
+        //     currentHealth -= damageAmount;
+        //     highlightEffect.HitFX();
+        // }
+        // public void PlayHitTween(Func<Transform, Tween> buildTween, bool killPrevious = true)
+        // {
+        //     if (killPrevious) _hitTween?.Kill();
+        //     _hitTween = buildTween(transform);
+        // }
         public bool OnHoverStart(GameObject go)
         {
-            data = new SceneObjectData(
+            Data = new SceneObjectData(
                 creatureType.creatureName,
                 creatureType.creatureIcon,
                 creatureType.shortDescription,
@@ -149,9 +297,9 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
                 GetActionText()
             );
 
-            data.Id = uniqueID;
+            Data.Id = uniqueID;
 
-            BillboardEvent.Trigger(data, BillboardEventType.Show);
+            BillboardEvent.Trigger(Data, BillboardEventType.Show);
 
             return true;
         }
@@ -161,13 +309,14 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
         }
         public bool OnHoverEnd(GameObject go)
         {
-            if (data == null) data = SceneObjectData.Empty();
-            BillboardEvent.Trigger(data, BillboardEventType.Hide);
+            if (Data == null) Data = SceneObjectData.Empty();
+            BillboardEvent.Trigger(Data, BillboardEventType.Hide);
             return true;
         }
         public void StartPuffGas()
         {
             if (IsPuffingGas) return;
+            if (HazardActive) return; // Don't puff while smoke is still alive
 
             IsPuffingGas = true;
 
@@ -177,6 +326,30 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
             PuffGasState = animancerComponent.Play(creatureType.animationSet.attackAnimation);
 
             PuffGasState.Events(this).OnEnd = () => { FinishPuffGas(); };
+        }
+
+        protected override IEnumerator InitializeAfterCreatureStateManager()
+        {
+            yield return null;
+
+            var creatureStateManager = CreatureStateManager.Instance;
+            if (creatureStateManager != null)
+            {
+                var creatureState = creatureStateManager.GetCreatureState(uniqueID);
+                if (creatureState == CreatureStateManager.CreatureState.None) creatureState = initialCreatureState;
+
+                if (creatureState == CreatureStateManager.CreatureState.HasBeenInitialized)
+                {
+                    ReLoadCreatureStateData();
+                }
+                else if (creatureState == CreatureStateManager.CreatureState.ShouldBeDestroyed)
+                {
+                    isDead = true;
+                    blackboard.SetVariableValue("isDead", true);
+                    destroyedModelObject.SetActive(true);
+                    undestroyedModelObject.SetActive(false);
+                }
+            }
         }
 
         void ReleaseGas()
@@ -193,7 +366,7 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
             else
             {
                 // Failsafe: if no smoke reference, still mark hazard active for a short window
-                _hazardActive = true;
+                HazardActive = true;
                 StartCoroutine(StopHazardNextFrame());
             }
         }
@@ -201,7 +374,7 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
         IEnumerator StopHazardNextFrame()
         {
             yield return null;
-            _hazardActive = false;
+            HazardActive = false;
         }
 
         IEnumerator TrackSmokeLife()
@@ -211,11 +384,11 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
 
             // Consider the cloud hazardous as long as InteractiveSmoke reports alive.
             // (Init sets isAlive=true; Cleanup sets isAlive=false). :contentReference[oaicite:1]{index=1}
-            _hazardActive = smoke && smoke.IsAlive();
+            HazardActive = smoke && smoke.IsAlive();
             while (smoke && smoke.IsAlive())
                 yield return null;
 
-            _hazardActive = false;
+            HazardActive = false;
             _playerInsideInner = false;
         }
 

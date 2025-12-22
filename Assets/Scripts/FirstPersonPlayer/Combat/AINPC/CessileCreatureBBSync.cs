@@ -24,11 +24,11 @@ namespace FirstPersonPlayer.Combat.AINPC
         // Update is called once per frame
         void Update()
         {
-            // Keep blackboard values synchronized
             _bb.SetVariableValue("currentHealth", _creatureController.currentHealth);
-            // _bb.SetVariableValue("gasReleased", _creatureController.gasReleased);
-            // _bb.SetVariableValue("hazardActive", _creatureController.hazardActive);
-            // _bb.SetVariableValue("playerInsideInner", _creatureController.playerInsideInner);
+            _bb.SetVariableValue("isPuffingGas", _creatureController.IsPuffingGas);
+
+            _bb.SetVariableValue("isDead", _creatureController.isDead);
+            _bb.SetVariableValue("hazardActive", _creatureController.HazardActive);
         }
     }
 }

@@ -44,6 +44,7 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
         [SerializeField] MMFeedbacks jiggleFeedbacks;
 
         ObjectiveHelper _objectiveHelper;
+        
 
         string SceneKey => gameObject.scene.name;
 

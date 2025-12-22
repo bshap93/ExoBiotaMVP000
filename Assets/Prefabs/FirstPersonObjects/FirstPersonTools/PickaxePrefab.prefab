@@ -981,10 +981,12 @@ MonoBehaviour:
   attributesManager: {fileID: 0}
   agilityCooldownSecondsReducePerPoint: 0.04
   detectableType: 1
+  rightHandEquippableTool: {fileID: 0}
   useMultipleSwings: 1
   swing01HitDelay: 0.5
   swing02HitDelay: 0.5
   swing03HitDelay: 0.22
+  swingSpeedMultiplier: 1.5
   defaultHitDelay: 0.4
   swingDownHitDelay: 0.1
   useOnRelease: 0

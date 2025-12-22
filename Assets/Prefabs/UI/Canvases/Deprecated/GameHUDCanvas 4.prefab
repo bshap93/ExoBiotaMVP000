@@ -1960,7 +1960,7 @@ GameObject:
   - component: {fileID: 7752559508181495110}
   - component: {fileID: 3255936060892915391}
   m_Layer: 0
-  m_Name: GameHUDCanvas
+  m_Name: GameHUDCanvas 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

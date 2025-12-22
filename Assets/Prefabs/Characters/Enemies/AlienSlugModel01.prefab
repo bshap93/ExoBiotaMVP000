@@ -931,11 +931,18 @@ MonoBehaviour:
   animancerComponent: {fileID: 1737219110940688446}
   creatureType: {fileID: 11400000, guid: b70dcc55abc25f84db676e6cf78a12b6, type: 2}
   initialCreatureState: 1
+  deathFeedbacks: {fileID: 6055955623679788570}
+  critDamageFeedbacks: {fileID: 0}
+  meleeHitFeedbacksBasic: {fileID: 7656833899819546316}
+  meleeHitFeedbacksHeavy: {fileID: 3486730972447028925}
+  rangedHitFeedbacksBasic: {fileID: 7656833899819546316}
+  rangedHitFeedbacksHeavy: {fileID: 3486730972447028925}
   secondsBeforeSettingShouldBeDestroyed: 5
   appearsOnlyOnce: 0
   doesNotImmediatelyNeedToMove: 0
   currentHealth: 50
   maxHealth: 50
+  highlightEffect: {fileID: 200880329817783201}
   destroyAfterDeath: 1
   isDead: 0
   blackboardWasHitKey: wasHit
@@ -943,14 +950,7 @@ MonoBehaviour:
   hitActiveDuration: 0.2
   hitBoxColliderMouth: {fileID: 5425557703629072013}
   navMeshAgent: {fileID: 2208501960252533426}
-  highlightEffect: {fileID: 200880329817783201}
-  meleeHitFeedbacksBasic: {fileID: 7656833899819546316}
-  meleeHitFeedbacksHeavy: {fileID: 3486730972447028925}
-  critDamageFeedbacks: {fileID: 0}
-  rangedHitFeedbacksBasic: {fileID: 7656833899819546316}
-  rangedHitFeedbacksHeavy: {fileID: 3486730972447028925}
   deathParticlesPrefab: {fileID: 8007369982305464528, guid: b2de90739a54d1046820c9561e212c7d, type: 3}
-  deathFeedbacks: {fileID: 6055955623679788570}
   movementLoopFeedbacks: {fileID: 0}
 --- !u!95 &8818349750645854286
 Animator:
@@ -2689,6 +2689,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: BasicHitFB
       objectReference: {fileID: 0}
+    - target: {fileID: 7569503658196812541, guid: 91c2bbdb78b94ef42a5ef9c4860e9447, type: 3}
+      propertyPath: managedReferences[1616504596478820352].SpatialBlend
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7569503658196812541, guid: 91c2bbdb78b94ef42a5ef9c4860e9447, type: 3}
+      propertyPath: managedReferences[1616504596478820352].AttachToTransform
+      value: 
+      objectReference: {fileID: 8503119513960728826}
+    - target: {fileID: 7569503658196812541, guid: 91c2bbdb78b94ef42a5ef9c4860e9447, type: 3}
+      propertyPath: managedReferences[1616504596478820352].RandomSfx.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7569503658196812541, guid: 91c2bbdb78b94ef42a5ef9c4860e9447, type: 3}
+      propertyPath: 'managedReferences[1616504596478820352].RandomSfx.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: c0ace19d68c07b943bda1fb5c6ebacc0, type: 3}
+    - target: {fileID: 7569503658196812541, guid: 91c2bbdb78b94ef42a5ef9c4860e9447, type: 3}
+      propertyPath: 'managedReferences[1616504596478820352].RandomSfx.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 00cb8c1d9f8b07241861e8e25657be3d, type: 3}
+    - target: {fileID: 7569503658196812541, guid: 91c2bbdb78b94ef42a5ef9c4860e9447, type: 3}
+      propertyPath: 'managedReferences[1616504596478820352].RandomSfx.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: d4212c1686a187d41a892a0f27a38153, type: 3}
     - target: {fileID: 8611767923585184953, guid: 91c2bbdb78b94ef42a5ef9c4860e9447, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

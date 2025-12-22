@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using Animancer;
 using DG.Tweening;
 using FirstPersonPlayer.Combat.AINPC.ScriptableObjects;
-using FirstPersonPlayer.Combat.Player.ScriptableObjects;
-using FirstPersonPlayer.Tools.ToolPrefabScripts;
 using Helpers.Events.Combat;
 using Helpers.Events.NPCs;
-using HighlightPlus;
-using Manager;
 using Manager.StateManager;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.AI;
 using Utilities.Interface;
-using Random = UnityEngine.Random;
 
 namespace FirstPersonPlayer.Combat.AINPC.Creatures
 {
@@ -23,8 +17,8 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
     [DisallowMultipleComponent]
     public class EnemyController : CreatureController, IRequiresUniqueID, IDamageable
     {
-        public float currentHealth;
-        public float maxHealth;
+        // public float currentHealth;
+        // public float maxHealth;
 
         public bool destroyAfterDeath = true;
 
@@ -40,17 +34,17 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
         [SerializeField] EnemyHitbox hitBoxColliderMouth;
 
         [SerializeField] NavMeshAgent navMeshAgent;
-        [SerializeField] HighlightEffect highlightEffect;
+        // [SerializeField] HighlightEffect highlightEffect;
 
-        [Header("Feedbacks")] [SerializeField] MMFeedbacks meleeHitFeedbacksBasic;
-        [SerializeField] MMFeedbacks meleeHitFeedbacksHeavy;
-        [SerializeField] MMFeedbacks critDamageFeedbacks;
+        // [Header("Feedbacks")] [SerializeField] MMFeedbacks meleeHitFeedbacksBasic;
+        // [SerializeField] MMFeedbacks meleeHitFeedbacksHeavy;
+        // [SerializeField] MMFeedbacks critDamageFeedbacks;
 
-        [SerializeField] MMFeedbacks rangedHitFeedbacksBasic;
-        [SerializeField] MMFeedbacks rangedHitFeedbacksHeavy;
+        // [SerializeField] MMFeedbacks rangedHitFeedbacksBasic;
+        // [SerializeField] MMFeedbacks rangedHitFeedbacksHeavy;
 
         [SerializeField] GameObject deathParticlesPrefab;
-        [SerializeField] MMFeedbacks deathFeedbacks;
+        // [SerializeField] MMFeedbacks deathFeedbacks;
 
         [SerializeField] MMFeedbacks movementLoopFeedbacks;
 
@@ -87,103 +81,7 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
                 OnDeath();
             }
         }
-        public void ProcessAttackDamage(PlayerToolAttack playerAttack)
-        {
-            var attributeManager = AttributesManager.Instance;
-            var damageAmount = playerAttack.rawDamage;
-            var attackType = playerAttack.attackType;
 
-            var isCriticalHit = Random.value <= playerAttack.critChance;
-
-            if (attackType == PlayerAttackType.Melee)
-            {
-                // Placeholder for strength stat for player
-                var playerStrength = attributeManager.Strength;
-                // Provisional damage scaling based on player strength
-                var playerStrengthMultiplier = 1f + (playerStrength - 1) * 0.5f;
-                if (isCriticalHit)
-                {
-                    damageAmount *= playerAttack.critMultiplier;
-                    critDamageFeedbacks?.PlayFeedbacks();
-                }
-
-                damageAmount *= playerStrengthMultiplier;
-
-
-                // StartCoroutine(CooldownAfterWasHit());
-
-                if (playerAttack.damageType == MeleeToolPrefab.HitType.Normal)
-                {
-                    meleeHitFeedbacksBasic?.PlayFeedbacks();
-                    PlayHitTween(t => t.DOPunchPosition(
-                        new Vector3(creatureType.meleeAttackShakeIntensity, 0f, creatureType.meleeAttackShakeIntensity),
-                        creatureType.meleeAttackShakeDuration));
-
-                    blackboard.SetVariableValue("wasHit", true);
-                    Debug.Log("Normal Hit registered on " + creatureType.creatureName);
-                }
-                else if (playerAttack.damageType == MeleeToolPrefab.HitType.Heavy)
-                {
-                    meleeHitFeedbacksHeavy?.PlayFeedbacks();
-                    blackboard.SetVariableValue("wasHitHeavy", true);
-                    Debug.Log("Heavy Hit registered on " + creatureType.creatureName);
-                    PlayHitTween(t => t.DOShakePosition(
-                        creatureType.meleeAttackShakeDuration,
-                        new Vector3(
-                            creatureType.heavyMeleeAttackShakeIntensity, 0f,
-                            creatureType.heavyMeleeAttackShakeIntensity))); // or still punch
-                }
-            }
-            else if (attackType == PlayerAttackType.Ranged)
-            {
-                var playerDexterity = attributeManager.Dexterity;
-                var playerDexterityMultiplier = 1f + (playerDexterity - 1) * 0.5f;
-                if (isCriticalHit)
-                {
-                    damageAmount *= playerAttack.critMultiplier;
-                    critDamageFeedbacks?.PlayFeedbacks();
-                }
-
-                damageAmount *= playerDexterityMultiplier;
-
-                if (playerAttack.damageType == MeleeToolPrefab.HitType.Normal)
-                {
-                    rangedHitFeedbacksBasic?.PlayFeedbacks();
-                    PlayHitTween(t => t.DOPunchPosition(
-                        new Vector3(
-                            creatureType.rangedAttackShakeIntensity, 0f, creatureType.rangedAttackShakeIntensity),
-                        creatureType.rangedAttackShakeDuration));
-
-                    blackboard.SetVariableValue("wasHit", true);
-                    Debug.Log("Ranged Normal Hit registered on " + creatureType.creatureName);
-                }
-                else if (playerAttack.damageType == MeleeToolPrefab.HitType.Heavy)
-                {
-                    rangedHitFeedbacksHeavy?.PlayFeedbacks();
-                    blackboard.SetVariableValue("wasHitHeavy", true);
-                    Debug.Log("Ranged Heavy Hit registered on " + creatureType.creatureName);
-                    PlayHitTween(t => t.DOShakePosition(
-                        creatureType.rangedAttackShakeDuration,
-                        new Vector3(
-                            creatureType.heavyRangedAttackShakeIntensity, 0f,
-                            creatureType.heavyRangedAttackShakeIntensity))); // or still punch
-                }
-            }
-
-            var eventType = isCriticalHit
-                ? DamageEventType.CriticalHitDamage
-                : DamageEventType.DealtDamage;
-
-            EnemyDamageEvent.Trigger(
-                currentHealth - damageAmount, currentHealth, maxHealth,
-                eventType, creatureType.creatureName);
-
-            // blackboard.SetVariableValue(blackboardWasHitKey, true);
-            // Debug.Log("Fallback hit registered on " + creatureType.creatureName);
-
-            currentHealth -= damageAmount;
-            highlightEffect.HitFX();
-        }
 
         public virtual void OnDeath()
         {
@@ -212,11 +110,11 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
             HitState.Events(this).OnEnd = () => { };
         }
 
-        public void PlayHitTween(Func<Transform, Tween> buildTween, bool killPrevious = true)
-        {
-            if (killPrevious) _hitTween?.Kill();
-            _hitTween = buildTween(transform);
-        }
+        // public void PlayHitTween(Func<Transform, Tween> buildTween, bool killPrevious = true)
+        // {
+        //     if (killPrevious) _hitTween?.Kill();
+        //     _hitTween = buildTween(transform);
+        // }
 
 
         public void StartAttack()
