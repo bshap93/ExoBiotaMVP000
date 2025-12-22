@@ -459,6 +459,7 @@ MonoBehaviour:
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"myInteractiveSmoke":{"_value":3,"_name":"myInteractiveSmoke","_id":"724ced86-6069-4f31-a4f4-acc159684d14","$type":"NodeCanvas.Framework.Variable`1[[OccaSoftware.ResponsiveSmokes.Runtime.InteractiveSmoke,
     OccaSoftware.ResponsiveSmokes.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},"puffGasFB":{"_value":4,"_name":"puffGasFB","_id":"877e7e30-1f44-4891-bba6-51eb7cc0b95c","$type":"NodeCanvas.Framework.Variable`1[[MoreMountains.Feedbacks.MMFeedbacks,
     MoreMountains.Tools, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},"isDead":{"_name":"isDead","_id":"2da6e850-9de2-47bf-a0ab-db6014ab7e46","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"isPuffingGas":{"_name":"isPuffingGas","_id":"965d153e-a49c-4f68-8606-bd9737621adc","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}}}'
   _objectReferences:
   - {fileID: 0}
@@ -512,6 +513,9 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 3894367198166227559}
   - _json: '{"_name":"isDead","_id":"2da6e850-9de2-47bf-a0ab-db6014ab7e46","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
+      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
+    _references: []
+  - _json: '{"_name":"isPuffingGas","_id":"965d153e-a49c-4f68-8606-bd9737621adc","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
       mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
     _references: []
 --- !u!114 &948736716530846155
