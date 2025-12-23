@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Manager
 {
     public class InGameTimeManager : MonoBehaviour, ICoreGameService, MMEventListener<InGameTimeActionEvent>,
-        MMEventListener<FirstPersonDialogueEvent>
+        MMEventListener<FirstPersonDialogueEvent>, MMEventListener<MyUIEvent>
 
     {
         public enum TimeState
@@ -118,12 +118,14 @@ namespace Manager
         {
             this.MMEventStartListening<InGameTimeActionEvent>();
             this.MMEventStartListening<FirstPersonDialogueEvent>();
+            this.MMEventStartListening<MyUIEvent>();
         }
 
         void OnDisable()
         {
             this.MMEventStopListening<InGameTimeActionEvent>();
             this.MMEventStopListening<FirstPersonDialogueEvent>();
+            this.MMEventStopListening<MyUIEvent>();
         }
         public void Save()
         {
@@ -219,6 +221,16 @@ namespace Manager
                 case InGameTimeActionEvent.ActionType.StopLapseTime:
                     timeState = TimeState.RunningNormalSpeed;
                     break;
+            }
+        }
+        public void OnMMEvent(MyUIEvent eventType)
+        {
+            if (eventType.uiType == UIType.InfoLogTablet)
+            {
+                if (eventType.uiActionType == UIActionType.Open)
+                    timeState = TimeState.Paused;
+                else if (eventType.uiActionType == UIActionType.Close)
+                    timeState = TimeState.RunningNormalSpeed;
             }
         }
 
