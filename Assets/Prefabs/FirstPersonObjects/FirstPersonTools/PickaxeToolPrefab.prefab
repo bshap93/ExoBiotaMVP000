@@ -866,7 +866,7 @@ GameObject:
   - component: {fileID: 8434107762429702526}
   - component: {fileID: 8366716114946432193}
   m_Layer: 0
-  m_Name: PickaxePrefab
+  m_Name: PickaxeToolPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -977,7 +977,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pullbackQuicknessFactor: 1
-  toolAttackProfile: {fileID: 11400000, guid: e3251e058139a894684eb6a3a27f2856, type: 2}
+  toolAttackProfile: {fileID: 11400000, guid: 1eafc0d58b3f8314e81cb06e7e9236a7, type: 2}
   attributesManager: {fileID: 0}
   agilityCooldownSecondsReducePerPoint: 0.04
   detectableType: 1

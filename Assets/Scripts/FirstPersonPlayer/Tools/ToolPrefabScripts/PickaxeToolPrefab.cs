@@ -2,6 +2,7 @@
 using System.Linq;
 using Domains.Gameplay.Mining.Scripts;
 using Feedbacks.Interface;
+using FirstPersonPlayer.Combat.AINPC.Creatures;
 using FirstPersonPlayer.Interactable;
 using FirstPersonPlayer.Tools.Interface;
 using Helpers.Events;
@@ -24,6 +25,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         // No cost if swing didn't make contact
         [FormerlySerializedAs("staminaCostPerConnectingSwing")] [SerializeField]
         float baseStaminaCostPerConnectingSwing = 1f;
+        public float baseStaminaCostPerHeavyConnectingSwing = 2f;
 
         [SerializeField] Sprite defaultReticleForTool;
 
@@ -60,6 +62,35 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 var agility = attrMgr.Agility;
                 var reduction = agilityReductionFactor * agility; // Example: 0.05
                 var finalCost = baseStaminaCostPerConnectingSwing * (1f - reduction);
+
+                return Mathf.Max(0.1f, finalCost); // Ensure a minimum cost
+            }
+        }
+
+        float StaminaCostPerNormalConnectingSwing
+        {
+            get
+            {
+                var attrMgr = AttributesManager.Instance;
+                if (attrMgr == null) return baseStaminaCostPerConnectingSwing;
+
+                var agility = attrMgr.Agility;
+                var reduction = agilityReductionFactor * (agility - 1); // Example: 0.05
+                var finalCost = baseStaminaCostPerConnectingSwing * (1f - reduction);
+
+                return Mathf.Max(0.1f, finalCost); // Ensure a minimum cost
+            }
+        }
+
+        float StaminaCostPerHeavyConnectingSwing
+        {
+            get
+            {
+                var attrMgr = AttributesManager.Instance;
+                if (attrMgr == null) return baseStaminaCostPerHeavyConnectingSwing;
+                var agility = attrMgr.Agility;
+                var reduction = agilityReductionFactor * (agility - 1); // Example: 0.05
+                var finalCost = baseStaminaCostPerHeavyConnectingSwing * (1f - reduction);
 
                 return Mathf.Max(0.1f, finalCost); // Ensure a minimum cost
             }
@@ -256,7 +287,40 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             {
                 hitRigidOrganismFeedbacks?.PlayFeedbacks();
             }
+
+            if (go.CompareTag("EnemyNPC"))
+            {
+                var enemyController = go.GetComponentInParent<CreatureController>();
+
+                if (enemyController == null)
+                {
+                    Debug.LogWarning("HatchetToolPrefab: Hit enemy NPC but no EnemyController found in parents.");
+                    return;
+                }
+
+                var playerAttack = DetermineCorrectPlayerToolAttack(hitType);
+
+
+                // Spawn VFX with proper cleanup
+                var vfx = enemyController.GetEffectsAndFeedbacks().basicHitVFX;
+                if (vfx != null)
+                {
+                    var vfxInstance = Instantiate(vfx, hit.point, Quaternion.LookRotation(hit.normal));
+                    Destroy(vfxInstance, 2f); // Clean up after 2 seconds
+                }
+
+
+                enemyController.ProcessAttackDamage(playerAttack);
+                if (hitType == HitType.Heavy)
+
+                    Debug.Log("Stamina decreased by: " + StaminaCostPerHeavyConnectingSwing);
+                else
+
+                    Debug.Log("Stamina decreased by: " + StaminaCostPerNormalConnectingSwing);
+            }
         }
+
+
         public override void PerformToolAction()
         {
             var effectiveCooldown = miningCooldown - agilityCooldownSecondsReducePerPoint * attributesManager.Agility;

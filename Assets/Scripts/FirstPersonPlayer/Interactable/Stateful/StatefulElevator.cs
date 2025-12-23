@@ -78,7 +78,9 @@ namespace FirstPersonPlayer.Interactable.Stateful
 
 
         public GameObject frontalBarrier;
-        public GameObject entranceBarriers;
+        // public GameObject entranceBarriers;
+
+        public GameObject[] entranceBarrierObjects;
 
         // [FormerlySerializedAs("startAtTop")]
         // [Tooltip("Should the elevator start at the top position (EndPoint) when the scene loads?")]
@@ -98,9 +100,6 @@ namespace FirstPersonPlayer.Interactable.Stateful
         int _overrideFloor;
 
         bool _overrideKeyed;
-
-
-        // bool _isAtBottom;
 
 
         bool moveswitch;
@@ -131,8 +130,12 @@ namespace FirstPersonPlayer.Interactable.Stateful
                 if (frontalBarrier != null)
                     frontalBarrier.SetActive(false);
 
-                if (entranceBarriers != null)
-                    entranceBarriers.SetActive(false);
+
+                for (var i = 0; i < entranceBarrierObjects.Length; i++)
+                    if (i == currentState.currentFloor)
+                        entranceBarrierObjects[i].SetActive(false);
+                    else
+                        entranceBarrierObjects[i].SetActive(true);
             }
         }
 
@@ -208,8 +211,7 @@ namespace FirstPersonPlayer.Interactable.Stateful
             if (frontalBarrier != null)
                 frontalBarrier.SetActive(true);
 
-            if (entranceBarriers != null)
-                entranceBarriers.SetActive(true);
+            for (var i = 0; i < entranceBarrierObjects.Length; i++) entranceBarrierObjects[i].SetActive(true);
 
 
             DOTween.Kill(elevatorScriptObject.transform); // prevent overlapping tweens
@@ -252,8 +254,8 @@ namespace FirstPersonPlayer.Interactable.Stateful
             if (frontalBarrier != null)
                 frontalBarrier.SetActive(true);
 
-            if (entranceBarriers != null)
-                entranceBarriers.SetActive(true);
+            for (var i = 0; i < entranceBarrierObjects.Length; i++) entranceBarrierObjects[i].SetActive(true);
+
 
             //Debug.Log("Button Elevator Clicked");
             // TweenXYZ.Add(
