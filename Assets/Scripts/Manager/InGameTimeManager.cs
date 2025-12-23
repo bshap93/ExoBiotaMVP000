@@ -1,11 +1,13 @@
 ﻿using Helpers.Events;
+using Helpers.Events.Dialog;
 using Helpers.Interfaces;
 using MoreMountains.Tools;
 using UnityEngine;
 
 namespace Manager
 {
-    public class InGameTimeManager : MonoBehaviour, ICoreGameService, MMEventListener<InGameTimeActionEvent>
+    public class InGameTimeManager : MonoBehaviour, ICoreGameService, MMEventListener<InGameTimeActionEvent>,
+        MMEventListener<FirstPersonDialogueEvent>
 
     {
         public enum TimeState
@@ -114,12 +116,14 @@ namespace Manager
 
         void OnEnable()
         {
-            this.MMEventStartListening();
+            this.MMEventStartListening<InGameTimeActionEvent>();
+            this.MMEventStartListening<FirstPersonDialogueEvent>();
         }
 
         void OnDisable()
         {
-            this.MMEventStopListening();
+            this.MMEventStopListening<InGameTimeActionEvent>();
+            this.MMEventStopListening<FirstPersonDialogueEvent>();
         }
         public void Save()
         {
@@ -178,6 +182,13 @@ namespace Manager
         public bool HasSavedData()
         {
             return ES3.FileExists(_savePath ?? GetSaveFilePath());
+        }
+        public void OnMMEvent(FirstPersonDialogueEvent eventType)
+        {
+            if (eventType.Type == FirstPersonDialogueEventType.StartDialogue)
+                timeState = TimeState.Paused;
+            else if (eventType.Type == FirstPersonDialogueEventType.EndDialogue)
+                timeState = TimeState.RunningNormalSpeed;
         }
         public void OnMMEvent(InGameTimeActionEvent eventType)
         {

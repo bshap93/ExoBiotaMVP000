@@ -4,7 +4,8 @@ namespace Helpers.Events.Dialog
 {
     public enum FirstPersonDialogueEventType
     {
-        StartDialogue
+        StartDialogue,
+        EndDialogue
     }
 
     public struct FirstPersonDialogueEvent
