@@ -3,6 +3,7 @@ using Helpers.Events.Status;
 using Manager;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -25,6 +26,9 @@ namespace FirstPersonPlayer.UI.Stats
         [SerializeField] Color maxContaminationBarColor;
         [SerializeField] Color normalContaminationBarColor;
         [SerializeField] MMFeedbacks startDialogueFeedback;
+        [SerializeField] TMP_Text healthText;
+        [SerializeField] TMP_Text staminaText;
+        [SerializeField] TMP_Text contaminationText;
 
         [Header("Update")] [Tooltip("Minimum absolute change before we push a UI update")] [SerializeField]
         float epsilon = 0.001f;
@@ -42,9 +46,6 @@ namespace FirstPersonPlayer.UI.Stats
                 bioAlertIcon.enabled = true;
             else
                 bioAlertIcon.enabled = false;
-
-
-            // AlertPlayerToStatRisk(isMaxContaminated, nodeTitle: );
         }
 
 
@@ -57,6 +58,19 @@ namespace FirstPersonPlayer.UI.Stats
             TryUpdateBar(
                 ref _lastContamination, stats.CurrentContamination, 0f,
                 stats.CurrentMaxContamination, contaminationBar);
+
+            // Update text displays "Current / Max"
+            if (healthText != null)
+                healthText.text =
+                    $"{Mathf.RoundToInt(stats.CurrentHealth)} / {Mathf.RoundToInt(stats.CurrentMaxHealth)}";
+
+            if (staminaText != null)
+                staminaText.text =
+                    $"{Mathf.RoundToInt(stats.CurrentStamina)} / {Mathf.RoundToInt(stats.CurrentMaxStamina)}";
+
+            if (contaminationText != null)
+                contaminationText.text =
+                    $"{Mathf.RoundToInt(stats.CurrentContamination)} / {Mathf.RoundToInt(stats.CurrentMaxContamination)}";
 
             // Show lost capacity
             if (lostHealthCapacityFill != null)
