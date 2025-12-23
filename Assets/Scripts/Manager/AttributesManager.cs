@@ -32,6 +32,12 @@ namespace Manager
         int overrideMentalToughness = 2;
         [ShowIf("overrideAttributesOnLoad")] [SerializeField]
         int overrideExobiotic = 2;
+
+        [SerializeField] float staminaPerAgilityIncrease = 5;
+        [SerializeField] float staminaPerMentalToughnessIncrease = 2.5f;
+        [SerializeField] float healthPerStrengthIncrease = 5;
+        [SerializeField] float contaminationResistPerMentalToughnessIncrease = 2.5f;
+        [SerializeField] float contaminationResistPerExobioticIncrease = 5f;
         // has endurance and agility's traditional 
         // functions been merged into a single stat...for now
         int _agility;
@@ -376,6 +382,27 @@ namespace Manager
         {
             // higher mental toughness reduces severity of status effects
             return 1.0f - MentalToughness * 0.05f;
+        }
+        public float GetStaminaPerAgilityIncrease()
+        {
+            return staminaPerAgilityIncrease;
+        }
+        public float GetStaminaPerMentalToughnessIncrease()
+        {
+            return staminaPerMentalToughnessIncrease;
+        }
+
+        public float GetHealthPerStrengthIncrease()
+        {
+            return healthPerStrengthIncrease;
+        }
+        public float GetContaminationResistPerMentalToughnessIncrease()
+        {
+            return contaminationResistPerMentalToughnessIncrease;
+        }
+        public float GetContaminationResistPerExobioticIncrease()
+        {
+            return contaminationResistPerExobioticIncrease;
         }
     }
 }

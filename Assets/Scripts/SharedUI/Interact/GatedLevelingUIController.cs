@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using FirstPersonPlayer.UI.InventoryListView;
 using Helpers.Events;
 using Helpers.Events.Gated;
@@ -47,18 +48,33 @@ namespace SharedUI.Interact
         [Header(" Buttons ")] [SerializeField] ButtonManager commitButton;
         [SerializeField] ButtonManager cancelButton;
 
+        [SerializeField] TMP_Text maxHealth;
+        [SerializeField] TMP_Text maxStamina;
+        [SerializeField] TMP_Text contaminationResistance;
+
         CanvasGroup _canvasGroup;
 
         int _currentUnusedXP;
 
         int _initialAgility;
+        float _initialContaminationResistance;
         int _initialDexterity;
         int _initialExobiotic;
+
+        float _initialMaxHealth;
+        float _initialMaxStamina;
         int _initialMentalToughness;
         int _initialStrength;
+
+        //Attributes
         int _pendingNewAgility;
+        float _pendingNewContaminationResistance;
         int _pendingNewDexterity;
         int _pendingNewExobiotic;
+
+        // Float Stats
+        float _pendingNewMaxHealth;
+        float _pendingNewMaxStamina;
         int _pendingNewMentalToughness;
         int _pendingNewStrength;
 
@@ -116,21 +132,32 @@ namespace SharedUI.Interact
                 {
                     case AttributeType.Dexterity:
                         _pendingNewDexterity = eventType.AttrLevelTarget;
+
                         dexteritySetter.Initialize(eventType.AttrLevelTarget, _pendingNewUnusedXP);
                         dexteritySetter.canDecrease = true;
                         break;
                     case AttributeType.MentalToughness:
                         _pendingNewMentalToughness = eventType.AttrLevelTarget;
+                        _pendingNewMaxStamina += AttributesManager.Instance.GetStaminaPerMentalToughnessIncrease();
+                        _pendingNewContaminationResistance +=
+                            AttributesManager.Instance.GetContaminationResistPerMentalToughnessIncrease();
+
+                        UpdateFloatStatsUI();
+
                         mentalToughnessSetter.Initialize(eventType.AttrLevelTarget, _pendingNewUnusedXP);
                         mentalToughnessSetter.canDecrease = true;
                         break;
                     case AttributeType.Agility:
                         _pendingNewAgility = eventType.AttrLevelTarget;
+                        _pendingNewMaxStamina += AttributesManager.Instance.GetStaminaPerAgilityIncrease();
+                        UpdateFloatStatsUI();
                         agilitySetter.Initialize(eventType.AttrLevelTarget, _pendingNewUnusedXP);
                         agilitySetter.canDecrease = true;
                         break;
                     case AttributeType.Strength:
                         _pendingNewStrength = eventType.AttrLevelTarget;
+                        _pendingNewMaxHealth += AttributesManager.Instance.GetHealthPerStrengthIncrease();
+                        UpdateFloatStatsUI();
                         strengthSetter.Initialize(eventType.AttrLevelTarget, _pendingNewUnusedXP);
                         strengthSetter.canDecrease = true;
                         break;
@@ -138,6 +165,11 @@ namespace SharedUI.Interact
                         if (mediStatType == MediStatType.Infected)
                         {
                             _pendingNewExobiotic = eventType.AttrLevelTarget;
+                            _pendingNewContaminationResistance +=
+                                AttributesManager.Instance.GetContaminationResistPerExobioticIncrease();
+
+                            UpdateFloatStatsUI();
+
                             exobioticSetter.Initialize(eventType.AttrLevelTarget, _pendingNewUnusedXP);
                             exobioticSetter.canDecrease = true;
                         }
@@ -181,17 +213,23 @@ namespace SharedUI.Interact
                     case AttributeType.MentalToughness:
                         _pendingNewMentalToughness = eventType.AttrLevelTarget;
                         mentalToughnessSetter.Initialize(eventType.AttrLevelTarget, _pendingNewUnusedXP);
+                        _pendingNewMaxStamina -= AttributesManager.Instance.GetStaminaPerMentalToughnessIncrease();
+                        UpdateFloatStatsUI();
                         mentalToughnessSetter.canDecrease = eventType.AttrLevelTarget >= _initialMentalToughness;
                         break;
                     case AttributeType.Agility:
                         _pendingNewAgility = eventType.AttrLevelTarget;
                         agilitySetter.Initialize(eventType.AttrLevelTarget, _pendingNewUnusedXP);
+                        _pendingNewMaxStamina -= AttributesManager.Instance.GetStaminaPerAgilityIncrease();
+                        UpdateFloatStatsUI();
                         agilitySetter.canDecrease = eventType.AttrLevelTarget >= _initialAgility;
 
                         break;
                     case AttributeType.Strength:
                         _pendingNewStrength = eventType.AttrLevelTarget;
                         strengthSetter.Initialize(eventType.AttrLevelTarget, _pendingNewUnusedXP);
+                        _pendingNewMaxHealth -= AttributesManager.Instance.GetHealthPerStrengthIncrease();
+                        UpdateFloatStatsUI();
                         strengthSetter.canDecrease = eventType.AttrLevelTarget >= _initialStrength;
                         break;
                     case AttributeType.Exobiotic:
@@ -199,6 +237,11 @@ namespace SharedUI.Interact
                         {
                             _pendingNewExobiotic = eventType.AttrLevelTarget;
                             exobioticSetter.Initialize(eventType.AttrLevelTarget, _pendingNewUnusedXP);
+                            _pendingNewContaminationResistance -=
+                                AttributesManager.Instance.GetContaminationResistPerExobioticIncrease();
+
+                            UpdateFloatStatsUI();
+
                             exobioticSetter.canDecrease = eventType.AttrLevelTarget >= _initialExobiotic;
                         }
 
@@ -251,10 +294,17 @@ namespace SharedUI.Interact
                 totalUnusedXPText.text = CurrentUnusedXP.ToString();
             }
         }
+        void UpdateFloatStatsUI()
+        {
+            maxHealth.text = _pendingNewMaxHealth.ToString(CultureInfo.InvariantCulture);
+            maxStamina.text = _pendingNewMaxStamina.ToString(CultureInfo.InvariantCulture);
+            contaminationResistance.text = _pendingNewContaminationResistance.ToString(CultureInfo.InvariantCulture);
+        }
 
         void Initialize()
         {
             var attributeManager = AttributesManager.Instance;
+            var playerMutableStatsManager = PlayerMutableStatsManager.Instance;
             if (attributeManager == null)
             {
                 Debug.LogError("AttributesManager instance not found!");
@@ -277,11 +327,19 @@ namespace SharedUI.Interact
             _initialStrength = attributeManager.Strength;
             _initialExobiotic = attributeManager.Exobiotic;
 
+            _initialMaxHealth = playerMutableStatsManager.CurrentMaxHealth;
+            _initialMaxStamina = playerMutableStatsManager.CurrentMaxStamina;
+            _initialContaminationResistance = playerMutableStatsManager.CurrentMaxContamination;
+
             _pendingNewAgility = _initialAgility;
             _pendingNewDexterity = _initialDexterity;
             _pendingNewMentalToughness = _initialMentalToughness;
             _pendingNewStrength = _initialStrength;
             _pendingNewExobiotic = _initialExobiotic;
+
+            _pendingNewMaxHealth = _initialMaxHealth;
+            _pendingNewMaxStamina = _initialMaxStamina;
+            _pendingNewContaminationResistance = _initialContaminationResistance;
 
             cancelButton.onClick.RemoveAllListeners();
             cancelButton.onClick.AddListener(() => { CancelLeveling(); });
@@ -356,6 +414,11 @@ namespace SharedUI.Interact
                 _pendingNewExobiotic);
 
             AttributesManager.Instance.ApplyPendingUnusedXP(_pendingNewUnusedXP);
+
+            PlayerMutableStatsManager.Instance.ApplyPendingFloatStatChanges(
+                _pendingNewMaxHealth,
+                _pendingNewMaxStamina,
+                _pendingNewContaminationResistance);
 
             commitChangesFeedbacks?.PlayFeedbacks();
 

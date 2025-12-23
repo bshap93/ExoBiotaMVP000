@@ -696,6 +696,32 @@ namespace Manager
             return damage;
         }
 
+        public void ApplyPendingFloatStatChanges(float pendingNewMaxHealth, float pendingNewMaxStamina,
+            float pendingNewContaminationResistance)
+        {
+            var previoutMaxHealth = CurrentMaxHealth;
+            var previousMaxStamina = CurrentMaxStamina;
+            var previousMaxContamination = CurrentMaxContamination;
+            CurrentMaxHealth = pendingNewMaxHealth;
+            CurrentMaxStamina = pendingNewMaxStamina;
+            CurrentMaxContamination = pendingNewContaminationResistance;
+
+            if (CurrentMaxHealth > previoutMaxHealth)
+                CurrentHealth = CurrentMaxHealth;
+
+            if (CurrentMaxStamina > previousMaxStamina)
+                CurrentStamina = CurrentMaxStamina;
+
+            if (CurrentMaxContamination > previousMaxContamination)
+                CurrentContamination = CurrentMaxContamination;
+
+
+            playerStatsBars?.UpdateAllBars();
+            MarkDirty();
+            ConditionalSave();
+            PlayerStatsSyncEvent.Trigger();
+        }
+
         [Serializable]
         public class StatBasedDialogueNode
         {
