@@ -102,7 +102,7 @@ namespace FirstPersonPlayer.InputHandling
         protected bool isAllowedToCancelJump;
         protected bool isCrouched;
 
-        protected bool isFalling;
+        protected bool IsFalling;
 
         // public TextureDetector textureDetector;
 
@@ -224,7 +224,7 @@ namespace FirstPersonPlayer.InputHandling
             isAllowedToCancelJump = false;
 
             // Reset fall tracking when teleporting
-            isFalling = false;
+            IsFalling = false;
             maxFallSpeed = 0f;
         }
 
@@ -599,17 +599,17 @@ namespace FirstPersonPlayer.InputHandling
 
                 if (currentFallSpeed > 0 && !CharacterActor.IsGrounded)
                 {
-                    isFalling = true;
+                    IsFalling = true;
                     // Track the maximum fall speed during this fall
                     maxFallSpeed = Mathf.Max(maxFallSpeed, currentFallSpeed);
                 }
 
                 // Check for landing impact
-                if (isFalling && CharacterActor.IsGrounded)
+                if (IsFalling && CharacterActor.IsGrounded)
                 {
                     HandleFallDamage();
                     // Reset fall tracking
-                    isFalling = false;
+                    IsFalling = false;
                     maxFallSpeed = 0f;
                 }
             }
@@ -666,7 +666,7 @@ namespace FirstPersonPlayer.InputHandling
             CharacterActor.alwaysNotGrounded = false;
 
             // Reset fall tracking
-            isFalling = false;
+            IsFalling = false;
             maxFallSpeed = 0f;
 
             // Grounded jump

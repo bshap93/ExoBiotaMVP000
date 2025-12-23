@@ -6,9 +6,11 @@ using UnityEngine;
 public class DirigibleCameraEventHandler : MonoBehaviour, MMEventListener<MyUIEvent>
 {
     RewiredCinemachineInputAxisController _rewiredCinemachineInputAxisController;
+    int _uiElementsOpen;
     void Awake()
     {
         _rewiredCinemachineInputAxisController = GetComponent<RewiredCinemachineInputAxisController>();
+        _uiElementsOpen = 0;
     }
 
     void OnEnable()
@@ -22,7 +24,16 @@ public class DirigibleCameraEventHandler : MonoBehaviour, MMEventListener<MyUIEv
     public void OnMMEvent(MyUIEvent eventType)
     {
         if (eventType.uiActionType == UIActionType.Open)
-            _rewiredCinemachineInputAxisController.enabled = false;
-        else if (eventType.uiActionType == UIActionType.Close) _rewiredCinemachineInputAxisController.enabled = true;
+        {
+            _uiElementsOpen++;
+            if (_uiElementsOpen > 0)
+                _rewiredCinemachineInputAxisController.enabled = false;
+        }
+        else if (eventType.uiActionType == UIActionType.Close)
+        {
+            _uiElementsOpen--;
+            if (_uiElementsOpen <= 0)
+                _rewiredCinemachineInputAxisController.enabled = true;
+        }
     }
 }
