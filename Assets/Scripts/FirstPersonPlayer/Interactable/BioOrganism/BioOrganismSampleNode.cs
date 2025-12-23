@@ -29,6 +29,8 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
 
         public UnityEvent OnDepleted;
 
+        public float baseBlowbackContaminationAmt = 0.5f;
+
         public int timesAllowedToSample = 1;
 
         [SerializeField] float interactionDistance = 2f;
@@ -44,7 +46,7 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
         [SerializeField] MMFeedbacks jiggleFeedbacks;
 
         ObjectiveHelper _objectiveHelper;
-        
+
 
         string SceneKey => gameObject.scene.name;
 
@@ -62,6 +64,7 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
         {
             jiggleFeedbacks?.PlayFeedbacks();
         }
+        public float BaseBlowbackContaminationAmt => baseBlowbackContaminationAmt;
         public void Interact()
         {
             var isToolEquipped = IsLiquidScannerEquipped();

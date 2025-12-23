@@ -249,6 +249,12 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             {
                 hitFleshyFeedbacks?.PlayFeedbacks();
                 fleshyObject.MakeJiggle();
+                var contaminationAmt = fleshyObject.BaseBlowbackContaminationAmt;
+                if (contaminationAmt > 0f)
+                    PlayerStatsEvent.Trigger(
+                        PlayerStatsEvent.PlayerStat.CurrentContamination,
+                        PlayerStatsEvent.PlayerStatChangeType.Increase,
+                        contaminationAmt);
             }
             else if (go.CompareTag("DiggerChunk") || go.CompareTag("MainSceneTerrain"))
             {

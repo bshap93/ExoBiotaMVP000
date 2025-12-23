@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Dirigible.Input;
 using Events;
 using FirstPersonPlayer.UI.LocationButtonBase.Test;
@@ -25,7 +24,6 @@ namespace Manager.DialogueScene
 {
     public class DialogueManager : MonoBehaviour, IGameMetaService, MMEventListener<SpecialDialogueEvent>
     {
-        const string MetaSaveKey = "DialogueMetaSave";
         [SerializeField] Camera stageCamera; // drag StageCamera from DialogueOverlay
         [SerializeField] Transform stageRoot; // drag StageRoot from DialogueOverlay
         [SerializeField] CanvasGroup overlay; // fade & block clicks
@@ -147,11 +145,6 @@ namespace Manager.DialogueScene
             }
         }
 
-        public string GetSaveFilePath()
-        {
-            return SaveManager.Instance.GetGlobalSaveFilePath(GlobalManagerType.DialogueSave);
-        }
-
 
         void Close()
         {
@@ -174,15 +167,15 @@ namespace Manager.DialogueScene
             avatarImage.gameObject.SetActive(true);
             nonNPCInterface.SetActive(false);
             // 1) put NPC in the stage
-            _currentModel = Instantiate(def.characterPrefab, stageRoot);
-            _currentModel.transform.localPosition = Vector3.zero;
-            _currentModel.transform.localRotation = Quaternion.identity;
+            if (def.hasAvatarDiorama)
+            {
+                _currentModel = Instantiate(def.characterPrefab, stageRoot);
+                _currentModel.transform.localPosition = Vector3.zero;
+                _currentModel.transform.localRotation = Quaternion.identity;
+            }
+
             npcUIIdentifierPanel.SetInfo(def.characterName);
 
-            // 2) aim the stage‑camera if a custom anchor was supplied
-            // if (camAnchor != null)
-            //     stageCamera.transform.SetPositionAndRotation(camAnchor.position,
-            //         camAnchor.rotation);
 
             // 3) push dialogue
             dialogueRunner.SetProject(def.yarnProject);
@@ -213,46 +206,6 @@ namespace Manager.DialogueScene
             // MyUIEvent.Trigger(UIType.Dialogue, UIActionType.Open);
 
             // 5) WAIT here until all Yarn nodes (and any option UIs) finish
-            await dialogueRunner.DialogueTask; // ‑‑ this replaces WaitForDialogueToFinish()
-
-            if (GameStateManager.Instance.CurrentMode == GameMode.FirstPerson)
-            {
-                if (autoClose) // only close if caller asked for it
-                    Close();
-            }
-            else
-            {
-                TriggerRetreatFromLocationEvent();
-
-                varProbeYSES3.TryGet();
-
-                if (autoClose) // only close if caller asked for it
-                    Close();
-            }
-        }
-
-        public async Task TriggerInfoSequence(NpcDefinition def, Transform camAnchor = null, bool autoClose = true,
-            string startNodeOverride = null)
-        {
-            avatarImage.gameObject.SetActive(false);
-            nonNPCInterface.SetActive(true);
-
-            // _currentModel = Instantiate(def.characterPrefab, stageRoot);
-            _currentModel.transform.localPosition = Vector3.zero;
-            _currentModel.transform.localRotation = Quaternion.identity;
-            npcUIIdentifierPanel.SetInfo(def.characterName);
-
-            dialogueRunner.SetProject(def.yarnProject);
-
-            var startNodeStr = startNodeOverride ?? def.startNode;
-            var startNodeToUse = DialogueStartNodeManager.Instance.GetStartNode(def.npcId, startNodeStr);
-            DialogueEvent.Trigger(DialogueEventType.DialogueStarted, def.npcId, startNodeToUse);
-            dialogueRunner.StartDialogue(startNodeToUse);
-
-            overlay.alpha = 1;
-            overlay.blocksRaycasts = true;
-            overlay.interactable = true;
-
             await dialogueRunner.DialogueTask; // ‑‑ this replaces WaitForDialogueToFinish()
 
             if (GameStateManager.Instance.CurrentMode == GameMode.FirstPerson)
@@ -302,8 +255,11 @@ namespace Manager.DialogueScene
         {
             return new[]
             {
+                // Convenience Structures
+                "NarratorAsNPC",
+                // NPCs
                 "FabricatorClancy", "ScientistHypolita", "ShadyCoreTrafficker", "None", "ScienceShopRobot",
-                "VitalSystems", "WreckedRunnerNPC",
+                "VitalSystems",
                 // Consoles
                 "Mine01GrottoSanctumConsole", "Mine01GrottoNookConsole",
                 // Aliens

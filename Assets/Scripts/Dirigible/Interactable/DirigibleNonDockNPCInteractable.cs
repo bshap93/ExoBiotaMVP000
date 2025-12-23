@@ -71,6 +71,7 @@ namespace Dirigible.Interactable
                     FirstPersonDialogueEventType.StartDialogue, npcDefinition.npcId, nodeToUse);
 
             MyUIEvent.Trigger(UIType.Any, UIActionType.Open);
+            ControlsHelpEvent.Trigger(ControlHelpEventType.Hide, 0);
         }
         public void OnInteractionStart()
         {
