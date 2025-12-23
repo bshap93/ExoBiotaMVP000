@@ -19,6 +19,7 @@ namespace FirstPersonPlayer.Combat.Player.ScriptableObjects
     public class PlayerToolAttack : ScriptableObject
     {
         public string displayName;
+        public float baseBlowbackContaminationMultiplier = 1f;
         public float rawDamage;
         [Range(0f, 1f)] public float critChance;
         public float critMultiplier = 1.2f;

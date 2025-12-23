@@ -1003,12 +1003,13 @@ MonoBehaviour:
   reach: 3.74
   hitMask:
     serializedVersion: 2
-    m_Bits: 16777215
+    m_Bits: 150994943
   timeToFullCharge: 1.5
   miningCooldown: 1
   hardnessCanBreak: 2
   highlighingRange: 5
   baseStaminaCostPerConnectingSwing: 3
+  baseStaminaCostPerHeavyConnectingSwing: 2
   defaultReticleForTool: {fileID: 21300000, guid: 4f5efa23f803efe41900694e287ac262, type: 3}
   allowedTerrainTextureIndices: 
   equippedFeedbacks: {fileID: 5697828116582486340}

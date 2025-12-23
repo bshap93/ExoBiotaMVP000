@@ -7,6 +7,7 @@ using FirstPersonPlayer.Combat.Player.ScriptableObjects;
 using FirstPersonPlayer.Tools.ToolPrefabScripts;
 using Helpers.Events.Combat;
 using Helpers.Events.NPCs;
+using Helpers.Events.Status;
 using HighlightPlus;
 using Manager;
 using Manager.StateManager;
@@ -113,6 +114,14 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
 
                 damageAmount *= playerStrengthMultiplier;
 
+                // Melee contamination
+                var contaminationAmt = creatureType.baseBlowbackContaminationAmt *
+                                       playerAttack.baseBlowbackContaminationMultiplier;
+
+                PlayerStatsEvent.Trigger(
+                    PlayerStatsEvent.PlayerStat.CurrentContamination,
+                    PlayerStatsEvent.PlayerStatChangeType.Increase,
+                    contaminationAmt);
 
                 // StartCoroutine(CooldownAfterWasHit());
 
