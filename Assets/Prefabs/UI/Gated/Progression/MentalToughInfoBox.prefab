@@ -18,15 +18,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8125183886302335666, guid: 72943cefab58d95468d0dd164b8ff297, type: 3}
       propertyPath: m_text
-      value: 'You lose stamina less quickly.
+      value: 'Your max stamina and contamination resistance are increased.
 
 
-        You make NPCs see reason (more
-        favorable dialogue choices).
+        Your
+        interactions with sentient NPCs are improved and you resist manipulation
+        attempts.
 
 
-        You are less affected by ill effects
-        of contamination, infections or other status effects.'
+        You are less affected by ill effects of contamination,
+        especially the mental effects.'
       objectReference: {fileID: 0}
     - target: {fileID: 9079788085922262693, guid: 72943cefab58d95468d0dd164b8ff297, type: 3}
       propertyPath: m_Pivot.x

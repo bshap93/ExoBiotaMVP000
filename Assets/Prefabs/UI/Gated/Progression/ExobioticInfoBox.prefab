@@ -30,10 +30,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8125183886302335666, guid: 72943cefab58d95468d0dd164b8ff297, type: 3}
       propertyPath: m_text
-      value: "You have been colonized by Sheol exobiota, but you make the best of
-        it. \n\nYou now understand many languages of sentient life on this planet,
-        converse with it, interface with it, and eventually control it, the higher
-        you level this attribute. \n\nHowever, you make normal humans very uncomfortable."
+      value: 'Your progrssion into hybrid biology advances.
+
+
+        You are able
+        to communicate with more native life (most intelligent first).
+
+
+        However,
+        your ability to communicate with humans is degraded, and you are shunned
+        from some places altogether.'
       objectReference: {fileID: 0}
     - target: {fileID: 9079788085922262693, guid: 72943cefab58d95468d0dd164b8ff297, type: 3}
       propertyPath: m_Pivot.x

@@ -26,12 +26,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8125183886302335666, guid: 72943cefab58d95468d0dd164b8ff297, type: 3}
       propertyPath: m_text
-      value: 'Your movement speed is faster and you jump higher. You strike with
-        melee weapons or tools faster.
-
-
-        You don''t lose stamina as quickly
-        when sprinting, fighting, or using tools.'
+      value: "Your movement speed is faster and you jump higher. You strike with
+        melee weapons or tools faster.\n\nYou don't lose stamina as quickly when
+        sprinting, fighting, or using tools. \n\nYour overall stamina max is increased."
       objectReference: {fileID: 0}
     - target: {fileID: 9079788085922262693, guid: 72943cefab58d95468d0dd164b8ff297, type: 3}
       propertyPath: m_Pivot.x

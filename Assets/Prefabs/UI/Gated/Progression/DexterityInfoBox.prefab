@@ -201,11 +201,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Handle skill-based actions like sampling or harvesting cores faster and
-    with a higher success rate.
-
-
-    You''re more accurate with tools and weapons.'
+  m_text: "Handle skill-based actions like sampling or harvesting cores faster and
+    while taking on less contamination. \n\nYou're more accurate with tools and weapons.
+    \n\nSome tasks will require a certain level of dexterity to complete at all.\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6397f3e1c84180d4095570d6baddc47c, type: 2}
   m_sharedMaterial: {fileID: -1780899124936488904, guid: 6397f3e1c84180d4095570d6baddc47c, type: 2}
@@ -238,7 +236,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535

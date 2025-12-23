@@ -26,9 +26,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8125183886302335666, guid: 72943cefab58d95468d0dd164b8ff297, type: 3}
       propertyPath: m_text
-      value: "You hit harder with heavy tools and melee weapons. \n\nYou carry more
-        weight in your inventory.\n\nYou can break into areas that otherwise required
-        a key."
+      value: 'You hit harder with heavy tools and melee weapons.
+
+
+        You carry
+        more weight in your inventory.
+
+
+        Some areas may be blocked by breakable
+        doors or walls, requiring certain strength level to break.'
       objectReference: {fileID: 0}
     - target: {fileID: 9079788085922262693, guid: 72943cefab58d95468d0dd164b8ff297, type: 3}
       propertyPath: m_Pivot.x
