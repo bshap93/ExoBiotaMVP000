@@ -362,7 +362,7 @@ MonoBehaviour:
   detectionRadius: 4
   contaminateRadius: 3
   contaminationOnEnter: 0
-  contaminationPerSecond: 2
+  contaminationPerSecond: 1
   releaseFeedbacks: {fileID: 3894367198166227559}
   deathParticlesPrefab: {fileID: 0}
   isDead: 0

@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 287518595356570896}
   - component: {fileID: 7680921298712409508}
   - component: {fileID: 4444058636447637976}
+  - component: {fileID: 2121397282382109078}
   m_Layer: 0
   m_Name: MineL1BoxVolume
   m_TagString: MainSceneVolume
@@ -419,3 +420,19 @@ MonoBehaviour:
   initialDistortProfile: {fileID: 11400000, guid: 1b554e69a7236a649b4ae9b04dc05f4e, type: 2}
   distortProfile: {fileID: 11400000, guid: aeb7bd081454d1944a20bb161f8292d9, type: 2}
   floatersProfile: {fileID: 11400000, guid: 54a4712f802efe64b9877ae01ad87842, type: 2}
+--- !u!114 &2121397282382109078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4691997015965142046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b900b6d691ae49f8a12753b63b449e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sun: {fileID: 0}
+  depthOfFieldTarget: {fileID: 0}
+  depthOfFieldFocusPositionEnabled: 0
+  depthOfFieldFocusPosition: {x: 0, y: 0, z: 0}
