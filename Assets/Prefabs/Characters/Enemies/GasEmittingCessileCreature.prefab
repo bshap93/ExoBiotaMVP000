@@ -1268,7 +1268,7 @@ MonoBehaviour:
   sdfQuality: 1
   maximumFrameCostMilliseconds: 0.88
   maximumStepCount: 64
-  maximumDensity: 0.53
+  maximumDensity: 0.6
   minimumVisibility: 0.806
   noiseTexture: {fileID: 11700000, guid: 373c8120693a0ae4980eae7e55f1c680, type: 2}
   erosionScale: 1
@@ -1283,7 +1283,7 @@ MonoBehaviour:
   expansionUpdateFrequency: 0.01
   expansionDuration: 5
   fadeInDuration: 1
-  activeLifetime: 15
+  activeLifetime: 5
   fadeOutDuration: 5
   cleanupOptions: 1
   startupOptions: 0
@@ -2540,10 +2540,6 @@ PrefabInstance:
       propertyPath: 'FeedbacksList.Array.data[1]'
       value: 2956590578917179583
       objectReference: {fileID: 0}
-    - target: {fileID: 4335554841815714329, guid: 93ea40ccecb65254c81ae0197b49499b, type: 3}
-      propertyPath: managedReferences[1616504596478820352].Sfx
-      value: 
-      objectReference: {fileID: 8300000, guid: c71b645788c2a4c27badb687ca6444a2, type: 3}
     - target: {fileID: 4335554841815714329, guid: 93ea40ccecb65254c81ae0197b49499b, type: 3}
       propertyPath: managedReferences[1616504639524700662].GameObjectToInstantiate
       value: 
