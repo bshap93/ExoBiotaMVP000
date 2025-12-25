@@ -84,8 +84,8 @@ public class BootLoader : MonoBehaviour
                 info = new SpawnInfo
                 {
                     SceneName = "Overworld",
-                    Mode = GameMode.DirigibleFlight,
-                    SpawnPointId = "EnterValleySpawn"
+                    Mode = GameMode.Overview,
+                    SpawnPointId = "ScienceDockSpawn"
                 };
         }
 

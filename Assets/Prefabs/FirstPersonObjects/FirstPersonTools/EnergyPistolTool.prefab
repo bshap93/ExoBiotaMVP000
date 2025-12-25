@@ -2365,11 +2365,15 @@ MonoBehaviour:
   missSparksPrefab: {fileID: 7264065572978307275, guid: ec1e4ecb868579e41b40ec884b9c9ef8, type: 3}
   beamLineRenderer: {fileID: 7576258866032881082}
   beamDuration: 0.1
-  beamColor: {r: 0, g: 1, b: 1, a: 1}
+  beamColor: {r: 0.60784316, g: 0.13333334, b: 0.16862746, a: 1}
   recoilBackComponent: 0.001
   recoilBackDuration: 0.15
   recoilBackVibrato: 8
   recoilBackElasticity: 0.4
+  maxSpreadAngle: 4
+  minSpreadAngle: 0.4
+  perfectAccuracyDexterity: 10
+  debugAccuracy: 0
   shootFeedbacks: {fileID: 6335247859753198447}
   nonLocalHitFeedbacks: {fileID: 0}
   missFeedbacks: {fileID: 0}
