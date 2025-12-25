@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Dirigible.HighlightTriggers;
 using Dirigible.Input;
 using Dirigible.Interface;
 using Events;
@@ -19,6 +20,7 @@ using Sirenix.OdinInspector;
 using Structs;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Utilities.Interface;
 
 namespace Dirigible.Interactable
 {
@@ -38,7 +40,7 @@ namespace Dirigible.Interactable
 
     [RequireComponent(typeof(Collider))]
     public class DirigibleDockInteractable : MonoBehaviour, IDirigibleInteractable, MMEventListener<DockingEvent>,
-        MMEventListener<ModeLoadEvent>
+        MMEventListener<ModeLoadEvent>, IRequiresUniqueID
     {
         [SerializeField] Transform dockAnchor; // assign DockAnchor child
         [SerializeField] ObjectiveObject objectiveToCompleteOnInteract;
@@ -75,12 +77,15 @@ namespace Dirigible.Interactable
         [SerializeField] LayerMask dirigibleLayers; // set to your Dirigible layer in Inspector
 
         readonly HashSet<Collider> _dirigibleOverlaps = new();
+
+        DockHighlightTrigger _highlightTrigger;
         float _ignoreUntil;
 
 
         void Awake()
         {
             HideLocationCanvas();
+            _highlightTrigger = GetComponent<DockHighlightTrigger>();
         }
 
         void OnEnable()
@@ -101,8 +106,6 @@ namespace Dirigible.Interactable
             if (Time.time < _ignoreUntil) return;
             if (!IsDirigible(other)) return;
 
-            // if (_dirigibleOverlaps.Count == 0)
-            //     DockingEvent.Trigger(DockingEventType.SetCurrentDock, def);
 
             _dirigibleOverlaps.Add(other);
         }
@@ -163,6 +166,16 @@ namespace Dirigible.Interactable
             Debug.Log("Interacted with " + gameObject.name);
 
             StartCoroutine(SlideInAndEnterOverview());
+        }
+        public string UniqueID => def.dockId;
+        public void SetUniqueID()
+        {
+            // UniqueID = Guid.NewGuid().ToString();
+            // Not needed, dock ID comes from ScriptableObject
+        }
+        public bool IsUniqueIDEmpty()
+        {
+            return string.IsNullOrEmpty(def.dockId);
         }
 
         public void OnMMEvent(DockingEvent e)
@@ -336,6 +349,7 @@ namespace Dirigible.Interactable
                 GameMode.Overview, def.spawnInfo.SpawnPointId, def);
 
             CheckpointEvent.Trigger(def.spawnInfo.ToSpawnInfo());
+            _highlightTrigger.showDockingInstructions = false;
 
 
             // overworldPOIHelper.gameObject.SetActive(false);

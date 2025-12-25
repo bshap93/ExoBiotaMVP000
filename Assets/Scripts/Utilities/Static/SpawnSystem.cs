@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Events;
+using Helpers.Events;
 using Manager;
 using Manager.Global;
 using SceneScripts.Spawn;
 using Spawn;
-using Static;
 using Structs;
 using UnityEngine;
 using UnityEngine.SceneManagement;

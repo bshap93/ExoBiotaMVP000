@@ -1,16 +1,16 @@
-using Events;
+using Helpers.Events;
 using Manager.SceneManagers.Dock;
 using MoreMountains.Tools;
 using UnityEngine;
 
 public class OverviewCameraTarget : MonoBehaviour, MMEventListener<DockingEvent>
 {
-    private void OnEnable()
+    void OnEnable()
     {
         this.MMEventStartListening();
     }
 
-    private void OnDisable()
+    void OnDisable()
     {
         this.MMEventStopListening();
     }

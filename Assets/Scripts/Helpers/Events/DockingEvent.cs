@@ -1,7 +1,7 @@
 ﻿using MoreMountains.Tools;
 using Overview.OverviewMode.ScriptableObjectDefinitions;
 
-namespace Events
+namespace Helpers.Events
 {
     public enum DockingEventType
     {

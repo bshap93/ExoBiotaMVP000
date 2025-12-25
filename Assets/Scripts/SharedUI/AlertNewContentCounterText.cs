@@ -1,4 +1,4 @@
-using Events;
+using Helpers.Events;
 using Manager.SceneManagers.Dock;
 using MoreMountains.Tools;
 using TMPro;
@@ -8,17 +8,17 @@ namespace SharedUI
 {
     public class AlertNewContentCounterText : MonoBehaviour, MMEventListener<DockingEvent>
     {
-        [SerializeField] private TMP_Text text;
-        private string _dockId;
-        private string _locationId;
+        [SerializeField] TMP_Text text;
+        string _dockId;
+        string _locationId;
 
 
-        private void OnEnable()
+        void OnEnable()
         {
             this.MMEventStartListening();
         }
 
-        private void OnDisable()
+        void OnDisable()
         {
             this.MMEventStopListening();
         }

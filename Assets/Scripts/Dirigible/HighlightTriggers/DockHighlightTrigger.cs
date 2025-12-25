@@ -3,11 +3,12 @@ using Helpers.Events;
 using HighlightPlus;
 using MoreMountains.Feedbacks;
 using UnityEngine;
+using Utilities.Interface;
 
 namespace Dirigible.HighlightTriggers
 {
     [RequireComponent(typeof(HighlightEffect))]
-    public class DockHighlightTrigger : MonoBehaviour
+    public class DockHighlightTrigger : MonoBehaviour, IRequiresUniqueID
     {
         [SerializeField] HighlightEffect highlightEffect;
         [SerializeField] DirigibleDockInteractable dockInteractable;
@@ -16,6 +17,8 @@ namespace Dirigible.HighlightTriggers
         [SerializeField] MMFeedbacks exitRangeFeedbacks;
 
         [SerializeField] bool alertEnabled = true;
+
+        public bool showDockingInstructions;
 
         void Start()
         {
@@ -27,6 +30,12 @@ namespace Dirigible.HighlightTriggers
 
         void OnTriggerEnter(Collider other)
         {
+            if (!showDockingInstructions)
+            {
+                showDockingInstructions = true;
+                return;
+            }
+
             if (other.CompareTag("Player"))
             {
                 highlightEffect.highlighted = true;
@@ -58,6 +67,15 @@ namespace Dirigible.HighlightTriggers
 
                 exitRangeFeedbacks?.PlayFeedbacks();
             }
+        }
+        public string UniqueID => dockInteractable.def.dockId;
+        public void SetUniqueID()
+        {
+            // UniqueID is derived from the dockInteractable, so no action needed here.
+        }
+        public bool IsUniqueIDEmpty()
+        {
+            return string.IsNullOrEmpty(UniqueID);
         }
     }
 }

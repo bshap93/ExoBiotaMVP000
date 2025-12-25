@@ -49,7 +49,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal0:
-        m_Texture: {fileID: 2800000, guid: 5b4adf30a9e293f42a5f299e1095d672, type: 3}
+        m_Texture: {fileID: 2800000, guid: e9aa952ddcaa08849ab6169ca8706f02, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal1:
@@ -57,15 +57,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal2:
-        m_Texture: {fileID: 2800000, guid: 7751ab4f966266e49be8ef8a7098bbda, type: 3}
+        m_Texture: {fileID: 2800000, guid: 524e1d2486dcd9140b8866a5b5d1a80a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal3:
-        m_Texture: {fileID: 2800000, guid: 21184dd1eff21d24b8ce7cf16aae32ec, type: 3}
+        m_Texture: {fileID: 2800000, guid: 9f0f0df692ee9d547accd8dec2df52f8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Splat0:
-        m_Texture: {fileID: 2800000, guid: d207ef1c595d98d4aa06baafdd2dbce6, type: 3}
+        m_Texture: {fileID: 2800000, guid: 0784f37db20973d4488b7e2a96330ee6, type: 3}
         m_Scale: {x: 0.5, y: 0.5}
         m_Offset: {x: 0, y: 0}
     - _Splat1:
@@ -73,11 +73,11 @@ Material:
         m_Scale: {x: 0.5, y: 0.5}
         m_Offset: {x: 0, y: 0}
     - _Splat2:
-        m_Texture: {fileID: 2800000, guid: acdac6014a41d054aa5298206cffa8cc, type: 3}
+        m_Texture: {fileID: 2800000, guid: 52cdc437570a70744872ef354c000683, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Splat3:
-        m_Texture: {fileID: 2800000, guid: 0d5bebfc6bcefb245ae2a949e1df8b02, type: 3}
+        m_Texture: {fileID: 2800000, guid: 99227c2bd3ed5a741bb0416174a48ce7, type: 3}
         m_Scale: {x: 0.5, y: 0.5}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
@@ -93,15 +93,15 @@ Material:
     - _Metallic1: 0
     - _Metallic2: 0
     - _Metallic3: 0
-    - _NormalScale0: 1.2
+    - _NormalScale0: 0.64
     - _NormalScale1: 1
-    - _NormalScale2: 3.47
+    - _NormalScale2: 1.1
     - _NormalScale3: 3.5
     - _NumLayersCount: 1
     - _Smoothness0: 0
     - _Smoothness1: 0
-    - _Smoothness2: 0.713
-    - _Smoothness3: 0.576
+    - _Smoothness2: 0.132
+    - _Smoothness3: 0.146
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _DiffuseRemapScale0: {r: 1, g: 1, b: 1, a: 1}

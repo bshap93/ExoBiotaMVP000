@@ -1,4 +1,4 @@
-using Events;
+using Helpers.Events;
 using MoreMountains.Tools;
 using UnityEngine;
 
@@ -10,12 +10,12 @@ namespace Dirigible
 
         public GameObject dockingGear;
 
-        private void OnEnable()
+        void OnEnable()
         {
             this.MMEventStartListening();
         }
 
-        private void OnDisable()
+        void OnDisable()
         {
             this.MMEventStopListening();
         }
