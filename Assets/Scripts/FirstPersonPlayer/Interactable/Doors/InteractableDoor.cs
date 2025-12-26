@@ -13,9 +13,8 @@ namespace FirstPersonPlayer.Interactable.Doors
 {
     public abstract class InteractableDoor : MonoBehaviour, IInteractable, IBillboardable, IRequiresUniqueID
     {
-        [Header("Optional access check")] [SerializeField]
-        DoorAccessRequirement access; // optional
-
+        public bool isLocked;
+        public string keyId;
         [SerializeField] string uniqueId;
 #if UNITY_EDITOR
         [ValueDropdown(nameof(GetAllRewiredActions))]
@@ -29,7 +28,7 @@ namespace FirstPersonPlayer.Interactable.Doors
         protected HighlightTrigger trigger;
         protected virtual void Awake()
         {
-            if (access == null) access = GetComponent<DoorAccessRequirement>();
+            // if (access == null) access = GetComponent<DoorAccessRequirement>();
             trigger = GetComponent<HighlightTrigger>();
         }
         void OnEnable()
@@ -153,7 +152,12 @@ namespace FirstPersonPlayer.Interactable.Doors
 
         protected virtual bool IsLocked()
         {
-            return access != null && !access.CanOpen();
+            if (!isLocked)
+                return false;
+
+            AlertEvent.Trigger(AlertReason.DoorLocked, "The door is locked. You need a key to open it.");
+
+            return true;
         }
 
         protected bool TryOpenWithAccess()
@@ -162,7 +166,7 @@ namespace FirstPersonPlayer.Interactable.Doors
                 // locked feedback here
                 return false;
 
-            access?.MarkOpenedIfPermanent();
+            // access?.MarkOpenedIfPermanent();
             return true;
         }
     }

@@ -13,6 +13,7 @@ namespace FirstPersonPlayer.Interactable.Doors
     {
         public DockDefinition dockDefinition;
 
+
         [SerializeField] ObjectiveObject objectiveIfActiveToComplete;
 
         public override async void Interact()

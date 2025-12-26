@@ -7,8 +7,8 @@ TerrainLayer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: CalcifiedSand
-  m_DiffuseTexture: {fileID: 2800000, guid: fe706bf6b8d198b47a09437992e04675, type: 3}
-  m_NormalMapTexture: {fileID: 2800000, guid: 8eef6fb8881b6c249a2890700c141b70, type: 3}
+  m_DiffuseTexture: {fileID: 2800000, guid: 00fb8b0ec6403fc4c9e842cb134f38ac, type: 3}
+  m_NormalMapTexture: {fileID: 2800000, guid: ca318692c13966742b4cde2d6aeb25a7, type: 3}
   m_MaskMapTexture: {fileID: 2800000, guid: 499636d34503a5a4c9484fa7294c50b1, type: 3}
   m_TileSize: {x: 2, y: 2}
   m_TileOffset: {x: 0, y: 0}
