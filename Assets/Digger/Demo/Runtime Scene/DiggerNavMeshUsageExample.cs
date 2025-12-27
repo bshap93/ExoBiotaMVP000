@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Digger
 {
     /// <summary>
-    ///     This is just a basic example showing how to use DiggerNavMeshRuntime.
+    /// This is just a basic example showing how to use DiggerNavMeshRuntime.
     /// </summary>
     public class DiggerNavMeshUsageExample : MonoBehaviour
     {
@@ -14,11 +14,9 @@ namespace Digger
         private void Start()
         {
             diggerNavMeshRuntime = FindFirstObjectByType<DiggerNavMeshRuntime>();
-            if (!diggerNavMeshRuntime)
-            {
+            if (!diggerNavMeshRuntime) {
                 enabled = false;
-                Debug.LogWarning(
-                    "DiggerNavMeshUsageExample requires DiggerNavMeshRuntime component to be setup in the scene. DiggerNavMeshUsageExample will be disabled.");
+                Debug.LogWarning("DiggerNavMeshUsageExample requires DiggerNavMeshRuntime component to be setup in the scene. DiggerNavMeshUsageExample will be disabled.");
                 return;
             }
 
@@ -28,8 +26,7 @@ namespace Digger
 
         private void Update()
         {
-            if (UnityEngine.Input.GetKeyDown(keyToUpdateNavMesh))
-            {
+            if (Input.GetKeyDown(keyToUpdateNavMesh)) {
                 // this will start updating the NavMesh over several frames, asynchronously
                 diggerNavMeshRuntime.UpdateNavMeshAsync(() => Debug.Log("NavMesh has been updated."));
                 Debug.Log("NavMesh is updating...");

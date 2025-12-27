@@ -73,6 +73,16 @@ namespace Digger.Modules.Core.Sources.NativeCollections
             return (*m_Counter) -= increment;
         }
 
+        public int Add(int value)
+        {
+            // Verify that the caller has write permission on this data.
+            // This is the race condition protection, without these checks the AtomicSafetyHandle is useless
+#if ENABLE_UNITY_COLLECTIONS_CHECKS
+            AtomicSafetyHandle.CheckWriteAndThrow(m_Safety);
+#endif
+            return (*m_Counter) += value;
+        }
+
         public int Count {
             get {
                 // Verify that the caller has read permission on this data.
@@ -158,6 +168,16 @@ namespace Digger.Modules.Core.Sources.NativeCollections
                 // The actual decrement is implemented with an atomic since it can be decremented by multiple threads at the same time
                 return Interlocked.Add(ref *m_Counter, -increment);
             }
+
+            public int Add(int value)
+            {
+                // Add still needs to check for write permissions
+#if ENABLE_UNITY_COLLECTIONS_CHECKS
+                AtomicSafetyHandle.CheckWriteAndThrow(m_Safety);
+#endif
+                // The actual add is implemented with an atomic since it can be modified by multiple threads at the same time
+                return Interlocked.Add(ref *m_Counter, value);
+            }
         }
     }
 
@@ -215,6 +235,16 @@ namespace Digger.Modules.Core.Sources.NativeCollections
             AtomicSafetyHandle.CheckWriteAndThrow(m_Safety);
 #endif
             (*m_Counter)++;
+        }
+
+        public void Add(int value)
+        {
+            // Verify that the caller has write permission on this data.
+            // This is the race condition protection, without these checks the AtomicSafetyHandle is useless
+#if ENABLE_UNITY_COLLECTIONS_CHECKS
+            AtomicSafetyHandle.CheckWriteAndThrow(m_Safety);
+#endif
+            (*m_Counter) += value;
         }
 
         public int Count {
@@ -297,6 +327,15 @@ namespace Digger.Modules.Core.Sources.NativeCollections
 #endif
                 // No need for atomics any more since we are just incrementing the local count
                 ++m_Counter[IntsPerCacheLine * m_ThreadIndex];
+            }
+
+            public void Add(int value)
+            {
+#if ENABLE_UNITY_COLLECTIONS_CHECKS
+                AtomicSafetyHandle.CheckWriteAndThrow(m_Safety);
+#endif
+                // No need for atomics any more since we are just modifying the local count
+                m_Counter[IntsPerCacheLine * m_ThreadIndex] += value;
             }
         }
     }

@@ -130,6 +130,31 @@ namespace Digger.Modules.Core.Sources
         {
             voxelChunk.CompleteOperation(operation);
         }
+
+        public void RecordUndoIfNeeded()
+        {
+            voxelChunk.RecordUndoIfNeeded();
+        }
+        
+        public void LabelizeVoxels()
+        {
+            voxelChunk.LabelizeVoxels();
+        }
+
+        public void CompleteLabelizeVoxels()
+        {
+            voxelChunk.CompleteLabelizeVoxels();
+        }
+        
+        public void HandleFloatingVoxels()
+        {
+            voxelChunk.HandleFloatingVoxels();
+        }
+
+        public void CompleteHandleFloatingVoxels()
+        {
+            voxelChunk.CompleteHandleFloatingVoxels();
+        }
         
         internal void BuildVisualMesh(int lod)
         {

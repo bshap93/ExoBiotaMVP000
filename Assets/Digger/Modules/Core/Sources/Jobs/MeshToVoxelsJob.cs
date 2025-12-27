@@ -5,7 +5,7 @@ using Unity.Mathematics;
 
 namespace Digger.Modules.Core.Sources.Jobs
 {
-    [BurstCompile(CompileSynchronously = true, FloatMode = FloatMode.Fast)]
+    [BurstCompile(CompileSynchronously = true, FloatMode = FloatMode.Fast, OptimizeFor = OptimizeFor.Performance)]
     public struct MeshToVoxelsJob : IJobParallelFor
     {
         public int3 SizeVox;
@@ -35,7 +35,7 @@ namespace Digger.Modules.Core.Sources.Jobs
                     maxOrthogonality = orthogonality;
                 }
             }
-            var voxel = new Voxel((maxOrthogonality < 0f ? -1f : 1f) * math.sqrt(minDistance));
+            var voxel = new Voxel((maxOrthogonality < 0f ? -1f : 1f) * math.sqrt(minDistance), 10f);
             Voxels[index] = voxel;
         }
 

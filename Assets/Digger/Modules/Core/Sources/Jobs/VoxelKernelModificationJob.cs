@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Digger.Modules.Core.Sources.Jobs
 {
-    [BurstCompile(CompileSynchronously = true, FloatMode = FloatMode.Fast)]
+    [BurstCompile(CompileSynchronously = true, FloatMode = FloatMode.Fast, OptimizeFor = OptimizeFor.Performance)]
     public struct VoxelKernelModificationJob : IJobParallelFor
     {
         public int SizeVox;
@@ -265,7 +265,7 @@ namespace Digger.Modules.Core.Sources.Jobs
         private Voxel ComputeAltered(float distance, Voxel voxel, float voxelValue, uint alterationNeighbour)
         {
             if (distance >= 0) {
-                voxel.Value = Mathf.Lerp(voxel.Value, voxelValue, Intensity);
+                voxel.SetValue(Mathf.Lerp(voxel.Value, voxelValue, Intensity), HeightmapScale.y);
                 voxel.Alteration = alterationNeighbour;
             }
 

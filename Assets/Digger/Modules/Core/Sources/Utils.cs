@@ -37,6 +37,11 @@ namespace Digger.Modules.Core.Sources
         {
             return voxelPosition * heightmapScale;
         }
+
+        public static float3 ChunkVoxelToUnityPosition(int3 chunkPosition, int3 voxelPosition, float3 heightmapScale)
+        {
+            return chunkPosition * heightmapScale + voxelPosition * heightmapScale;
+        }
         
         public static int3 UnityToVoxelPosition(float3 position, float3 heightmapScale)
         {
@@ -51,6 +56,8 @@ namespace Digger.Modules.Core.Sources
             var zi = index - xi * sizeVox2 - yi * sizeVox;
             return new int3(xi, yi, zi);
         }
+
+        public static int3 IndexToWorldXYZ(int index, int sizeVox, int sizeVox2, int3 chunkVoxelPosition) => IndexToXYZ(index, sizeVox, sizeVox2) + chunkVoxelPosition;
 
         public static int XYZToHeightIndex(int3 pi, int sizeVox)
         {
@@ -76,11 +83,12 @@ namespace Digger.Modules.Core.Sources
         {
             var minHeight = float.PositiveInfinity;
             var maxHeight = float.NegativeInfinity;
-            for (var x = pi.x - 1; x <= pi.x + 1; ++x) {
-                for (var z = pi.z - 1; z <= pi.z + 1; ++z) {
-                    if (x < -1 || x >= sizeVox + 1 || z < -1 || z >= sizeVox + 1)
-                        continue;
-
+            var minX = math.max(-1, pi.x - 1);
+            var maxX = math.min(sizeVox, pi.x + 1);
+            var minZ = math.max(-1, pi.z - 1);
+            var maxZ = math.min(sizeVox, pi.z + 1);
+            for (var x = minX; x <= maxX; ++x) {
+                for (var z = minZ; z <= maxZ; ++z) {
                     var terrainHeight = heights[XYZToHeightIndex(new int3(x, 0, z), sizeVox)];
                     if (math.abs(voxelAltitude - terrainHeight) <= voxelHeight)
                         return true;

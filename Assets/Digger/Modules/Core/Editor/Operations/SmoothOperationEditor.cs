@@ -39,6 +39,16 @@ namespace Digger.Modules.Core.Editor.Operations
             set => EditorPrefs.SetInt("diggerMaster_textureIndex", value);
         }
 
+        private bool operationSettingsFoldout {
+            get => EditorPrefs.GetBool("SmoothOperationEditor_operationSettingsFoldout", true);
+            set => EditorPrefs.SetBool("SmoothOperationEditor_operationSettingsFoldout", value);
+        }
+
+        private bool reticleConstraintsFoldout {
+            get => EditorPrefs.GetBool("SmoothOperationEditor_reticleConstraintsFoldout", false);
+            set => EditorPrefs.SetBool("SmoothOperationEditor_reticleConstraintsFoldout", value);
+        }
+
         private GameObject ReticleSphere {
             get {
                 if (!reticleSphere) {
@@ -70,15 +80,42 @@ namespace Digger.Modules.Core.Editor.Operations
             if (!diggerSystem)
                 return;
 
-            size = EditorGUILayout.Slider(new GUIContent("Brush Size", DiggerMasterEditor.shortcutsEnabled ? "Shortcut: keypad - or +" : ""), size, 0.5f, 20f);
-            opacity = EditorGUILayout.Slider(new GUIContent("Opacity", DiggerMasterEditor.shortcutsEnabled ? "Shortcut: keypad / or *" : ""), opacity, 0f, 1f);
-            depth = EditorGUILayout.Slider("Depth", depth, -size, size);
+            // Brush Section (always visible)
+            EditorGUILayout.LabelField("Brush", EditorStyles.boldLabel);
+            size = EditorGUILayout.Slider(new GUIContent("Size", DiggerMasterEditor.shortcutsEnabled ? "Shortcut: keypad - or +" : ""), size, 0.5f, 20f);
+
+            EditorGUILayout.Space();
+
+            // Texture Section (always visible)
+            EditorGUILayout.LabelField("Texture", EditorStyles.boldLabel);
             textureIndex = DiggerMasterEditor.TextureSelector(textureIndex, diggerSystem);
 
             EditorGUILayout.Space();
-            keepingHeight = EditorGUILayout.ToggleLeft("Constrain reticle to given altitude", keepingHeight);
-            keptHeight = EditorGUILayout.FloatField("Reticle constrained altitude", keptHeight);
-            EditorGUILayout.HelpBox("Press Shift to pick current reticle height.", MessageType.None);
+
+            // Operation Settings Section
+            operationSettingsFoldout = EditorGUILayout.BeginFoldoutHeaderGroup(operationSettingsFoldout, "Operation Settings");
+            if (operationSettingsFoldout)
+            {
+                EditorGUI.indentLevel++;
+                opacity = EditorGUILayout.Slider(new GUIContent("Opacity", DiggerMasterEditor.shortcutsEnabled ? "Shortcut: keypad / or *" : ""), opacity, 0f, 1f);
+                depth = EditorGUILayout.Slider("Depth", depth, -size, size);
+                EditorGUI.indentLevel--;
+            }
+            EditorGUILayout.EndFoldoutHeaderGroup();
+
+            EditorGUILayout.Space();
+
+            // Reticle Constraints Section
+            reticleConstraintsFoldout = EditorGUILayout.BeginFoldoutHeaderGroup(reticleConstraintsFoldout, "Reticle Constraints");
+            if (reticleConstraintsFoldout)
+            {
+                EditorGUI.indentLevel++;
+                keepingHeight = EditorGUILayout.ToggleLeft("Constrain reticle to given altitude", keepingHeight);
+                keptHeight = EditorGUILayout.FloatField("Reticle constrained altitude", keptHeight);
+                EditorGUILayout.HelpBox("Press Shift to pick current reticle height.", MessageType.None);
+                EditorGUI.indentLevel--;
+            }
+            EditorGUILayout.EndFoldoutHeaderGroup();
         }
         
         public void OnSceneGUI()

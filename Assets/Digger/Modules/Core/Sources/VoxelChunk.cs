@@ -5,6 +5,7 @@ using System.Linq;
 using Digger.Modules.Core.Sources.Jobs;
 using Digger.Modules.Core.Sources.Polygonizers;
 using Digger.Modules.Core.Sources.TerrainInterface;
+using Digger.Modules.Core.Sources.VoxelPhysics;
 using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
@@ -26,6 +27,16 @@ namespace Digger.Modules.Core.Sources
         [NonSerialized] private float[] heightArray;
         [NonSerialized] private float3[] normalArray;
         [NonSerialized] private float[] alphamapArray;
+        [NonSerialized] private int[] labelArray;
+        [NonSerialized] private readonly Dictionary<int, ConnectedComponentLabeling.AABB> labelMap = new Dictionary<int, ConnectedComponentLabeling.AABB>();
+        [NonSerialized] private readonly HashSet<int> labelsConnectedToTheGround = new HashSet<int>();
+        [NonSerialized] private readonly HashSet<int> labelsConnectedToTheGroundThroughNeighbors = new HashSet<int>();
+        [NonSerialized] private readonly Dictionary<int, HashSet<int>> linksToRight = new Dictionary<int, HashSet<int>>();
+        [NonSerialized] private readonly Dictionary<int, HashSet<int>> linksToLeft = new Dictionary<int, HashSet<int>>();
+        [NonSerialized] private readonly Dictionary<int, HashSet<int>> linksToTop = new Dictionary<int, HashSet<int>>();
+        [NonSerialized] private readonly Dictionary<int, HashSet<int>> linksToBottom = new Dictionary<int, HashSet<int>>();
+        [NonSerialized] private readonly Dictionary<int, HashSet<int>> linksToBack = new Dictionary<int, HashSet<int>>();
+        [NonSerialized] private readonly Dictionary<int, HashSet<int>> linksToFront = new Dictionary<int, HashSet<int>>();
         [NonSerialized] private int3 alphamapArraySize;
         [NonSerialized] private int2 alphamapArrayOrigin;
 
@@ -33,12 +44,15 @@ namespace Digger.Modules.Core.Sources
 
         [NonSerialized] private JobHandle? currentJobHandle;
         [NonSerialized] private IJobParallelFor currentJob;
+        [NonSerialized] private int currentJobStartFrame;
+        [NonSerialized] private ConnectedComponentLabelingJob? currentLabelizationJob;
         [NonSerialized] private NativeArray<Voxel> voxels;
         [NonSerialized] private NativeArray<float> heights;
         [NonSerialized] private NativeArray<int> holes;
         [NonSerialized] private NativeParallelHashSet<int> chunkOnSurfaceY;
         [NonSerialized] private readonly Dictionary<int, IPolygonizer> polygonizersPerLod = new();
         [NonSerialized] private int needToBakePhysicMeshInstanceID;
+        [NonSerialized] private ModificationResult lastOperationResult;
 
         private IPolygonizer GetPolygonizer(int lod)
         {
@@ -63,12 +77,32 @@ namespace Digger.Modules.Core.Sources
         public float[] HeightArray => heightArray;
         public float3[] NormalArray => normalArray;
         public float[] AlphamapArray => alphamapArray;
+        public int[] LabelArray => labelArray;
+
         public int[] HolesArray => digger.Cutter.GetHoles(chunkPosition, voxelPosition);
         public float3 CutMargin => digger.CutMargin;
         public TerrainCutter Cutter => digger.Cutter;
         public DiggerSystem Digger => digger;
         public int3 AlphamapArraySize => alphamapArraySize;
         public int2 AlphamapArrayOrigin => alphamapArrayOrigin;
+
+        public HashSet<int> LabelsConnectedToTheGround => labelsConnectedToTheGround;
+
+        public Dictionary<int, HashSet<int>> LinksToRight => linksToRight;
+
+        public Dictionary<int, HashSet<int>> LinksToLeft => linksToLeft;
+
+        public Dictionary<int, HashSet<int>> LinksToTop => linksToTop;
+
+        public Dictionary<int, HashSet<int>> LinksToBottom => linksToBottom;
+
+        public Dictionary<int, HashSet<int>> LinksToBack => linksToBack;
+
+        public Dictionary<int, HashSet<int>> LinksToFront => linksToFront;
+
+        public HashSet<int> LabelsConnectedToTheGroundThroughNeighbors => labelsConnectedToTheGroundThroughNeighbors;
+
+        public Dictionary<int, ConnectedComponentLabeling.AABB> LabelMap => labelMap;
 
         internal static VoxelChunk Create(DiggerSystem digger, Chunk chunk)
         {
@@ -97,30 +131,26 @@ namespace Digger.Modules.Core.Sources
             return voxelChunk;
         }
 
-        private static void GenerateVoxels(DiggerSystem digger, float[] heightArray, float chunkAltitude,
-            ref Voxel[] voxelArray)
+        private static void GenerateVoxels(DiggerSystem digger, float[] heightArray, Vector3i chunkVoxelPosition, ref Voxel[] voxelArray, bool refreshOnly)
         {
             Utils.Profiler.BeginSample("[Dig] VoxelChunk.GenerateVoxels");
             var sizeVox = digger.SizeVox;
             voxelArray ??= new Voxel[sizeVox * sizeVox * sizeVox];
 
             var heights = new NativeArray<float>(heightArray, Allocator.TempJob);
-            var voxels = new NativeArray<Voxel>(sizeVox * sizeVox * sizeVox, Allocator.TempJob,
-                NativeArrayOptions.UninitializedMemory);
+            var voxels = refreshOnly ? new NativeArray<Voxel>(voxelArray, Allocator.TempJob) 
+                                     : new NativeArray<Voxel>(sizeVox * sizeVox * sizeVox, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
 
-            // Set up the job data
-            var jobData = new VoxelGenerationJob
-            {
-                ChunkAltitude = chunkAltitude,
-                Heights = heights,
-                Voxels = voxels,
-                SizeVox = sizeVox,
-                SizeVox2 = sizeVox * sizeVox,
-                HeightmapScale = digger.HeightmapScale,
-            };
-
-            // Schedule the job
-            var handle = jobData.Schedule(voxels.Length, 64);
+            // Use the configured voxel generator
+            var generator = digger.VoxelGenerator;
+            var handle = generator.GenerateVoxels(
+                heightArray,
+                chunkVoxelPosition.ToInt3(),
+                sizeVox,
+                digger.HeightmapScale,
+                heights,
+                voxels,
+                refreshOnly);
 
             // Wait for the job to complete
             handle.Complete();
@@ -134,38 +164,7 @@ namespace Digger.Modules.Core.Sources
 
         public void RefreshVoxels()
         {
-            Utils.Profiler.BeginSample("VoxelChunk.RefreshVoxels");
-            if (VoxelArray == null)
-                return;
-
-            heights = new NativeArray<float>(HeightArray, Allocator.TempJob);
-            voxels = new NativeArray<Voxel>(VoxelArray, Allocator.TempJob);
-            holes = new NativeArray<int>(digger.Cutter.GetHoles(chunkPosition, voxelPosition), Allocator.TempJob);
-
-            // Set up the job data
-            var jobData = new VoxelRefreshJob()
-            {
-                ChunkAltitude = Altitude,
-                Heights = heights,
-                Holes = holes,
-                Voxels = voxels,
-                SizeVox = SizeVox,
-                SizeVox2 = SizeVox * SizeVox,
-                HeightmapScale = digger.HeightmapScale,
-            };
-
-            // Schedule the job
-            var handle = jobData.Schedule(voxels.Length, 64);
-
-            // Wait for the job to complete
-            handle.Complete();
-
-            voxels.CopyTo(VoxelArray);
-            heights.Dispose();
-            voxels.Dispose();
-            holes.Dispose();
-
-            Utils.Profiler.EndSample();
+            GenerateVoxels(digger, HeightArray, voxelPosition, ref voxelArray, refreshOnly: true);
         }
 
         public void PrepareOperationJob<T>(IOperation<T> operation) where T : struct, IJobParallelFor
@@ -182,11 +181,44 @@ namespace Digger.Modules.Core.Sources
         public void CompleteOperation<T>(IOperation<T> operation) where T : struct, IJobParallelFor
         {
             CompleteBackgroundJob();
-            operation.Complete((T)currentJob, this);
-            RecordUndoIfNeeded();
-            digger.EnsureChunkWillBePersisted(this);
+            lastOperationResult = operation.Complete((T)currentJob, this);
         }
 
+        public ModificationResult GetAndClearOperationResult()
+        {
+            var result = lastOperationResult;
+            lastOperationResult = ModificationResult.Empty;
+            return result;
+        }
+
+        public void LabelizeVoxels()
+        {
+            var job = ConnectedComponentLabeling.Do(this);
+            currentLabelizationJob = job;
+            currentJobHandle = job.Schedule();
+        }
+
+        public void CompleteLabelizeVoxels()
+        {
+            CompleteBackgroundJob();
+            Debug.Assert(currentLabelizationJob != null, nameof(currentLabelizationJob) + " != null");
+            ConnectedComponentLabeling.Complete(currentLabelizationJob.Value, this);
+            currentLabelizationJob = null;
+        }
+
+        public void HandleFloatingVoxels()
+        {
+            var job = RemoveFloatingVoxels.Do(this);
+            currentJob = job;
+            currentJobHandle = job.Schedule(VoxelArray.Length, 512);
+        }
+
+        public void CompleteHandleFloatingVoxels()
+        {
+            CompleteBackgroundJob();
+            RemoveFloatingVoxels.Complete((RemoveFloatingVoxelsJob)currentJob, this);
+            currentJob = null;
+        }
 
         public void UpdateVoxelsOnSurface()
         {
@@ -322,7 +354,7 @@ namespace Digger.Modules.Core.Sources
             CompleteBackgroundJob();
         }
 
-        private void RecordUndoIfNeeded()
+        public void RecordUndoIfNeeded()
         {
 #if UNITY_EDITOR
             if (VoxelArray == null || VoxelArray.Length == 0) {
@@ -332,12 +364,25 @@ namespace Digger.Modules.Core.Sources
 
             Utils.Profiler.BeginSample("[Dig] VoxelChunk.RecordUndoIfNeeded");
             var path = digger.GetEditorOnlyPathVoxelFile(chunkPosition);
-
             var savePath = digger.GetPathVersionedVoxelFile(chunkPosition, digger.PreviousVersion);
             if (File.Exists(path) && !File.Exists(savePath)) {
                 File.Copy(path, savePath);
             }
+
+            var labelPath = digger.GetEditorOnlyPathLabelFile(chunkPosition);
+            var saveLabelPath = digger.GetPathVersionedLabelFile(chunkPosition, digger.PreviousVersion);
+            if (File.Exists(labelPath) && !File.Exists(saveLabelPath)) {
+                File.Copy(labelPath, saveLabelPath);
+            }
+
+            var metadataPath = digger.GetEditorOnlyPathVoxelMetadataFile(chunkPosition);
+            var saveMetadataPath = digger.GetPathVersionedVoxelMetadataFile(chunkPosition, digger.PreviousVersion);
+            if (File.Exists(metadataPath) && !File.Exists(saveMetadataPath)) {
+                File.Copy(metadataPath, saveMetadataPath);
+            }
+
             Utils.Profiler.EndSample();
+            digger.EnsureChunkWillBePersisted(this);
 #endif
         }
 
@@ -349,18 +394,81 @@ namespace Digger.Modules.Core.Sources
             }
 
             Utils.Profiler.BeginSample("[Dig] VoxelChunk.Persist");
-            var path = digger.GetPathVoxelFile(chunkPosition, true);
 
+            var path = digger.GetPathVoxelFile(chunkPosition, true);
             var voxelsToPersist = new NativeArray<Voxel>(VoxelArray, Allocator.Temp);
             var bytes = new NativeSlice<Voxel>(voxelsToPersist).SliceConvert<byte>();
             File.WriteAllBytes(path, bytes.ToArray());
             voxelsToPersist.Dispose();
 
+            var labelPath = digger.GetPathLabelFile(chunkPosition, true);
+            var labelsToPersist = new NativeArray<int>(LabelArray, Allocator.Temp);
+            var labelBytes = new NativeSlice<int>(labelsToPersist).SliceConvert<byte>();
+            File.WriteAllBytes(labelPath, labelBytes.ToArray());
+            labelsToPersist.Dispose();
+
+            var metadataPath = digger.GetPathVoxelMetadataFile(chunkPosition, true);
+            using (var stream = new FileStream(metadataPath, FileMode.Create, FileAccess.Write, FileShare.Write, 4096,
+                       FileOptions.Asynchronous)) {
+                using (var writer = new BinaryWriter(stream, System.Text.Encoding.ASCII)) {
+                    PersistHashSet(writer, labelsConnectedToTheGround);
+                    PersistHashSet(writer, labelsConnectedToTheGroundThroughNeighbors);
+                    PersistDictionary(writer, linksToRight);
+                    PersistDictionary(writer, linksToLeft);
+                    PersistDictionary(writer, linksToTop);
+                    PersistDictionary(writer, linksToBottom);
+                    PersistDictionary(writer, linksToBack);
+                    PersistDictionary(writer, linksToFront);
+                }
+            }
+
 #if UNITY_EDITOR
             var savePath = digger.GetPathVersionedVoxelFile(chunkPosition, digger.Version);
             File.Copy(path, savePath, true);
+            var saveLabelPath = digger.GetPathVersionedLabelFile(chunkPosition, digger.Version);
+            File.Copy(labelPath, saveLabelPath, true);
+            var saveMetadataPath = digger.GetPathVersionedVoxelMetadataFile(chunkPosition, digger.Version);
+            File.Copy(metadataPath, saveMetadataPath, true);
 #endif
             Utils.Profiler.EndSample();
+        }
+
+        private void PersistDictionary(BinaryWriter writer, Dictionary<int, HashSet<int>> dico)
+        {
+            writer.Write(dico.Count);
+            foreach (var keyValuePair in dico) {
+                writer.Write(keyValuePair.Key);
+                PersistHashSet(writer, keyValuePair.Value);
+            }
+        }
+
+        private void ReadDictionary(BinaryReader reader, Dictionary<int, HashSet<int>> dico)
+        {
+            dico.Clear();
+            var count = reader.ReadInt32();
+            for (var i = 0; i < count; i++) {
+                var key = reader.ReadInt32();
+                var set = new HashSet<int>();
+                ReadHashSet(reader, set);
+                dico.Add(key, set);
+            }
+        }
+
+        private void PersistHashSet(BinaryWriter writer, HashSet<int> set)
+        {
+            writer.Write(set.Count);
+            foreach (var value in set) {
+                writer.Write(value);
+            }
+        }
+
+        private void ReadHashSet(BinaryReader reader, HashSet<int> set)
+        {
+            set.Clear();
+            var count = reader.ReadInt32();
+            for (var i = 0; i < count; i++) {
+                set.Add(reader.ReadInt32());
+            }
         }
 
         public void Load()
@@ -374,13 +482,27 @@ namespace Digger.Modules.Core.Sources
             alphamapArraySize = alphamapsInfo.AlphamapArraySize;
             alphamapArrayOrigin = alphamapsInfo.AlphamapArrayOrigin;
 
+            // Load holes
+            var cutter = digger.Cutter;
+            cutter.GetHoles(chunkPosition, voxelPosition);
+
             var path = digger.GetPathVoxelFile(chunkPosition, false);
             var rawBytes = Utils.GetBytes(path);
 
             if (rawBytes == null) {
                 if (VoxelArray == null) {
                     // If there is no persisted voxels but voxel array is null, then we fall back and (re)generate them.
-                    GenerateVoxels(digger, HeightArray, Altitude, ref voxelArray);
+                    GenerateVoxels(digger, heightArray, voxelPosition, ref voxelArray, refreshOnly: false);
+                    labelArray = new int[voxelArray.Length];
+                    labelMap.Clear();
+                    labelsConnectedToTheGround.Clear();
+                    labelsConnectedToTheGroundThroughNeighbors.Clear();
+                    linksToRight.Clear();
+                    linksToLeft.Clear();
+                    linksToTop.Clear();
+                    linksToBottom.Clear();
+                    linksToBack.Clear();
+                    linksToFront.Clear();
                     digger.EnsureChunkWillBePersisted(this);
                 }
 
@@ -389,6 +511,38 @@ namespace Digger.Modules.Core.Sources
             }
 
             ReadVoxelFile(SizeVox, rawBytes, ref voxelArray);
+            
+            var labelPath = digger.GetPathLabelFile(chunkPosition, false);
+            var labelBytes = Utils.GetBytes(labelPath);
+            if (labelBytes == null) {
+                Debug.LogError($"Could not read label file of chunk {chunkPosition}");
+                Utils.Profiler.EndSample();
+                return;
+            }
+            ReadLabelFile(SizeVox, labelBytes, ref labelArray);
+
+            var hScale = digger.HeightmapScale;
+            var metadataPath = digger.GetPathVoxelMetadataFile(chunkPosition, false);
+            rawBytes = Utils.GetBytes(metadataPath);
+            if (rawBytes == null) {
+                Debug.LogError($"Could not read metadata file of chunk {chunkPosition}");
+                Utils.Profiler.EndSample();
+                return;
+            }
+
+            using (Stream stream = new MemoryStream(rawBytes)) {
+                using (var reader = new BinaryReader(stream, System.Text.Encoding.ASCII)) {
+                    ReadHashSet(reader, labelsConnectedToTheGround);
+                    ReadHashSet(reader, labelsConnectedToTheGroundThroughNeighbors);
+                    ReadDictionary(reader, linksToRight);
+                    ReadDictionary(reader, linksToLeft);
+                    ReadDictionary(reader, linksToTop);
+                    ReadDictionary(reader, linksToBottom);
+                    ReadDictionary(reader, linksToBack);
+                    ReadDictionary(reader, linksToFront);
+                }
+            }
+
             Utils.Profiler.EndSample();
         }
 
@@ -412,6 +566,18 @@ namespace Digger.Modules.Core.Sources
             var voxelSlice = bytes.SliceConvert<Voxel>();
             DirectNativeCollectionsAccess.CopyTo(voxelSlice, voxelArray);
             voxelBytes.Dispose();
+        }
+
+        private void ReadLabelFile(int sizeVox, byte[] rawBytes, ref int[] labelArray)
+        {
+            if (labelArray == null)
+                labelArray = new int[sizeVox * sizeVox * sizeVox];
+
+            var labelBytes = new NativeArray<byte>(rawBytes, Allocator.Temp);
+            var bytes = new NativeSlice<byte>(labelBytes);
+            var labelSlice = bytes.SliceConvert<int>();
+            DirectNativeCollectionsAccess.CopyTo(labelSlice, labelArray);
+            labelBytes.Dispose();
         }
 
         public static NativeArray<Voxel> LoadVoxels(DiggerSystem digger, Vector3i chunkPosition)

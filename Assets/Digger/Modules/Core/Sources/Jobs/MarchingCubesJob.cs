@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Digger.Modules.Core.Sources.Jobs
 {
-    [BurstCompile(CompileSynchronously = true, FloatMode = FloatMode.Fast)]
+    [BurstCompile(CompileSynchronously = true, FloatMode = FloatMode.Fast, OptimizeFor = OptimizeFor.Performance)]
     public struct MarchingCubesJob : IJobParallelFor
     {
         private struct WorkNorm
@@ -165,10 +165,21 @@ namespace Digger.Modules.Core.Sources.Jobs
         private static Voxel GetProminentVoxel(Voxel vA, Voxel vB)
         {
             var altA = vA.Alteration;
-            if (altA == Voxel.OnSurface) return vA;
+            var isIndestructibleA = vA.IsIndestructible;
+            //if (isIndestructibleA && altA == Voxel.OnSurface) return vA;
 
             var altB = vB.Alteration;
-            if (altB == Voxel.OnSurface) return vB;
+            var isIndestructibleB = vB.IsIndestructible;
+            //if (isIndestructibleB && altB == Voxel.OnSurface) return vB;
+
+            // if (altA == Voxel.OnSurface) return vA;
+            // if (altB == Voxel.OnSurface) return vB;
+
+            if (isIndestructibleA && !isIndestructibleB)
+                return vA;
+
+            if (isIndestructibleB && !isIndestructibleA)
+                return vB;
 
             // Use 'Altered' value of the most altered voxel to avoid artifacts (ie. prefer voxel which has been actually altered by VoxelModificationJob over a "virgin" voxel)
             if (altA > altB)
@@ -334,7 +345,7 @@ namespace Digger.Modules.Core.Sources.Jobs
                     0f,
                     EncodeToFloat(GetControlFor(firstTextureIndex, secondTextureIndex, lerp, 6)),
                     EncodeToFloat(new float4(voxel.NormalizedWetnessWeight, voxel.NormalizedPuddlesWeight,
-                        voxel.NormalizedStreamsWeight, voxel.NormalizedLavaWeight))
+                        0f, 0f))
                 );
             }
         }

@@ -84,7 +84,7 @@ namespace Digger.Modules.Core.Sources.Operations
             return job;
         }
 
-        public void Complete(VoxelKernelModificationJob job, VoxelChunk chunk)
+        public ModificationResult Complete(VoxelKernelModificationJob job, VoxelChunk chunk)
         {
             // Wait for the job to complete
             job.DisposeNeighbors();
@@ -100,6 +100,9 @@ namespace Digger.Modules.Core.Sources.Operations
 
             job.NewHolesConcurrentCounter.Dispose();
             job.Holes.Dispose();
+
+            // Kernel operations (smooth/sharpen) don't track matter changes
+            return ModificationResult.Empty;
         }
     }
 }

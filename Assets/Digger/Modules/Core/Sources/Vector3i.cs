@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Unity.Mathematics;
 
 namespace Digger.Modules.Core.Sources
 {
@@ -236,6 +237,11 @@ namespace Digger.Modules.Core.Sources
             }
 
             return false;
+        }
+
+        public int3 ToInt3()
+        {
+            return new int3(x, y, z);
         }
 
         public float MagnitudeSquared {

@@ -33,7 +33,7 @@ namespace Digger.Modules.Core.Editor.Operations
 
         protected float opacity
         {
-            get => EditorPrefs.GetFloat("BasicOperationEditor_opacity", 0.3f);
+            get => EditorPrefs.GetFloat("BasicOperationEditor_opacity", 0.25f);
             set => EditorPrefs.SetFloat("BasicOperationEditor_opacity", Mathf.Clamp01(value));
         }
 
@@ -60,6 +60,12 @@ namespace Digger.Modules.Core.Editor.Operations
             set => EditorPrefs.SetBool("BasicOperationEditor_sizeLinked", value);
         }
 
+        protected bool autoDepth
+        {
+            get => EditorPrefs.GetBool("BasicOperationEditor_autoDepth", true);
+            set => EditorPrefs.SetBool("BasicOperationEditor_autoDepth", value);
+        }
+
         protected float depth
         {
             get => EditorPrefs.GetFloat("BasicOperationEditor_depth", 0f);
@@ -82,6 +88,24 @@ namespace Digger.Modules.Core.Editor.Operations
         {
             get => EditorPrefs.GetString("BasicOperationEditor_customBrushId", "");
             set => EditorPrefs.SetString("BasicOperationEditor_customBrushId", value);
+        }
+        
+        protected bool bypassDestructability
+        {
+            get => EditorPrefs.GetBool("BasicOperationEditor_bypassDestructability", false);
+            set => EditorPrefs.SetBool("BasicOperationEditor_bypassDestructability", value);
+        }
+        
+        protected bool paintWhileDigging
+        {
+            get => EditorPrefs.GetBool("BasicOperationEditor_paintWhileDigging", true);
+            set => EditorPrefs.SetBool("BasicOperationEditor_paintWhileDigging", value);
+        }
+        
+        protected bool isIndestructible
+        {
+            get => EditorPrefs.GetBool("BasicOperationEditor_isIndestructible", false);
+            set => EditorPrefs.SetBool("BasicOperationEditor_isIndestructible", value);
         }
 
         private GameObject ReticleSphere
@@ -241,6 +265,9 @@ namespace Digger.Modules.Core.Editor.Operations
         protected void BrushInspectorGUI()
         {
             brush = (BrushType)EditorGUILayout.EnumPopup(new GUIContent("Brush", DiggerMasterEditor.shortcutsEnabled ? "Shortcut: B" : ""), brush);
+            if (autoDepth) {
+                depth = 0f;
+            }
 
             switch (brush)
             {
@@ -253,6 +280,7 @@ namespace Digger.Modules.Core.Editor.Operations
 
                     if (sizeLinked) y = size.x;
                     size = new float3(x, y, x);
+                    if (autoDepth && sizeLinked) depth = -size.x * 0.5f;
                     break;
                 }
                 case BrushType.RoundedCube:

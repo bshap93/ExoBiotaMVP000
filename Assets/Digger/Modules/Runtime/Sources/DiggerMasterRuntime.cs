@@ -103,7 +103,8 @@ namespace Digger.Modules.Runtime.Sources
         /// <param name="stalagmiteUpsideDown">Defines if stalagmite is upside-down or not (only when Brush is stalagmite)</param>
         /// <param name="opacityIsTarget">If true when painting texture, the weight of the texture will be directly set to the given opacity</param>
         public void Modify(Vector3 position, BrushType brush, ActionType action, int textureIndex, float opacity,
-            float size, float stalagmiteHeight = 8f, bool stalagmiteUpsideDown = false, bool opacityIsTarget = false)
+            float size, float stalagmiteHeight = 8f, bool stalagmiteUpsideDown = false, bool opacityIsTarget = false, 
+            bool bypassDestructability = false, bool paintWhileDigging = true)
         {
             Modify(new ModificationParameters
             {
@@ -115,6 +116,8 @@ namespace Digger.Modules.Runtime.Sources
                 Size = size,
                 StalagmiteUpsideDown = stalagmiteUpsideDown,
                 OpacityIsTarget = opacityIsTarget,
+                PaintWhileDigging = paintWhileDigging,
+                BypassDestructability = bypassDestructability,
                 Callback = null
             });
         }
@@ -126,7 +129,7 @@ namespace Digger.Modules.Runtime.Sources
         /// </summary>
         /// <param name="operation">The operation to perform</param>
         /// <param name="callback">Callback method called once modification is done</param>
-        public async Awaitable ModifyAsync<T>(IOperation<T> operation, Action callback = null) where T : struct, IJobParallelFor
+        public async Awaitable ModifyAsync<T>(IOperation<T> operation, Action<ModificationResult> callback = null) where T : struct, IJobParallelFor
         {
             if (isRunningAsync)
             {
@@ -136,6 +139,7 @@ namespace Digger.Modules.Runtime.Sources
 
             isRunningAsync = true;
 
+            var aggregatedResult = ModificationResult.Empty;
             try
             {
                 foreach (var diggerSystem in diggerSystems)
@@ -144,7 +148,8 @@ namespace Digger.Modules.Runtime.Sources
                     if (!area.NeedsModification)
                         continue;
 
-                    await diggerSystem.Modify(operation, true);
+                    var result = await diggerSystem.Modify(operation, true);
+                    aggregatedResult.Add(result);
                 }
             }
             finally
@@ -152,7 +157,7 @@ namespace Digger.Modules.Runtime.Sources
                 isRunningAsync = false;
             }
 
-            callback?.Invoke();
+            callback?.Invoke(aggregatedResult);
         }
 
         /// <summary>
@@ -171,7 +176,9 @@ namespace Digger.Modules.Runtime.Sources
         /// <param name="opacityIsTarget">If true when painting texture, the weight of the texture will be directly set to the given opacity</param>
         /// <param name="callback">A callback function that will be called once modification is done</param>
         public async Awaitable ModifyAsync(Vector3 position, BrushType brush, ActionType action, int textureIndex, float opacity,
-            float size, float stalagmiteHeight = 8f, bool stalagmiteUpsideDown = false, bool opacityIsTarget = false, Action callback = null)
+            float size, float stalagmiteHeight = 8f, bool stalagmiteUpsideDown = false, bool opacityIsTarget = false, 
+            bool bypassDestructability = false, bool paintWhileDigging = true,
+            Action<ModificationResult> callback = null)
         {
             await ModifyAsync(new ModificationParameters
             {
@@ -183,11 +190,13 @@ namespace Digger.Modules.Runtime.Sources
                 Size = size,
                 StalagmiteUpsideDown = stalagmiteUpsideDown,
                 OpacityIsTarget = opacityIsTarget,
+                PaintWhileDigging = paintWhileDigging,
+                BypassDestructability = bypassDestructability,
                 Callback = callback
             });
         }
 
-        /// <see cref="ModifyAsync(UnityEngine.Vector3,BrushType,ActionType,int,float,float,bool,bool,float,bool,bool,System.Action)"/>
+        /// <see cref="ModifyAsync(UnityEngine.Vector3,BrushType,ActionType,int,float,float,bool,bool,float,bool,bool,System.Action{ModificationResult})"/>
         /// <param name="p">Modification parameters</param>
         public async Awaitable ModifyAsync(ModificationParameters p)
         {
@@ -201,6 +210,7 @@ namespace Digger.Modules.Runtime.Sources
             {
                 kernelOperation.Params = p;
                 await ModifyAsync(kernelOperation, p.Callback);
+                return;
             }
 
             basicOperation.Params = p;
@@ -224,7 +234,9 @@ namespace Digger.Modules.Runtime.Sources
         /// <param name="opacityIsTarget">If true when painting texture, the weight of the texture will be directly set to the given opacity</param>
         /// <param name="callback">A callback function that will be called once modification is done</param>
         public bool ModifyAsyncBuffured(Vector3 position, BrushType brush, ActionType action, int textureIndex, float opacity,
-            float size, float stalagmiteHeight = 8f, bool stalagmiteUpsideDown = false, bool opacityIsTarget = false, Action callback = null)
+            float size, float stalagmiteHeight = 8f, bool stalagmiteUpsideDown = false, bool opacityIsTarget = false, 
+            bool bypassDestructability = false, bool paintWhileDigging = true,
+            Action<ModificationResult> callback = null)
         {
             if (buffer.Count >= BufferSize)
             {
@@ -241,6 +253,8 @@ namespace Digger.Modules.Runtime.Sources
                 Size = size,
                 StalagmiteUpsideDown = stalagmiteUpsideDown,
                 OpacityIsTarget = opacityIsTarget,
+                PaintWhileDigging = paintWhileDigging,
+                BypassDestructability = bypassDestructability,
                 Callback = callback
             });
         }

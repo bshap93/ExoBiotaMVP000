@@ -14,7 +14,10 @@ namespace Digger.Modules.Core.Sources
         public bool StalagmiteUpsideDown;
         public bool OpacityIsTarget;
         public CustomBrush CustomBrush;
-        public Action Callback;
+        public Action<ModificationResult> Callback;
+        public bool PaintWhileDigging;
+        public bool BypassDestructability;
+        public bool IsIndestructible;
 
         public static ModificationParameters Default => new ModificationParameters
         {
@@ -27,7 +30,10 @@ namespace Digger.Modules.Core.Sources
             StalagmiteUpsideDown = false,
             OpacityIsTarget = false,
             CustomBrush = null,
-            Callback = null
+            Callback = null,
+            PaintWhileDigging = true,
+            BypassDestructability = false,
+            IsIndestructible = false
         };
     }
 }

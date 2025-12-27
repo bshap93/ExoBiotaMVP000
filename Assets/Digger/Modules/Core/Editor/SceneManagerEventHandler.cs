@@ -16,21 +16,21 @@ namespace Digger.Modules.Core.Editor
         {
             currentScene = SceneManager.GetActiveScene();
             EditorApplication.hierarchyChanged += HierarchyWindowChanged;
-            SceneManager.sceneLoaded += (scene, mode) =>
-            {
-                if (scene.IsValid() && scene.isLoaded) DiggerMasterEditor.LoadAllChunks(scene);
+            SceneManager.sceneLoaded += (scene, mode) => {
+                if (scene.IsValid() && scene.isLoaded) {
+                    DiggerMasterEditor.LoadAllChunks(scene);
+                }
             };
             EditorSceneManager.sceneSaving += OnBeforeSceneSave;
         }
 
         private static void HierarchyWindowChanged()
         {
-            if (currentScene != SceneManager.GetActiveScene())
-            {
+            if (currentScene != SceneManager.GetActiveScene()) {
+                Debug.Log($"[Digger] switched scene from {currentScene.name} to {SceneManager.GetActiveScene().name}");
                 NativeCollectionsPool.Instance.Dispose();
                 currentScene = SceneManager.GetActiveScene();
-                if (currentScene.IsValid() && currentScene.isLoaded)
-                {
+                if (currentScene.IsValid() && currentScene.isLoaded) {
                     DiggerMasterEditor.CheckDiggerVersion();
                     DiggerMasterEditor.LoadAllChunks(currentScene);
                 }
@@ -40,7 +40,10 @@ namespace Digger.Modules.Core.Editor
         private static void OnBeforeSceneSave(Scene scene, string path)
         {
             var diggerMaster = Object.FindFirstObjectByType<DiggerMaster>();
-            if (diggerMaster && diggerMaster.AutoSaveMeshesAsAssets) DiggerMasterEditor.SaveMeshesAsAssets();
+            if (diggerMaster && diggerMaster.AutoSaveMeshesAsAssets)
+            {
+                DiggerMasterEditor.SaveMeshesAsAssets();
+            }
         }
     }
 }

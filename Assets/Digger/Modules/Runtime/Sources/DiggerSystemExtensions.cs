@@ -49,6 +49,19 @@ namespace Digger.Modules.Runtime.Sources
                     var fi = new FileInfo(p);
                     fi.CopyTo(Path.Combine(digger.StreamingAssetsPathData, fi.Name));
                     chunksInStreamingAssetsList.Add(Chunk.GetPositionFromName(fi.Name));
+                    
+                    // Also copy the associated label and metadata files
+                    var labelFile = Path.ChangeExtension(p, DiggerSystem.LabelFileExtension);
+                    if (File.Exists(labelFile)) {
+                        var labelFi = new FileInfo(labelFile);
+                        labelFi.CopyTo(Path.Combine(digger.StreamingAssetsPathData, labelFi.Name));
+                    }
+                    
+                    var metadataFile = Path.ChangeExtension(p, DiggerSystem.VoxelMetadataFileExtension);
+                    if (File.Exists(metadataFile)) {
+                        var metadataFi = new FileInfo(metadataFile);
+                        metadataFi.CopyTo(Path.Combine(digger.StreamingAssetsPathData, metadataFi.Name));
+                    }
                 }
 
                 digger.ChunksInStreamingAssets = chunksInStreamingAssetsList.ToArray();

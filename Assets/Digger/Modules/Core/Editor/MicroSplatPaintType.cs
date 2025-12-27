@@ -5,7 +5,6 @@ namespace Digger.Modules.Core.Editor
         Texture,
         Wetness,
         Puddles,
-        Stream,
-        Lava
+        Stream
     }
 }

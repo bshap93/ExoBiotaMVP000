@@ -1,0 +1,86 @@
+title: InitialTutorialCommunication
+---
+-> Ok, Dr. Hypolita. I'm in place at the cavern atrium. 
+Hypolita: Good, you're in position to start your training. Any questions?
+-> What is this training for again?
+    <<jump WhatIsThisTrainingFor>>
+-> No, I'm ready to start.
+    <<jump ReadyToBeginTrainingForSubter>>
+===
+
+title: WhatIsThisTrainingFor
+---
+Hypolita: You needed a crash course in situational readiness.
+Hypolita: We agreed that your skills navigating our hazardous subterranean environs needed an update.
+Hypolita: Let's begin. I can answer any further questions when you're done.
+<<jump ReadyToBeginTrainingForSubter>>
+===
+
+title: ReadyToBeginTrainingForSubter
+---
+Hypolita: Now, then, you'll find a hatchet on the table to your right. And the bailout facility just past that.
+Hypolita: ....Slight hiccup: I've got a visual on the facility. Looks like those Stalks cropped up in the facility's entrance.
+Hypolita: Use your axd to clear out thse obstructing your way. They are quite brittle. Two or so hits will cause a section to crumble. 
+===
+
+
+title: HasAccessedTheBailoutFacility
+---
+Hypolita: Good, you're in the facility. This is about as basic a bailout facility as you'll find.
+Hypolita: Not to worry. You've got the two systems required by the Sheol Mining Guild.
+Hypolita: I'm happy to explain their purpose if you need me to.
+-> Please, doctor. Refresh my memory.
+    <<jump ExplainTheSystemsOfTheBailoutFacility>>
+-> I believe I am up to date on that front.
+    <<jump HypolitaGivesFurtherInstructionAfterFacility>>
+===
+
+
+title: ExplainTheSystemsOfTheBailoutFacility
+---
+Hypolita: Certainly. To your right is a MediStat cryo-recovery pod. 
+Hypolita: Should you befall overwhelming injury, a Science Directory mech will be dispatched to bring you to this pod.
+Hypolita: Additionaly, when you enter a cavern or mine, be sure to note the location of the MediStat pod and which organization, if any, will coordinate your rescue.
+Hypolita: To your left, is our EquiBap decontamination chamber. Contamination is a constant concern in any cavern you enter upon our planet.
+Hypolita: You'll be familiar with chambers like these on the entrances to the planetary capital.
+Hypolita: Be vigilant and track your status if you're contaminated with microbes, plant spores or any other life forms you come in contact with.
+Hypolita: In addition to decontaminating you fully, minor infections are treatable with this system.
+Hypolita: If your infections progress to moderate severity, use of this facility is not recommended.
+Hypolita: The worse your infection, the greater is the risk of killing biomass that has replaced your internal organs' functions.
+-> You mean it would eat my organ while gradually taking over its failing function, without triggering a massive immune response.
+    Hypolita: Precisely, the life of this planet does not alert the immune system to widespread colonization until it's too late. 
+    Hypolita: Beyond the confines of this training, which is not long enough for such a fate to befall you, manual biometric tracking is vital.
+    Hypolita: It's not a sudden thing, this organ replacement syndrome. If you monitor biometrics, you need not panic if you're contaminated or infected.
+    Hypolita: Don't feel the need to rush back to an EquiBap tank every time you are conaminated. 
+    Hypolita: Even minor infections should not be cause for the abortion of your current tasks, so long as you take care to decontaminate on the way back out.
+-> Gross. Don't tell me this is going to happen here in your caverns...
+    Hypolita: No, not to worry. This training is too short for any infection to progress that far. It's gross, but it's important ground to cover.
+-> Got it. Thank you, doctor.
+Hypolita: Certainly. Now then, straight ahead is a storage room. You'll find a Heat Gun and a key access terminal.
+Hypolita: Do you need me to explain further?
+-> Please do, doctor.
+    <<jump HypolitaExplainsHeatGunAndKeyAccess>>
+-> No need, I know what to do.
+Hypolita: Excellent, I'll standby.
+===
+
+title: HypolitaExplainsHeatGunAndKeyAccess
+---
+Hypolita: Ok, that Heat Gun is pretty standard, and is powered by your standard weapons-grade Magnium-ion cell.
+Hypolita: The model is old but it's plenty powerful for self-defense and neutralizing contaminating flora and fauna you'll find in this cavern complex.
+Hypolita: All the mines and caverns of this particular region share a host of possible creatures or organisms, all of which you should manage.
+Hypolita: Your pickaxe, light source, hatchet, and heat gun all collected, and you're equipped to handle those subterranean tunnels.
+Hypolita: Of course you'll have chances to upgrade and get better gear, but this is the core gear needed for this training.
+Hypolita: You'll find it most effective in the upper levels of the caverns here.
+Hypolita: The key terminal will grant you key access to the other areas of this cavern complex, through the door to the left of where you entered the atrium.
+-> And lower levels?
+    Hypolita: This cavern complex doesn't access lower levels. I can fill you in on going into lower levels if you wish to discuss it after the training.
+-> Thank you, doctor. I'm ready to proceed.
+<<jump HypolitaGivesFurtherInstructionAfterFacility>>
+===
+
+title: HypolitaGivesFurtherInstructionAfterFacility
+---
+Hypolita: Ok, go and use the Door Access Panel's switch to access that door. The door will automatically unlock and open for you, now you have key access.
+-> Will do.
+===

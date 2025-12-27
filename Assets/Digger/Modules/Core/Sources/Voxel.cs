@@ -9,7 +9,12 @@ namespace Digger.Modules.Core.Sources
         /// Negative value means the voxel is inside the volume. Positive value means the voxel is outside the volume.
         /// Zero value means the voxel is exactly on the volume's surface.
         /// </summary>
-        public float Value;
+        public float Value { get; private set; }
+        public void SetValue(float value, float maxAbsValue)
+        {
+            
+            Value = math.clamp(value, -maxAbsValue, maxAbsValue);
+        }
 
         /// <summary>
         /// This 32-bits uint stores many properties about this voxel:
@@ -19,8 +24,7 @@ namespace Digger.Modules.Core.Sources
         /// - bites 11 to 16 store lerp (weight) value between the two textures (6 bites, so 64 possible values)
         /// - bites 17 to 19 store weight of MicroSplat wetness (3 bites, so only 8 possible values)
         /// - bites 20 to 22 store weight of MicroSplat puddles (3 bites, so only 8 possible values)
-        /// - bites 23 to 25 store weight of MicroSplat streams (3 bites, so only 8 possible values)
-        /// - bites 26 to 28 store weight of MicroSplat lava (3 bites, so only 8 possible values)
+        /// - bites 23 to 28 store the voxel's max value (6 bites, so only 64 possible values)
         /// - bites 29 to 32 store specific information:
         ///        0 => not altered, no visual mesh generated
         ///        1 => not altered but visual mesh must be generated on terrain surface
@@ -76,22 +80,13 @@ namespace Digger.Modules.Core.Sources
             get => (properties & 0b0000_0000_0011_1000_0000_0000_0000_0000) >> 19;
         }
 
-        private uint StreamsWeight {
+        private uint MaxValue {
             set {
-                properties |= (value & 0b0000_0000_0000_0000_0000_0000_0000_0111) << 22;
-                properties &= (value | 0b1111_1111_1111_1111_1111_1111_1111_1000) << 22 |
+                properties |= (value & 0b0000_0000_0000_0000_0000_0000_0011_1111) << 22;
+                properties &= (value | 0b1111_1111_1111_1111_1111_1111_1100_0000) << 22 |
                               0b0000_0000_0011_1111_1111_1111_1111_1111;
             }
-            get => (properties & 0b0000_0001_1100_0000_0000_0000_0000_0000) >> 22;
-        }
-
-        private uint LavaWeight {
-            set {
-                properties |= (value & 0b0000_0000_0000_0000_0000_0000_0000_0111) << 25;
-                properties &= (value | 0b1111_1111_1111_1111_1111_1111_1111_1000) << 25 |
-                              0b0000_0001_1111_1111_1111_1111_1111_1111;
-            }
-            get => (properties & 0b0000_1110_0000_0000_0000_0000_0000_0000) >> 25;
+            get => (properties & 0b0000_1111_1100_0000_0000_0000_0000_0000) >> 22;
         }
 
         public uint Alteration {
@@ -118,19 +113,29 @@ namespace Digger.Modules.Core.Sources
             get => PuddlesWeight / 7f;
         }
 
-        public float NormalizedStreamsWeight {
-            set => StreamsWeight = (uint) (math.clamp(value, 0f, 1f) * 7f);
-            get => StreamsWeight / 7f;
-        }
-
-        public float NormalizedLavaWeight {
-            set => LavaWeight = (uint) (math.clamp(value, 0f, 1f) * 7f);
-            get => LavaWeight / 7f;
-        }
-
-        public Voxel(float value)
+        public float SetMaxValue(float maxValue, float maxAbsValue)
         {
-            Value = value;
+            maxValue = math.clamp(maxValue, -maxAbsValue, maxAbsValue);
+            var normalizedMaxValue = (maxValue + maxAbsValue) / (2f * maxAbsValue);
+            return MaxValue = 63 - (uint) (normalizedMaxValue * 63f);
+        }
+
+        public float GetMaxValue(float maxAbsValue)
+        {
+            var normalizedMaxValue = (63 - MaxValue) / 63f;
+            return normalizedMaxValue * 2f * maxAbsValue - maxAbsValue;
+        }
+
+        public void ResetMaxValue()
+        {
+            MaxValue = 0;
+        }
+
+        public bool IsIndestructible => MaxValue >= 32;
+
+        public Voxel(float value, float maxAbsValue)
+        {
+            Value = math.clamp(value, -maxAbsValue, maxAbsValue);
             properties = 0;
         }
 

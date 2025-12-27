@@ -1,18 +1,24 @@
-﻿using System;
+using System;
+using Digger.Modules.Core.Sources.NativeCollections;
 using Unity.Burst;
 using Unity.Collections;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.Jobs;
 using Unity.Mathematics;
 
 namespace Digger.Modules.Core.Sources.Jobs
 {
-    [BurstCompile(CompileSynchronously = true, FloatMode = FloatMode.Fast)]
+    [BurstCompile(CompileSynchronously = true, FloatMode = FloatMode.Fast, OptimizeFor = OptimizeFor.Performance)]
     public struct VoxelModificationJob : IJobParallelFor, IDisposable
     {
+        private const long DoubleToLongMultiplier = 1000000;
+        
         public int SizeVox;
         public int SizeVox2;
         public BrushType Brush;
         public ActionType Action;
+        public bool PaintWhileDigging;
+        public bool BypassDestructability;
         public float3 HeightmapScale;
         public float3 Center;
         public float3 Size;
@@ -21,6 +27,7 @@ namespace Digger.Modules.Core.Sources.Jobs
         public bool IsTargetIntensity;
         public float ChunkAltitude;
         public uint TextureIndex;
+        public bool IsIndestructible;
 
         [ReadOnly]
         [NativeDisableParallelForRestriction]
@@ -41,6 +48,15 @@ namespace Digger.Modules.Core.Sources.Jobs
         [WriteOnly]
         [NativeDisableParallelForRestriction]
         public NativeArray<int> NewHolesConcurrentCounter;
+
+        [NativeDisableParallelForRestriction]
+        public NativeArray<long> RemovedMatterCounter;
+
+        [NativeDisableParallelForRestriction]
+        public NativeArray<long> AddedMatterCounter;
+
+        [NativeDisableParallelForRestriction]
+        public NativeArray<int> ModifiedVoxelCounter;
 
         private double coneAngle;
         private float upsideDownSign;
@@ -86,8 +102,7 @@ namespace Digger.Modules.Core.Sources.Jobs
             {
                 case ActionType.Add:
                 case ActionType.Dig:
-                    var intensityWeight = math.max(0.5f, math.abs(terrainHeightValue) * 0.5f);
-                    voxel = ApplyDigAdd(index, Action == ActionType.Dig, distance, intensityWeight);
+                    voxel = ApplyDigAdd(index, Action == ActionType.Dig, distance);
                     break;
                 case ActionType.Paint:
                     voxel = ApplyPaint(index, distance);
@@ -176,25 +191,48 @@ namespace Digger.Modules.Core.Sources.Jobs
             return math.min(math.min((float)d, Size.y + upsideDownSign * vec.y), -upsideDownSign * vec.y);
         }
 
-        private Voxel ApplyDigAdd(int index, bool dig, float distance, float intensityWeight)
+        private Voxel ApplyDigAdd(int index, bool dig, float distance)
         {
             var voxel = Voxels[index];
             var currentValF = voxel.Value;
 
-            if (dig)
+            if (dig && currentValF <= 0.99f * HeightmapScale.y)
             {
-                voxel.Value = math.max(currentValF, currentValF + Intensity * intensityWeight * distance);
+                var maxValue = voxel.GetMaxValue(HeightmapScale.y);
+                var newVal = math.select(math.max(currentValF, math.min(currentValF + Intensity * distance, maxValue)), 
+                                         math.max(currentValF, currentValF + Intensity * distance),
+                                         BypassDestructability);
+                
+                voxel.SetValue(newVal, HeightmapScale.y);
+                if (distance >= 0)
+                {
+                    voxel.Alteration = Voxel.FarAboveSurface;
+                    if (PaintWhileDigging)
+                    {
+                        if (!voxel.IsIndestructible || BypassDestructability)
+                        {
+                            voxel.AddTexture(TextureIndex, 1f);
+                        }
+                    }
+                }
             }
-            else
+            else if (!dig && currentValF >= -0.9f * HeightmapScale.y)
             {
-                voxel.Value = math.min(currentValF, currentValF - Intensity * intensityWeight * distance);
+                var newVal = math.min(currentValF, currentValF - Intensity * distance);
+                voxel.SetValue(newVal, HeightmapScale.y);
+                if (distance >= 0)
+                {
+                    voxel.Alteration = Voxel.FarAboveSurface;
+                    if (PaintWhileDigging)
+                    {
+                        voxel.AddTexture(TextureIndex, 1f);
+                        if (IsIndestructible)
+                            voxel.SetMaxValue(voxel.Value, HeightmapScale.y);
+                    }
+                }
             }
 
-            if (distance >= 0)
-            {
-                voxel.Alteration = Voxel.FarAboveSurface;
-                voxel.AddTexture(TextureIndex, 1f);
-            }
+            TrackMatterChange(currentValF, voxel.Value);
 
             return voxel;
         }
@@ -219,14 +257,6 @@ namespace Digger.Modules.Core.Sources.Jobs
                     {
                         voxel.NormalizedPuddlesWeight = Intensity;
                     }
-                    else if (TextureIndex == 30)
-                    {
-                        voxel.NormalizedStreamsWeight = Intensity;
-                    }
-                    else if (TextureIndex == 31)
-                    {
-                        voxel.NormalizedLavaWeight = Intensity;
-                    }
                 }
                 else
                 {
@@ -242,14 +272,11 @@ namespace Digger.Modules.Core.Sources.Jobs
                     {
                         voxel.NormalizedPuddlesWeight += Intensity;
                     }
-                    else if (TextureIndex == 30)
-                    {
-                        voxel.NormalizedStreamsWeight += Intensity;
-                    }
-                    else if (TextureIndex == 31)
-                    {
-                        voxel.NormalizedLavaWeight += Intensity;
-                    }
+                }
+                if (IsIndestructible) {
+                    voxel.SetMaxValue(voxel.Value, HeightmapScale.y);
+                } else {
+                    voxel.ResetMaxValue();
                 }
             }
 
@@ -277,7 +304,7 @@ namespace Digger.Modules.Core.Sources.Jobs
             if (distance >= 0)
             {
                 var height = Heights[Utils.XYZToHeightIndex(pi, SizeVox)];
-                var voxel = new Voxel(p.y + ChunkAltitude - height);
+                var voxel = new Voxel(p.y + ChunkAltitude - height, HeightmapScale.y);
                 if (Utils.IsOnSurface(pi, HeightmapScale.y, p.y + ChunkAltitude, SizeVox, Heights))
                 {
                     NativeCollections.Utils.SetZeroAt(Holes, Utils.XZToHoleIndex(pi.x, pi.z, SizeVox));
@@ -287,6 +314,27 @@ namespace Digger.Modules.Core.Sources.Jobs
             }
 
             return Voxels[index];
+        }
+
+        private void TrackMatterChange(float oldValue, float newValue)
+        {
+            if (oldValue == newValue)
+                return;
+
+            NativeCollections.Utils.IncrementAt(ModifiedVoxelCounter, 0);
+
+            // Removed matter: voxel went from negative (inside terrain) to more positive (digging)
+            if (oldValue < 0 && newValue > oldValue)
+            {
+                var change = (double)(newValue - oldValue);
+                NativeCollections.Utils.InterlockedAddDouble(RemovedMatterCounter, 0, change, DoubleToLongMultiplier);
+            }
+            // Added matter: voxel went from positive (empty space) to more negative (adding)
+            else if (oldValue > 0 && newValue < oldValue)
+            {
+                var change = (double)(oldValue - newValue);
+                NativeCollections.Utils.InterlockedAddDouble(AddedMatterCounter, 0, change, DoubleToLongMultiplier);
+            }
         }
 
         public void Dispose()

@@ -5,6 +5,9 @@ using System.Linq;
 using Digger.Modules.Core.Sources.Polygonizers;
 using Digger.Modules.Core.Sources.TerrainInterface;
 using Digger.Modules.Core.Sources.Versioning;
+using Digger.Modules.Core.Sources.VoxelPhysics;
+using Digger.Modules.Core.Sources.Generators;
+using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
@@ -20,8 +23,10 @@ namespace Digger.Modules.Core.Sources
 {
     public class DiggerSystem : MonoBehaviour
     {
-        public const int DiggerVersion = 70010;
+        public const int DiggerVersion = 80000;
         public const string VoxelFileExtension = "vox3";
+        public const string VoxelMetadataFileExtension = "vom";
+        public const string LabelFileExtension = "labels";
         private const string VersionFileExtension = "ver";
         private const int UndoStackSize = 15;
 
@@ -31,6 +36,9 @@ namespace Digger.Modules.Core.Sources
         private readonly Dictionary<Vector3i, Chunk> builtChunks = new(new Vector3iComparer());
         private readonly Dictionary<Vector3i, Chunk> missingBuiltChunks = new(new Vector3iComparer());
         private readonly Dictionary<Vector3i, Chunk> chunksPendingForMeshBuild = new(new Vector3iComparer());
+        private readonly List<LinkLabelOfNeighborChunksXJobData> linkLabelOfNeighborChunksXJobs = new List<LinkLabelOfNeighborChunksXJobData>();
+        private readonly List<LinkLabelOfNeighborChunksYJobData> linkLabelOfNeighborChunksYJobs = new List<LinkLabelOfNeighborChunksYJobData>();
+        private readonly List<LinkLabelOfNeighborChunksZJobData> linkLabelOfNeighborChunksZJobs = new List<LinkLabelOfNeighborChunksZJobData>();
         private readonly HashSet<int3> surfaceChunkPositionsOnHoles = new();
 
         private bool disablePersistence;
@@ -72,6 +80,7 @@ namespace Digger.Modules.Core.Sources
         public NormalsFeeder NormalsFeeder => normalsFeeder;
         public AlphamapsFeeder AlphamapsFeeder => alphamapsFeeder;
         public APolygonizerProvider PolygonizerProvider => polygonizerProvider;
+        public IVoxelGenerator VoxelGenerator => master.VoxelGenerator;
 
         public Vector3 HeightmapScale => heightmapScale;
         public int2 AlphamapsSize => alphamapsSize;
@@ -105,6 +114,8 @@ namespace Digger.Modules.Core.Sources
         public bool AutoVoxelHeight => master.AutoVoxelHeight;
         public float VoxelHeight => master.VoxelHeight;
         public bool ForceMicroSplatMaterialAssetUpdate => master.ForceMicroSplatMaterialAssetUpdate;
+        public bool AutoRemoveFloatingVoxels => master.AutoRemoveFloatingVoxels;
+        public int MaxFloatingVoxelGroupSizeToRemove => master.MaxFloatingVoxelGroupSizeToRemove;
 
         public int DefaultNavMeshArea { get; set; }
 
@@ -208,9 +219,41 @@ namespace Digger.Modules.Core.Sources
 #endif
         }
 
+        public string GetPathVoxelMetadataFile(Vector3i chunkPosition, bool forPersistence)
+        {
+            return Path.ChangeExtension(GetPathVoxelFile(chunkPosition, forPersistence), VoxelMetadataFileExtension);
+        }
+        
+        public string GetPathLabelFile(Vector3i chunkPosition, bool forPersistence)
+        {
+            return Path.ChangeExtension(GetPathVoxelFile(chunkPosition, forPersistence), LabelFileExtension);
+        }
+
+        public string GetEditorOnlyPathVoxelMetadataFile(Vector3i chunkPosition)
+        {
+            return Path.ChangeExtension(GetEditorOnlyPathVoxelFile(chunkPosition), VoxelMetadataFileExtension);
+        }
+        
+        public string GetEditorOnlyPathLabelFile(Vector3i chunkPosition)
+        {
+            return Path.ChangeExtension(GetEditorOnlyPathVoxelFile(chunkPosition), LabelFileExtension);
+        }
+
         public string GetPathVersionedVoxelFile(Vector3i chunkPosition, long v)
         {
             return Path.ChangeExtension(GetEditorOnlyPathVoxelFile(chunkPosition), $"{VoxelFileExtension}_v{v}");
+        }
+
+        public string GetPathVersionedVoxelMetadataFile(Vector3i chunkPosition, long v)
+        {
+            return Path.ChangeExtension(GetEditorOnlyPathVoxelMetadataFile(chunkPosition),
+                $"{VoxelMetadataFileExtension}_v{v}");
+        }
+        
+        public string GetPathVersionedLabelFile(Vector3i chunkPosition, long v)
+        {
+            return Path.ChangeExtension(GetEditorOnlyPathLabelFile(chunkPosition),
+                $"{LabelFileExtension}_v{v}");
         }
 
         public string TerrainHolesRuntimePath => Path.Combine(PersistentRuntimePathData, "terrain.holes");
@@ -281,15 +324,18 @@ namespace Digger.Modules.Core.Sources
             Utils.Profiler.EndSample();
         }
 
-        private void UndoRedoFiles()
+        private List<Vector3i> UndoRedoFiles()
         {
             var dir = new DirectoryInfo(InternalPathData);
+            var chunkPositions = new List<Vector3i>();
             foreach (var file in dir.EnumerateFiles($"*.{VoxelFileExtension}_v{PreviousVersion}")) {
+                chunkPositions.Add(Chunk.GetPositionFromName(file.Name));
                 var bytesFilePath = Path.ChangeExtension(file.FullName, VoxelFileExtension);
                 File.Copy(file.FullName, bytesFilePath, true);
             }
 
             cutter.PerformUndo(PreviousVersion);
+            return chunkPositions;
         }
 #endif
 
@@ -314,8 +360,12 @@ namespace Digger.Modules.Core.Sources
             PersistVersion();
             var versionInfo = JsonUtility.FromJson<VersionInfo>(File.ReadAllText(GetPathVersionFile(PreviousVersion)));
 
-            UndoRedoFiles();
-            Reload(LoadType.Minimal_and_LoadVoxels_and_RebuildMeshes);
+            var chunkPositions = UndoRedoFiles();
+            foreach (var chunkPosition in chunkPositions) {
+                var chunkAlreadyExisted = GetOrCreateChunk(chunkPosition, out var chunk);
+                LoadChunk(true, true, chunk);
+            }
+            //Reload(LoadType.Minimal_and_LoadVoxels_and_RebuildMeshes);
             SyncChunksWithVersion(versionInfo);
 #endif
         }
@@ -575,14 +625,13 @@ namespace Digger.Modules.Core.Sources
             return chunks.TryGetValue(position, out chunk);
         }
 
-        public async Awaitable<bool> Modify<T>(IOperation<T> operation, bool useBackgroundThreads = false) where T : struct, IJobParallelFor
+        public async Awaitable<ModificationResult> Modify<T>(IOperation<T> operation, bool useBackgroundThreads = false) where T : struct, IJobParallelFor
         {
             var area = operation.GetAreaToModify(this);
             if (!area.NeedsModification)
-                return false;
+                return ModificationResult.Empty;
 
-            await Modify(operation, area, true, useBackgroundThreads);
-            return true;
+            return await Modify(operation, area, true, useBackgroundThreads);
         }
 
         public async Awaitable<bool> ModifyWithoutMeshes<T>(IOperation<T> operation, bool useBackgroundThreads = false) where T : struct, IJobParallelFor
@@ -646,10 +695,10 @@ namespace Digger.Modules.Core.Sources
             cutter.Apply(true);
         }
 
-        private async Awaitable Modify<T>(IOperation<T> operation, ModificationArea area, bool buildMeshes, bool useBackgroundThreads) where T : struct, IJobParallelFor
+        private async Awaitable<ModificationResult> Modify<T>(IOperation<T> operation, ModificationArea area, bool buildMeshes, bool useBackgroundThreads) where T : struct, IJobParallelFor
         {
             if (!area.NeedsModification)
-                return;
+                return ModificationResult.Empty;
 
             needRecordUndo = true;
             useBackgroundThreads = Application.isPlaying && useBackgroundThreads;
@@ -679,6 +728,14 @@ namespace Digger.Modules.Core.Sources
                 builtChunk.CompleteOperation(operation);
             }
 
+            // Collect modification results from all chunks
+            var aggregatedResult = ModificationResult.Empty;
+            foreach (var builtChunk in builtChunks.Values)
+            {
+                var chunkResult = builtChunk.VoxelChunk.GetAndClearOperationResult();
+                aggregatedResult.Add(chunkResult);
+            }
+
             foreach (var builtChunk in builtChunks.Values) {
                 builtChunk.GetSurfaceChunksOnHoles();
             }
@@ -702,12 +759,171 @@ namespace Digger.Modules.Core.Sources
             foreach(var missingBuiltChunkPosition in missingBuiltChunks.Values) {
                 builtChunks.Add(missingBuiltChunkPosition.ChunkPosition, missingBuiltChunkPosition);
             }
+
             foreach (var builtChunk in builtChunks.Values) {
                 builtChunk.UpdateVoxelsOnSurface();
             }
-            foreach (var builtChunk in builtChunks.Values)
-            {
+            foreach (var builtChunk in builtChunks.Values) {
                 builtChunk.CompleteUpdateVoxelsOnSurface();
+            }
+
+            if (AutoRemoveFloatingVoxels) {
+                Utils.Profiler.BeginSample("DiggerSystem.LabelizeVoxels");
+                foreach (var builtChunk in builtChunks.Values) {
+                    builtChunk.LabelizeVoxels();
+                }
+                foreach (var builtChunk in builtChunks.Values) {
+                    builtChunk.CompleteLabelizeVoxels();
+                }
+                Utils.Profiler.EndSample();
+
+                Utils.Profiler.BeginSample("DiggerSystem.LoadNeighborChunks");
+                await Awaitable.MainThreadAsync();
+                foreach (var builtChunk in builtChunks.Values) {
+                    chunks.TryGetValue(builtChunk.ChunkPosition + Vector3i.left, out var leftChunk);
+                    {
+                        leftChunk?.LazyLoad();
+                    }
+                    chunks.TryGetValue(builtChunk.ChunkPosition + Vector3i.right, out var rightChunk);
+                    {
+                        rightChunk?.LazyLoad();
+                    }
+                    chunks.TryGetValue(builtChunk.ChunkPosition + Vector3i.down, out var downChunk);
+                    {
+                        downChunk?.LazyLoad();
+                    }
+                    chunks.TryGetValue(builtChunk.ChunkPosition + Vector3i.up, out var topChunk);
+                    {
+                        topChunk?.LazyLoad();
+                    }
+                    chunks.TryGetValue(builtChunk.ChunkPosition + Vector3i.back, out var forwardChunk);
+                    {
+                        forwardChunk?.LazyLoad();
+                    }
+                    chunks.TryGetValue(builtChunk.ChunkPosition + Vector3i.forward, out var backChunk);
+                    {
+                        backChunk?.LazyLoad();
+                    }
+                }
+                Utils.Profiler.EndSample();
+
+                if (useBackgroundThreads) await Awaitable.BackgroundThreadAsync();
+
+                Utils.Profiler.BeginSample("DiggerSystem.LinkLabelOfNeighborChunks");
+                foreach (var builtChunk in builtChunks.Values) {
+                    chunks.TryGetValue(builtChunk.ChunkPosition + Vector3i.left, out var leftChunk);
+                    {
+                        var job = LinkLabelOfNeighborChunks.DoX(SizeVox, leftChunk?.VoxelChunk, builtChunk.VoxelChunk);
+                        var handle = job.Schedule();
+                        linkLabelOfNeighborChunksXJobs.Add(new LinkLabelOfNeighborChunksXJobData()
+                        {
+                            Job = job,
+                            Handle = handle,
+                            Chunk1 = leftChunk?.VoxelChunk,
+                            Chunk2 = builtChunk.VoxelChunk
+                        });
+                    }
+
+                    chunks.TryGetValue(builtChunk.ChunkPosition + Vector3i.right, out var rightChunk);
+                    {
+                        var job = LinkLabelOfNeighborChunks.DoX(SizeVox, builtChunk.VoxelChunk, rightChunk?.VoxelChunk);
+                        var handle = job.Schedule();
+                        linkLabelOfNeighborChunksXJobs.Add(new LinkLabelOfNeighborChunksXJobData()
+                        {
+                            Job = job,
+                            Handle = handle,
+                            Chunk1 = builtChunk.VoxelChunk,
+                            Chunk2 = rightChunk?.VoxelChunk
+                        });
+                    }
+
+                    chunks.TryGetValue(builtChunk.ChunkPosition + Vector3i.down, out var downChunk);
+                    {
+                        var job = LinkLabelOfNeighborChunks.DoY(SizeVox, downChunk?.VoxelChunk, builtChunk.VoxelChunk);
+                        var handle = job.Schedule();
+                        linkLabelOfNeighborChunksYJobs.Add(new LinkLabelOfNeighborChunksYJobData()
+                        {
+                            Job = job,
+                            Handle = handle,
+                            Chunk1 = downChunk?.VoxelChunk,
+                            Chunk2 = builtChunk.VoxelChunk
+                        });
+                    }
+
+                    chunks.TryGetValue(builtChunk.ChunkPosition + Vector3i.up, out var topChunk);
+                    {
+                        var job = LinkLabelOfNeighborChunks.DoY(SizeVox, builtChunk.VoxelChunk, topChunk?.VoxelChunk);
+                        var handle = job.Schedule();
+                        linkLabelOfNeighborChunksYJobs.Add(new LinkLabelOfNeighborChunksYJobData()
+                        {
+                            Job = job,
+                            Handle = handle,
+                            Chunk1 = builtChunk.VoxelChunk,
+                            Chunk2 = topChunk?.VoxelChunk
+                        });
+                    }
+
+                    chunks.TryGetValue(builtChunk.ChunkPosition + Vector3i.back, out var forwardChunk);
+                    {
+                        var job = LinkLabelOfNeighborChunks.DoZ(SizeVox, forwardChunk?.VoxelChunk, builtChunk.VoxelChunk);
+                        var handle = job.Schedule();
+                        linkLabelOfNeighborChunksZJobs.Add(new LinkLabelOfNeighborChunksZJobData()
+                        {
+                            Job = job,
+                            Handle = handle,
+                            Chunk1 = forwardChunk?.VoxelChunk,
+                            Chunk2 = builtChunk.VoxelChunk
+                        });
+                    }
+
+                    chunks.TryGetValue(builtChunk.ChunkPosition + Vector3i.forward, out var backChunk);
+                    {
+                        var job = LinkLabelOfNeighborChunks.DoZ(SizeVox, builtChunk.VoxelChunk, backChunk?.VoxelChunk);
+                        var handle = job.Schedule();
+                        linkLabelOfNeighborChunksZJobs.Add(new LinkLabelOfNeighborChunksZJobData()
+                        {
+                            Job = job,
+                            Handle = handle,
+                            Chunk1 = builtChunk.VoxelChunk,
+                            Chunk2 = backChunk?.VoxelChunk
+                        });
+                    }
+                }
+
+                foreach (var jobData in linkLabelOfNeighborChunksXJobs) {
+                    jobData.Handle.Complete();
+                    LinkLabelOfNeighborChunks.CompleteX(jobData.Job, jobData.Chunk1, jobData.Chunk2);
+                }
+                linkLabelOfNeighborChunksXJobs.Clear();
+
+                foreach (var jobData in linkLabelOfNeighborChunksYJobs) {
+                    jobData.Handle.Complete();
+                    LinkLabelOfNeighborChunks.CompleteY(jobData.Job, jobData.Chunk1, jobData.Chunk2);
+                }
+                linkLabelOfNeighborChunksYJobs.Clear();
+
+                foreach (var jobData in linkLabelOfNeighborChunksZJobs) {
+                    jobData.Handle.Complete();
+                    LinkLabelOfNeighborChunks.CompleteZ(jobData.Job, jobData.Chunk1, jobData.Chunk2);
+                }
+                linkLabelOfNeighborChunksZJobs.Clear();
+
+                Utils.Profiler.EndSample();
+
+                await UpdateAllLabels(useBackgroundThreads);
+
+                Utils.Profiler.BeginSample("DiggerSystem.HandleFloatingVoxels");
+                foreach (var builtChunk in builtChunks.Values) {
+                    builtChunk.HandleFloatingVoxels();
+                }
+                foreach (var builtChunk in builtChunks.Values) {
+                    builtChunk.CompleteHandleFloatingVoxels();
+                }
+                Utils.Profiler.EndSample();
+            }
+
+            foreach (var builtChunk in builtChunks.Values) {
+                builtChunk.RecordUndoIfNeeded();
             }
 
             if (buildMeshes) {
@@ -719,6 +935,114 @@ namespace Digger.Modules.Core.Sources
                 }
             }
             await Awaitable.MainThreadAsync();
+            
+            return aggregatedResult;
+        }
+
+        private readonly Dictionary<Vector3i, HashSet<int>> connectedLabels = new Dictionary<Vector3i, HashSet<int>>(new Vector3iComparer());
+        private readonly Dictionary<Vector3i, HashSet<int>> visitedLabels = new Dictionary<Vector3i, HashSet<int>>(new Vector3iComparer());
+        private bool connectedLabelsAreConnectedToTheGround;
+        private VoxelPhysics.ConnectedComponentLabeling.AABB connectedLabelsAABB;
+        private readonly HashSet<Vector3i> chunksWithFloatingVoxels = new HashSet<Vector3i>(new Vector3iComparer());
+
+        private async Awaitable UpdateAllLabels(bool useBackgroundThreads)
+        {
+            visitedLabels.Clear();
+            chunksWithFloatingVoxels.Clear();
+
+            await Awaitable.MainThreadAsync();
+
+            var i = 0;
+            foreach (var builtChunk in builtChunks.Values) {
+                foreach (var label in builtChunk.VoxelChunk.LabelMap.Keys) {
+                    connectedLabels.Clear();
+                    connectedLabelsAreConnectedToTheGround = false;
+                    connectedLabelsAABB = new VoxelPhysics.ConnectedComponentLabeling.AABB {
+                        Min = new int3(int.MaxValue),
+                        Max = new int3(int.MinValue)
+                    };
+                    TraverseLabel(builtChunk.VoxelChunk, label);
+                    UpdateLabelsStatus(i++);
+                }
+            }
+
+            foreach (var chunkWithFloatingVoxels in chunksWithFloatingVoxels) {
+                if (!builtChunks.ContainsKey(chunkWithFloatingVoxels)) {                    
+                    GetOrCreateChunk(chunkWithFloatingVoxels, out var chunk);
+                    builtChunks.Add(chunkWithFloatingVoxels, chunk);
+                }
+            }
+            if (useBackgroundThreads) await Awaitable.BackgroundThreadAsync();
+        }
+
+        private void TraverseLabel(VoxelChunk chunk, int label)
+        {
+            if (!visitedLabels.TryGetValue(chunk.ChunkPosition, out var visited)) {
+                visited = new HashSet<int>();
+                visitedLabels.Add(chunk.ChunkPosition, visited);
+            }
+
+            if (visited.Contains(label)) {
+                return;
+            }
+
+            visited.Add(label);
+
+            if (!connectedLabels.TryGetValue(chunk.ChunkPosition, out var labels)) {
+                labels = new HashSet<int>();
+                connectedLabels.Add(chunk.ChunkPosition, labels);
+            }
+
+            if (!labels.Contains(label)) {
+                labels.Add(label);
+                if (chunk.LabelsConnectedToTheGround.Contains(label)) {
+                    connectedLabelsAreConnectedToTheGround = true;
+                }
+
+                // Merge AABB from this label into the connected group's AABB
+                if (chunk.LabelMap.TryGetValue(label, out var labelAABB)) {
+                    connectedLabelsAABB.Expand(labelAABB.Min);
+                    connectedLabelsAABB.Expand(labelAABB.Max);
+                }
+
+                TraverseNeighbor(chunk, label, chunk.LinksToRight, chunk.ChunkPosition + Vector3i.right);
+                TraverseNeighbor(chunk, label, chunk.LinksToLeft, chunk.ChunkPosition + Vector3i.left);
+                TraverseNeighbor(chunk, label, chunk.LinksToTop, chunk.ChunkPosition + Vector3i.up);
+                TraverseNeighbor(chunk, label, chunk.LinksToBottom, chunk.ChunkPosition + Vector3i.down);
+                TraverseNeighbor(chunk, label, chunk.LinksToBack, chunk.ChunkPosition + Vector3i.forward);
+                TraverseNeighbor(chunk, label, chunk.LinksToFront, chunk.ChunkPosition + Vector3i.back);
+            }
+        }
+
+        private void TraverseNeighbor(VoxelChunk chunk, int label, Dictionary<int, HashSet<int>> links, Vector3i neighborPosition)
+        {
+            if (links.TryGetValue(label, out var linkedLabels) && chunks.TryGetValue(neighborPosition, out var neighbor)) {
+                neighbor.LazyLoad();
+                foreach (var linkedLabel in linkedLabels) {
+                    TraverseLabel(neighbor.VoxelChunk, linkedLabel);
+                }
+            }
+        }
+
+        private void UpdateLabelsStatus(int i)
+        {
+            // If the group is large enough, treat it as connected to ground even if it's floating
+            // This allows intentional floating platforms to persist while cleaning up small debris
+            var isEffectivelyConnected = connectedLabelsAreConnectedToTheGround ||
+                                         connectedLabelsAABB.GreatestSideLength >= MaxFloatingVoxelGroupSizeToRemove;
+
+            foreach (var keyValuePair in connectedLabels) {
+                if (chunks.TryGetValue(keyValuePair.Key, out var chunk)) {
+                    foreach (var label in keyValuePair.Value) {
+                        if (isEffectivelyConnected) {
+                            chunk.VoxelChunk.LabelsConnectedToTheGroundThroughNeighbors.Add(label);
+                        } else if (chunk.VoxelChunk.LabelsConnectedToTheGroundThroughNeighbors.Contains(label)) {
+                            chunk.VoxelChunk.LabelsConnectedToTheGroundThroughNeighbors.Remove(label);
+                            chunksWithFloatingVoxels.Add(keyValuePair.Key);
+                        }
+                    }
+                }
+            }
         }
 
         public bool IsChunkBelongingToMe(Vector3i chunkPosition)

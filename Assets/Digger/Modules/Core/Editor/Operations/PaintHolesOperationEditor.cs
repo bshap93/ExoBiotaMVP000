@@ -12,6 +12,10 @@ namespace Digger.Modules.Core.Editor.Operations
     {
         private readonly BasicOperation basicOperation = new BasicOperation();
 
+        private bool reticleConstraintsFoldout {
+            get => EditorPrefs.GetBool("PaintHolesOperationEditor_reticleConstraintsFoldout", false);
+            set => EditorPrefs.SetBool("PaintHolesOperationEditor_reticleConstraintsFoldout", value);
+        }
 
         public void OnInspectorGUI()
         {
@@ -22,9 +26,24 @@ namespace Digger.Modules.Core.Editor.Operations
             BrushInspectorGUI();
 
             EditorGUILayout.Space();
-            keepingHeight = EditorGUILayout.ToggleLeft("Constrain reticle to given altitude", keepingHeight);
-            keptHeight = EditorGUILayout.FloatField("Reticle constrained altitude", keptHeight);
-            EditorGUILayout.HelpBox("Press Shift to pick current reticle height.", MessageType.None);
+
+            EditorGUILayout.HelpBox(
+                "Paint Holes creates invisible areas in the terrain. Hold Ctrl to fill holes instead of creating them.",
+                MessageType.Info);
+
+            EditorGUILayout.Space();
+
+            // Reticle Constraints Section
+            reticleConstraintsFoldout = EditorGUILayout.BeginFoldoutHeaderGroup(reticleConstraintsFoldout, "Reticle Constraints");
+            if (reticleConstraintsFoldout)
+            {
+                EditorGUI.indentLevel++;
+                keepingHeight = EditorGUILayout.ToggleLeft("Constrain reticle to given altitude", keepingHeight);
+                keptHeight = EditorGUILayout.FloatField("Reticle constrained altitude", keptHeight);
+                EditorGUILayout.HelpBox("Press Shift to pick current reticle height.", MessageType.None);
+                EditorGUI.indentLevel--;
+            }
+            EditorGUILayout.EndFoldoutHeaderGroup();
         }
         
         public void OnSceneGUI()

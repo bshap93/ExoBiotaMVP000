@@ -1,4 +1,5 @@
 using System.IO;
+using Digger.Modules.Core.Sources.Generators;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 #if UNITY_EDITOR
@@ -33,6 +34,9 @@ namespace Digger.Modules.Core.Sources
         [SerializeField] private bool enableContributeGI = true;
         [SerializeField] private bool forceMicroSplatMaterialAssetUpdate = false;
         [SerializeField] private bool autoSaveMeshesAsAssets = true;
+        [SerializeField] private bool autoRemoveFloatingVoxels = false;
+        [SerializeField] private int maxFloatingVoxelGroupSizeToRemove = 30;
+        [SerializeField] private ScriptableObject voxelGenerator;
 
         private static string ParentPath {
             get {
@@ -127,6 +131,41 @@ namespace Digger.Modules.Core.Sources
         {
             get => autoSaveMeshesAsAssets;
             set => autoSaveMeshesAsAssets = value;
+        }
+
+        public bool AutoRemoveFloatingVoxels {
+            get => autoRemoveFloatingVoxels;
+            set => autoRemoveFloatingVoxels = value;
+        }
+
+        public int MaxFloatingVoxelGroupSizeToRemove {
+            get => maxFloatingVoxelGroupSizeToRemove;
+            set => maxFloatingVoxelGroupSizeToRemove = value;
+        }
+
+        public IVoxelGenerator VoxelGenerator {
+            get {
+                // If no generator is assigned, try to find a default one
+                if (voxelGenerator == null || !(voxelGenerator is IVoxelGenerator)) {
+#if UNITY_EDITOR
+                    // In editor, try to load the default simple generator asset
+                    var defaultPath = "Assets/Digger/Modules/Core/DefaultGenerators/DefaultSimpleVoxelGenerator.asset";
+                    voxelGenerator = UnityEditor.AssetDatabase.LoadAssetAtPath<ScriptableObject>(defaultPath);
+                    
+                    // If still null, create a temporary instance (will not be saved)
+                    if (voxelGenerator == null) {
+                        voxelGenerator = ScriptableObject.CreateInstance<SimpleVoxelGenerator>();
+                    }
+#else
+                    // At runtime, create a temporary instance if needed
+                    if (voxelGenerator == null) {
+                        voxelGenerator = ScriptableObject.CreateInstance<SimpleVoxelGenerator>();
+                    }
+#endif
+                }
+                return voxelGenerator as IVoxelGenerator;
+            }
+            set => voxelGenerator = value as ScriptableObject;
         }
 
         public void CreateDirs()

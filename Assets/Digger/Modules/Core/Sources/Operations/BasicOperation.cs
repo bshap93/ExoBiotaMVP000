@@ -8,6 +8,8 @@ namespace Digger.Modules.Core.Sources.Operations
 {
     public class BasicOperation : IOperation<VoxelModificationJob>
     {
+        private const long DoubleToLongMultiplier = 1000000;
+        
         public ModificationParameters Params;
 
         public ModificationArea GetAreaToModify(DiggerSystem digger)
@@ -64,13 +66,19 @@ namespace Digger.Modules.Core.Sources.Operations
                 TextureIndex = (uint)Params.TextureIndex,
                 InputOriginVox = inputOriginVox,
                 InputSizeVox = inputSizeVox,
-                InputVoxels = inputVoxels
+                InputVoxels = inputVoxels,
+                PaintWhileDigging = Params.PaintWhileDigging,
+                BypassDestructability = Params.BypassDestructability,
+                IsIndestructible = Params.IsIndestructible,
+                RemovedMatterCounter = new NativeArray<long>(1, Allocator.Persistent),
+                AddedMatterCounter = new NativeArray<long>(1, Allocator.Persistent),
+                ModifiedVoxelCounter = new NativeArray<int>(1, Allocator.Persistent)
             };
             job.PostConstruct();
             return job;
         }
 
-        public void Complete(VoxelModificationJob job, VoxelChunk chunk)
+        public ModificationResult Complete(VoxelModificationJob job, VoxelChunk chunk)
         {
             job.Voxels.CopyTo(chunk.VoxelArray);
             job.Voxels.Dispose();
@@ -92,6 +100,20 @@ namespace Digger.Modules.Core.Sources.Operations
 
             job.NewHolesConcurrentCounter.Dispose();
             job.Holes.Dispose();
+
+            // Extract tracking data (divide by multiplier to convert back to double)
+            var result = new ModificationResult
+            {
+                RemovedMatterQuantity = (double)job.RemovedMatterCounter[0] / DoubleToLongMultiplier,
+                AddedMatterQuantity = (double)job.AddedMatterCounter[0] / DoubleToLongMultiplier,
+                TotalModifiedVoxels = job.ModifiedVoxelCounter[0]
+            };
+
+            job.RemovedMatterCounter.Dispose();
+            job.AddedMatterCounter.Dispose();
+            job.ModifiedVoxelCounter.Dispose();
+
+            return result;
         }
     }
 }

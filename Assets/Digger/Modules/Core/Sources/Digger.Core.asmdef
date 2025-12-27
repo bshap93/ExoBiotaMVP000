@@ -1,5 +1,6 @@
 {
     "name": "Digger.Core",
+    "rootNamespace": "",
     "references": [
         "Unity.Mathematics",
         "Unity.Burst",

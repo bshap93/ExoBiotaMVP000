@@ -369,7 +369,7 @@ namespace Digger.Modules.Core.Editor
                 material.SetFloat($"_offset{i}y", terrainLayer.tileOffset.y);
                 material.SetFloat($"_NormalScale{i}", terrainLayer.normalScale);
                 material.SetFloat($"_LayerHasMask{i}", terrainLayer.maskMapTexture ? 1 : 0);
-                material.SetFloat($"_Metallic{i}", terrainLayer.metallic);
+                material.SetFloat($"_Metallic{i}", terrainLayer.metallic-0.2f);
                 material.SetFloat($"_Smoothness{i}", terrainLayer.smoothness);
                 material.SetTexture($"_Splat{i}", terrainLayer.diffuseTexture);
                 material.SetTexture($"_Normal{i}", terrainLayer.normalMapTexture);

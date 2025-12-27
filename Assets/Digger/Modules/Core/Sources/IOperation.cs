@@ -6,6 +6,6 @@ namespace Digger.Modules.Core.Sources
     {
         ModificationArea GetAreaToModify(DiggerSystem digger);
         T Do(VoxelChunk chunk);
-        void Complete(T job, VoxelChunk chunk);
+        ModificationResult Complete(T job, VoxelChunk chunk);
     }
 }

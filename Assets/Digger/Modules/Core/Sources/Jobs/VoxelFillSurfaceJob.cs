@@ -5,7 +5,7 @@ using Unity.Mathematics;
 
 namespace Digger.Modules.Core.Sources.Jobs
 {
-    [BurstCompile(CompileSynchronously = true, FloatMode = FloatMode.Fast)]
+    [BurstCompile(CompileSynchronously = true, FloatMode = FloatMode.Fast, OptimizeFor = OptimizeFor.Performance)]
     public struct VoxelFillSurfaceJob : IJobParallelFor
     {
         public float ChunkAltitude;
