@@ -30,7 +30,6 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
 
         [Header("Combat Settings")] [SerializeField]
         PlayerToolAttackProfile attackProfile;
-        [SerializeField] float energyCostPerShot = 5f;
         [SerializeField] bool requiresEnergy = true;
 
         [Header("Visual Effects")] [SerializeField]
@@ -76,12 +75,41 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
 
         [Header("Scriptable Object Reference")] [SerializeField]
         PistolToolObject pistolToolObject;
+        [SerializeField] float delaySlideAnimation;
 
         Vector3 _initialLocalPos;
         GameObject _muzzleFlashInstance;
         ParticleSystem[] _muzzleParticles;
         bool _readyToFire = true;
         float _timeSinceLastUse;
+
+        float EnergyCostPerHeavyShot
+        {
+            get
+            {
+                var attrMgr = AttributesManager.Instance;
+                if (attrMgr == null) return attackProfile.heavyAttack.baseEnergyCost;
+                var dexterity = attrMgr.Dexterity;
+                var reduction = attackProfile.dexterityReductionFactor * (dexterity - 1); // Example: 0.05
+                var finalCost = attackProfile.heavyAttack.baseEnergyCost * (1f - reduction);
+
+                return Mathf.Max(0.1f, finalCost); // Ensure a minimum cost
+            }
+        }
+
+        float EnergyCostPerBasicShot
+        {
+            get
+            {
+                var attrMgr = AttributesManager.Instance;
+                if (attrMgr == null) return attackProfile.basicAttack.baseEnergyCost;
+                var dexterity = attrMgr.Dexterity;
+                var reduction = attackProfile.dexterityReductionFactor * (dexterity - 1); // Example: 0.05
+                var finalCost = attackProfile.basicAttack.baseEnergyCost * (1f - reduction);
+
+                return Mathf.Max(0.1f, finalCost); // Ensure a minimum cost
+            }
+        }
 
         void Awake()
         {
@@ -138,6 +166,22 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
             if (_muzzleFlashInstance != null) Destroy(_muzzleFlashInstance);
         }
 
+        public override void Use()
+        {
+            var attributesManager = AttributesManager.Instance;
+
+            if (PlayerMutableStatsManager.Instance.CurrentStamina < EnergyCostPerBasicShot)
+            {
+                // Not enough stamina
+                AlertEvent.Trigger(
+                    AlertReason.NotEnoughStamina, "Not enough stamina to use pickaxe.", "Insufficient Stamina");
+
+                return;
+            }
+
+            PerformToolAction();
+        }
+
         void SetupBeamRenderers()
         {
             if (beamLineRenderers == null || beamLineRenderers.Length == 0)
@@ -184,6 +228,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
         {
             if (!_readyToFire) return;
 
+
             // Check energy cost
             if (requiresEnergy && !HasSufficientEnergy())
             {
@@ -195,16 +240,18 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
                 return;
             }
 
+
             // Consume energy
             if (requiresEnergy)
                 PlayerStatsEvent.Trigger(
                     PlayerStatsEvent.PlayerStat.CurrentStamina,
                     PlayerStatsEvent.PlayerStatChangeType.Decrease,
-                    energyCostPerShot);
+                    EnergyCostPerBasicShot);
 
             // Visual and audio feedback
             AnimateRecoil();
-            AnimateSlideOutAndBack();
+            StartCoroutine(AnimateSlideOutAndBack());
+            // AnimateSlideOutAndBack();
             AnimateFrontEmitterOutAndBack();
             OnUseStarted();
             shootFeedbacks?.PlayFeedbacks();
@@ -251,9 +298,12 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
                 recoilBackElasticity);
         }
 
-        public void AnimateSlideOutAndBack()
+        public IEnumerator AnimateSlideOutAndBack()
         {
-            if (slider == null) return;
+            if (slider == null) yield break;
+
+            // Wait N seconds to sync with firing animation
+            yield return new WaitForSeconds(delaySlideAnimation);
 
             var originalPos = slider.transform.localPosition;
             var slideOutPos = originalPos + new Vector3(0, 0, 0.2f);
@@ -438,7 +488,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
             var statsManager = PlayerMutableStatsManager.Instance;
             if (statsManager == null) return true;
 
-            return statsManager.CurrentStamina >= energyCostPerShot;
+            return statsManager.CurrentStamina >= EnergyCostPerBasicShot;
         }
     }
 }

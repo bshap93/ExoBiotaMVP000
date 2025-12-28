@@ -21,6 +21,7 @@ namespace FirstPersonPlayer.Combat.Player.ScriptableObjects
         public string displayName;
         public float baseBlowbackContaminationMultiplier = 1f;
         public float rawDamage;
+        public float baseEnergyCost;
         [Range(0f, 1f)] public float critChance;
         public float critMultiplier = 1.2f;
         public MeleeToolPrefab.HitType damageType;

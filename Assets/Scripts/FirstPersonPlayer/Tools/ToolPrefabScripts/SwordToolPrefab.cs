@@ -31,7 +31,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
                 if (attrMgr == null) return baseStaminaCostPerConnectingSwing;
 
                 var agility = attrMgr.Agility;
-                var reduction = agilityReductionFactor * agility; // Example: 0.05
+                var reduction = toolAttackProfile.agilityReductionFactor * agility; // Example: 0.05
                 var finalCost = baseStaminaCostPerConnectingSwing * (1f - reduction);
 
                 return Mathf.Max(0.1f, finalCost); // Ensure a minimum cost

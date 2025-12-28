@@ -20,12 +20,11 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         public string[] allowedTags;
         // No cost if swing didn't make contact
         [FormerlySerializedAs("staminaCostPerConnectingSwing")]
-        public float baseStaminaCostPerConnectingSwing = 1f;
+        // public float baseStaminaCostPerConnectingSwing = 1f;
 
-        public float baseStaminaCostPerHeavyConnectingSwing = 2f;
-
-
-        [FormerlySerializedAs("swingCooldown")] [Tooltip("Number of seconds between swings.")]
+        // public float baseStaminaCostPerHeavyConnectingSwing = 2f;
+        [FormerlySerializedAs("swingCooldown")]
+        [Tooltip("Number of seconds between swings.")]
         public float normalSwingCooldown = 0.6f;
 
         public float fromHeldUpChargedSwingCooldown = 0.3f;
@@ -46,11 +45,11 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             get
             {
                 var attrMgr = AttributesManager.Instance;
-                if (attrMgr == null) return baseStaminaCostPerConnectingSwing;
+                if (attrMgr == null) return toolAttackProfile.basicAttack.baseEnergyCost;
 
                 var agility = attrMgr.Agility;
-                var reduction = agilityReductionFactor * (agility - 1); // Example: 0.05
-                var finalCost = baseStaminaCostPerConnectingSwing * (1f - reduction);
+                var reduction = toolAttackProfile.agilityReductionFactor * (agility - 1); // Example: 0.05
+                var finalCost = toolAttackProfile.basicAttack.baseEnergyCost * (1f - reduction);
 
                 return Mathf.Max(0.1f, finalCost); // Ensure a minimum cost
             }
@@ -61,10 +60,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             get
             {
                 var attrMgr = AttributesManager.Instance;
-                if (attrMgr == null) return baseStaminaCostPerHeavyConnectingSwing;
+                if (attrMgr == null) return toolAttackProfile.heavyAttack.baseEnergyCost;
                 var agility = attrMgr.Agility;
-                var reduction = agilityReductionFactor * (agility - 1); // Example: 0.05
-                var finalCost = baseStaminaCostPerHeavyConnectingSwing * (1f - reduction);
+                var reduction = toolAttackProfile.agilityReductionFactor * (agility - 1); // Example: 0.05
+                var finalCost = toolAttackProfile.heavyAttack.baseEnergyCost * (1f - reduction);
 
                 return Mathf.Max(0.1f, finalCost); // Ensure a minimum cost
             }

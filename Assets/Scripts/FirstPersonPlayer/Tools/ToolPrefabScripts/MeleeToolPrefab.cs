@@ -56,7 +56,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
         public bool useOnRelease;
 
-        [SerializeField] protected float agilityReductionFactor = 0.05f;
+        // [SerializeField] protected float agilityReductionFactor = 0.05f;
 
         public GameObject ineffectualDebrisEffectPrefab;
 

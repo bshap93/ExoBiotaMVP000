@@ -24,14 +24,16 @@ namespace FirstPersonPlayer.Tools.Animation
             if (fpPlayerCharacter == null) return;
 
             var velocity = fpPlayerCharacter.PlanarVelocity.magnitude;
+            var bobTime = GetBobTime();
 
             // Add bump (optional: replace with footstep trigger)
-            if (velocity > 0.1f && Mathf.FloorToInt(Time.time * swaySpeed) % 2 == 0) _bobSpring.Bump(bumpStrength);
+            if (velocity > 0.1f && Mathf.FloorToInt(bobTime * swaySpeed) % 2 == 0)
+                _bobSpring.Bump(bumpStrength);
 
             _bobSpring.UpdateSpringValue(Time.deltaTime);
 
             // Only sway when moving
-            var sway = velocity > 0.1f ? Mathf.Sin(Time.time * swaySpeed) * swayAmount : 0f;
+            var sway = velocity > 0.1f ? Mathf.Sin(bobTime * swaySpeed) * swayAmount : 0f;
 
             var offset = new Vector3(0f, sway + _bobSpring.CurrentValue, 0f);
             transform.localPosition = _initialLocalPosition + offset;
@@ -41,14 +43,22 @@ namespace FirstPersonPlayer.Tools.Animation
         {
             this.MMEventStartListening();
         }
+
         void OnDisable()
         {
             this.MMEventStopListening();
         }
+
         public void OnMMEvent(LoadedManagerEvent eventType)
         {
             if (eventType.ManagerType == ManagerType.All)
                 Initialize();
+        }
+
+        // Virtual method to allow child classes to offset the time
+        protected virtual float GetBobTime()
+        {
+            return Time.time;
         }
 
         public virtual void Initialize()
@@ -63,7 +73,6 @@ namespace FirstPersonPlayer.Tools.Animation
                 Debug.LogWarning("ToolBob: CharacterActor not found in parent hierarchy.");
                 return;
             }
-
 
             _bobSpring = new MMSpringFloat
             {

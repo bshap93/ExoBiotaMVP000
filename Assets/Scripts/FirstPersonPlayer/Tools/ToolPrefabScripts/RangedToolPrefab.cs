@@ -14,13 +14,15 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         [Header("References")] public Camera mainCamera;
 
         [SerializeField] protected MMFeedbacks equipFeedbacks;
+
+        // [SerializeField] protected float dexterityReductionFactor = 0.05f;
         protected AnimancerRightArmController AnimancerRightArmController;
         protected AnimancerRightArmController AnimController;
         protected RaycastHit LastHit;
 
 
         public abstract void Initialize(PlayerEquipment owner);
-        public void Use()
+        public virtual void Use()
         {
             PerformToolAction();
         }

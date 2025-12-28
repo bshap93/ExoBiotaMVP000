@@ -11,7 +11,6 @@ using LevelConstruct.Highlighting;
 using Manager;
 using MoreMountains.Feedbacks;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 {
@@ -23,9 +22,9 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
         public float highlighingRange;
 
         // No cost if swing didn't make contact
-        [FormerlySerializedAs("staminaCostPerConnectingSwing")] [SerializeField]
-        float baseStaminaCostPerConnectingSwing = 1f;
-        public float baseStaminaCostPerHeavyConnectingSwing = 2f;
+        // [FormerlySerializedAs("staminaCostPerConnectingSwing")] [SerializeField]
+        // float baseStaminaCostPerConnectingSwing = 1f;
+        // public float baseStaminaCostPerHeavyConnectingSwing = 2f;
 
         [SerializeField] Sprite defaultReticleForTool;
 
@@ -57,11 +56,12 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             get
             {
                 var attrMgr = AttributesManager.Instance;
-                if (attrMgr == null) return baseStaminaCostPerConnectingSwing;
+                var baseEnergyCost = toolAttackProfile.basicAttack.baseEnergyCost;
+                if (attrMgr == null) return baseEnergyCost;
 
                 var agility = attrMgr.Agility;
-                var reduction = agilityReductionFactor * agility; // Example: 0.05
-                var finalCost = baseStaminaCostPerConnectingSwing * (1f - reduction);
+                var reduction = toolAttackProfile.agilityReductionFactor * agility; // Example: 0.05
+                var finalCost = baseEnergyCost * (1f - reduction);
 
                 return Mathf.Max(0.1f, finalCost); // Ensure a minimum cost
             }
@@ -72,11 +72,12 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             get
             {
                 var attrMgr = AttributesManager.Instance;
-                if (attrMgr == null) return baseStaminaCostPerConnectingSwing;
+                var baseEnergyCost = toolAttackProfile.basicAttack.baseEnergyCost;
+                if (attrMgr == null) return baseEnergyCost;
 
                 var agility = attrMgr.Agility;
-                var reduction = agilityReductionFactor * (agility - 1); // Example: 0.05
-                var finalCost = baseStaminaCostPerConnectingSwing * (1f - reduction);
+                var reduction = toolAttackProfile.agilityReductionFactor * (agility - 1); // Example: 0.05
+                var finalCost = baseEnergyCost * (1f - reduction);
 
                 return Mathf.Max(0.1f, finalCost); // Ensure a minimum cost
             }
@@ -87,10 +88,11 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             get
             {
                 var attrMgr = AttributesManager.Instance;
-                if (attrMgr == null) return baseStaminaCostPerHeavyConnectingSwing;
+                var baseEnergyCost = toolAttackProfile.heavyAttack.baseEnergyCost;
+                if (attrMgr == null) return baseEnergyCost;
                 var agility = attrMgr.Agility;
-                var reduction = agilityReductionFactor * (agility - 1); // Example: 0.05
-                var finalCost = baseStaminaCostPerHeavyConnectingSwing * (1f - reduction);
+                var reduction = toolAttackProfile.agilityReductionFactor * (agility - 1); // Example: 0.05
+                var finalCost = baseEnergyCost * (1f - reduction);
 
                 return Mathf.Max(0.1f, finalCost); // Ensure a minimum cost
             }

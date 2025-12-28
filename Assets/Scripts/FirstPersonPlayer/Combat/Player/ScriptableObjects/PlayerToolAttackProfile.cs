@@ -10,5 +10,7 @@ namespace FirstPersonPlayer.Combat.Player.ScriptableObjects
     {
         public PlayerToolAttack basicAttack;
         public PlayerToolAttack heavyAttack;
+        public float dexterityReductionFactor = 0.05f;
+        public float agilityReductionFactor = 0.05f;
     }
 }
