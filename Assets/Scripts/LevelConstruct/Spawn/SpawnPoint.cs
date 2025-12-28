@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 using Structs;
 using UnityEngine;
 
-namespace SceneScripts.Spawn
+namespace LevelConstruct.Spawn
 {
     [DisallowMultipleComponent]
     public class SpawnPoint : MonoBehaviour
@@ -22,7 +22,7 @@ namespace SceneScripts.Spawn
         public GameMode Mode => mode;
         public Transform Xform => transform;
 
-        private static string[] GetSpawnPointIdOptions()
+        static string[] GetSpawnPointIdOptions()
         {
             return PlayerSpawnManager.GetSpawnPointIdOptions();
         }

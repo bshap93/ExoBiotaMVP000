@@ -1,5 +1,5 @@
-﻿using Overview.OverviewMode.ScriptableObjectDefinitions;
-using SceneScripts.Spawn;
+﻿using LevelConstruct.Spawn;
+using Overview.OverviewMode.ScriptableObjectDefinitions;
 using UnityEngine.Serialization;
 
 namespace Spawn

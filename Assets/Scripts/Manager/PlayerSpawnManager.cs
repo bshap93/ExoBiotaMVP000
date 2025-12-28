@@ -229,7 +229,9 @@ namespace Manager
                 "ThreeJaneMineDoorSpawn", "DebugThreeJaneMineSpawn", "Hangar3JMineSpawn",
                 "AshpoolMineBackElevatorL01", "AshpoolMineL1AB",
                 // Choked Caverns
-                "ChokedCavernsDebugSpawn", "ElevatorStopChokedCaves"
+                "ChokedCavernsDebugSpawn", "ElevatorStopChokedCaves",
+                // Ashpool Mine,
+                "AshpoolMineDoorSpawn"
             };
         }
 
@@ -239,6 +241,7 @@ namespace Manager
             {
                 "Overworld",
                 "Mine01",
+                "AshpoolMine",
                 "TradeStation01", "FirstPersonTestbed", "Mine01a", "ThreeJaneMine",
                 "ChokedCaverns"
             };
