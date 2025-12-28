@@ -29,6 +29,7 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
 
         [Header("Main Settings")] [SerializeField]
         bool destroyAfterDeath;
+        
 
         public float detectionRadius;
         [FormerlySerializedAs("lethalRadius")] public float contaminateRadius;
@@ -244,7 +245,9 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
                 else if (creatureState == CreatureStateManager.CreatureState.ShouldBeDestroyed)
                 {
                     isDead = true;
+                    blackboard.SetVariableValue("wasAlreadyDead", true);
                     blackboard.SetVariableValue("isDead", true);
+
                     destroyedModelObject.SetActive(true);
                     undestroyedModelObject.SetActive(false);
                 }

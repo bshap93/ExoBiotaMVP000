@@ -57,6 +57,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
         [SerializeField] float recoilBackDuration = 0.15f;
         [SerializeField] int recoilBackVibrato = 8;
         [SerializeField] float recoilBackElasticity = 0.4f;
+        [SerializeField] float recoilRotationComponent = 2f;
+
 
         [Header("Accuracy Settings")] [Tooltip("Maximum spread angle in degrees at Dexterity 1")] [SerializeField]
         float maxSpreadAngle = 5f;
@@ -238,6 +240,12 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
             physicalRoot.transform.localPosition = _initialLocalPos;
             physicalRoot.transform.DOPunchPosition(
                 new Vector3(0, 0, recoilBackComponent),
+                recoilBackDuration,
+                recoilBackVibrato,
+                recoilBackElasticity);
+
+            physicalRoot.transform.DOPunchRotation(
+                new Vector3(recoilRotationComponent, 0, 0),
                 recoilBackDuration,
                 recoilBackVibrato,
                 recoilBackElasticity);

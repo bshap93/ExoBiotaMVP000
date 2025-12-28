@@ -1,6 +1,4 @@
-using Helpers.Events;
 using Helpers.Events.Inventory;
-using Manager;
 using Rewired;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -42,10 +40,10 @@ namespace FirstPersonPlayer
         public bool jump;
         public bool jumpHeld;
         // Sprint
-        public bool sprint;
-        public bool sprintStart;
-        public bool sprintStop;
-
+        // public bool sprint;
+        // public bool sprintStart;
+        // public bool sprintStop;
+        //
 
         public bool analogMovement;
         public bool interact;
@@ -100,9 +98,9 @@ namespace FirstPersonPlayer
             // Read button inputs
             jump = _rewiredPlayer.GetButton("Jump");
             // Sprint
-            sprint = _rewiredPlayer.GetButton("Sprint");
-            sprintStart = _rewiredPlayer.GetButtonDown("Sprint");
-            sprintStop = _rewiredPlayer.GetButtonUp("Sprint");
+            // sprint = _rewiredPlayer.GetButton("Sprint");
+            // sprintStart = _rewiredPlayer.GetButtonDown("Sprint");
+            // sprintStop = _rewiredPlayer.GetButtonUp("Sprint");
 
             interact = _rewiredPlayer.GetButtonDown("Interact");
             interactHeld = _rewiredPlayer.GetButton("Interact");
@@ -138,14 +136,14 @@ namespace FirstPersonPlayer
                 _isHoldingDropPropOrHold = false;
             }
 
-            if (sprintStart)
-                StaminaAffectorEvent.Trigger(
-                    StaminaAffectorEventType.StaminaDrainActivityStarted,
-                    PlayerMutableStatsManager.Instance.SprintStaminaDrainPerSecond);
-
-            if (sprintStop)
-                StaminaAffectorEvent.Trigger(
-                    StaminaAffectorEventType.StaminaDrainActivityStopped, 0f);
+            // if (sprintStart)
+            //     StaminaAffectorEvent.Trigger(
+            //         StaminaAffectorEventType.StaminaDrainActivityStarted,
+            //         PlayerMutableStatsManager.Instance.SprintStaminaDrainPerSecond);
+            //
+            // if (sprintStop)
+            //     StaminaAffectorEvent.Trigger(
+            //         StaminaAffectorEventType.StaminaDrainActivityStopped, 0f);
         }
 
         void ResetHoldDropPropOrHold()
@@ -168,14 +166,14 @@ namespace FirstPersonPlayer
                 case InputActions.Crouch:
                     return crouch;
 
-                case InputActions.Sprint:
-                    return sprint;
-
-                case InputActions.SprintStart:
-                    return sprintStart;
-
-                case InputActions.SprintStop:
-                    return sprintStop;
+                // case InputActions.Sprint:
+                //     return sprint;
+                //
+                // case InputActions.SprintStart:
+                //     return sprintStart;
+                //
+                // case InputActions.SprintStop:
+                //     return sprintStop;
 
                 case InputActions.InteractHeld:
                     return interactHeld;
