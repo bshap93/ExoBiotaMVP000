@@ -51,6 +51,9 @@ namespace Overview.NPC
 
         public AnimationClip idleClip;
 
+        [Title("Available Start Nodes")] [InfoBox("List all dialogue entry points for this NPC")]
+        public string[] availableStartNodes; // all possible start nodes
+
         [FormerlySerializedAs("NativeLanguage")]
         public LanguageType nativeLanguage;
 

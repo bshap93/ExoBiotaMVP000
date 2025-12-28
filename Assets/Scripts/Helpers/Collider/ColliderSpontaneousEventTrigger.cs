@@ -3,6 +3,7 @@ using Animancer;
 using Helpers.Events;
 using Helpers.Events.Triggering;
 using Manager;
+using PhysicsHandlers.Triggers;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Utilities.Interface;

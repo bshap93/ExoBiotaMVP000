@@ -1,22 +1,13 @@
-using System;
 using Events;
 using Helpers.Events.Triggering;
 using Manager;
 using Objectives.ScriptableObjects;
 using UnityEngine;
 
-namespace Objectives
+namespace PhysicsHandlers.Triggers
 {
     public class ColliderObjectiveTrigger : MonoBehaviour
     {
-        [Serializable]
-        public enum TriggerType
-        {
-            OnEnter,
-            OnExit,
-            Both
-        }
-
         public bool setNotTriggerableOnExit;
         public bool setNotTriggerableOnEnter;
 

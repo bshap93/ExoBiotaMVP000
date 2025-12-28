@@ -11,7 +11,7 @@ namespace Overview.OverviewMode
     {
         [Header("Identity")]
         [Tooltip("The NPC this button represents (stable id used by dialogue/quests).")]
-        [ValueDropdown("GetNPCIdOptions")]
+        [ValueDropdown("Options")]
         public string npcId;
 
 
@@ -27,20 +27,20 @@ namespace Overview.OverviewMode
         [Header("UI")] public AnimatedIconHandler icon; // MUIP animated icon on/near the button
 
         // cache last visible state
-        private bool _isOn;
+        bool _isOn;
 
 
-        private static string[] GetDockIdOptions()
+        static string[] GetDockIdOptions()
         {
             return DockManager.GetDockIdOptions();
         }
 
-        private static string[] GetNPCIdOptions()
+        static string[] GetNPCIdOptions()
         {
             return DialogueManager.GetAllNpcIdOptions();
         }
 
-        private static string[] GetLocationIdOptions()
+        static string[] GetLocationIdOptions()
         {
             return DockManager.GetLocationIdOptions();
         }

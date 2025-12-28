@@ -1,5 +1,6 @@
 ﻿using System;
 using MoreMountains.Tools;
+using PhysicsHandlers.Triggers;
 
 namespace Helpers.Events.Triggering
 {
@@ -9,13 +10,6 @@ namespace Helpers.Events.Triggering
         SetTriggerable
     }
 
-    [Serializable]
-    public enum TriggerColliderType
-    {
-        Spontaneous,
-        Tutorial,
-        Objective
-    }
 
     public struct TriggerColliderEvent
     {

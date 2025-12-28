@@ -37,6 +37,8 @@ namespace Manager.DialogueScene
 
         [SerializeField] bool autoSave;
 
+        [SerializeField] NpcDatabase npcDatabase;
+
         [SerializeField] RawImage avatarImage;
         [FormerlySerializedAs("interfaceBackground")] [SerializeField]
         GameObject nonNPCInterface;
@@ -251,20 +253,58 @@ namespace Manager.DialogueScene
             );
         }
 
+        // public static string[] GetAllNpcIdOptions()
+        // {
+        //     return new[]
+        //     {
+        //         // Convenience Structures
+        //         "NarratorAsNPC",
+        //         // NPCs
+        //         "FabricatorClancy", "ScientistHypolita", "ShadyCoreTrafficker", "None", "ScienceShopRobot",
+        //         "VitalSystems",
+        //         // Consoles
+        //         "Mine01GrottoSanctumConsole", "Mine01GrottoNookConsole",
+        //         // Aliens
+        //         "Sheolite001"
+        //     };
+        // }
+
         public static string[] GetAllNpcIdOptions()
         {
-            return new[]
+#if UNITY_EDITOR
+            // In editor, find the DialogueManager in the scene
+            if (!Application.isPlaying)
             {
-                // Convenience Structures
-                "NarratorAsNPC",
-                // NPCs
-                "FabricatorClancy", "ScientistHypolita", "ShadyCoreTrafficker", "None", "ScienceShopRobot",
-                "VitalSystems",
-                // Consoles
-                "Mine01GrottoSanctumConsole", "Mine01GrottoNookConsole",
-                // Aliens
-                "Sheolite001"
-            };
+                var manager = FindObjectOfType<DialogueManager>();
+                if (manager?.npcDatabase != null)
+                    return manager.npcDatabase.GetAllNpcIds();
+            }
+#endif
+
+            // At runtime, use the instance
+            if (Instance?.npcDatabase != null)
+                return Instance.npcDatabase.GetAllNpcIds();
+
+            return new[] { "NpcDatabase not assigned!" };
+        }
+
+        public static string[] GetNpcStartNodesByNpcId(string npcId)
+        {
+#if UNITY_EDITOR
+            // In editor, find the DialogueManager in the scene
+            if (!Application.isPlaying)
+            {
+                var manager = FindObjectOfType<DialogueManager>();
+                if (manager?.npcDatabase != null)
+                    return manager.npcDatabase.GetStartNodesForNpc(npcId);
+            }
+#endif
+
+            // At runtime, use the instance
+            if (Instance?.npcDatabase != null)
+                return Instance.npcDatabase.GetStartNodesForNpc(npcId);
+
+            return new string[] { };
         }
 
 #if UNITY_EDITOR

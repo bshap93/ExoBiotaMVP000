@@ -30,5 +30,43 @@ namespace Overview.NPC
 
             return _map.Values;
         }
+
+        // New methods for inspector dropdowns
+        public string[] GetAllNpcIds()
+        {
+            if (npcDefinitions == null || npcDefinitions.Length == 0)
+                return new string[] { };
+
+            return npcDefinitions
+                .Where(n => n != null && !string.IsNullOrEmpty(n.npcId))
+                .Select(n => n.npcId)
+                .ToArray();
+        }
+
+        public string[] GetStartNodesForNpc(string npcId)
+        {
+            // Ensure map is initialized
+            if (_map == null)
+            {
+                if (npcDefinitions != null && npcDefinitions.Length > 0)
+                    _map = npcDefinitions.ToDictionary(n => n.npcId, n => n);
+                else
+                    return new string[] { };
+            }
+
+            if (!_map.TryGetValue(npcId, out var def))
+            {
+                Debug.LogWarning($"NPC '{npcId}' not found in database");
+                return new string[] { };
+            }
+
+            if (def.availableStartNodes == null || def.availableStartNodes.Length == 0)
+            {
+                Debug.LogWarning($"NPC '{npcId}' has no availableStartNodes defined");
+                return new string[] { };
+            }
+
+            return def.availableStartNodes;
+        }
     }
 }

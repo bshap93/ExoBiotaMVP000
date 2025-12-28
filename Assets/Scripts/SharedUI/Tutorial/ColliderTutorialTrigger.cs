@@ -9,6 +9,7 @@ using Manager;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
 using Objectives.ScriptableObjects;
+using PhysicsHandlers.Triggers;
 using Rewired;
 using Sirenix.OdinInspector;
 using UnityEngine;
