@@ -38,7 +38,17 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
         [SerializeField] GameObject muzzleFlashPrefab;
         [SerializeField] GameObject hitSparksPrefab;
         [SerializeField] GameObject missSparksPrefab;
-        [SerializeField] LineRenderer beamLineRenderer;
+
+
+        [Header("Multi-Beam Settings")] [Tooltip("Number of beams to render (2 or 3 recommended)")] [SerializeField]
+        int numberOfBeams = 3;
+        [Tooltip("Vertical spacing between beams")] [SerializeField]
+        float beamVerticalSpacing = 0.04f;
+        [SerializeField] float beamVerticalOffset = -0.04f;
+
+
+        [SerializeField] LineRenderer[] beamLineRenderers;
+        [SerializeField] float beamWidth = 0.03f;
         [SerializeField] float beamDuration = 0.1f;
         [SerializeField] Color beamColor = Color.cyan;
 
@@ -76,15 +86,28 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
             _initialLocalPos = physicalRoot.transform.localPosition;
             AnimController = FindFirstObjectByType<AnimancerRightArmController>();
 
-            // Setup beam renderer
-            if (beamLineRenderer != null)
+            // Setup multiple beam renderers
+            SetupBeamRenderers();
+            // Setup persistent muzzle flash (Hovl style)
+            if (muzzleFlashPrefab != null && muzzlePosition != null)
             {
-                beamLineRenderer.enabled = false;
-                beamLineRenderer.startColor = beamColor;
-                beamLineRenderer.endColor = beamColor;
-                beamLineRenderer.startWidth = 0.05f;
-                beamLineRenderer.endWidth = 0.02f;
+                _muzzleFlashInstance = Instantiate(muzzleFlashPrefab, muzzlePosition.position, muzzlePosition.rotation);
+                _muzzleFlashInstance.transform.SetParent(muzzlePosition);
+                _muzzleParticles = _muzzleFlashInstance.GetComponentsInChildren<ParticleSystem>();
+
+                // Stop all particles initially
+                foreach (var ps in _muzzleParticles)
+                    if (ps.isPlaying)
+                        ps.Stop();
             }
+            // if (beamLineRenderer != null)
+            // {
+            //     beamLineRenderer.enabled = false;
+            //     beamLineRenderer.startColor = beamColor;
+            //     beamLineRenderer.endColor = beamColor;
+            //     beamLineRenderer.startWidth = 0.05f;
+            //     beamLineRenderer.endWidth = 0.02f;
+            // }
 
             // Setup persistent muzzle flash (Hovl style)
             if (muzzleFlashPrefab != null && muzzlePosition != null)
@@ -99,7 +122,6 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
                         ps.Stop();
             }
         }
-
         void Update()
         {
             if (_timeSinceLastUse < cooldownTime)
@@ -112,6 +134,35 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
         {
             // Clean up persistent muzzle flash
             if (_muzzleFlashInstance != null) Destroy(_muzzleFlashInstance);
+        }
+
+        void SetupBeamRenderers()
+        {
+            if (beamLineRenderers == null || beamLineRenderers.Length == 0)
+            {
+                Debug.LogWarning("No beam LineRenderers assigned. Please assign them in the Inspector.");
+                return;
+            }
+
+            // Ensure we only use the specified number of beams
+            numberOfBeams = Mathf.Min(numberOfBeams, beamLineRenderers.Length);
+
+            for (var i = 0; i < beamLineRenderers.Length; i++)
+            {
+                var beam = beamLineRenderers[i];
+                if (beam != null)
+                {
+                    beam.enabled = false;
+                    beam.startColor = beamColor;
+                    beam.endColor = beamColor;
+                    beam.startWidth = beamWidth;
+                    beam.endWidth = beamWidth * 0.8f;
+                    beam.positionCount = 2;
+
+                    // Hide unused beams
+                    if (i >= numberOfBeams) beam.gameObject.SetActive(false);
+                }
+            }
         }
 
         public override void Initialize(PlayerEquipment owner)
@@ -265,31 +316,67 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
             if (!mainCamera) mainCamera = Camera.main;
             if (!mainCamera) return;
 
-            // NEW: Calculate spread and apply it
+            // Calculate spread and apply it
             var spreadAngle = CalculateSpreadAngle();
             var baseDirection = mainCamera.transform.forward;
             var spreadDirection = ApplySpread(baseDirection, spreadAngle);
             var ray = new Ray(mainCamera.transform.position, spreadDirection);
-            // Plus debug visualization
+
+            // Debug visualization
             if (debugAccuracy)
             {
                 Debug.DrawRay(mainCamera.transform.position, baseDirection * range, Color.green, 1f);
                 Debug.DrawRay(mainCamera.transform.position, spreadDirection * range, Color.red, 1f);
             }
 
-            // var ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
             var didHit = Physics.Raycast(ray, out var hit, range, hitMask, QueryTriggerInteraction.Ignore);
-
             var endPoint = didHit ? hit.point : ray.GetPoint(range);
 
-            // Draw energy beam
-            if (beamLineRenderer != null) StartCoroutine(DrawBeam(muzzlePosition.position, endPoint));
+            // Draw multiple energy beams
+            StartCoroutine(DrawMultipleBeams(muzzlePosition.position, endPoint));
 
             if (didHit)
                 ProcessHit(hit);
             else
                 missFeedbacks?.PlayFeedbacks();
         }
+
+        IEnumerator DrawMultipleBeams(Vector3 start, Vector3 end)
+        {
+            if (beamLineRenderers == null || beamLineRenderers.Length == 0) yield break;
+
+            // Calculate the camera's up vector for vertical offset
+            var cameraUp = mainCamera.transform.up;
+
+            // Calculate vertical offset for centering the beams
+            var totalHeight = (numberOfBeams - 1) * beamVerticalSpacing;
+            var startOffset = totalHeight / 2f;
+
+            // Apply additional downward offset to entire beam array
+            var baseOffset = beamVerticalOffset * cameraUp;
+
+            // Draw each beam with vertical offset
+            for (var i = 0; i < numberOfBeams && i < beamLineRenderers.Length; i++)
+            {
+                var beam = beamLineRenderers[i];
+                if (beam == null) continue;
+
+                // Calculate vertical offset for this beam
+                var verticalOffset = (i * beamVerticalSpacing - startOffset) * cameraUp + baseOffset;
+
+                beam.enabled = true;
+                beam.SetPosition(0, start + verticalOffset);
+                beam.SetPosition(1, end + verticalOffset);
+            }
+
+            yield return new WaitForSeconds(beamDuration);
+
+            // Disable all beams
+            for (var i = 0; i < numberOfBeams && i < beamLineRenderers.Length; i++)
+                if (beamLineRenderers[i] != null)
+                    beamLineRenderers[i].enabled = false;
+        }
+
 
         void ProcessHit(RaycastHit hit)
         {
@@ -326,19 +413,6 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
                 SpawnHitFX(hitSparksPrefab, hit.point, hit.normal);
                 nonLocalHitFeedbacks?.PlayFeedbacks();
             }
-        }
-
-        IEnumerator DrawBeam(Vector3 start, Vector3 end)
-        {
-            if (beamLineRenderer == null) yield break;
-
-            beamLineRenderer.enabled = true;
-            beamLineRenderer.SetPosition(0, start);
-            beamLineRenderer.SetPosition(1, end);
-
-            yield return new WaitForSeconds(beamDuration);
-
-            beamLineRenderer.enabled = false;
         }
 
         void SpawnHitFX(GameObject vfxPrefab, Vector3 position, Vector3 normal)

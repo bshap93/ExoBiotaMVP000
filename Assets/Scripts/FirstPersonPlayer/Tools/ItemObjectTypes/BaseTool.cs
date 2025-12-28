@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 
 namespace FirstPersonPlayer.Tools.ItemObjectTypes
 {
-    [CreateAssetMenu(fileName = "BaseTool", menuName = "MoreMountains/InventoryEngine/BaseTool", order = 0)]
+    [CreateAssetMenu(fileName = "BaseTool", menuName = "Scriptable Objects/Items/BaseTool", order = 0)]
     [Serializable]
     public class BaseTool : MyBaseItem
     {

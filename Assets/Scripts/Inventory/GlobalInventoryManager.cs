@@ -43,6 +43,7 @@ namespace Inventory
         public const string DirigibleScannerInventoryName = "DirigMainScannerInventory";
         public const string KeyTypeInventoryName = "KeyItemsInventory";
         public const string InnerCoresInventoryName = "InnerCoresInventory";
+        public const string AmmoInventoryName = "AmmoInventory";
 
 
         static string _savePath;
@@ -60,6 +61,7 @@ namespace Inventory
         public MoreMountains.InventoryEngine.Inventory backEquipmentInventory;
         public MoreMountains.InventoryEngine.Inventory keyItemInventory;
         public MoreMountains.InventoryEngine.Inventory innerCoresInventory;
+        public MoreMountains.InventoryEngine.Inventory ammoInventory;
 
         [Header("Dirigible Inventory")] public MoreMountains.InventoryEngine.Inventory dirigibleInventory;
 
@@ -74,6 +76,7 @@ namespace Inventory
         public DefaultInventoryDefinition dirigibleScannerStartingItems;
         public DefaultInventoryDefinition keyItemStartingItems;
         public DefaultInventoryDefinition innerCoresStartingItems;
+        public DefaultInventoryDefinition ammoStartingItems;
 
         [FormerlySerializedAs("intitialPlayerFPMaxWeight")] [Header("Initial Weight Limits")] [SerializeField]
         float initialPlayerFPMaxWeight;
