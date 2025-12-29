@@ -109,7 +109,11 @@ namespace Helpers.AnimancerHelper
             );
 
             // Make walk animation loop
-            _currentLocomotionState.Events(this).OnEnd = () => { _currentLocomotionState.Time = 0f; };
+            _currentLocomotionState.Events(this).OnEnd = () =>
+            {
+                _currentLocomotionState.Time = 0f;
+                Debug.Log("Looping walk animation");
+            };
         }
 
         /// <summary>
@@ -145,22 +149,26 @@ namespace Helpers.AnimancerHelper
             LoopIdleAnimation();
         }
 
-        /// <summary>
-        ///     Set locomotion based on movement speed
-        /// </summary>
-        /// <param name="isMoving">Is the player moving?</param>
-        /// <param name="isRunning">Is the player running/sprinting?</param>
         public void UpdateLocomotion(bool isMoving, bool isRunning = false)
         {
             if (IsPlayingAction())
                 return; // Don't re-trigger walk/run/idle
 
             if (!isMoving)
-                MoveToIdle();
+            {
+                if (_currentLocoMode != LocomotionState.Idle) 
+                    MoveToIdle();
+            }
             else if (isRunning)
-                LoopRunAnimation();
+            {
+                if (_currentLocoMode != LocomotionState.Run) 
+                    LoopRunAnimation();
+            }
             else
-                LoopWalkAnimation();
+            {
+                if (_currentLocoMode != LocomotionState.Walk)
+                    LoopWalkAnimation();
+            }
         }
 
         #endregion

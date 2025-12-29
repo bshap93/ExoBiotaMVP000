@@ -5725,7 +5725,7 @@ MonoBehaviour:
   currentToolAnimationSet: {fileID: 11400000, guid: 1d8b743d361c71f4089034c7bb42d9a7, type: 2}
   animancerComponent: {fileID: 726400461300103764}
   defaultTransitionDuration: 0.25
-  locomotionTransitionDuration: 0.15
+  locomotionTransitionDuration: 0.25
 --- !u!1 &6360253695837798188
 GameObject:
   m_ObjectHideFlags: 0
