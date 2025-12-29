@@ -34,13 +34,10 @@ namespace Overview.NPC
         // New methods for inspector dropdowns
         public string[] GetAllNpcIds()
         {
-            if (npcDefinitions == null || npcDefinitions.Length == 0)
-                return new string[] { };
-
-            return npcDefinitions
-                .Where(n => n != null && !string.IsNullOrEmpty(n.npcId))
-                .Select(n => n.npcId)
-                .ToArray();
+            return new[]
+            {
+                "ScientistHypolita"
+            };
         }
 
         public string[] GetStartNodesForNpc(string npcId)
