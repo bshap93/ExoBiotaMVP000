@@ -68,7 +68,7 @@ namespace SharedUI
             // MyUIEvent.Trigger(UIType.Any, UIActionType.Close);
             ResetFields();
             MainTutorialBitEvent.Trigger(id, MainTutorialBitEventType.FinishTutBit);
-            MyUIEvent.Trigger(UIType.TutorialWindow, UIActionType.Close);
+            // MyUIEvent.Trigger(UIType.TutorialWindow, UIActionType.Close);
         }
 
         public void Open(MainTutBitWindowArgs mainTutBitWindowArgs)
