@@ -6748,9 +6748,6 @@ MonoBehaviour:
   scrollBetweenTools: 0
   jump: 0
   jumpHeld: 0
-  sprint: 0
-  sprintStart: 0
-  sprintStop: 0
   analogMovement: 0
   interact: 0
   interactHeld: 0

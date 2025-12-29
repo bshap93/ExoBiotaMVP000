@@ -142,7 +142,7 @@ namespace Helpers.AnimancerHelper
         /// </summary>
         public void MoveToIdle()
         {
-            if (_currentLocoMode != LocomotionState.Idle) LoopIdleAnimation();
+            LoopIdleAnimation();
         }
 
         /// <summary>

@@ -777,6 +777,7 @@ namespace FirstPersonPlayer.InputHandling
             {
                 CharacterActor.PlanarVelocity = Vector3.zero;
                 CharacterActor.VerticalVelocity = Vector3.zero;
+                UpdateArmLocomotion();
                 return;
             }
 

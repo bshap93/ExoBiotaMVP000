@@ -121,26 +121,6 @@ namespace FirstPersonPlayer.Tools
         }
 
 
-        // void Update()
-        // {
-        //     if (rewiredInput != null)
-        //     {
-        //         if (rewiredInput.useEquipped)
-        //         {
-        //             if (hand == Hand.Right)
-        //                 UseCurrentTool();
-        //         }
-        //         else if (rewiredInput.leftHandToggle && autoEquipLightSourceInLeftHand)
-        //         {
-        //             if (hand == Hand.Left)
-        //             {
-        //                 if (CurrentToolSo == null) TryEquipLightSourceTool();
-        //                 UseCurrentTool();
-        //             }
-        //         }
-        //     }
-        // }
-        //
 
         void OnEnable()
         {
@@ -302,8 +282,7 @@ namespace FirstPersonPlayer.Tools
         public static PlayerEquipment GetWithActiveToolOrRight()
         {
             if (InstanceRight?.CurrentRuntimeTool != null) return InstanceRight;
-            // if (InstanceLeft?.CurrentRuntimeTool != null) return InstanceLeft;
-            // return InstanceRight ?? InstanceLeft;
+
             return InstanceRight;
         }
         // Example tool-type query
@@ -354,7 +333,6 @@ namespace FirstPersonPlayer.Tools
                 if (rightArmGameObject != null) rightArmGameObject.SetActive(true);
                 animancerRightArmController.currentToolAnimationSet = tool.toolAnimationSet;
                 animancerRightArmController.UpdateAnimationSet();
-                Debug.Log("Right hand tool instantiated at secondary anchor");
             }
             else
             {
@@ -365,7 +343,6 @@ namespace FirstPersonPlayer.Tools
                     animancerRightArmController.UpdateAnimationSet();
                 }
 
-                Debug.Log("Left hand tool instantiated at primary anchor");
             }
 
             // var go = Instantiate(tool.FPToolPrefab, primaryToolAnchor, false);
@@ -381,12 +358,6 @@ namespace FirstPersonPlayer.Tools
             CurrentToolSo = tool;
 
 
-            // if (hand == Hand.Right && animancerRightArmController != null)
-            // {
-            //     // animancerRightArmController.gameObject.SetActive(true);
-            //
-            //
-            // }
 
             CurrentRuntimeTool.Initialize(this);
 
@@ -436,20 +407,12 @@ namespace FirstPersonPlayer.Tools
 
                 {
                     animancerRightArmController.gameObject.SetActive(false);
+                    animancerRightArmController.currentToolAnimationSet = null;
                 }
 
-                animancerRightArmController.currentToolAnimationSet = null;
             }
 
-            // if (CurrentToolSo != null)
-            //     if (CurrentToolSo.hasObjectivesEquipping)
-            //         foreach (var equipObjective in equipObjectivesArray)
-            //             if (equipObjective.toolScriptableObjectId == CurrentToolSo.ItemID)
-            //                 if (equipObjective.onEventEquipment == EquipObjectives.OnEvent.OnUnequip)
-            //                     ObjectiveEvent.Trigger(
-            //                         equipObjective.objectiveToCompleteId, ObjectiveEventType.ObjectiveCompleted
-            //                     );
-            //
+
 
             CurrentToolSo = null;
             _nextUseTime = 0f;
