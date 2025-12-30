@@ -114,29 +114,29 @@ namespace LevelConstruct.Highlighting
 
         public void OnMMEvent(MyUIEvent eventType)
         {
-            if (eventType.uiActionType == UIActionType.Open)
-            {
-                // Save current state before wiping
-                _isHighlighted = _highlightEffect.highlighted;
-                _isTargetVisible = _highlightEffect.targetFX;
-
-                // Now wipe
-                _highlightEffect.highlighted = false;
-                _highlightEffect.targetFX = false;
-                _highlightEffect.targetFXVisibility = Visibility.OnlyWhenOccluded;
-                _highlightEffect.Refresh();
-            }
-            else if (eventType.uiActionType == UIActionType.Close)
-            {
-                // Restore last saved state
-                _highlightEffect.highlighted = _isHighlighted;
-                _highlightEffect.targetFX = _isTargetVisible;
-                _highlightEffect.targetFXVisibility = _isTargetVisible
-                    ? Visibility.AlwaysOnTop
-                    : Visibility.OnlyWhenOccluded;
-
-                _highlightEffect.Refresh();
-            }
+            // if (eventType.uiActionType == UIActionType.Open)
+            // {
+            //     // Save current state before wiping
+            //     _isHighlighted = _highlightEffect.highlighted;
+            //     _isTargetVisible = _highlightEffect.targetFX;
+            //
+            //     // Now wipe
+            //     _highlightEffect.highlighted = false;
+            //     _highlightEffect.targetFX = false;
+            //     _highlightEffect.targetFXVisibility = Visibility.OnlyWhenOccluded;
+            //     _highlightEffect.Refresh();
+            // }
+            // else if (eventType.uiActionType == UIActionType.Close)
+            // {
+            //     // Restore last saved state
+            //     _highlightEffect.highlighted = _isHighlighted;
+            //     _highlightEffect.targetFX = _isTargetVisible;
+            //     _highlightEffect.targetFXVisibility = _isTargetVisible
+            //         ? Visibility.AlwaysOnTop
+            //         : Visibility.OnlyWhenOccluded;
+            //
+            //     _highlightEffect.Refresh();
+            // }
         }
 
         public void OnMMEvent(ScannerExaminedVFXEvent e)

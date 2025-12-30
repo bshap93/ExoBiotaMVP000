@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 6366262875888271362}
   - component: {fileID: 50622077108301320}
   - component: {fileID: 4640213103877572443}
+  - component: {fileID: 722071457820009409}
   m_Layer: 8
   m_Name: BrittleStalkWarrenSmall00
   m_TagString: HackableBiostructure
@@ -130,7 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 888380afc233049ce9e618f9f36c8ba8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profile: {fileID: 11400000, guid: 8ca68fbbe5d197c4487a469fb7cf582a, type: 2}
+  profile: {fileID: 11400000, guid: 8f1b643d11bbe524c9ad0eb081bc9932, type: 2}
   profileSync: 1
   camerasLayerMask:
     serializedVersion: 2
@@ -177,7 +178,7 @@ MonoBehaviour:
   overlayTextureScrolling: {x: 0, y: 0}
   overlayVisibility: 0
   outline: 1
-  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  outlineColor: {r: 0.44025147, g: 0.006922148, b: 0.025718434, a: 1}
   outlineColorStyle: 0
   outlineGradient:
     serializedVersion: 2
@@ -210,7 +211,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   outlineGradientInLocalSpace: 0
-  outlineWidth: 0.67
+  outlineWidth: 0.69
   outlineBlurPasses: 2
   outlineQuality: 1
   outlineEdgeMode: 0
@@ -240,16 +241,16 @@ MonoBehaviour:
   glowPasses:
   - offset: 4
     alpha: 0.1
-    color: {r: 1, g: 0.43137255, b: 0.3882353, a: 1}
+    color: {r: 0.1882353, g: 0.8, b: 0.6784314, a: 1}
   - offset: 3
     alpha: 0.2
-    color: {r: 1, g: 0.43137255, b: 0.3882353, a: 1}
+    color: {r: 0.1882353, g: 0.8, b: 0.6784314, a: 1}
   - offset: 2
     alpha: 0.3
-    color: {r: 1, g: 0.43137255, b: 0.3882353, a: 1}
+    color: {r: 0.1882353, g: 0.8, b: 0.6784314, a: 1}
   - offset: 1
     alpha: 0.4
-    color: {r: 1, g: 0.43137255, b: 0.3882353, a: 1}
+    color: {r: 0.1882353, g: 0.8, b: 0.6784314, a: 1}
   glowMaskMode: 0
   innerGlow: 0.05
   innerGlowWidth: 1
@@ -257,16 +258,16 @@ MonoBehaviour:
   innerGlowBlendMode: 0
   innerGlowVisibility: 0
   targetFX: 0
-  targetFXTexture: {fileID: 2800000, guid: 2175e7b567174444cb43d771ef12f410, type: 3}
-  targetFXColor: {r: 1, g: 0.4304654, b: 0.38823533, a: 1}
+  targetFXTexture: {fileID: 2800000, guid: d3f9f79929c708d45b0cc96aa9af8fdd, type: 3}
+  targetFXColor: {r: 0.93333334, g: 0.9490196, b: 0.7294118, a: 1}
   targetFXCenter: {fileID: 0}
-  targetFXRotationSpeed: 0
-  targetFXInitialScale: 1
-  targetFXEndScale: 0.4
+  targetFXRotationSpeed: 50
+  targetFXInitialScale: 4
+  targetFXEndScale: 1.5
   targetFXScaleToRenderBounds: 0
   targetFXUseEnclosingBounds: 0
   targetFXAlignToGround: 0
-  targetFXOffset: {x: 0, y: 1, z: 0}
+  targetFXOffset: {x: 0, y: 0, z: 0}
   targetFXFadePower: 32
   targetFXGroundMaxDistance: 15
   targetFXGroundLayerMask:
@@ -276,7 +277,7 @@ MonoBehaviour:
   targetFXStayDuration: 1.5
   targetFXVisibility: 1
   iconFX: 0
-  iconFXMesh: {fileID: 4300000, guid: 9bad58a629f5c4546bb9d148b6c43b7e, type: 3}
+  iconFXMesh: {fileID: 0}
   iconFXLightColor: {r: 1, g: 1, b: 1, a: 1}
   iconFXDarkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   iconFXCenter: {fileID: 0}
@@ -294,7 +295,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   seeThroughOccluderThreshold: 0.4
-  seeThroughOccluderMaskAccurate: 0
+  seeThroughOccluderMaskAccurate: 1
   seeThroughOccluderCheckInterval: 1
   seeThroughOccluderCheckIndividualObjects: 0
   seeThroughDepthOffset: 0
@@ -331,7 +332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightOnHover: 1
-  triggerMode: 1
+  triggerMode: 2
   raycastCamera: {fileID: 0}
   raycastSource: 1
   raycastLayerMask:
@@ -342,7 +343,7 @@ MonoBehaviour:
   respectUI: 1
   volumeLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   selectOnClick: 0
   selectedProfile: {fileID: 0}
   selectedAndHighlightedProfile: {fileID: 0}
@@ -578,7 +579,6 @@ MonoBehaviour:
   actionText: Break
   trigger: {fileID: 6392069568347120475}
   gatedBreakableInteractionDetails: {fileID: 11400000, guid: 0a6a47d4be95d6640a6172f05d8bc173, type: 2}
-  hatchetBreakable: {fileID: 0}
   breakActionId: 54
   interactionDistance: 2
   loopedInteractionFeedbacks: {fileID: 3771652228430234889}
@@ -591,8 +591,28 @@ MonoBehaviour:
   onBreakFeedbacks: {fileID: 7518590549183490000}
   hitParticles: {fileID: 0}
   breakParticles: {fileID: 0}
-  bioOrganismNode: {fileID: 0}
   rf: {fileID: 50622077108301320}
+--- !u!135 &722071457820009409
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1160839599030103873}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 2
+  m_Center: {x: 0.0020781609, y: 0.36198956, z: -0.0005084873}
 --- !u!1 &3469991829118237979
 GameObject:
   m_ObjectHideFlags: 0

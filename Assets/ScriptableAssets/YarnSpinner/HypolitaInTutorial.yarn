@@ -23,9 +23,9 @@ title: ReadyToBeginTrainingForSubter
 ---
 Hypolita: Now, then, you'll find a hatchet on the table to your right. And the bailout facility just past that.
 <<trigger_gesture  ScientitstHypolita ConcedingAPoint>>
-Hypolita: ....Slight hiccup: I've got a visual on the facility. Looks like those Stalks cropped up in the facility's entrance.
+Hypolita: ....Slight hiccup: I've got a visual on the facility. Looks like those Stalks cropped up again, blocking the the facility's entrance.
 <<trigger_gesture ScientistHypolita LayingItAllOut>>
-Hypolita: Use your axd to clear out thse obstructing your way. They are quite brittle. Two or so hits will cause a section to crumble. 
+Hypolita: Use your axe to clear out thse obstructing your way. They are quite brittle. Two or so hits will cause a section to crumble. 
 ===
 
 

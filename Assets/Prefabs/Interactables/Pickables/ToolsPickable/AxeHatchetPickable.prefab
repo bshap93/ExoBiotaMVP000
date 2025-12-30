@@ -379,6 +379,7 @@ GameObject:
   - component: {fileID: 7157876648883980479}
   - component: {fileID: 8425715041330262823}
   - component: {fileID: 2137311080758979808}
+  - component: {fileID: 5016354347572011733}
   m_Layer: 8
   m_Name: AxeHatchetPickable
   m_TagString: Untagged
@@ -394,9 +395,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4239224177064474150}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.70710576, y: -0, z: -0, w: 0.70710784}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.495, y: 1.495, z: 1.495}
+  m_LocalScale: {x: 1.4949999, y: 1.4949999, z: 1.4949999}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6998658521800637749}
@@ -615,8 +616,8 @@ MonoBehaviour:
   innerGlowColor: {r: 1, g: 1, b: 1, a: 1}
   innerGlowBlendMode: 0
   innerGlowVisibility: 0
-  targetFX: 0
-  targetFXTexture: {fileID: 0}
+  targetFX: 1
+  targetFXTexture: {fileID: 2800000, guid: 1de3c566a6c8c405b9f6f453137273ec, type: 3}
   targetFXColor: {r: 1, g: 1, b: 1, a: 1}
   targetFXCenter: {fileID: 0}
   targetFXRotationSpeed: 50
@@ -633,9 +634,9 @@ MonoBehaviour:
     m_Bits: 4294967295
   targetFXTransitionDuration: 0.5
   targetFXStayDuration: 1.5
-  targetFXVisibility: 1
+  targetFXVisibility: 0
   iconFX: 0
-  iconFXMesh: {fileID: 0}
+  iconFXMesh: {fileID: 1853827350423519691, guid: 9dfbe757542ecfc42aa27c030de03513, type: 3}
   iconFXLightColor: {r: 1, g: 1, b: 1, a: 1}
   iconFXDarkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   iconFXCenter: {fileID: 0}
@@ -690,7 +691,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightOnHover: 1
-  triggerMode: 1
+  triggerMode: 2
   raycastCamera: {fileID: 0}
   raycastSource: 1
   raycastLayerMask:
@@ -701,7 +702,7 @@ MonoBehaviour:
   respectUI: 1
   volumeLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   selectOnClick: 0
   selectedProfile: {fileID: 0}
   selectedAndHighlightedProfile: {fileID: 0}
@@ -793,3 +794,24 @@ MonoBehaviour:
   placedByPlayerEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!135 &5016354347572011733
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4239224177064474150}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 2
+  m_Center: {x: -0.0000001226031, y: 0.025830097, z: 0.24466003}

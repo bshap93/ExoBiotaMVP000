@@ -69,7 +69,7 @@ namespace LevelConstruct.Interactable.ItemInteractables
 
         public string GetName()
         {
-            return consoleType != null ? consoleType.name : "Unknown Console";
+            return consoleType != null ? consoleType.consoleName : "Unknown Console";
         }
 
         public virtual Sprite GetIcon()
