@@ -23,8 +23,7 @@ namespace Manager.DialogueScene
             if (Instance == null)
             {
                 Instance = this;
-                if (SaveManager.Instance.saveManagersDontDestroyOnLoad)
-                    DontDestroyOnLoad(gameObject);
+
             }
             else
             {

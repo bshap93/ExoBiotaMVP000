@@ -9,6 +9,7 @@ using Inventory;
 using Manager.SceneManagers;
 using MoreMountains.InventoryEngine;
 using Objectives;
+using Overview.NPC;
 using SharedUI;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -17,7 +18,7 @@ using Yarn.Unity;
 
 namespace Manager.DialogueScene.DialogueCommands
 {
-    public partial class DialogueGameCommands : MonoBehaviour
+    public class DialogueGameCommands : MonoBehaviour
     {
         [Tooltip("If not assigned, will try DialogueManager.Instance.dialogueRunner")]
         public DialogueRunner dialogueRunner;
@@ -38,6 +39,8 @@ namespace Manager.DialogueScene.DialogueCommands
 
             if (variableStorage == null && DialogueManager.Instance != null)
                 variableStorage = DialogueManager.Instance.variableStorage;
+            
+            dialogueRunner.AddCommandHandler("test_command", TestCommand);
         }
 
         // ---------- Inventory  commands ----------
@@ -99,6 +102,12 @@ namespace Manager.DialogueScene.DialogueCommands
         {
             if (DoorManager.Instance != null)
                 DoorManager.Instance.GrantKey(keyId);
+        }
+
+        [YarnCommand("test_command")]
+        public void TestCommand()
+        {
+            Debug.Log("Test command executed.");
         }
 
         [YarnCommand("revoke_key")]
@@ -340,6 +349,81 @@ namespace Manager.DialogueScene.DialogueCommands
         public IEnumerator Wait(float seconds)
         {
             yield return new WaitForSeconds(seconds);
+        }
+        
+        // Dialogue Gesture Commands
+        // Character Avatar animations -----------
+        public GameObject characterNPCRoot;
+        [YarnCommand("shrug")]
+        public void Shrug(string npcId)
+        {
+            TriggerGesture(npcId, "shrug");
+        }
+
+        [YarnCommand("greet")]
+        public void Greet(string npcId)
+        {
+            TriggerGesture(npcId, "greet");
+        }
+
+        [YarnCommand("smalltalk")]
+        public void SmallTalk(string npcId)
+        {
+            TriggerGesture(npcId, "smalltalk");
+        }
+
+        [YarnCommand("trigger_gesture")]
+        public void TriggerGesture(string npcId, string key)
+        {
+            // Find NPC by id in the scene
+            if (characterNPCRoot == null)
+            {
+                Debug.LogError($"NPC '{npcId}' not found in scene.");
+                return;
+            }
+
+            var helper = characterNPCRoot.GetComponentInChildren<NPCCharacterAnimancerHelper>();
+
+            if (helper == null) return;
+
+            helper.PlayGesture(key);
+        }
+
+
+        void TriggerSound(string npcId, string key)
+        {
+            if (characterNPCRoot == null)
+            {
+                Debug.LogError($"NPC '{npcId}' not found in scene.");
+                return;
+            }
+
+            var helper = characterNPCRoot.GetComponentInChildren<NPCCharacterAnimancerHelper>();
+
+            if (helper == null) return;
+
+            helper.PlaySound(key);
+        }
+
+
+        [YarnCommand("scoffs")]
+        public void Scoffs(string npcId)
+        {
+            TriggerGesture(npcId, "scoffs");
+        }
+
+        [YarnCommand("pleased")]
+        public void Pleased(string npcId)
+        {
+            TriggerGesture(npcId, "pleased");
+        }
+
+        // Character Sounds
+
+        [YarnCommand("play_greet_sound")]
+        public void PlayGreetSound(string npcId)
+        {
+            TriggerSound(npcId, "greet");
         }
 
         // ---------- Tutorial Media Commands ----------

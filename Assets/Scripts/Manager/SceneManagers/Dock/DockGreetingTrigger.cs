@@ -1,14 +1,13 @@
 ﻿using Events;
 using Helpers.Events;
 using Manager.DialogueScene;
-using Manager.SceneManagers.Dock;
 using MoreMountains.Tools;
 using Overview.NPC;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Manager.SceneManagers.Global.Dock
+namespace Manager.SceneManagers.Dock
 {
     /// Attaclh to the Core scene (lives across modes)
     public class DockGreetingTrigger : MonoBehaviour, MMEventListener<DockingEvent>
