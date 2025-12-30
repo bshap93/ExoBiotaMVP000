@@ -15,6 +15,8 @@ namespace Overview.NPC
 
         public MMF_Player dialogueSoundFeedbackPlayer;
 
+        [SerializeField] float gestureTransitionDuration = 0.2f;
+
         AnimancerState _idleState;
 
 
@@ -40,11 +42,11 @@ namespace Overview.NPC
                 return;
             }
 
-            var state = _animancer.Play(clip);
+            var state = _animancer.Play(clip, gestureTransitionDuration);
             state.Events(_animancer).OnEnd = () =>
             {
                 if (_idleState != null)
-                    _animancer.Play(_idleState);
+                    _animancer.Play(_idleState, gestureTransitionDuration);
             };
         }
         public void PlaySound(string key)

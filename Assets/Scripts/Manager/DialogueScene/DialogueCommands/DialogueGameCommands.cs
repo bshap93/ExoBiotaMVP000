@@ -5,9 +5,7 @@ using Events;
 using Helpers.Events;
 using Helpers.Events.ManagerEvents;
 using Helpers.StaticHelpers;
-using Inventory;
 using Manager.SceneManagers;
-using MoreMountains.InventoryEngine;
 using Objectives;
 using Overview.NPC;
 using SharedUI;
@@ -30,6 +28,10 @@ namespace Manager.DialogueScene.DialogueCommands
 #endif
         public int defaultActionId = -1;
 
+        // Dialogue Gesture Commands
+        // Character Avatar animations -----------
+        public GameObject characterNPCRoot;
+
 
         void Awake()
         {
@@ -39,40 +41,40 @@ namespace Manager.DialogueScene.DialogueCommands
 
             if (variableStorage == null && DialogueManager.Instance != null)
                 variableStorage = DialogueManager.Instance.variableStorage;
-            
+
             dialogueRunner.AddCommandHandler("test_command", TestCommand);
         }
 
         // ---------- Inventory  commands ----------
 
 // DialogueGameCommands.cs
-        [YarnCommand("give_player_item")]
-        public void GivePlayerItem(string itemId, int amount = 1)
-        {
-            Debug.Log($"[Yarn] give_player_item on {name} (instanceID={GetInstanceID()}) x{amount}");
-
-            var inv = GlobalInventoryManager.Instance;
-            if (inv == null)
-            {
-                Debug.LogWarning("GlobalInventoryManager not found, cannot give item.");
-                return;
-            }
-
-            var item = inv.CreateItem(itemId); // SINGLE unit item
-            if (item == null)
-            {
-                Debug.LogWarning($"Item with ID '{itemId}' not found.");
-                return;
-            }
-
-            MMInventoryEvent.Trigger(
-                MMInventoryEventType.Pick, null,
-                item.TargetInventoryName, item, amount, 0, inv.playerId);
-            // if (inv.playerInventory.AddItem(item, amount))
-            //     // Event stays 'amount' so your PickupDisplayer shows the right number
-            //     MMInventoryEvent.Trigger(MMInventoryEventType.Pick, null,
-            //         item.TargetInventoryName, item, amount, 0, inv.playerId);
-        }
+        // [YarnCommand("give_player_item")]
+        // public void GivePlayerItem(string itemId, int amount = 1)
+        // {
+        //     Debug.Log($"[Yarn] give_player_item on {name} (instanceID={GetInstanceID()}) x{amount}");
+        //
+        //     var inv = GlobalInventoryManager.Instance;
+        //     if (inv == null)
+        //     {
+        //         Debug.LogWarning("GlobalInventoryManager not found, cannot give item.");
+        //         return;
+        //     }
+        //
+        //     var item = inv.CreateItem(itemId); // SINGLE unit item
+        //     if (item == null)
+        //     {
+        //         Debug.LogWarning($"Item with ID '{itemId}' not found.");
+        //         return;
+        //     }
+        //
+        //     MMInventoryEvent.Trigger(
+        //         MMInventoryEventType.Pick, null,
+        //         item.TargetInventoryName, item, amount, 0, inv.playerId);
+        //     // if (inv.playerInventory.AddItem(item, amount))
+        //     //     // Event stays 'amount' so your PickupDisplayer shows the right number
+        //     //     MMInventoryEvent.Trigger(MMInventoryEventType.Pick, null,
+        //     //         item.TargetInventoryName, item, amount, 0, inv.playerId);
+        // }
 
         [YarnCommand("remove_player_item")]
         public void RemovePlayerItem(string itemId)
@@ -350,44 +352,40 @@ namespace Manager.DialogueScene.DialogueCommands
         {
             yield return new WaitForSeconds(seconds);
         }
-        
-        // Dialogue Gesture Commands
-        // Character Avatar animations -----------
-        public GameObject characterNPCRoot;
-        [YarnCommand("shrug")]
-        public void Shrug(string npcId)
-        {
-            TriggerGesture(npcId, "shrug");
-        }
+        // [YarnCommand("shrug")]
+        // public void Shrug(string npcId)
+        // {
+        //     TriggerGesture(npcId, "shrug");
+        // }
+        //
+        // [YarnCommand("greet")]
+        // public void Greet(string npcId)
+        // {
+        //     TriggerGesture(npcId, "greet");
+        // }
+        //
+        // [YarnCommand("smalltalk")]
+        // public void SmallTalk(string npcId)
+        // {
+        //     TriggerGesture(npcId, "smalltalk");
+        // }
 
-        [YarnCommand("greet")]
-        public void Greet(string npcId)
-        {
-            TriggerGesture(npcId, "greet");
-        }
-
-        [YarnCommand("smalltalk")]
-        public void SmallTalk(string npcId)
-        {
-            TriggerGesture(npcId, "smalltalk");
-        }
-
-        [YarnCommand("trigger_gesture")]
-        public void TriggerGesture(string npcId, string key)
-        {
-            // Find NPC by id in the scene
-            if (characterNPCRoot == null)
-            {
-                Debug.LogError($"NPC '{npcId}' not found in scene.");
-                return;
-            }
-
-            var helper = characterNPCRoot.GetComponentInChildren<NPCCharacterAnimancerHelper>();
-
-            if (helper == null) return;
-
-            helper.PlayGesture(key);
-        }
+        // [YarnCommand("trigger_gesture")]
+        // public void TriggerGesture(string npcId, string key)
+        // {
+        //     // Find NPC by id in the scene
+        //     if (characterNPCRoot == null)
+        //     {
+        //         Debug.LogError($"NPC '{npcId}' not found in scene.");
+        //         return;
+        //     }
+        //
+        //     var helper = characterNPCRoot.GetComponentInChildren<NPCCharacterAnimancerHelper>();
+        //
+        //     if (helper == null) return;
+        //
+        //     helper.PlayGesture(key);
+        // }
 
 
         void TriggerSound(string npcId, string key)
@@ -405,19 +403,19 @@ namespace Manager.DialogueScene.DialogueCommands
             helper.PlaySound(key);
         }
 
-
-        [YarnCommand("scoffs")]
-        public void Scoffs(string npcId)
-        {
-            TriggerGesture(npcId, "scoffs");
-        }
-
-        [YarnCommand("pleased")]
-        public void Pleased(string npcId)
-        {
-            TriggerGesture(npcId, "pleased");
-        }
-
+        //
+        // [YarnCommand("scoffs")]
+        // public void Scoffs(string npcId)
+        // {
+        //     TriggerGesture(npcId, "scoffs");
+        // }
+        //
+        // [YarnCommand("pleased")]
+        // public void Pleased(string npcId)
+        // {
+        //     TriggerGesture(npcId, "pleased");
+        // }
+        //
         // Character Sounds
 
         [YarnCommand("play_greet_sound")]

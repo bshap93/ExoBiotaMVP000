@@ -1,5 +1,4 @@
 ﻿using System;
-using Domains.Player.Events;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
 using Helpers.Events;
 using Helpers.Interfaces;
@@ -28,6 +27,7 @@ namespace Manager
         [SerializeField] string dirigibleInventoryNameId;
 
         [SerializeField] NPCShopStock[] npcStocks;
+        CustomCommands _dialogueCustomCommands;
 
         DialogueGameCommands _dialogueGameCommands;
         public static ShopManager Instance { get; private set; }
@@ -63,6 +63,9 @@ namespace Manager
                     if (_dialogueGameCommands == null)
                         _dialogueGameCommands = FindFirstObjectByType<DialogueGameCommands>();
 
+                    if (_dialogueCustomCommands == null)
+                        _dialogueCustomCommands = FindFirstObjectByType<CustomCommands>();
+
                     if (shoppingEvent.InventoryId == playerInventoryNameId)
                         _dialogueGameCommands?.RemovePlayerItem(shoppingEvent.CurrentItem.ItemID);
                     else if (shoppingEvent.InventoryId == dirigibleInventoryNameId)
@@ -81,7 +84,7 @@ namespace Manager
                         if (_dialogueGameCommands == null)
                             _dialogueGameCommands = FindFirstObjectByType<DialogueGameCommands>();
 
-                        _dialogueGameCommands?.GivePlayerItem(shoppingEvent.CurrentItem.ItemID);
+                        _dialogueCustomCommands?.GivePlayerItem(shoppingEvent.CurrentItem.ItemID);
                         buyFeedbacks?.PlayFeedbacks();
                     }
                     else

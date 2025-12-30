@@ -1,7 +1,7 @@
 title: InitialTutorialCommunication
 ---
 -> Ok, Dr. Hypolita. I'm in place at the cavern atrium. 
-<<test_command DialogueGameCommands>>
+<<trigger_gesture  ScientitstHypolita ShakeHead>>
 Hypolita: Good, you're in position to start your training. Any questions?
 -> What is this training for again?
     <<jump WhatIsThisTrainingFor>>
