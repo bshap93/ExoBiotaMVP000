@@ -25,6 +25,14 @@ namespace Overview.NPC
     }
 
     [Serializable]
+    public struct IdleLoopingEntry
+    {
+        public string key; // e.g. "shrug", "scoff", "wave"
+        public AnimationClip clip; // NPC-specific animation
+    }
+
+
+    [Serializable]
     public struct SoundEntry
     {
         public string key; // e.g. "greeting", "farewell"
@@ -46,10 +54,11 @@ namespace Overview.NPC
         public GameObject characterPrefab;
 
         [FoldoutGroup("Animations")] public List<GestureEntry> gestures = new();
+        [FoldoutGroup("Idle Animations")] public List<IdleLoopingEntry> idleLoopingAnimations = new();
+        public int initialIdleLoopingAnimationIndex;
 
         [FoldoutGroup("Sounds")] public List<SoundEntry> sounds = new();
 
-        public AnimationClip idleClip;
 
         [Title("Available Start Nodes")] [InfoBox("List all dialogue entry points for this NPC")]
         public string[] availableStartNodes; // all possible start nodes
@@ -58,6 +67,9 @@ namespace Overview.NPC
         public LanguageType nativeLanguage;
 
         public bool hasAvatarDiorama = true;
+
+        public float gestureTransitionDuration = 0.2f;
+        public float idleTransitionDuration = 0.2f;
 
         static string[] GetNpcIdOptions()
         {
@@ -72,6 +84,14 @@ namespace Overview.NPC
         public AnimationClip GetGesture(string key)
         {
             foreach (var g in gestures)
+                if (g.key == key)
+                    return g.clip;
+
+            return null;
+        }
+        public AnimationClip GetIdleLoopingClip(string key)
+        {
+            foreach (var g in idleLoopingAnimations)
                 if (g.key == key)
                     return g.clip;
 

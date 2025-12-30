@@ -1,29 +1,36 @@
 using Animancer;
 using MoreMountains.Feedbacks;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Overview.NPC
 {
     [RequireComponent(typeof(AnimancerComponent))]
     public class NPCCharacterAnimancerHelper : MonoBehaviour
     {
-        [SerializeField] AnimancerComponent _animancer;
-        [SerializeField] AnimationClip idleClip;
+        [FormerlySerializedAs("_animancer")] [SerializeField]
+        AnimancerComponent animancer;
 
         [SerializeField] AnimationClip handGesture02;
         [SerializeField] NpcDefinition npcDefinition;
 
         public MMF_Player dialogueSoundFeedbackPlayer;
 
-        [SerializeField] float gestureTransitionDuration = 0.2f;
 
         AnimancerState _idleState;
 
 
         void Start()
         {
-            if (npcDefinition != null && npcDefinition.idleClip != null)
-                _idleState = _animancer.Play(npcDefinition.idleClip);
+            var initialIdleIndex = npcDefinition != null ? npcDefinition.initialIdleLoopingAnimationIndex : -1;
+            if (npcDefinition != null &&
+                npcDefinition.idleLoopingAnimations != null &&
+                npcDefinition.idleLoopingAnimations.Count > initialIdleIndex &&
+                npcDefinition.idleLoopingAnimations[initialIdleIndex].clip != null)
+            {
+                var initialIdleClip = npcDefinition.idleLoopingAnimations[initialIdleIndex].clip;
+                _idleState = animancer.Play(initialIdleClip, npcDefinition.gestureTransitionDuration);
+            }
         }
 
 
@@ -42,11 +49,11 @@ namespace Overview.NPC
                 return;
             }
 
-            var state = _animancer.Play(clip, gestureTransitionDuration);
-            state.Events(_animancer).OnEnd = () =>
+            var state = animancer.Play(clip, npcDefinition.gestureTransitionDuration);
+            state.Events(animancer).OnEnd = () =>
             {
                 if (_idleState != null)
-                    _animancer.Play(_idleState, gestureTransitionDuration);
+                    animancer.Play(_idleState, npcDefinition.gestureTransitionDuration);
             };
         }
         public void PlaySound(string key)
@@ -74,6 +81,23 @@ namespace Overview.NPC
             mmfSound.Sfx = clip;
 
             dialogueSoundFeedbackPlayer?.PlayFeedbacks();
+        }
+        public void SwitchIdleLoopingAnimation(string key)
+        {
+            if (npcDefinition == null)
+            {
+                Debug.LogWarning($"[{name}] No NPCDefinition assigned.");
+                return;
+            }
+
+            var clip = npcDefinition.GetIdleLoopingClip(key);
+            if (clip == null)
+            {
+                Debug.LogWarning($"[{npcDefinition.characterName}] has no idle looping animation for '{key}'.");
+                return;
+            }
+
+            _idleState = animancer.Play(clip, npcDefinition.idleTransitionDuration);
         }
     }
 }

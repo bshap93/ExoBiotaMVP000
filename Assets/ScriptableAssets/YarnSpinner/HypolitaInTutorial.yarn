@@ -1,7 +1,7 @@
 title: InitialTutorialCommunication
 ---
 -> Ok, Dr. Hypolita. I'm in place at the cavern atrium. 
-<<trigger_gesture  ScientitstHypolita ShakeHead>>
+<<trigger_gesture  ScientitstHypolita ConcedingAPoint>>
 Hypolita: Good, you're in position to start your training. Any questions?
 -> What is this training for again?
     <<jump WhatIsThisTrainingFor>>
@@ -11,7 +11,9 @@ Hypolita: Good, you're in position to start your training. Any questions?
 
 title: WhatIsThisTrainingFor
 ---
+<<trigger_gesture ScientistHypolita LayingItAllOut>>
 Hypolita: You needed a crash course in situational readiness.
+<<trigger_gesture  ScientitstHypolita ConcedingAPoint>>
 Hypolita: We agreed that your skills navigating our hazardous subterranean environs needed an update.
 Hypolita: Let's begin. I can answer any further questions when you're done.
 <<jump ReadyToBeginTrainingForSubter>>
@@ -20,7 +22,9 @@ Hypolita: Let's begin. I can answer any further questions when you're done.
 title: ReadyToBeginTrainingForSubter
 ---
 Hypolita: Now, then, you'll find a hatchet on the table to your right. And the bailout facility just past that.
+<<trigger_gesture  ScientitstHypolita ConcedingAPoint>>
 Hypolita: ....Slight hiccup: I've got a visual on the facility. Looks like those Stalks cropped up in the facility's entrance.
+<<trigger_gesture ScientistHypolita LayingItAllOut>>
 Hypolita: Use your axd to clear out thse obstructing your way. They are quite brittle. Two or so hits will cause a section to crumble. 
 ===
 

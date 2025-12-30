@@ -32,6 +32,11 @@ public class CustomCommands : MonoBehaviour
             "trigger_gesture",
             TriggerGesture
         );
+
+        dialogueRunner.AddCommandHandler<string, string>(
+            "switch_idle_animation",
+            SwitchIdleLoopingAnimation
+        );
     }
 
     // The method that gets called when '<<camera_look>>' is run.
@@ -82,5 +87,21 @@ public class CustomCommands : MonoBehaviour
         if (helper == null) return;
 
         helper.PlayGesture(key);
+    }
+
+    public void SwitchIdleLoopingAnimation(string npcId, string key)
+    {
+        // Find NPC by id in the scene
+        if (characterNPCRoot == null)
+        {
+            Debug.LogError($"NPC '{npcId}' not found in scene.");
+            return;
+        }
+
+        var helper = characterNPCRoot.GetComponentInChildren<NPCCharacterAnimancerHelper>();
+
+        if (helper == null) return;
+
+        helper.SwitchIdleLoopingAnimation(key);
     }
 }
