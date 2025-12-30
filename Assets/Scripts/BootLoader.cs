@@ -37,7 +37,7 @@ public class BootLoader : MonoBehaviour
         await SceneManager.LoadSceneAsync("Core", LoadSceneMode.Additive);
         await SceneManager.LoadSceneAsync("Actors", LoadSceneMode.Additive);
         await SceneManager.LoadSceneAsync("DialogueScene", LoadSceneMode.Additive);
-        await SceneManager.LoadSceneAsync("Overseer", LoadSceneMode.Additive);
+        // await SceneManager.LoadSceneAsync("Overseer", LoadSceneMode.Additive);
         if (playWithTutorialOn) await SceneManager.LoadSceneAsync("Tutorial", LoadSceneMode.Additive);
         // if (playWithDevToolsOn) await SceneManager.LoadSceneAsync("DevTools", LoadSceneMode.Additive);
 
