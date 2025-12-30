@@ -61,7 +61,7 @@ Hypolita: The worse your infection, the greater is the risk of killing biomass t
 -> Gross. Don't tell me this is going to happen here in your caverns...
     Hypolita: No, not to worry. This training is too short for any infection to progress that far. It's gross, but it's important ground to cover.
 -> Got it. Thank you, doctor.
-Hypolita: Certainly. Now then, straight ahead is a storage room. You'll find a Heat Gun and a key access terminal.
+Hypolita: Certainly. Now then, straight ahead is a storage room. You'll find my old Heat Pistol and a key access terminal.
 Hypolita: Do you need me to explain further?
 -> Please do, doctor.
     <<jump HypolitaExplainsHeatGunAndKeyAccess>>
@@ -71,10 +71,10 @@ Hypolita: Excellent, I'll standby.
 
 title: HypolitaExplainsHeatGunAndKeyAccess
 ---
-Hypolita: Ok, that Heat Gun is pretty standard, and is powered by your standard weapons-grade Magnium-ion cell.
+Hypolita: Ok, that Heat Pistol is standard issue Science Directorate defense weapon, and is powered by standard weapons-grade Magnium-ion cells.
 Hypolita: The model is old but it's plenty powerful for self-defense and neutralizing contaminating flora and fauna you'll find in this cavern complex.
 Hypolita: All the mines and caverns of this particular region share a host of possible creatures or organisms, all of which you should manage.
-Hypolita: Your pickaxe, light source, hatchet, and heat gun all collected, and you're equipped to handle those subterranean tunnels.
+Hypolita: Your pickaxe, light source, hatchet, and heat pistol all collected, and you're equipped to handle those subterranean tunnels.
 Hypolita: Of course you'll have chances to upgrade and get better gear, but this is the core gear needed for this training.
 Hypolita: You'll find it most effective in the upper levels of the caverns here.
 Hypolita: The key terminal will grant you key access to the other areas of this cavern complex, through the door to the left of where you entered the atrium.
@@ -88,4 +88,8 @@ title: HypolitaGivesFurtherInstructionAfterFacility
 ---
 Hypolita: Ok, go and use the Door Access Panel's switch to access that door. The door will automatically unlock and open for you, now you have key access.
 -> Will do.
+Hypolita: My scanners show life-signs just on the other side of the door. It's definitely a couple of Urchins. That's the layman's name anyway. They're immobile,
+Hypolita: but they spew a corrosive gas that has a knack for getting through our best hazard suits, so don't stay close to them for too long. Go ahead and use your 
+Hypolita: heat pistol to neutralize them. Again, don't feel the need to rush back to an EquiBap tank every time you are conaminated and
+Hypolita: minor infections can be kept from woresening with a salve.
 ===
