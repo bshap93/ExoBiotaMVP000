@@ -231,7 +231,13 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             {
                 // hardness/HP handled inside component
                 breakable.ApplyHit(hatchetPower, hit.point, hit.normal, hitType);
+                
+                if (go.CompareTag("MiscRigidOrganism"))
+                {
+                    hitRigidOrganismFeedbacks?.PlayFeedbacks();
+                }
 
+                
                 // SpawnFxForConnectingHit(hit.point, hit.normal);
                 // PlayerStatsEvent.Trigger(
                 //     PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,

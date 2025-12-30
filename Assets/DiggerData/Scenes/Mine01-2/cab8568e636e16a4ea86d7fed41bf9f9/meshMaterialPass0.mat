@@ -93,7 +93,7 @@ Material:
     - _Metallic1: -0.2
     - _Metallic2: -0.2
     - _Metallic3: -0.2
-    - _NormalScale0: 0.64
+    - _NormalScale0: 2
     - _NormalScale1: 1
     - _NormalScale2: 1.1
     - _NormalScale3: 3.5

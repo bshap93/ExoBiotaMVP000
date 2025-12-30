@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 722071457820009409}
   m_Layer: 8
   m_Name: BrittleStalkWarrenSmall00
-  m_TagString: HackableBiostructure
+  m_TagString: MiscRigidOrganism
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
