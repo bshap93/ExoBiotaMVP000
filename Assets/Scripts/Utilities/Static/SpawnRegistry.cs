@@ -8,7 +8,7 @@ namespace Utilities.Static
 {
     public static class SpawnRegistry
     {
-        static readonly Dictionary<string, SpawnPoint> Dict = new();
+        static readonly Dictionary<string, SpawnPoint >Dict = new();
 
         public static void Init()
         {

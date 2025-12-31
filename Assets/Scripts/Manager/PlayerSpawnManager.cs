@@ -218,16 +218,12 @@ namespace Manager
             {
                 // Overworld
                 "ScienceDockSpawn", "Mine01Dock", "MidFlightTestSpawn",
-                "EnterValleySpawn", "CoreTraffickerSpawn", "Mine01aDock", "DockMineThreeJaneSpawn",
+                "EnterValleySpawn", "DockAshpoolMineSpawn",
                 // Mine01
                 "Mine01DoorSpawn", "SpawnDeep01", "SpawnGrotto", "DebugMine01Spawn",
                 // Bionics Lab
                 "BionicsLabSpawn",
-                // Test Mine 03
-                "TestMine03Spawn",
-                //  Three Jane Mine,
-                "ThreeJaneMineDoorSpawn", "DebugThreeJaneMineSpawn", "Hangar3JMineSpawn",
-                "AshpoolMineBackElevatorL01", "AshpoolMineL1AB",
+
                 // Choked Caverns
                 "ChokedCavernsDebugSpawn", "ElevatorStopChokedCaves",
                 // Ashpool Mine,

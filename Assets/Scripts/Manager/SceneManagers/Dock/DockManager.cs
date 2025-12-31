@@ -159,8 +159,8 @@ namespace Manager.SceneManagers.Dock
         {
             return new[]
             {
-                "ScienceSettlementDock", "Mine01Dock", "ClarasOutpostDock", "CoreTraffickerDock", "Mine01aDock",
-                "ThreeJaneMineDock", "WreckedRunnerSiteNonDock"
+                "ScienceSettlementDock", "ClarasOutpostDock",
+                "AshpoolMineDock"
             };
         }
 
