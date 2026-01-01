@@ -52,8 +52,8 @@ namespace FirstPersonPlayer.InputHandling
 
         public PlayerInteraction playerInteraction;
 
-        [FormerlySerializedAs("ForwardTextureDetector")]
-        public TerrainLayerDetector forwardTerrainLayerDetector;
+        // [FormerlySerializedAs("ForwardTextureDetector")]
+        // public TerrainLayerDetector forwardTerrainLayerDetector;
 
         [Header("Animation")] [SerializeField] protected string groundedParameter = "Grounded";
 
@@ -238,26 +238,7 @@ namespace FirstPersonPlayer.InputHandling
                 if (playerInteraction == null)
                     return;
 
-                var textureIndex = forwardTerrainLayerDetector.textureIndex;
-                // var tool = PlayerEquipment.Instance.CurrentToolComponent;
 
-                // if (tool == null)
-                //     return;
-                //
-                // var canUseOnTerrain = textureIndex >= 0 &&
-                //                       textureIndex < playerInteraction.diggableLayers.Length &&
-                //                       playerInteraction.diggableLayers[textureIndex];
-                //
-                // // Perform a raycast to detect non-terrain objects (e.g., OreNodes)
-                // if (Camera.main != null && Physics.Raycast(Camera.main.transform.position,
-                //         Camera.main.transform.forward,
-                //         out var hit, 5f, ~playerInteraction.playerLayerMask))
-                // {
-                //     var canUseOnObject = tool.CanInteractWithObject(hit.collider.gameObject);
-                //
-                //     // if (canUseOnTerrain || canUseOnObject)
-                //     //     CharacterStateController.EnqueueTransition<UsingToolState>();
-                // }
             }
         }
 

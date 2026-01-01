@@ -1,20 +1,24 @@
 using System;
 using System.Collections.Generic;
 using Helpers.Events;
+using Helpers.Events.Triggering;
 using Helpers.Events.Tutorial;
 using Helpers.Interfaces;
 using Helpers.ScriptableObjects.Tutorial;
 using MoreMountains.Tools;
+using PhysicsHandlers.Triggers;
 using UnityEngine;
 
 namespace Manager
 {
-    public class TutorialManager : MonoBehaviour, ICoreGameService, MMEventListener<MainTutorialBitEvent>
+    public class TutorialManager : MonoBehaviour, ICoreGameService, MMEventListener<MainTutorialBitEvent>, MMEventListener<TriggerColliderEvent>
     {
         [SerializeField] bool autoSave; // checkpoint-only by default
 
         [SerializeField] AudioSource uiButtonAudioSource;
         readonly HashSet<string> _tutorialBitsCompleted = new();
+        readonly HashSet<string> _dialogueInitTriggersCleared = new();
+        
 
         List<AudioSource> _audioSources = new();
         readonly HashSet<string> _colliderTutorialTriggersCleared = new();
@@ -54,12 +58,14 @@ namespace Manager
 
         void OnEnable()
         {
-            this.MMEventStartListening();
+            this.MMEventStartListening<MainTutorialBitEvent>();
+            this.MMEventStartListening<TriggerColliderEvent>();
         }
 
         void OnDisable()
         {
-            this.MMEventStopListening();
+            this.MMEventStopListening<MainTutorialBitEvent>();
+            this.MMEventStopListening<TriggerColliderEvent>();
         }
         public void Save()
         {
@@ -67,6 +73,7 @@ namespace Manager
 
             ES3.Save("TutorialBitsCompleted", _tutorialBitsCompleted, _savePath);
             ES3.Save("ColliderTutorialTriggersCleared", _colliderTutorialTriggersCleared, _savePath);
+            ES3.Save("DialogueInitTriggersCleared", _dialogueInitTriggersCleared, _savePath);
             _dirty = false;
         }
         public void Load()
@@ -74,6 +81,8 @@ namespace Manager
             _savePath = GetSaveFilePath();
 
             _tutorialBitsCompleted.Clear();
+            _colliderTutorialTriggersCleared.Clear();
+            _dialogueInitTriggersCleared.Clear();
 
             if (ES3.KeyExists("TutorialBitsCompleted", _savePath))
             {
@@ -88,6 +97,13 @@ namespace Manager
                 foreach (var id in set)
                     _colliderTutorialTriggersCleared.Add(id);
             }
+            
+            if (ES3.KeyExists("DialogueInitTriggersCleared", _savePath))
+            {
+                var set = ES3.Load<HashSet<string>>("DialogueInitTriggersCleared", _savePath);
+                foreach (var id in set)
+                    _dialogueInitTriggersCleared.Add(id);
+            }
 
 
             _dirty = false;
@@ -95,7 +111,8 @@ namespace Manager
         public void Reset()
         {
             _tutorialBitsCompleted.Clear();
-            _colliderTutorialTriggersCleared.Clear();
+            _colliderTutorialTriggersCleared.Clear(); 
+            _dialogueInitTriggersCleared.Clear();
             _dirty = true;
             ConditionalSave();
         }
@@ -240,6 +257,17 @@ namespace Manager
         public bool IsControlPromptSequenceComplete(string controlPromptSequenceID)
         {
             throw new NotImplementedException();
+        }
+        public void OnMMEvent(TriggerColliderEvent eventType)
+        {
+            if (eventType.ColliderType== TriggerColliderType.Dialogue)
+            {
+                if (eventType.EventType == TriggerColliderEventType.SetTriggerable)
+                {
+                    throw new NotImplementedException();
+                }
+            }
+            
         }
     }
 }

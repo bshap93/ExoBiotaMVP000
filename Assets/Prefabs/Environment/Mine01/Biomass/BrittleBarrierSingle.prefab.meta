@@ -1,14 +1,7 @@
 fileFormatVersion: 2
-guid: b2371af854ab1224cba2c3d9903f9d4f
+guid: 5e45b47582e5fb447a571365ea898071
 PrefabImporter:
   externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 163649
-  packageName: Bionic structures
-  packageVersion: 1.0
-  assetPath: Assets/ThirdParty/_BionicStructures/Prefabs/Grouped/BioStructure7_G1.prefab
-  uploadId: 354465

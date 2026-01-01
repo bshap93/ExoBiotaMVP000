@@ -6,8 +6,6 @@ using UnityEngine;
 
 namespace LevelConstruct.Interactable.ItemInteractables
 {
-    [RequireComponent(typeof(MeshCollider))]
-    [RequireComponent(typeof(HighlightEffectController))]
     [DisallowMultipleComponent]
     public class InfoLogTablet : ActionConsole, IInteractable
     {

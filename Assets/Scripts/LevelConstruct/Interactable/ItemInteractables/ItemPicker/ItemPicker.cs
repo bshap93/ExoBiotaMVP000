@@ -35,7 +35,6 @@ using UnityEditor.SceneManagement;
 
 namespace LevelConstruct.Interactable.ItemInteractables.ItemPicker
 {
-    [RequireComponent(typeof(HighlightEffectController))]
     [RequireComponent(typeof(Collider))]
     [ExecuteInEditMode]
     public class ItemPicker : MonoBehaviour, IInteractable, IBillboardable, IExaminable, IHoverable,

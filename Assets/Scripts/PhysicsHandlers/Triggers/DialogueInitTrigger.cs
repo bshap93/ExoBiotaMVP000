@@ -5,6 +5,7 @@ using Helpers.Events.Triggering;
 using Manager;
 using Manager.DialogueScene;
 using MoreMountains.Feedbacks;
+using MoreMountains.Tools;
 using Rewired;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -13,7 +14,7 @@ using Utilities.Interface;
 namespace PhysicsHandlers.Triggers
 {
     [DisallowMultipleComponent]
-    public class DialogueInitTrigger : MonoBehaviour, IRequiresUniqueID
+    public class DialogueInitTrigger : MonoBehaviour, IRequiresUniqueID, MMEventListener<TriggerColliderEvent>
     {
         public TriggerType triggerType = TriggerType.OnEnter;
         [ValueDropdown("GetStartNodeOptions")] public string startNode;
@@ -111,6 +112,18 @@ namespace PhysicsHandlers.Triggers
             return nodes != null && nodes.Length > 0
                 ? nodes
                 : new[] { "No start nodes found" };
+        }
+        void OnEnable()
+        {
+            this.MMEventStartListening<TriggerColliderEvent>();
+        }
+        void OnDisable()
+        {
+            this.MMEventStopListening<TriggerColliderEvent>();
+        }
+        public void OnMMEvent(TriggerColliderEvent eventType)
+        {
+            throw new NotImplementedException();
         }
     }
 }
