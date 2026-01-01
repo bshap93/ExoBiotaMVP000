@@ -22,12 +22,16 @@ Hypolita: Let's begin. I can answer any further questions when you're done.
 title: ReadyToBeginTrainingForSubter
 ---
 Hypolita: Now, then, you'll find a hatchet on the table to your right. And the bailout facility just past that.
+
+===
+
+title: SlightHiccupTutorial
+---
 <<trigger_gesture  ScientitstHypolita ConcedingAPoint>>
 Hypolita: ....Slight hiccup: I've got a visual on the facility. Looks like those Stalks cropped up again, blocking the the facility's entrance.
 <<trigger_gesture ScientistHypolita LayingItAllOut>>
 Hypolita: Use your axe to clear out thse obstructing your way. They are quite brittle. Two or so hits will cause a section to crumble. 
 ===
-
 
 title: HasAccessedTheBailoutFacility
 ---
@@ -37,7 +41,6 @@ Hypolita: I'm happy to explain their purpose if you need me to.
 -> Please, doctor. Refresh my memory.
     <<jump ExplainTheSystemsOfTheBailoutFacility>>
 -> I believe I am up to date on that front.
-    <<jump HypolitaGivesFurtherInstructionAfterFacility>>
 ===
 
 
@@ -63,6 +66,8 @@ Hypolita: The worse your infection, the greater is the risk of killing biomass t
 -> Got it. Thank you, doctor.
 Hypolita: Certainly. Now then, straight ahead is a storage room. You'll find my old Heat Pistol and a key access terminal.
 Hypolita: Do you need me to explain further?
+<<add_objective GetKeyAccessForMine01>>
+<<activate_objective GetKeyAccessForMine01>>
 -> Please do, doctor.
     <<jump HypolitaExplainsHeatGunAndKeyAccess>>
 -> No need, I know what to do.
@@ -78,10 +83,10 @@ Hypolita: Your pickaxe, light source, hatchet, and heat pistol all collected, an
 Hypolita: Of course you'll have chances to upgrade and get better gear, but this is the core gear needed for this training.
 Hypolita: You'll find it most effective in the upper levels of the caverns here.
 Hypolita: The key terminal will grant you key access to the other areas of this cavern complex, through the door to the left of where you entered the atrium.
+
 -> And lower levels?
     Hypolita: This cavern complex doesn't access lower levels. I can fill you in on going into lower levels if you wish to discuss it after the training.
 -> Thank you, doctor. I'm ready to proceed.
-<<jump HypolitaGivesFurtherInstructionAfterFacility>>
 ===
 
 title: HypolitaGivesFurtherInstructionAfterFacility
@@ -92,4 +97,11 @@ Hypolita: My scanners show life-signs just on the other side of the door. It's d
 Hypolita: but they spew a corrosive gas that has a knack for getting through our best hazard suits, so don't stay close to them for too long. Go ahead and use your 
 Hypolita: heat pistol to neutralize them. Again, don't feel the need to rush back to an EquiBap tank every time you are conaminated and
 Hypolita: minor infections can be kept from woresening with a salve.
+<<add_objective KillTheTwoContaminantUrchins>>
+<<activate_objective KillTheTwoContaminantUrchins>>
+===
+
+title: HypolitaGivesInstructionsCorePatch
+---
+Hypolita: Ok, go ahead and get Core fruit from the patch up ahead. We'll run through a little exercise on how to process them and isolate the Core Gems inside.
 ===

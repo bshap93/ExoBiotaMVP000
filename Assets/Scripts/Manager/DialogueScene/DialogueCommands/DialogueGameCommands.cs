@@ -153,93 +153,93 @@ namespace Manager.DialogueScene.DialogueCommands
 
         // ----------- Objectives commands ----------
 
-        [YarnCommand("add_objective")]
-        public void AddObjective(string objectiveId)
-        {
-            var objMgr = ObjectivesManager.Instance;
-            if (objMgr == null)
-            {
-                Debug.LogWarning("ObjectivesManager not found, cannot add objective.");
-                return;
-            }
-
-            var obj = objMgr.GetObjectiveById(objectiveId);
-            if (obj == null)
-            {
-                Debug.LogWarning($"Objective with ID '{objectiveId}' not found.");
-                return;
-            }
-
-            ObjectiveEvent.Trigger(objectiveId, ObjectiveEventType.ObjectiveAdded);
-            AlertEvent.Trigger(AlertReason.NewObjective, obj.objectiveText, obj.objectiveId);
-        }
-
-        [YarnCommand("activate_objective")]
-        public void ActivateObjective(string objectiveId)
-        {
-            var objMgr = ObjectivesManager.Instance;
-            if (objMgr == null)
-            {
-                Debug.LogWarning("ObjectivesManager not found, cannot add objective.");
-                return;
-            }
-
-            var obj = objMgr.GetObjectiveById(objectiveId);
-            if (obj == null)
-            {
-                Debug.LogWarning($"Objective with ID '{objectiveId}' not found.");
-                return;
-            }
-
-            ObjectiveEvent.Trigger(objectiveId, ObjectiveEventType.ObjectiveActivated);
-            AlertEvent.Trigger(AlertReason.NewObjective, obj.objectiveText, obj.objectiveId);
-        }
-
-        [YarnCommand("make_objective_inactive")]
-        public void MakeObjectiveInactive(string objectiveId)
-        {
-            var objMgr = ObjectivesManager.Instance;
-            if (objMgr == null)
-            {
-                Debug.LogWarning("ObjectivesManager not found, cannot add objective.");
-                return;
-            }
-
-            var obj = objMgr.GetObjectiveById(objectiveId);
-            if (obj == null)
-            {
-                Debug.LogWarning($"Objective with ID '{objectiveId}' not found.");
-                return;
-            }
-
-            ObjectiveEvent.Trigger(objectiveId, ObjectiveEventType.ObjectiveMadeInactive);
-        }
-
-        [YarnCommand("mark_poi_as_having_new_content")]
-        public void MarkPOIAsHavingNewContent(string uniqueID)
-        {
-            GamePOIEvent.Trigger(uniqueID, GamePOIEventType.POIMarkedAsHavingNewContent, null);
-        }
-
-        [YarnCommand("complete_objective")]
-        public void CompleteObjective(string objectiveId)
-        {
-            var objMgr = ObjectivesManager.Instance;
-            if (objMgr == null)
-            {
-                Debug.LogWarning("ObjectivesManager not found, cannot complete objective.");
-                return;
-            }
-
-            var obj = objMgr.GetObjectiveById(objectiveId);
-            if (obj == null)
-            {
-                Debug.LogWarning($"Objective with ID '{objectiveId}' not found.");
-                return;
-            }
-
-            ObjectiveEvent.Trigger(objectiveId, ObjectiveEventType.ObjectiveCompleted);
-        }
+        // [YarnCommand("add_objective")]
+        // public void AddObjective(string objectiveId)
+        // {
+        //     var objMgr = ObjectivesManager.Instance;
+        //     if (objMgr == null)
+        //     {
+        //         Debug.LogWarning("ObjectivesManager not found, cannot add objective.");
+        //         return;
+        //     }
+        //
+        //     var obj = objMgr.GetObjectiveById(objectiveId);
+        //     if (obj == null)
+        //     {
+        //         Debug.LogWarning($"Objective with ID '{objectiveId}' not found.");
+        //         return;
+        //     }
+        //
+        //     ObjectiveEvent.Trigger(objectiveId, ObjectiveEventType.ObjectiveAdded);
+        //     AlertEvent.Trigger(AlertReason.NewObjective, obj.objectiveText, obj.objectiveId);
+        // }
+        //
+        // [YarnCommand("activate_objective")]
+        // public void ActivateObjective(string objectiveId)
+        // {
+        //     var objMgr = ObjectivesManager.Instance;
+        //     if (objMgr == null)
+        //     {
+        //         Debug.LogWarning("ObjectivesManager not found, cannot add objective.");
+        //         return;
+        //     }
+        //
+        //     var obj = objMgr.GetObjectiveById(objectiveId);
+        //     if (obj == null)
+        //     {
+        //         Debug.LogWarning($"Objective with ID '{objectiveId}' not found.");
+        //         return;
+        //     }
+        //
+        //     ObjectiveEvent.Trigger(objectiveId, ObjectiveEventType.ObjectiveActivated);
+        //     AlertEvent.Trigger(AlertReason.NewObjective, obj.objectiveText, obj.objectiveId);
+        // }
+        //
+        // [YarnCommand("make_objective_inactive")]
+        // public void MakeObjectiveInactive(string objectiveId)
+        // {
+        //     var objMgr = ObjectivesManager.Instance;
+        //     if (objMgr == null)
+        //     {
+        //         Debug.LogWarning("ObjectivesManager not found, cannot add objective.");
+        //         return;
+        //     }
+        //
+        //     var obj = objMgr.GetObjectiveById(objectiveId);
+        //     if (obj == null)
+        //     {
+        //         Debug.LogWarning($"Objective with ID '{objectiveId}' not found.");
+        //         return;
+        //     }
+        //
+        //     ObjectiveEvent.Trigger(objectiveId, ObjectiveEventType.ObjectiveMadeInactive);
+        // }
+        //
+        // [YarnCommand("mark_poi_as_having_new_content")]
+        // public void MarkPOIAsHavingNewContent(string uniqueID)
+        // {
+        //     GamePOIEvent.Trigger(uniqueID, GamePOIEventType.POIMarkedAsHavingNewContent, null);
+        // }
+        //
+        // [YarnCommand("complete_objective")]
+        // public void CompleteObjective(string objectiveId)
+        // {
+        //     var objMgr = ObjectivesManager.Instance;
+        //     if (objMgr == null)
+        //     {
+        //         Debug.LogWarning("ObjectivesManager not found, cannot complete objective.");
+        //         return;
+        //     }
+        //
+        //     var obj = objMgr.GetObjectiveById(objectiveId);
+        //     if (obj == null)
+        //     {
+        //         Debug.LogWarning($"Objective with ID '{objectiveId}' not found.");
+        //         return;
+        //     }
+        //
+        //     ObjectiveEvent.Trigger(objectiveId, ObjectiveEventType.ObjectiveCompleted);
+        // }
 
         // ----------- Shopping commands ----------
         [YarnCommand("start_shopping_buy")]

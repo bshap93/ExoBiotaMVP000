@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2384382453030499050}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.6724192, z: -0, w: 0.7401706}
+  m_LocalRotation: {x: 0, y: -0.6724185, z: 0, w: 0.74017125}
   m_LocalPosition: {x: -6.671997, y: -0.05699998, z: 2.790001}
   m_LocalScale: {x: 2.787063, y: 2.7870622, z: 2.787063}
   m_ConstrainProportionsScale: 0
@@ -249,7 +249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightOnHover: 1
-  triggerMode: 1
+  triggerMode: 2
   raycastCamera: {fileID: 0}
   raycastSource: 1
   raycastLayerMask:
@@ -260,7 +260,7 @@ MonoBehaviour:
   respectUI: 1
   volumeLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   selectOnClick: 0
   selectedProfile: {fileID: 0}
   selectedAndHighlightedProfile: {fileID: 0}
@@ -279,7 +279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0986de822ecb4835bfb249feaeb7996f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetID: e734bbbf-bbd8-4bf1-933f-5c545dd65f93
+  targetID: 
   seeThroughDuration: 5
   onScanned:
     m_PersistentCalls:
@@ -626,7 +626,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa1cac55029a4dab8e0a04ac51243045, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueID: 1dd3f3b4-17b2-44aa-b928-13b31a7e3d17
+  uniqueID: 
   bioOrganismType: {fileID: 11400000, guid: e08656f019c8dbd4d92107c0ce51b1a3, type: 2}
   actionId: 43
   actionText: Break

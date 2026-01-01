@@ -300,7 +300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0986de822ecb4835bfb249feaeb7996f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetID: e996cbe9-fc66-498a-a480-0944784ada9e
+  targetID: 
   seeThroughDuration: 5
   onScanned:
     m_PersistentCalls:
@@ -819,7 +819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ab61beb303f4cc2af9de8675f8c712c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueID: 396951c4-4290-4ca9-a35c-5b57f9a0dd7d
+  uniqueID: 
   actionId: 97
   actionText: Pickup
   quantity: 1

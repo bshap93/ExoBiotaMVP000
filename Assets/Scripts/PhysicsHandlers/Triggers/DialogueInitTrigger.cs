@@ -29,6 +29,8 @@ namespace PhysicsHandlers.Triggers
         bool _isDisabled;
         bool _isPlayerInTrigger;
 
+        public string nextDialogueInitTriggerToEnable;
+
         Player _player;
         TriggerColliderManager _triggerColliderManager;
 
@@ -66,6 +68,11 @@ namespace PhysicsHandlers.Triggers
 
                 startDialogueFeedback?.PlayFeedbacks();
                 MyUIEvent.Trigger(UIType.Any, UIActionType.Open);
+                
+                TriggerColliderEvent.Trigger(
+                    nextDialogueInitTriggerToEnable, TriggerColliderEventType.SetTriggerable, true,
+                    TriggerColliderType.Dialogue);
+                
             }
         }
         public string UniqueID => uniqueID;
@@ -77,6 +84,8 @@ namespace PhysicsHandlers.Triggers
         {
             return string.IsNullOrEmpty(uniqueID);
         }
+
+
 
         void OnNpcIdChanged()
         {
@@ -123,7 +132,15 @@ namespace PhysicsHandlers.Triggers
         }
         public void OnMMEvent(TriggerColliderEvent eventType)
         {
-            throw new NotImplementedException();
+            if (eventType.ColliderType != TriggerColliderType.Dialogue) return;
+            if (eventType.ColliderID != uniqueID) return;
+
+            switch (eventType.EventType)
+            {
+                case TriggerColliderEventType.SetTriggerable:
+                    _isDisabled = !eventType.IsTriggerable;
+                    break;
+            }
         }
     }
 }

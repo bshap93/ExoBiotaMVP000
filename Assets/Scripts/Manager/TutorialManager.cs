@@ -264,7 +264,7 @@ namespace Manager
             {
                 if (eventType.EventType == TriggerColliderEventType.SetTriggerable)
                 {
-                    throw new NotImplementedException();
+                    // throw new NotImplementedException();
                 }
             }
             

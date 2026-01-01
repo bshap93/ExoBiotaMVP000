@@ -11,6 +11,7 @@ using UnityEngine;
 
 namespace FirstPersonPlayer.Interactable.Consoles
 {
+    [DisallowMultipleComponent]
     public class DecontaminationConsole : ActionConsole, MMEventListener<PlayerStatusEffectEvent>
     {
         [SerializeField] MMFeedbacks decontaminationStartFeedback;

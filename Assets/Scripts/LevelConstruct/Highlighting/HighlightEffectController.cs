@@ -33,6 +33,8 @@ namespace LevelConstruct.Highlighting
         bool _isTargetVisible;
         Coroutine seeThroughCoroutine;
 
+        [SerializeField] Color secondaryStateHighlightColor;
+
 
         void Awake()
         {

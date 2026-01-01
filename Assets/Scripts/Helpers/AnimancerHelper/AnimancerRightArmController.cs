@@ -112,7 +112,6 @@ namespace Helpers.AnimancerHelper
             _currentLocomotionState.Events(this).OnEnd = () =>
             {
                 _currentLocomotionState.Time = 0f;
-                Debug.Log("Looping walk animation");
             };
         }
 

@@ -6,172 +6,144 @@
   <component name="ChangeListManager">
     <list default="true" id="abdb78f9-9d96-46eb-81c0-ec3c0363e4ff" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ExoBiotaMVP003/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ExoBiotaMVP003/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CustomAssets/Fonts/INTERGLOT/INTERGLOT SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/CustomAssets/Fonts/INTERGLOT/INTERGLOT SDF.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/CustomAssets/Fonts/alpha-prota/AlphaProta-Regular SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/CustomAssets/Fonts/alpha-prota/AlphaProta-Regular SDF.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/CustomAssets/Fonts/bacteria_12_v1.1/Bacteria 12 SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/CustomAssets/Fonts/bacteria_12_v1.1/Bacteria 12 SDF.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/CustomAssets/Fonts/genos_5.2.8/ttf/genos-latin-300-normal SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/CustomAssets/Fonts/genos_5.2.8/ttf/genos-latin-300-normal SDF.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/CustomAssets/Fonts/genos_5.2.8/ttf/genos-latin-500-normal SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/CustomAssets/Fonts/genos_5.2.8/ttf/genos-latin-500-normal SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/CustomAssets/Materials/Cores/BasicCore/BionicStructuresVariation01.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/CustomAssets/Materials/Cores/BasicCore/BionicStructuresVariation01.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/CustomAssets/Terrains/Mine01Terrain.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/CustomAssets/Terrains/Mine01Terrain.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/CustomAssets/Terrains/OverworldTile02.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/CustomAssets/Terrains/OverworldTile02.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_5.vox3" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_5.vox3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_5.vox3_v246" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_5.vox3_v247" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_5.vox3_v248" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_5.vox3_v249" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_5.vox3_v250" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_5.vox3_v251" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_5.vox3_v252" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_5.vox3_v253" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_5.vox3_v254" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_5.vox3_v255" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_6.vox3_v244" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_6.vox3_v245" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_6.vox3_v246" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_6.vox3_v247" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_6.vox3_v248" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_6.vox3_v249" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_6.vox3_v250" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_6.vox3_v251" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_6.vox3_v252" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_6.vox3_v253" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_6.vox3_v254" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_6.vox3_v255" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_6.vox3_v256" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_6.vox3_v257" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_6.vox3_v258" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_5_-1_5.vox3_v280" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_5_-1_5.vox3_v281" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_5_-1_6.vox3" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_5_-1_6.vox3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_5_0_5.vox3_v280" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_5_0_5.vox3_v281" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_5_0_6.vox3" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_5_0_6.vox3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_4.vox3_v285" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_5.vox3_v275" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_5.vox3_v276" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_5.vox3_v277" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_5.vox3_v278" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_5.vox3_v279" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_5.vox3_v280" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_5.vox3_v281" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_5.vox3_v282" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_5.vox3_v283" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_5.vox3_v284" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_5.vox3_v285" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_5.vox3_v286" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_5.vox3_v287" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_5.vox3_v288" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_5.vox3_v289" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_6.vox3_v285" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_6.vox3_v286" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_-1_6.vox3_v287" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_4.vox3_v285" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_5.vox3" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_5.vox3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_5.vox3_v246" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_5.vox3_v247" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_5.vox3_v248" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_5.vox3_v249" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_5.vox3_v250" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_5.vox3_v251" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_5.vox3_v252" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_5.vox3_v253" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_5.vox3_v254" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_5.vox3_v255" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_5.vox3_v275" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_5.vox3_v276" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_5.vox3_v277" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_5.vox3_v278" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_5.vox3_v279" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_5.vox3_v280" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_5.vox3_v281" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_5.vox3_v282" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_5.vox3_v283" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_5.vox3_v284" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_5.vox3_v285" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_5.vox3_v286" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_5.vox3_v287" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_5.vox3_v288" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_5.vox3_v289" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_6.vox3" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_6.vox3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_6.vox3_v244" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_6.vox3_v245" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_6.vox3_v246" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_6.vox3_v247" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_6.vox3_v248" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_6.vox3_v249" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_6.vox3_v250" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_6.vox3_v251" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_6.vox3_v252" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_6.vox3_v253" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_6.vox3_v254" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_6.vox3_v255" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_6.vox3_v256" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_6.vox3_v257" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_6.vox3_v258" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_-1_5.vox3" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_-1_5.vox3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_-1_5.vox3_v246" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_-1_5.vox3_v247" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_-1_5.vox3_v248" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_-1_5.vox3_v249" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_-1_5.vox3_v250" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_-1_6.vox3_v244" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_-1_6.vox3_v245" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_-1_6.vox3_v246" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_-1_6.vox3_v247" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_-1_6.vox3_v248" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_-1_6.vox3_v249" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_-1_6.vox3_v250" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_-1_6.vox3_v251" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_-1_6.vox3_v255" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_-1_6.vox3_v256" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_-1_6.vox3_v257" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_-1_6.vox3_v258" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_5.vox3" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_5.vox3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_5.vox3_v246" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_5.vox3_v247" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_5.vox3_v248" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_5.vox3_v249" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_5.vox3_v250" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_6.vox3" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_6.vox3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_6.vox3_v244" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_6.vox3_v245" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_6.vox3_v246" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_6.vox3_v247" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_6.vox3_v248" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_6.vox3_v249" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_6.vox3_v250" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_6.vox3_v251" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_6.vox3_v255" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_6.vox3_v256" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_6.vox3_v257" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_6.vox3_v258" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_244.ver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_245.ver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_246.ver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_247.ver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_248.ver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_249.ver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_250.ver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_251.ver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_252.ver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_253.ver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_254.ver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_255.ver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_256.ver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_257.ver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_258.ver" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_6.vox3_v285" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_6.vox3_v286" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_6.vox3_v287" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_7.vox3" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_6_0_7.vox3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_-1_10.vox3_v287" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_-1_10.vox3_v288" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_-1_10.vox3_v289" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_-1_4.vox3_v285" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_-1_5.vox3_v284" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_-1_5.vox3_v285" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_-1_9.vox3_v287" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_-1_9.vox3_v288" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_-1_9.vox3_v289" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_10.vox3_v287" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_10.vox3_v288" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_10.vox3_v289" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_4.vox3_v285" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_5.vox3_v284" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_5.vox3_v285" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_9.vox3_v287" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_9.vox3_v288" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_7_0_9.vox3_v289" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_8_-1_10.vox3_v287" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_8_-1_10.vox3_v288" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_8_-1_10.vox3_v289" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_8_-1_9.vox3_v287" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_8_-1_9.vox3_v288" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_8_-1_9.vox3_v289" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_8_0_10.vox3_v287" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_8_0_10.vox3_v288" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_8_0_10.vox3_v289" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_8_0_9.vox3_v287" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_8_0_9.vox3_v288" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/Chunk_8_0_9.vox3_v289" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_275.ver" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_276.ver" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_277.ver" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_278.ver" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_279.ver" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_280.ver" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_281.ver" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_282.ver" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_283.ver" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_284.ver" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_285.ver" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_286.ver" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_287.ver" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_288.ver" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/.internal/version_289.ver" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/current_version.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/current_version.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/meshes/ChunkObject_5_-1_5_1_mesh.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/meshes/ChunkObject_5_-1_5_1_mesh.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/meshes/ChunkObject_5_-1_6_1_mesh.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/meshes/ChunkObject_5_-1_6_1_mesh.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/meshes/ChunkObject_5_0_5_1_mesh.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/meshes/ChunkObject_5_0_5_1_mesh.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/meshes/ChunkObject_5_0_6_1_mesh.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/meshes/ChunkObject_5_0_6_1_mesh.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/meshes/ChunkObject_6_-1_5_1_mesh.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/meshes/ChunkObject_6_-1_5_1_mesh.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/meshes/ChunkObject_6_-1_6_1_mesh.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/meshes/ChunkObject_6_-1_6_1_mesh.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/meshes/ChunkObject_6_0_5_1_mesh.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/meshes/ChunkObject_6_0_5_1_mesh.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/meshes/ChunkObject_6_0_6_1_mesh.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/meshes/ChunkObject_6_0_6_1_mesh.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/meshes/ChunkObject_7_-1_5_1_mesh.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/meshes/ChunkObject_7_-1_5_1_mesh.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/meshes/ChunkObject_7_-1_6_1_mesh.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/meshes/ChunkObject_7_-1_6_1_mesh.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/meshes/ChunkObject_7_0_5_1_mesh.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/meshes/ChunkObject_7_0_5_1_mesh.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/meshes/ChunkObject_7_0_6_1_mesh.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DiggerData/Scenes/Mine01-2/cab8568e636e16a4ea86d7fed41bf9f9/meshes/ChunkObject_7_0_6_1_mesh.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MMData/InventoryEngine/EquippedItemInventory_Player1.inventory" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MMData/InventoryEngine/EquippedItemInventory_Player1.inventory" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ForceFieldOverworld.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ForceFieldOverworld.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/Biomass/BrittleBarrierSingle.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/Biomass/BrittleBarrierSingle.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/Biomass/BrittleBarrierSingle.prefab.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/Biomass/BrittleBarrierSingle.prefab.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/New Folder.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/New Folder/Decor.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/New Folder/Decor/Ceiling_Crystals_1A2.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/New Folder/Decor/Ceiling_Crystals_1A2.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/New Folder/Decor/Ceiling_Crystals_1A3.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/New Folder/Decor/Ceiling_Crystals_1A3.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/Spawns.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/FirstPersonObjects/Cores.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/FirstPersonObjects/Cores/CoreOuterV02.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/FirstPersonObjects/Cores/CoreOuterV02.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/FirstPersonObjects/Cores/CoreVariant03.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/FirstPersonObjects/Cores/CoreVariant03.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/FirstPersonObjects/Cores/Inner.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/FirstPersonObjects/Cores/Inner/InnerCoreTest.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/FirstPersonObjects/Cores/Inner/InnerCoreTest.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/FirstPersonObjects/Cores/Inner/RadiantInnerCore.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/FirstPersonObjects/Cores/Inner/RadiantInnerCore.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/FirstPersonObjects/Cores/Inner/StellarInnerCore.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/FirstPersonObjects/Cores/Inner/StellarInnerCore.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/FirstPersonObjects/Cores/Radiant001CoreGradeB.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/FirstPersonObjects/Cores/Radiant001CoreGradeB.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/FirstPersonObjects/Cores/RhizomicCoreGrade0.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/FirstPersonObjects/Cores/RhizomicCoreGrade0.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/FirstPersonObjects/Cores/StellarCore.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/FirstPersonObjects/Cores/StellarCore.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/FirstPersonPawnUCC.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/FirstPersonPawnUCC.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Interactables/Gadgets/InfoLogTablet.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Interactables/Gadgets/InfoLogTablet.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Interactables/Pickables/ToolsPickable/AxeHatchetPickable.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Interactables/Pickables/ToolsPickable/AxeHatchetPickable.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/Gated/SmallElements/CoreRows/Deprecated/StandardGradeCoresRow.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/Gated/SmallElements/CoreRows/Deprecated/StandardGradeCoresRow.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Boot.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Boot.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/Ores/LithiumOre.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/Ores/LithiumOre.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/Tech/KeyCrateBox.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/Tech/KeyCrateBox.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Interactables/Gadgets/InfectedCapsule.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Interactables/Gadgets/InfectedCapsule.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Interactables/Gadgets/InfoLogTabletRoot.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Interactables/Gadgets/InfoLogTabletRoot.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Interactables/Gadgets/MediStatHub.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Interactables/Gadgets/MediStatHub.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Interactables/Pickables/ToolsPickable/AxeHatchetPickableRoot.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Interactables/Pickables/ToolsPickable/AxeHatchetPickableRoot.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Interactables/Pickables/ToolsPickable/EnergyPistolPickable.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Interactables/Pickables/ToolsPickable/EnergyPistolPickable.prefab.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Core.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Core.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Mine/Mine01.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Mine/Mine01.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/InputHandling/MyNormalMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/InputHandling/MyNormalMovement.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/LevelConstruct/Interactable/ItemInteractables/InfoLogTablet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/LevelConstruct/Interactable/ItemInteractables/InfoLogTablet.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/LevelConstruct/Interactable/ItemInteractables/ItemPicker/ItemPicker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/LevelConstruct/Interactable/ItemInteractables/ItemPicker/ItemPicker.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Mine/Mine01/LightingData.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Mine/Mine01/LightingData.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableAssets/NPCs/NpcDefinitions/Human/ScientistHypolita.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableAssets/NPCs/NpcDefinitions/Human/ScientistHypolita.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableAssets/YarnSpinner/HypolitaInTutorial.yarn" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableAssets/YarnSpinner/HypolitaInTutorial.yarn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Interactable/Consoles/DecontaminationConsole.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Interactable/Consoles/DecontaminationConsole.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Minable/MyOreNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Minable/MyOreNode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Helpers/AnimancerHelper/AnimancerRightArmController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Helpers/AnimancerHelper/AnimancerRightArmController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/LevelConstruct/Highlighting/HighlightEffectController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/LevelConstruct/Highlighting/HighlightEffectController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/DialogueScene/DialogueCommands/DialogueGameCommands.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/DialogueScene/DialogueCommands/DialogueGameCommands.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/ShopManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/ShopManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/TutorialManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/TutorialManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NewScript/CustomCommands.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NewScript/CustomCommands.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/PhysicsHandlers/Triggers/DialogueInitTrigger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PhysicsHandlers/Triggers/DialogueInitTrigger.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Settings/BoxVolumes/Mines/Mine01/AAPDither001Mine01.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/BoxVolumes/Mines/Mine01/AAPDither001Mine01.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -200,6 +172,28 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/03bc89244eae41faa3400ee906fec7bf1e0800/d0/50f8a8ac/SceneManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/03bc89244eae41faa3400ee906fec7bf1e0800/ef/184c3831/Scene.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Digger/Modules/Runtime/Sources/Editor/PreprocessBuild.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/BootLoader.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Dirigible/HighlightTriggers/DockHighlightTrigger.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/EditorScripts/SpawnInfoEditor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/InputHandling/MyNormalMovement.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Interactable/BioOrganism/BioOrganismBreakableNode.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Interactable/BioOrganism/BioOrganismNode.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Interactable/Stateful/StatefulElevator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Helpers/Events/Gated/GatedBreakableInteractionEvent.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Helpers/Events/Triggering/TriggerColliderEvent.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/LevelConstruct/Interactable/ItemInteractables/InfoLogTablet.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/LevelConstruct/Interactable/ItemInteractables/ItemPicker/ItemPicker.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/LevelConstruct/Spawn/DockSpawnPoint.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Manager/PlayerSpawnManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Manager/SceneManagers/Dock/DockManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Manager/TutorialManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Overview/OverviewMode/ScriptableObjectDefinitions/DockDefinition.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/PhysicsHandlers/Triggers/DialogueInitTrigger.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/PhysicsHandlers/Triggers/TriggerType.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Utilities/Static/SpawnRegistry.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Utilities/Static/SpawnSystem.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Utilities/TerrainLayerDetector.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Settings/UniversalRenderPipelineGlobalSettings.asset" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@cdea37cdf817/Runtime/TMP/TMP_FontAsset.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -281,7 +275,8 @@
       <workItem from="1767124958705" duration="10296000" />
       <workItem from="1767145591769" duration="1352000" />
       <workItem from="1767216071744" duration="6231000" />
-      <workItem from="1767230125835" duration="4897000" />
+      <workItem from="1767230125835" duration="4977000" />
+      <workItem from="1767297377435" duration="5166000" />
     </task>
     <servers />
   </component>

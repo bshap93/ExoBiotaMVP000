@@ -40,7 +40,7 @@ namespace FirstPersonPlayer.Minable
 {
     [RequireComponent(typeof(MeshCollider))]
     [RequireComponent(typeof(Rigidbody))]
-    [RequireComponent(typeof(HighlightEffectController))]
+    [DisallowMultipleComponent]
     public class MyOreNode : MonoBehaviour, IMinable, IBillboardable, IExaminable, IRequiresUniqueID, IInteractable,
         IHoverable,
         MMEventListener<GatedBreakableInteractionEvent>
