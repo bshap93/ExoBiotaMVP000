@@ -2,6 +2,7 @@ using System;
 using FirstPersonPlayer.Interface;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
 using Inventory;
+using LevelConstruct.Highlighting;
 using Manager;
 using MoreMountains.Feedbacks;
 using MoreMountains.InventoryEngine;
@@ -19,6 +20,7 @@ namespace FirstPersonPlayer.Interactable
         [SerializeField] KeyItemObject keyItem;
         [SerializeField] float interactionDistance = 3f;
         [SerializeField] Sprite icon;
+        [SerializeField] HighlightEffectController effectController;
 
         [Header("Items inside the crate box")] [SerializeField]
         bool hasOtherItems;
@@ -97,6 +99,8 @@ namespace FirstPersonPlayer.Interactable
             // TODO: Add other items to inventory if hasOtherItems is true.
 
             _hasBeenOpened = true;
+            
+            effectController.SetSecondaryStateHighlightColor();
         }
         public void OnInteractionStart()
         {

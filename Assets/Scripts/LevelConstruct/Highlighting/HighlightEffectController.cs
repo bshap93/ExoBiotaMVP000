@@ -34,6 +34,15 @@ namespace LevelConstruct.Highlighting
         Coroutine seeThroughCoroutine;
 
         [SerializeField] Color secondaryStateHighlightColor;
+        
+        public void SetSecondaryStateHighlightColor()
+        {
+            if (_highlightEffect != null)
+            {
+                _highlightEffect.outlineColor = secondaryStateHighlightColor;
+                _highlightEffect.Refresh();
+            }
+        }
 
 
         void Awake()

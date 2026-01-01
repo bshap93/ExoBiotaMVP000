@@ -38,7 +38,7 @@ using UnityEditor.SceneManagement;
 namespace FirstPersonPlayer.Minable
 
 {
-    [RequireComponent(typeof(MeshCollider))]
+    [RequireComponent(typeof(Collider))]
     [RequireComponent(typeof(Rigidbody))]
     [DisallowMultipleComponent]
     public class MyOreNode : MonoBehaviour, IMinable, IBillboardable, IExaminable, IRequiresUniqueID, IInteractable,

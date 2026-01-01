@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4196963779576699094}
   - component: {fileID: 7448799904430673681}
   - component: {fileID: 8943895003784814947}
+  - component: {fileID: 8792935634513918996}
   m_Layer: 8
   m_Name: Supply_cyl
   m_TagString: Untagged
@@ -86,6 +87,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &8792935634513918996
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291163301902356566}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300010, guid: 1fce9ff5b0a62b24faa446183d9e15d6, type: 3}
 --- !u!1 &2026578483604782001
 GameObject:
   m_ObjectHideFlags: 0
@@ -305,6 +328,7 @@ MonoBehaviour:
   keyItem: {fileID: 11400000, guid: 9509fdce174830d4097f0ba852361526, type: 2}
   interactionDistance: 3.5
   icon: {fileID: 21300000, guid: 448b3f6a0f6b65a47a00bfedc7d35ad5, type: 3}
+  effectController: {fileID: 5896223540349541909}
   hasOtherItems: 0
   items: []
   givesMoney: 0
@@ -1265,6 +1289,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   targetDuration: 3
+  secondaryStateHighlightColor: {r: 1, g: 0.8225939, b: 0, a: 1}
 --- !u!135 &3240934527373474047
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1896,6 +1921,7 @@ GameObject:
   - component: {fileID: 2101444881169429891}
   - component: {fileID: 3566689210114972976}
   - component: {fileID: 5927502212121532093}
+  - component: {fileID: 5438567714925945327}
   m_Layer: 8
   m_Name: Supply
   m_TagString: Untagged
@@ -1971,6 +1997,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &5438567714925945327
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9007381412489914184}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300006, guid: 1fce9ff5b0a62b24faa446183d9e15d6, type: 3}
 --- !u!1001 &3844523322813255375
 PrefabInstance:
   m_ObjectHideFlags: 0
