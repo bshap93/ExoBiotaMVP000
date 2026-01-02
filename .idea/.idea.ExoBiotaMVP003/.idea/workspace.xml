@@ -6,11 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="abdb78f9-9d96-46eb-81c0-ec3c0363e4ff" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ExoBiotaMVP003/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ExoBiotaMVP003/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/FirstPersonGroup.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/FirstPersonGroup.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/HUD/InfoTabletUI.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/HUD/InfoTabletUI.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/Hotbars/FPHUDHotbars.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/Hotbars/FPHUDHotbars.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SharedUI/Hotbar/HotbarUISlot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SharedUI/Hotbar/HotbarUISlot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/Inventory/InventoryItemIGUIListElement.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/Inventory/InventoryItemIGUIListElement.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Core.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Core.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Helpers/Events/UI/HotbarEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Helpers/Events/UI/HotbarEvent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SharedUI/IGUI/InventoryItemIGUIListElement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SharedUI/IGUI/InventoryItemIGUIListElement.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,25 +77,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Attach to Unity Editor.Attach to Unity Editor.executor": "Debug",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "git-widget-placeholder": "Main04",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.editor",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Attach to Unity Editor.Attach to Unity Editor.executor&quot;: &quot;Debug&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Main04&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.editor&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\6000.0.64f1\Editor\Unity.exe" />

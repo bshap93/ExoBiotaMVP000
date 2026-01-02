@@ -6,8 +6,16 @@ namespace Helpers.Events.UI
     {
         static HotbarEvent _e;
 
-        public static void Trigger()
+        public enum HotbarEventType
         {
+            AddToHotbar,
+            RemoveFromHotbar,
+        }
+        public HotbarEventType EventType;
+
+        public static void Trigger(HotbarEventType eventType)
+        {
+            _e.EventType = eventType;
             MMEventManager.TriggerEvent(_e);
         }
     }

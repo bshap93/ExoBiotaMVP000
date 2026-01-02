@@ -2,6 +2,7 @@ using System;
 using FirstPersonPlayer.Interactable;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
 using Helpers.Events;
+using Helpers.Events.UI;
 using Inventory;
 using Manager.Global;
 using Michsky.MUIP;
@@ -39,6 +40,8 @@ namespace SharedUI.IGUI
         [SerializeField] ButtonManager placeButton;
 
         [SerializeField] ButtonManager moveButton;
+
+        [SerializeField] ButtonManager hotbarButton;
 
         [SerializeField] SlotsIGUIController slotsIGUIController;
 
@@ -121,6 +124,11 @@ namespace SharedUI.IGUI
                 moveButton.gameObject.SetActive(false);
             }
 
+            if (currentMode == GameMode.FirstPerson)
+            {
+                hotbarButton.onClick.AddListener(AddToHotbar);
+            }
+
             if (_item.Usable && !_item.Consumable && !_item.Equippable)
                 useButton.onClick.AddListener(UseNonConsumable);
             else if (_item.Usable && _item.Consumable && !_item.Equippable)
@@ -130,6 +138,13 @@ namespace SharedUI.IGUI
             // if (_item.isQuestItem) placeButton.gameObject.SetActive(false);
 
             SetPlaceButtonActiveIf();
+        }
+        void AddToHotbar()
+        {
+            if (_item == null) return;
+
+            HotbarEvent.Trigger(
+                HotbarEvent.HotbarEventType.AddToHotbar);
         }
         void SetPlaceButtonActiveIf()
         {
