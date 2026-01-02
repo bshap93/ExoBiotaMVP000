@@ -518,7 +518,7 @@ GameObject:
   - component: {fileID: 7317736396852881788}
   - component: {fileID: 867058583196271399}
   m_Layer: 0
-  m_Name: FirstPersonGroup
+  m_Name: FirstPersonGroup 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

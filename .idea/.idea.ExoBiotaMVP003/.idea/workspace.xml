@@ -6,10 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="abdb78f9-9d96-46eb-81c0-ec3c0363e4ff" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ExoBiotaMVP003/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ExoBiotaMVP003/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/FirstPersonGroup.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/FirstPersonGroup.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/HUD/InfoTabletUI.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/HUD/InfoTabletUI.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/Hotbars/FPHUDHotbars.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/Hotbars/FPHUDHotbars.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SharedUI/Hotbar/FPConsumableHotbar.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SharedUI/Hotbar/FPConsumableHotbar.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SharedUI/Hotbar/FPHUDHotbars.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SharedUI/Hotbar/FPHUDHotbars.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SharedUI/Hotbar/FPToolHotbar.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SharedUI/Hotbar/FPToolHotbar.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SharedUI/Hotbar/HotbarUISlot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SharedUI/Hotbar/HotbarUISlot.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
