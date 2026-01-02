@@ -12,6 +12,7 @@ using Manager.SceneManagers.Pickable;
 using Manager.Settings;
 using Manager.StateManager;
 using Manager.Status;
+using Manager.UI;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
 using Objectives;
@@ -62,7 +63,8 @@ namespace Manager
         InfectionManagerSave,
         TriggerColliderSave,
         AttributesSave,
-        CreatureStateSave
+        CreatureStateSave,
+        HotbarSave
     }
 
     public enum LocalManagerType
@@ -191,6 +193,8 @@ namespace Manager
 
             if (!_config.DisabledGlobalManagers.Contains(GlobalManagerType.TutorialSave))
                 TutorialManager.Instance?.Load();
+            
+            HotbarManager.Instance.Load();
 
             LoadedManagerEvent.Trigger(ManagerType.All);
         }
@@ -236,6 +240,7 @@ namespace Manager
             if (!_config.DisabledGlobalManagers.Contains(GlobalManagerType.TutorialSave))
                 TutorialManager.Instance?.Save();
 
+            HotbarManager.Instance.Save();
 
             SetResetState(false);
         }
@@ -274,6 +279,8 @@ namespace Manager
 
             if (!_config.DisabledGlobalManagers.Contains(GlobalManagerType.TutorialSave))
                 TutorialManager.Instance?.Reset();
+            
+            HotbarManager.Instance.Reset();
 
             SetResetState(true);
         }
@@ -354,6 +361,8 @@ namespace Manager
                     return "AttributesSave.es3";
                 case GlobalManagerType.CreatureStateSave:
                     return "CreatureStateSave.es3";
+                case GlobalManagerType.HotbarSave:
+                    return "HotbarSave.es3";
                 default:
 
                     Debug.LogError($"Unknown manager type: {globalManagerType}");
