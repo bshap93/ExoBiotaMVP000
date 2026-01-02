@@ -60,8 +60,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 
         public GameObject ineffectualDebrisEffectPrefab;
 
-        [FormerlySerializedAs("reticleForInabilityToSample")] [SerializeField]
-        protected Sprite reticleForInabilityToHit;
+        [FormerlySerializedAs("reticleForInabilityToHit")] [FormerlySerializedAs("reticleForInabilityToSample")] [SerializeField]
+        protected Sprite reticleForHittable;
 
         [SerializeField] protected string[] tagsWhichShouldShowInabilityReticle;
 

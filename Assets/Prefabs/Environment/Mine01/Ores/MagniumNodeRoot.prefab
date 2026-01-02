@@ -126,8 +126,8 @@ MonoBehaviour:
   OnOreHit:
     m_PersistentCalls:
       m_Calls: []
-  OreHardness: 0
-  uniqueID: d191b801-259d-4633-8f81-c34ac37f077b
+  OreHardness: 1
+  uniqueID: 
   failHitFeedbacks: {fileID: 0}
   oreHitParticles: {fileID: 1937569298127228, guid: 5be73deed3f1215429af3e7d15952965, type: 3}
   itemTypeMined: {fileID: 11400000, guid: b2113e517b19a9e4796ba912e9eff7ac, type: 2}
@@ -1812,7 +1812,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0986de822ecb4835bfb249feaeb7996f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetID: 285fc74a-a0c4-4bc5-8b6b-4545defc9743
+  targetID: 
   seeThroughDuration: 5
   onScanned:
     m_PersistentCalls:
