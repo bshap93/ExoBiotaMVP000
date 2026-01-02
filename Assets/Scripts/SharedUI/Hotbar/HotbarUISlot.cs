@@ -1,12 +1,10 @@
 using UnityEngine;
 
 namespace SharedUI.Hotbar
-{
+{ 
     [DisallowMultipleComponent]
-    public class FPHUDHotbars : MonoBehaviour
+    public class HotbarUISlot : MonoBehaviour
     {
-        [SerializeField] FPToolHotbar fpHudToolHotbar;
-        [SerializeField] FPConsumableHotbar fpHudConsumableHotbar;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
