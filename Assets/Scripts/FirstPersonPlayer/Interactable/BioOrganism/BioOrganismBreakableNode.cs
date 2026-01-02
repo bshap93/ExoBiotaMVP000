@@ -449,28 +449,9 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
             return false;
         }
 
-        // bool IsPlayerAlreadyEquippedWithBestTool(GatedBreakableInteractionDetails details, List<string> toolsFound)
-        // {
-        //     if (toolsFound == null)
-        //     {
-        //         _toolsFound = HasToolForInteractionInInventory();
-        //         if (_toolsFound.Count == 0) return false;
-        //     }
-        //
-        //     var toolID = details.GetMostEfficientRequiredToolID(toolsFound);
-        //
-        //     var equipmentInventory =
-        //         GlobalInventoryManager.Instance.equipmentInventory;
-        //
-        //     if (equipmentInventory == null) throw new Exception("Equipment inventory is null");
-        //
-        //     var equippedTool = equipmentInventory.Content.FirstOrDefault(s => s != null && s.ItemID == toolID);
-        //     if (equippedTool != null) return equippedTool.ItemID == toolID;
-        //
-        //     return false;
-        // }
 
-        void PlayHitFx(Vector3 hitPoint, Vector3 hitNormal)
+
+        public void PlayHitFx(Vector3 hitPoint, Vector3 hitNormal)
         {
             onHitFeedbacks?.PlayFeedbacks(transform.position);
 

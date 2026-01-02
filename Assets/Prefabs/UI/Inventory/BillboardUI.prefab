@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 266.4, y: 44.400074}
-  m_SizeDelta: {x: 100, y: 149}
+  m_AnchoredPosition: {x: 266.4, y: 32.5}
+  m_SizeDelta: {x: 100, y: 181.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7490852247094771875
 CanvasRenderer:
@@ -109,8 +109,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -211.1, y: 44.4}
-  m_SizeDelta: {x: 100, y: 149}
+  m_AnchoredPosition: {x: -211.1, y: 32.5}
+  m_SizeDelta: {x: 100, y: 181.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6448677206359357627
 CanvasRenderer:
@@ -551,17 +551,18 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
+  m_fontSize: 24
   m_fontSizeBase: 20
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 24
   m_fontStyle: 0
   m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -589,7 +590,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 13.21106, y: 0, z: 53.519844, w: -31.179333}
+  m_margin: {x: 14.287819, y: 0, z: 53.519844, w: -31.179333}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -698,6 +699,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -823,17 +825,18 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24.63
+  m_fontSize: 36
   m_fontSizeBase: 24.63
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 36
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -861,7 +864,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -16.96518, w: -72.466354}
+  m_margin: {x: 0, y: 0, z: -16.96518, w: -111.17864}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -881,11 +884,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2850313890047607873, guid: 05b44911560d28f4895a4c85ff30a2cf, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 56.5
+      value: 68.89
       objectReference: {fileID: 0}
     - target: {fileID: 2850313890047607873, guid: 05b44911560d28f4895a4c85ff30a2cf, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 67.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2850313890047607873, guid: 05b44911560d28f4895a4c85ff30a2cf, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -69.1
       objectReference: {fileID: 0}
     - target: {fileID: 3657959768541123046, guid: 05b44911560d28f4895a4c85ff30a2cf, type: 3}
       propertyPath: m_Name
@@ -997,11 +1004,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8492700322830805019, guid: 05b44911560d28f4895a4c85ff30a2cf, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 56.5
+      value: 68.89
       objectReference: {fileID: 0}
     - target: {fileID: 8492700322830805019, guid: 05b44911560d28f4895a4c85ff30a2cf, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 67.200035
+      objectReference: {fileID: 0}
+    - target: {fileID: 8492700322830805019, guid: 05b44911560d28f4895a4c85ff30a2cf, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -69.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

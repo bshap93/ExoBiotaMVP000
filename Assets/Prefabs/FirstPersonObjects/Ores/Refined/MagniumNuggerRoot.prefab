@@ -574,7 +574,7 @@ MonoBehaviour:
     UnknownIcon: {fileID: 0}
     UnknownShortBlurb: 
     UnkonwnName: Unknown Item
-  onPickFeedbacks: {fileID: 0}
+  onPickFeedbacks: {fileID: 3839008400038903605}
   canBeMoved: 1
   placedByPlayerEvent:
     m_PersistentCalls:

@@ -1519,8 +1519,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 888380afc233049ce9e618f9f36c8ba8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profile: {fileID: 11400000, guid: 243534bb9783b214a9ff12c0a16f371a, type: 2}
-  profileSync: 0
+  profile: {fileID: 11400000, guid: d77b9c41e18234a49b42c5d239354f69, type: 2}
+  profileSync: 1
   camerasLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -1566,7 +1566,7 @@ MonoBehaviour:
   overlayTextureScrolling: {x: 0, y: 0}
   overlayVisibility: 0
   outline: 1
-  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  outlineColor: {r: 0.69182384, g: 0, b: 0.051547863, a: 1}
   outlineColorStyle: 0
   outlineGradient:
     serializedVersion: 2
@@ -1612,7 +1612,7 @@ MonoBehaviour:
   outlineIndependent: 0
   outlineContourStyle: 0
   outlineMaskMode: 0
-  glow: 0.12
+  glow: 0
   glowWidth: 0.5
   glowQuality: 1
   glowBlurMethod: 0
@@ -1640,7 +1640,7 @@ MonoBehaviour:
     alpha: 0.4
     color: {r: 0.1882353, g: 0.8, b: 0.6784314, a: 1}
   glowMaskMode: 0
-  innerGlow: 0.22
+  innerGlow: 0.05
   innerGlowWidth: 1
   innerGlowColor: {r: 1, g: 1, b: 1, a: 1}
   innerGlowBlendMode: 0
@@ -1727,7 +1727,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   minDistance: 0
-  maxDistance: 3
+  maxDistance: 5
   respectUI: 1
   volumeLayerMask:
     serializedVersion: 2
@@ -1756,6 +1756,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   targetDuration: 3
+  secondaryStateHighlightColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!65 &988778645287512221
 BoxCollider:
   m_ObjectHideFlags: 0

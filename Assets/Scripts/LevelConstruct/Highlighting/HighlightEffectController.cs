@@ -32,6 +32,8 @@ namespace LevelConstruct.Highlighting
         bool _isHighlighted;
         bool _isTargetVisible;
         Coroutine seeThroughCoroutine;
+        
+        public HighlightEffect HighlightEffect => _highlightEffect;
 
         [SerializeField] Color secondaryStateHighlightColor;
         

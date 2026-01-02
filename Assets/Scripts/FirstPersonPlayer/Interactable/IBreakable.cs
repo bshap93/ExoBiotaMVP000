@@ -10,5 +10,6 @@ namespace FirstPersonPlayer.Interactable
         void ApplyHit(int toolPower, Vector3 hitPoint, Vector3 hitNormal,
             MeleeToolPrefab.HitType hitType = MeleeToolPrefab.HitType.Normal);
         IEnumerator InitializeAfterDestructableManager();
+        void PlayHitFx(Vector3 hitPoint, Vector3 hitNormal);
     }
 }

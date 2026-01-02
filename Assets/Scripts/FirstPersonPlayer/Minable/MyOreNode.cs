@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Dirigible.Input;
 using Domains.Gameplay.Mining.Scripts;
+using FirstPersonPlayer.Interactable;
 using FirstPersonPlayer.Interface;
 using FirstPersonPlayer.Tools.Interface;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
@@ -12,6 +13,7 @@ using Helpers.Events;
 using Helpers.Events.Domains.Player.Events;
 using Helpers.Events.Gated;
 using Helpers.ScriptableObjects.Gated;
+using HighlightPlus;
 using Inventory;
 using LevelConstruct.Highlighting;
 using Manager;
@@ -42,7 +44,7 @@ namespace FirstPersonPlayer.Minable
     [RequireComponent(typeof(Rigidbody))]
     [DisallowMultipleComponent]
     public class MyOreNode : MonoBehaviour, IMinable, IBillboardable, IExaminable, IRequiresUniqueID, IInteractable,
-        IHoverable,
+        IHoverable, 
         MMEventListener<GatedBreakableInteractionEvent>
     {
         const string DefaultActionText = "Mine Ore";
@@ -79,7 +81,9 @@ namespace FirstPersonPlayer.Minable
         public int actionId;
         public string actionText;
 
-
+        [SerializeField] HighlightEffectController highlightEffectController;
+        HighlightEffect _highlight;
+        
 #if UNITY_EDITOR
         [ValueDropdown(nameof(GetAllRewiredActions))]
 #endif
@@ -110,6 +114,7 @@ namespace FirstPersonPlayer.Minable
 
 
         [SerializeField] MMFeedbacks oreDestroyFeedback;
+        [SerializeField] MMFeedbacks onHitFeedbacks;
 
         [SerializeField] UnityEvent OnOreDestroyed;
         [SerializeField] UnityEvent OnOreHit;
@@ -120,9 +125,7 @@ namespace FirstPersonPlayer.Minable
         [FormerlySerializedAs("UniqueID")] public string uniqueID;
 
         [SerializeField] MMFeedbacks failHitFeedbacks;
-        [SerializeField] GameObject failHitParticles;
         [SerializeField] GameObject oreHitParticles;
-        [SerializeField] GameObject oreDestroyParticles;
 #if ODIN_INSPECTOR && UNITY_EDITOR
         [OnValueChanged(nameof(AutoSyncExaminableFromItem), true)]
         [InlineButton(nameof(SyncFromItem), "Sync From Item")]
@@ -141,7 +144,7 @@ namespace FirstPersonPlayer.Minable
         int dropIndex;
         int hitIndex;
 
-        HighlightTrigger trigger;
+        // HighlightTrigger trigger;
 
         void Awake()
         {
@@ -149,7 +152,6 @@ namespace FirstPersonPlayer.Minable
             if (!nodeCollider) nodeCollider = GetComponent<Collider>();
 
             _intactBounds = GetIntactBounds();
-            trigger = GetComponent<HighlightTrigger>();
         }
 
 
@@ -159,6 +161,8 @@ namespace FirstPersonPlayer.Minable
             if (!(_rigidbody == null)) _rigidbody.isKinematic = true;
             StartCoroutine(InitializeAfterDestructableManager());
             oreHitFeedback?.Initialization();
+            
+            _highlight = highlightEffectController != null ? highlightEffectController.HighlightEffect : null;
         }
 
 
@@ -354,7 +358,7 @@ namespace FirstPersonPlayer.Minable
             loopedInteractionFeedbacks?.StopFeedbacks();
             if (subjectUniquedID != uniqueID) return;
 
-            BreakInstantly();
+            // BreakInstantly();
         }
 
         public bool CanInteract()
@@ -379,6 +383,7 @@ namespace FirstPersonPlayer.Minable
 
 
                 OnOreHit?.Invoke();
+                PlayHitFx(transform.position, Vector3.up);
                 StartCoroutine(Animate());
                 return;
             }
@@ -386,11 +391,11 @@ namespace FirstPersonPlayer.Minable
             // === FINAL HIT ===
             oreDestroyFeedback?.PlayFeedbacks();
 
-            if (oreDestroyParticles != null)
-            {
-                var fx = Instantiate(oreDestroyParticles, transform.position, Quaternion.identity);
-                Destroy(fx, 2f);
-            }
+            // if (oreDestroyParticles != null)
+            // {
+            //     var fx = Instantiate(oreDestroyParticles, transform.position, Quaternion.identity);
+            //     Destroy(fx, 2f);
+            // }
 
             OnOreDestroyed?.Invoke();
             DestructableEvent.Trigger(DestructableEventType.Destroyed, uniqueID, transform);
@@ -411,11 +416,11 @@ namespace FirstPersonPlayer.Minable
         {
             failHitFeedbacks?.PlayFeedbacks();
 
-            if (failHitParticles != null)
-            {
-                var fx = Instantiate(failHitParticles, hitPoint, Quaternion.identity);
-                Destroy(fx, 2f);
-            }
+            // if (failHitParticles != null)
+            // {
+            //     var fx = Instantiate(failHitParticles, hitPoint, Quaternion.identity);
+            //     Destroy(fx, 2f);
+            // }
         }
 
         public int GetCurrentMinableHardness()
@@ -522,22 +527,6 @@ namespace FirstPersonPlayer.Minable
         {
         }
 
-        void BreakInstantly()
-        {
-            // Skip the incremental hits; just perform the full break logic
-            hitIndex = hitsToDestroy;
-            ApplyOreHit(hardness, transform.position, transform.up);
-        }
-        void ApplyOreHit(int toolPower, Vector3 hitPoint, Vector3 hitNormal)
-        {
-            if (!CanBeDamagedBy(toolPower))
-            {
-                MinableFailHit(hitPoint);
-                return;
-            }
-
-            MinableMineHit();
-        }
 
         bool CanBeDamagedBy(int toolPower)
         {
@@ -671,6 +660,27 @@ namespace FirstPersonPlayer.Minable
         }
 
 
+
+
+        public void PlayHitFx(Vector3 hitPoint, Vector3 hitNormal)
+        {
+            Debug.Log("[MyOreNode] PlayHitFx.");
+            onHitFeedbacks?.PlayFeedbacks(transform.position);
+
+            if (oreHitParticles)
+            {
+                var fx = Instantiate(oreHitParticles, hitPoint, Quaternion.LookRotation(hitNormal));
+                Destroy(fx, 2f);
+            }
+            
+            if (_highlight != null)
+            {
+                _highlight.HitFX(); // plays the configured hit effect
+                Debug.Log("[MyOreNode] Played highlight hit FX.");
+            }
+
+            
+        }
         IEnumerator InitializeAfterDestructableManager()
         {
             // Wait one frame so core managers come up

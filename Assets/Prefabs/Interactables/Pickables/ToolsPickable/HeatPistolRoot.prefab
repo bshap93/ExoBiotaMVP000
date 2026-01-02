@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5804589946731767809}
   - component: {fileID: 7301380691004115225}
   m_Layer: 8
-  m_Name: EnergyPistolPickable
+  m_Name: HeatPistolPickable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

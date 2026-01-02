@@ -224,7 +224,7 @@ MonoBehaviour:
   uniqueID: 8066d7af-7e1c-4404-ba23-5f37c436e808
   failHitFeedbacks: {fileID: 0}
   failHitParticles: {fileID: 0}
-  oreHitParticles: {fileID: 0}
+  oreHitParticles: {fileID: 6948713295122520351, guid: a82accbffacd8b44f8f4815fe94260d3, type: 3}
   oreDestroyParticles: {fileID: 0}
   itemTypeMined: {fileID: 11400000, guid: 2ca11962337766e4cb48df943498d897, type: 2}
 --- !u!1 &3071511310979043128
@@ -323,7 +323,7 @@ MonoBehaviour:
   overlayTextureScrolling: {x: 0, y: 0}
   overlayVisibility: 0
   outline: 1
-  outlineColor: {r: 0.44025147, g: 0.006922148, b: 0.025718434, a: 1}
+  outlineColor: {r: 0.27917883, g: 0.007843134, b: 0.4392157, a: 1}
   outlineColorStyle: 0
   outlineGradient:
     serializedVersion: 2

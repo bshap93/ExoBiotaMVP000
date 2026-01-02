@@ -75,6 +75,10 @@ namespace FirstPersonPlayer.Interactable
                 DestructableManager.Instance.IsDestroyed(uniqueId))
                 Destroy(gameObject);
         }
+        public void PlayHitFx(Vector3 hitPoint, Vector3 hitNormal)
+        {
+            throw new NotImplementedException();
+        }
         public string UniqueID =>
             uniqueId;
         public void SetUniqueID()
