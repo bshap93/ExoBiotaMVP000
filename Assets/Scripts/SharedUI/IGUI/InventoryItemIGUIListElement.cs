@@ -126,7 +126,8 @@ namespace SharedUI.IGUI
 
             if (currentMode == GameMode.FirstPerson)
             {
-                hotbarButton.onClick.AddListener(AddToHotbar);
+                if (hotbarButton != null)
+                    hotbarButton.onClick.AddListener(AddToHotbar);
             }
 
             if (_item.Usable && !_item.Consumable && !_item.Equippable)
@@ -142,9 +143,11 @@ namespace SharedUI.IGUI
         void AddToHotbar()
         {
             if (_item == null) return;
+            var _itemID = _item.ItemID;
+            var indexInInventory = _sourceIndex;
 
             HotbarEvent.Trigger(
-                HotbarEvent.HotbarEventType.AddToHotbar);
+                HotbarEvent.HotbarEventType.AddToHotbar, _itemID, indexInInventory);
         }
         void SetPlaceButtonActiveIf()
         {

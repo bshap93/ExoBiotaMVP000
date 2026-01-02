@@ -12,11 +12,14 @@ namespace Helpers.Events.UI
             RemoveFromHotbar,
         }
         public HotbarEventType EventType;
+        public string ItemID;
+        public int IndexInInventory;
 
-        public static void Trigger(HotbarEventType eventType)
+        public static void Trigger(HotbarEventType eventType, string itemID, int indexInInventory)
         {
             _e.EventType = eventType;
-            MMEventManager.TriggerEvent(_e);
-        }
+            _e.ItemID = itemID;
+            _e.IndexInInventory = indexInInventory;
+            MMEventManager.TriggerEvent(_e);        }
     }
 }

@@ -11,10 +11,18 @@ namespace Manager.UI
         [SerializeField] int fpToolHotbarSize = 6;
         [SerializeField] int fpConsumableHotbarSize = 2;
         
-        BaseTool[] _fpToolHotbarItems;
-        ConsumableEffectItem[] _fpConsumableHotbarItems;
-        
-        int[] _quantityConsumableHotbarItems;
+        [System.Serializable]
+        public class ItemHotbarData
+        {
+            public string itemID;
+            public int quantity;
+            public int[] inventoryIndices;
+        }
+        // Quantity of each consumable item in hotbar
+        ItemHotbarData[] _fpConsumableHotbarItems;
+        // Quantity not shown in hotbar, but used to answer questions like:
+        // If I sell or drop this tool, does the hotbar need to change?
+        ItemHotbarData[] _fpToolHotbarItems;
         
         int _currentConsumableHotbarIndex = 0;
         int _currentToolHotbarIndex = 0;
@@ -58,47 +66,17 @@ namespace Manager.UI
         public void Save()
         {
             var path = GetSaveFilePath();
-            
-            if (_fpToolHotbarItems.Length < fpToolHotbarSize)
-                ES3.Save("FPToolHotbarItems", _fpToolHotbarItems, path);
-            else
-            {
-                Debug.LogError("Attempted to save: " + _fpToolHotbarItems.Length +
-                               " tool hotbar items, but max size is " + fpToolHotbarSize);
-            } 
-            if (_fpConsumableHotbarItems.Length < fpConsumableHotbarSize)
-                ES3.Save("FPConsumableHotbarItems", _fpConsumableHotbarItems, path);
-            else
-            {
-                Debug.LogError("Attempted to save: " + _fpConsumableHotbarItems.Length +
-                               " consumable hotbar items, but max size is " + fpConsumableHotbarSize);
-            }   
-            
-            if (_quantityConsumableHotbarItems.Length == _fpConsumableHotbarItems.Length)
-                ES3.Save("QuantityConsumableHotbarItems", _quantityConsumableHotbarItems, path);
-            else
-            {
-                Debug.LogError("Attempted to save: " + _quantityConsumableHotbarItems.Length +
-                               " consumable quantity hotbar items, but size is " + _fpConsumableHotbarItems.Length);
-            }
-            if (_currentConsumableHotbarIndex < fpConsumableHotbarSize)
-                ES3.Save("CurrentConsumableHotbarIndex", _currentConsumableHotbarIndex, path);
-            else
-            {
-                Debug.LogError("Attempted to save: " + _currentConsumableHotbarIndex +
-                               " current consumable hotbar index, but max size is " + fpConsumableHotbarSize);
-            }
-            if (_currentToolHotbarIndex < fpToolHotbarSize)
-                ES3.Save("CurrentToolHotbarIndex", _currentToolHotbarIndex, path);
-            else
-            {
-                Debug.LogError("Attempted to save: " + _currentToolHotbarIndex +
-                               " current tool hotbar index, but max size is " + fpToolHotbarSize);
-            }
+
 
         }
         public void Load()
         {
+            var path = GetSaveFilePath();
+
+
+
+            _dirty = false;
+            _hasLoadedAndApplied = true;
         }
         public void Reset()
         {
@@ -126,7 +104,26 @@ namespace Manager.UI
         }
         public void OnMMEvent(HotbarEvent eventType)
         {
-            throw new System.NotImplementedException();
+            if (eventType.EventType == HotbarEvent.HotbarEventType.AddToHotbar)
+            {
+                var x = false;
+                var y = false;
+                // if itemID is for a tool, try add to tool hotbar
+                if (x)
+                    TryAddItemToToolHotbar(eventType.ItemID,eventType.IndexInInventory);
+                // if itemID is for a consumable, try add to consumable hotbar, and count the quantity
+                else if (y)
+                    TryAddItemToConsumableHotbar(eventType.ItemID,eventType.IndexInInventory);
+            }
+            
+            void TryAddItemToToolHotbar(string itemID, int indexInInventory)
+            {
+               
+            }
+            
+            void TryAddItemToConsumableHotbar(string itemID, int indexInInventory)
+            {
+            }
         }
     }
 }

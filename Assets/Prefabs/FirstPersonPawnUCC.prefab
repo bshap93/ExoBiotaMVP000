@@ -2490,7 +2490,6 @@ MonoBehaviour:
     unstableGroundedLookingDirectionMode: 0
     notGroundedLookingDirectionMode: 1
   playerInteraction: {fileID: 8398371441896539530}
-  forwardTerrainLayerDetector: {fileID: 5969745365844593951}
   groundedParameter: Grounded
   stableParameter: Stable
   verticalSpeedParameter: VerticalSpeed
@@ -6071,7 +6070,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4621633159602327336
 Transform:
   m_ObjectHideFlags: 0
