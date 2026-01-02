@@ -6,20 +6,20 @@
   <component name="ChangeListManager">
     <list default="true" id="abdb78f9-9d96-46eb-81c0-ec3c0363e4ff" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ExoBiotaMVP003/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ExoBiotaMVP003/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/CustomAssets/Fonts/genos_5.2.8/ttf/genos-latin-500-normal SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/CustomAssets/Fonts/genos_5.2.8/ttf/genos-latin-500-normal SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/Ores/MangiumNode.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/Ores/MangiumNode.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/Biomass/Breakable/BrittleStalkWarrenSingleRoot.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/Biomass/Breakable/BrittleStalkWarrenSingleRoot.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/Ores/LithiumOreRoot.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/Ores/LithiumOreRoot.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/Tech/KeyCrateBoxRoot.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/Tech/KeyCrateBoxRoot.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/FirstPersonObjects/Ores/Refined/LithiumNugget.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/FirstPersonObjects/Ores/Refined/LithiumNugget.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/AxeHatchet01.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Items/AxeHatchet01.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/EnergyPistolObject.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Items/EnergyPistolObject.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/LithiumOreObject.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Items/LithiumOreObject.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Boot.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Boot.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Interactables/Gadgets/InfoLogTabletRoot.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Interactables/Gadgets/InfoLogTabletRoot.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Interactables/Gadgets/SaveConsole.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Interactables/Gadgets/SaveConsole.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Interactables/Pickables/ToolsPickable/AxeHatchetPickableRoot.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Interactables/Pickables/ToolsPickable/AxeHatchetPickableRoot.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Interactables/Pickables/ToolsPickable/HeatPistolRoot.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Interactables/Pickables/ToolsPickable/HeatPistolRoot.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Mine/Mine01.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Mine/Mine01.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Interactable/KeyCrateBoxInteractable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Interactable/KeyCrateBoxInteractable.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Minable/MyOreNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Minable/MyOreNode.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/LevelConstruct/Highlighting/HighlightEffectController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/LevelConstruct/Highlighting/HighlightEffectController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Helpers/Events/ObjectiveEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Helpers/Events/ObjectiveEvent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/LevelConstruct/Interactable/ItemInteractables/SaveConsole.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/LevelConstruct/Interactable/ItemInteractables/SaveConsole.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NewScript/CustomCommands.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NewScript/CustomCommands.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objectives/ObjectivesManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objectives/ObjectivesManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/AssetProfiles/HighlightPlus/Interactable/StatusChangeInteractable.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/AssetProfiles/HighlightPlus/Interactable/StatusChangeInteractable.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,7 +151,7 @@
       <workItem from="1767145591769" duration="1352000" />
       <workItem from="1767216071744" duration="6231000" />
       <workItem from="1767230125835" duration="4977000" />
-      <workItem from="1767297377435" duration="8651000" />
+      <workItem from="1767297377435" duration="10666000" />
     </task>
     <servers />
   </component>

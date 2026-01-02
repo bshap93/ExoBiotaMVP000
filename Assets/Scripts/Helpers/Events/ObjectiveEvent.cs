@@ -16,7 +16,7 @@ namespace Events
         ObjectiveAdded,
         Refresh,
         ObjectiveProgressMade,
-        ObjectiveMadeInactive
+        ObjectiveDeleted
     }
 
     public enum NotifyType

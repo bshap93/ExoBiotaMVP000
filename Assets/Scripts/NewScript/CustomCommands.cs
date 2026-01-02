@@ -199,7 +199,7 @@ namespace NewScript
                 return;
             }
 
-            ObjectiveEvent.Trigger(objectiveId, ObjectiveEventType.ObjectiveMadeInactive);
+            ObjectiveEvent.Trigger(objectiveId, ObjectiveEventType.ObjectiveDeactivated);
         }
 
         public void MarkPOIAsHavingNewContent(string uniqueID)

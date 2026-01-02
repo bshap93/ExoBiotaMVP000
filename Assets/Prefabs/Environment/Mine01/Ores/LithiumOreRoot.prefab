@@ -393,6 +393,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   targetDuration: 3
+  secondaryStateHighlightColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &247871618620807328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -507,15 +508,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3071511310979043128}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.8073036, y: -0.17685212, z: -0.13083747, w: 0.54760015}
-  m_LocalPosition: {x: 5.839035, y: 1.2819998, z: -16.102493}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.8773911, y: 1.8773915, z: 1.8773906}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7270525026712727118}
   - {fileID: 3325847807332005762}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -111.497, y: -2.7470093, z: -22.84198}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1758237887819260400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -765,6 +766,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   targetDuration: 3
+  secondaryStateHighlightColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!135 &8540761866048175123
 SphereCollider:
   m_ObjectHideFlags: 0

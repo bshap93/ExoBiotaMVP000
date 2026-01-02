@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 2544655855995247402}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5012084, y: 0.49878868, z: -0.49878725, w: 0.50120986}
-  m_LocalPosition: {x: -8.005402, y: 0.63230264, z: -1.6773682}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.4949998, y: 1.4949998, z: 1.4949998}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -306,6 +306,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   targetDuration: 3
+  secondaryStateHighlightColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &4222525614690986290
 GameObject:
   m_ObjectHideFlags: 0

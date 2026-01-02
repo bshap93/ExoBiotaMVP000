@@ -223,7 +223,7 @@ namespace Objectives
                         eventType.objectiveId, eventType.progressMadeByN,
                         eventType.progressMadeByF, eventType.miscProgressInfo);
 
-                if (eventType.type == ObjectiveEventType.ObjectiveMadeInactive)
+                if (eventType.type == ObjectiveEventType.ObjectiveDeactivated)
                     SetObjectiveInactive(eventType.objectiveId);
 
                 if (eventType.type == ObjectiveEventType.ObjectiveAdded) AddObjective(eventType.objectiveId, false);

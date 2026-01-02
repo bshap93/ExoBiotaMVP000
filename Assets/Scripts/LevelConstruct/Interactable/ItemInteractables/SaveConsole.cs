@@ -13,7 +13,6 @@ using Utilities.Interface;
 namespace LevelConstruct.Interactable.ItemInteractables
 {
     [RequireComponent(typeof(MeshCollider))]
-    [RequireComponent(typeof(HighlightEffectController))]
     [DisallowMultipleComponent]
     public class SaveConsole : ActionConsole, IInteractable, IRequiresUniqueID
     {
