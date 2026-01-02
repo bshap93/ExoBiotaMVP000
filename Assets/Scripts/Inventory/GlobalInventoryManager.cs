@@ -478,5 +478,13 @@ namespace Inventory
 
             return highestPriorityCoreIndex;
         }
+        public bool IsItemIDaTool(string eventTypeItemID)
+        {
+            throw new NotImplementedException();
+        }
+        public bool IsItemIDaConsumableEffectItem(string eventTypeItemID)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

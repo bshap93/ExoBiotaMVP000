@@ -143,11 +143,11 @@ namespace SharedUI.IGUI
         void AddToHotbar()
         {
             if (_item == null) return;
-            var _itemID = _item.ItemID;
+            var itemID = _item.ItemID;
             var indexInInventory = _sourceIndex;
 
             HotbarEvent.Trigger(
-                HotbarEvent.HotbarEventType.AddToHotbar, _itemID, indexInInventory);
+                HotbarEvent.HotbarEventType.AddToHotbar, itemID, indexInInventory);
         }
         void SetPlaceButtonActiveIf()
         {

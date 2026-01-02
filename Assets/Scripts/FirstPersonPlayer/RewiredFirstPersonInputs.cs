@@ -27,7 +27,13 @@ namespace FirstPersonPlayer
             DropPropOrHold,
             Pause,
             LeftHandToggle,
-            PickablePick
+            PickablePick,
+            HotbarFP1,
+            HotbarFP2,
+            HotbarFP3,
+            HotbarFP4,
+            HotbarFP5,
+            HotbarFP6
         }
 
         [Header("Character Input Values")] public Vector2 move;
@@ -55,6 +61,18 @@ namespace FirstPersonPlayer
         public bool pause;
         public bool leftHandToggle;
         public bool pickablePick;
+
+        // 1-2 are consumables
+        public bool hotbarFP1;
+        public bool hotbarFP2;
+
+        //Tool hotbar
+        // 3 is empty hand
+        public bool hotbarFP3;
+        // 4-6 are tools
+        public bool hotbarFP4;
+        public bool hotbarFP5;
+        public bool hotbarFP6;
 
         float _currentHoldTimeDropPropOrHold;
         bool _isHoldingDropPropOrHold;
@@ -87,21 +105,8 @@ namespace FirstPersonPlayer
                 _rewiredPlayer.GetAxis("Look Y")
             );
 
-            // Trigger stamina events when sprint state changes
-            // if (sprintStart)
-            //     StaminaAffectorEvent.Trigger(
-            //         StaminaAffectorEventType.StaminaDrainActivityStarted,
-            //         PlayerStatsManager.Instance.SprintStaminaDrainPerSecond);
-            //
-            // if (sprintStop) StaminaAffectorEvent.Trigger(StaminaAffectorEventType.StaminaDrainActivityStopped, 0f);
-
             // Read button inputs
             jump = _rewiredPlayer.GetButton("Jump");
-            // Sprint
-            // sprint = _rewiredPlayer.GetButton("Sprint");
-            // sprintStart = _rewiredPlayer.GetButtonDown("Sprint");
-            // sprintStop = _rewiredPlayer.GetButtonUp("Sprint");
-
             interact = _rewiredPlayer.GetButtonDown("Interact");
             interactHeld = _rewiredPlayer.GetButton("Interact");
             crouch = _rewiredPlayer.GetButton("Crouch");
@@ -111,6 +116,13 @@ namespace FirstPersonPlayer
             leftHandToggle = _rewiredPlayer.GetButtonDown("LeftHandToggle");
             pickablePick = _rewiredPlayer.GetButtonDown("PickablePick");
             scrollBetweenTools = _rewiredPlayer.GetAxisDelta("ScrollTools");
+
+            hotbarFP1 = _rewiredPlayer.GetButtonDown("HotbarFP1");
+            hotbarFP2 = _rewiredPlayer.GetButtonDown("HotbarFP2");
+            hotbarFP3 = _rewiredPlayer.GetButtonDown("HotbarFP3");
+            hotbarFP4 = _rewiredPlayer.GetButtonDown("HotbarFP4");
+            hotbarFP5 = _rewiredPlayer.GetButtonDown("HotbarFP5");
+            hotbarFP6 = _rewiredPlayer.GetButtonDown("HotbarFP6");
 
             if (dropPropOrHold)
             {
@@ -135,15 +147,6 @@ namespace FirstPersonPlayer
 
                 _isHoldingDropPropOrHold = false;
             }
-
-            // if (sprintStart)
-            //     StaminaAffectorEvent.Trigger(
-            //         StaminaAffectorEventType.StaminaDrainActivityStarted,
-            //         PlayerMutableStatsManager.Instance.SprintStaminaDrainPerSecond);
-            //
-            // if (sprintStop)
-            //     StaminaAffectorEvent.Trigger(
-            //         StaminaAffectorEventType.StaminaDrainActivityStopped, 0f);
         }
 
         void ResetHoldDropPropOrHold()
@@ -189,6 +192,19 @@ namespace FirstPersonPlayer
                     return leftHandToggle;
                 case InputActions.PickablePick:
                     return pickablePick;
+
+                case InputActions.HotbarFP1:
+                    return hotbarFP1;
+                case InputActions.HotbarFP2:
+                    return hotbarFP2;
+                case InputActions.HotbarFP3:
+                    return hotbarFP3;
+                case InputActions.HotbarFP4:
+                    return hotbarFP4;
+                case InputActions.HotbarFP5:
+                    return hotbarFP5;
+                case InputActions.HotbarFP6:
+                    return hotbarFP6;
 
 
                 default:
