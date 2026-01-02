@@ -154,12 +154,15 @@ namespace Manager.DialogueScene
             MyUIEvent.Trigger(UIType.Dialogue, UIActionType.Close);
 
             dialogueRunner.Stop();
-            overlay.blocksRaycasts = false;
-            overlay.interactable = false;
+            if (overlay != null)
+            {
+                overlay.blocksRaycasts = false;
+                overlay.interactable = false;
+                overlay.alpha = 0;
+            }
 
             ControlsHelpEvent.Trigger(ControlHelpEventType.Hide, 0);
 
-            overlay.alpha = 0;
         }
 
         public async void OpenNPCDialogue(NpcDefinition def, Transform camAnchor = null, bool autoClose = true,

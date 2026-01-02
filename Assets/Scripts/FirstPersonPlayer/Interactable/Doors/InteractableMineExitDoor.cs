@@ -2,6 +2,7 @@
 using Helpers.Events;
 using Helpers.Events.UI;
 using Manager;
+using MoreMountains.Feedbacks;
 using Objectives.ScriptableObjects;
 using Overview.OverviewMode.ScriptableObjectDefinitions;
 using Structs;
@@ -13,6 +14,7 @@ namespace FirstPersonPlayer.Interactable.Doors
     {
         public DockDefinition dockDefinition;
 
+        [SerializeField] MMFeedbacks denyEntryFeedbacks;
 
         [SerializeField] ObjectiveObject objectiveIfActiveToComplete;
 
