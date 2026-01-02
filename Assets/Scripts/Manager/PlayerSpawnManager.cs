@@ -220,7 +220,7 @@ namespace Manager
                 "ScienceDockSpawn", "Mine01Dock", "MidFlightTestSpawn",
                 "EnterValleySpawn", "DockAshpoolMineSpawn",
                 // Mine01
-                "Mine01DoorSpawn", "SpawnDeep01", "SpawnGrotto", "DebugMine01Spawn",
+                "Mine01DoorSpawn", "CorePatchSpawn",
                 // Bionics Lab
                 "BionicsLabSpawn",
 

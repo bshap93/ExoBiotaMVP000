@@ -208,7 +208,6 @@ GameObject:
   - component: {fileID: 6670608316033854775}
   - component: {fileID: 3921800140851719983}
   - component: {fileID: 6468350145043161973}
-  - component: {fileID: 6129192771614492993}
   m_Layer: 8
   m_Name: KeyCrateBox
   m_TagString: Untagged
@@ -338,18 +337,8 @@ MonoBehaviour:
   alreadyGotKeyFeedback: {fileID: 1547173794285796397}
   holoScreenMesh: {fileID: 2910117826969201628}
   screenlayer09Index: 5
---- !u!114 &6129192771614492993
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4700318105534789741}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6cd6422b728e804c9953f6a3d29213f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  objectiveActionType: 0
+  attachedObjective: {fileID: 0}
 --- !u!1 &5298616535048827461
 GameObject:
   m_ObjectHideFlags: 0

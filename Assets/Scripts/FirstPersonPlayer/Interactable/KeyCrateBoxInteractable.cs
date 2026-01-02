@@ -1,4 +1,5 @@
 using System;
+using Events;
 using FirstPersonPlayer.Interface;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
 using Inventory;
@@ -6,6 +7,7 @@ using LevelConstruct.Highlighting;
 using Manager;
 using MoreMountains.Feedbacks;
 using MoreMountains.InventoryEngine;
+using Objectives.ScriptableObjects;
 using SharedUI.Interface;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -36,11 +38,12 @@ namespace FirstPersonPlayer.Interactable
 
         [SerializeField] GameObject holoScreenMesh;
         [SerializeField] int screenlayer09Index = 5;
+        
+        [Header("Objective Options")]
+        [SerializeField] InteractableObjectiveModifier.ObjectiveActionType objectiveActionType;
+        [SerializeField] ObjectiveObject attachedObjective;
 
         bool _hasBeenOpened;
-        void Start()
-        {
-        }
 
         public string GetName()
         {
@@ -90,6 +93,8 @@ namespace FirstPersonPlayer.Interactable
                     keyItem.TargetInventoryName, keyItem, 1, 0, GlobalInventoryManager.Instance.playerId);
 
                 getKeyItemFeedback?.PlayFeedbacks();
+                
+                PerformObjectiveAction();
             }
             else
             {
@@ -154,6 +159,37 @@ namespace FirstPersonPlayer.Interactable
 
             mats[index] = newMat;
             rendererVar.materials = mats;
+        }
+
+        public void PerformObjectiveAction()
+        {
+            var objective = attachedObjective;
+            var objectiveAction = objectiveActionType;
+            if (objective == null)
+            {
+                return;
+            }
+            
+            switch (objectiveAction)
+            {
+                case InteractableObjectiveModifier.ObjectiveActionType.Add:
+                    ObjectiveEvent.Trigger(objective.objectiveId, ObjectiveEventType.ObjectiveAdded);
+                    break;
+                case InteractableObjectiveModifier.ObjectiveActionType.Activate:
+                    ObjectiveEvent.Trigger(objective.objectiveId, ObjectiveEventType.ObjectiveActivated);
+                    break;
+                case InteractableObjectiveModifier.ObjectiveActionType.Complete:
+                    ObjectiveEvent.Trigger(objective.objectiveId, ObjectiveEventType.ObjectiveCompleted);
+                    break;
+                case InteractableObjectiveModifier.ObjectiveActionType.Deactivate:
+                    ObjectiveEvent.Trigger(objective.objectiveId, ObjectiveEventType.ObjectiveDeactivated) ;
+                    break;
+                case InteractableObjectiveModifier.ObjectiveActionType.Delete:
+                    ObjectiveEvent.Trigger(objective.objectiveId, ObjectiveEventType.ObjectiveDeleted);
+                    break;
+                default:
+                    throw new System.ArgumentOutOfRangeException();
+            }
         }
     }
 }
