@@ -9,20 +9,20 @@ namespace Inventory.ScriptableObjects
     [CreateAssetMenu(fileName = "InventoryDatabase", menuName = "Scriptable Objects/Inventory/Inventory Database")]
     public class InventoryDatabase : SerializedScriptableObject
     {
-        private Dictionary<string, InventoryItem> _lookup;
+        Dictionary<string, InventoryItem> _lookup;
 
         [LabelText("All Items (Auto-Populated from Resources/Items)")] [ReadOnly]
         // so you don't edit directly — list is managed automatically
         public List<InventoryItem> items = new();
 
-        private void OnEnable()
+        void OnEnable()
         {
             AutoPopulateFromResources();
             BuildLookup();
         }
 
         [Button("Auto-Populate From Resources", ButtonSizes.Large)]
-        private void AutoPopulateFromResources()
+        void AutoPopulateFromResources()
         {
             // Load all InventoryItem assets in Resources/Items (including subfolders)
             items = Resources.LoadAll<InventoryItem>("Items")
@@ -32,16 +32,12 @@ namespace Inventory.ScriptableObjects
         }
 
         [Button("Rebuild Lookup", ButtonSizes.Small)]
-        private void BuildLookup()
+        void BuildLookup()
         {
             _lookup = new Dictionary<string, InventoryItem>();
             foreach (var item in items)
             {
-                if (_lookup.ContainsKey(item.ItemID))
-                {
-                    Debug.LogWarning($"Duplicate ItemID '{item.ItemID}' in database, ignoring duplicate.");
-                    continue;
-                }
+                if (_lookup.ContainsKey(item.ItemID)) continue;
 
                 _lookup[item.ItemID] = item;
             }

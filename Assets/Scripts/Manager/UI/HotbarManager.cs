@@ -15,15 +15,18 @@ namespace Manager.UI
 {
     public class HotbarManager : MonoBehaviour, ICoreGameService, MMEventListener<HotbarEvent>
     {
-        [SerializeField] int fpToolHotbarSize = 6;
+        [SerializeField] int fpToolHotbarSize = 4;
         [SerializeField] int fpConsumableHotbarSize = 2;
 
         [FormerlySerializedAs("_inventoryManager")] [SerializeField]
         GlobalInventoryManager inventoryManager;
         public bool autoSave;
 
+        [SerializeField] bool startEverySceneWithEmptyHandSlot;
+
         int _currentConsumableHotbarIndex;
         int _currentToolHotbarIndex;
+
 
         bool _dirty;
         // Quantity of each consumable item in hotbar
@@ -78,13 +81,14 @@ namespace Manager.UI
                 currentIndex = _currentConsumableHotbarIndex
             };
 
+
             ES3.Save("ConsumableHotbar", consumableData, path);
 
             // Save tool hotbar
             var toolData = new HotbarSaveData
             {
                 items = _fpToolHotbarItems ?? new ItemHotbarData[fpToolHotbarSize],
-                currentIndex = _currentToolHotbarIndex
+                currentIndex = startEverySceneWithEmptyHandSlot ? 0 : _currentToolHotbarIndex
             };
 
             ES3.Save("ToolHotbar", toolData, path);

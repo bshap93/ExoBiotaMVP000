@@ -98,7 +98,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8047484506620005713, guid: 9096a0f746709aa4e98092cd5ae1bc68, type: 3}
       propertyPath: zeroColor.a
-      value: 1
+      value: 0.69803923
       objectReference: {fileID: 0}
     - target: {fileID: 8047484506620005713, guid: 9096a0f746709aa4e98092cd5ae1bc68, type: 3}
       propertyPath: zeroColor.b
@@ -117,6 +117,22 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5451330747502654913}
     - target: {fileID: 8047484506620005713, guid: 9096a0f746709aa4e98092cd5ae1bc68, type: 3}
+      propertyPath: normalColor.a
+      value: 0.7019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 8047484506620005713, guid: 9096a0f746709aa4e98092cd5ae1bc68, type: 3}
+      propertyPath: normalColor.b
+      value: 0.25882354
+      objectReference: {fileID: 0}
+    - target: {fileID: 8047484506620005713, guid: 9096a0f746709aa4e98092cd5ae1bc68, type: 3}
+      propertyPath: normalColor.g
+      value: 0.12941177
+      objectReference: {fileID: 0}
+    - target: {fileID: 8047484506620005713, guid: 9096a0f746709aa4e98092cd5ae1bc68, type: 3}
+      propertyPath: normalColor.r
+      value: 0.40392157
+      objectReference: {fileID: 0}
+    - target: {fileID: 8047484506620005713, guid: 9096a0f746709aa4e98092cd5ae1bc68, type: 3}
       propertyPath: quantityBadge
       value: 
       objectReference: {fileID: 1068013376899502493}
@@ -125,8 +141,24 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8047484506620005713, guid: 9096a0f746709aa4e98092cd5ae1bc68, type: 3}
+      propertyPath: selectedColor.a
+      value: 0.7019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 8047484506620005713, guid: 9096a0f746709aa4e98092cd5ae1bc68, type: 3}
+      propertyPath: selectedColor.b
+      value: 0.16862746
+      objectReference: {fileID: 0}
+    - target: {fileID: 8047484506620005713, guid: 9096a0f746709aa4e98092cd5ae1bc68, type: 3}
+      propertyPath: selectedColor.g
+      value: 0.13333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8047484506620005713, guid: 9096a0f746709aa4e98092cd5ae1bc68, type: 3}
+      propertyPath: selectedColor.r
+      value: 0.60784316
+      objectReference: {fileID: 0}
+    - target: {fileID: 8047484506620005713, guid: 9096a0f746709aa4e98092cd5ae1bc68, type: 3}
       propertyPath: moreThanZeroColor.a
-      value: 1
+      value: 0.7058824
       objectReference: {fileID: 0}
     - target: {fileID: 8047484506620005713, guid: 9096a0f746709aa4e98092cd5ae1bc68, type: 3}
       propertyPath: moreThanZeroColor.b
