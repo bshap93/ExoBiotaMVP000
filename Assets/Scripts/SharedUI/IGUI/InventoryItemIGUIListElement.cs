@@ -5,6 +5,7 @@ using Helpers.Events;
 using Helpers.Events.UI;
 using Inventory;
 using Manager.Global;
+using Manager.UI;
 using Michsky.MUIP;
 using MoreMountains.Feedbacks;
 using MoreMountains.InventoryEngine;
@@ -47,10 +48,12 @@ namespace SharedUI.IGUI
 
         [SerializeField] MMFeedbacks placeObjectFeedbacks;
 
+        [Header("Hotbar Button Text")] [SerializeField]
+        string addToHotbarText = "Add to Hotbar";
+        [SerializeField] string removeFromHotbarText = "Remove from Hotbar";
+        bool _isInHotbar;
+
         MyBaseItem _item;
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-
-
         ItemType _itemType;
         int _sourceIndex;
 
@@ -126,8 +129,11 @@ namespace SharedUI.IGUI
 
             if (currentMode == GameMode.FirstPerson)
             {
-                if (hotbarButton != null)
-                    hotbarButton.onClick.AddListener(AddToHotbar);
+                if (hotbarButton != null) SetupHotbarButton();
+            }
+            else
+            {
+                if (hotbarButton != null) hotbarButton.gameObject.SetActive(false);
             }
 
             if (_item.Usable && !_item.Consumable && !_item.Equippable)
@@ -140,15 +146,103 @@ namespace SharedUI.IGUI
 
             SetPlaceButtonActiveIf();
         }
-        void AddToHotbar()
+
+        void SetupHotbarButton()
+        {
+            if (hotbarButton == null) return;
+
+            // Check if item can be added to hotbar (tools or consumables only)
+            var inventoryManager = GlobalInventoryManager.Instance;
+            if (inventoryManager == null)
+            {
+                hotbarButton.gameObject.SetActive(false);
+                return;
+            }
+
+            var isTool = inventoryManager.IsItemIDaTool(_item.ItemID);
+            var isConsumable = inventoryManager.IsItemIDaConsumableEffectItem(_item.ItemID);
+
+            if (!isTool && !isConsumable)
+            {
+                // Item cannot be added to hotbar
+                hotbarButton.gameObject.SetActive(false);
+                return;
+            }
+
+            // Item can be added to hotbar
+            hotbarButton.gameObject.SetActive(true);
+            hotbarButton.onClick.RemoveAllListeners();
+            hotbarButton.onClick.AddListener(ToggleHotbar);
+
+            // Update button appearance based on whether item is in hotbar
+            UpdateHotbarButtonState();
+        }
+
+        void UpdateHotbarButtonState()
+        {
+            if (hotbarButton == null || _item == null) return;
+
+            var hotbarManager = HotbarManager.Instance;
+            if (hotbarManager == null)
+                _isInHotbar = false;
+            else
+                _isInHotbar = hotbarManager.IsItemInHotbar(_item.ItemID);
+
+            // Update button text
+            var buttonText = _isInHotbar ? removeFromHotbarText : addToHotbarText;
+            hotbarButton.buttonText = buttonText;
+
+            // Update the text in all text components
+            if (hotbarButton.normalText != null) hotbarButton.normalText.text = buttonText;
+            if (hotbarButton.highlightedText != null) hotbarButton.highlightedText.text = buttonText;
+            if (hotbarButton.disabledText != null) hotbarButton.disabledText.text = buttonText;
+
+            // Optional: Change button color/appearance
+            // You could add logic here to change the button's color or icon
+            // For example, make it a different color when item is in hotbar
+        }
+
+        void ToggleHotbar()
         {
             if (_item == null) return;
+
+            var hotbarManager = HotbarManager.Instance;
+            if (hotbarManager == null)
+            {
+                Debug.LogWarning("[InventoryItemIGUIListElement] HotbarManager.Instance is null!");
+                return;
+            }
+
             var itemID = _item.ItemID;
             var indexInInventory = _sourceIndex;
 
-            HotbarEvent.Trigger(
-                HotbarEvent.HotbarEventType.AddToHotbar, itemID, indexInInventory);
+            if (_isInHotbar)
+            {
+                // Remove from hotbar
+                HotbarEvent.Trigger(
+                    HotbarEvent.HotbarEventType.RemoveFromHotbar, itemID, indexInInventory);
+
+                Debug.Log($"[InventoryItemIGUIListElement] Removed {_item.ItemName} from hotbar");
+            }
+            else
+            {
+                // Add to hotbar
+                HotbarEvent.Trigger(
+                    HotbarEvent.HotbarEventType.AddToHotbar, itemID, indexInInventory);
+
+                Debug.Log($"[InventoryItemIGUIListElement] Added {_item.ItemName} to hotbar");
+            }
+
+            // Update button state after a short delay to allow the hotbar to update
+            Invoke(nameof(UpdateHotbarButtonState), 0.1f);
         }
+
+        // Keep the old method for backwards compatibility if needed elsewhere
+        void AddToHotbar()
+        {
+            ToggleHotbar();
+        }
+
         void SetPlaceButtonActiveIf()
         {
             if (GameStateManager.Instance.CurrentMode == GameMode.FirstPerson &&

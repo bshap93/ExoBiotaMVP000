@@ -478,13 +478,37 @@ namespace Inventory
 
             return highestPriorityCoreIndex;
         }
-        public bool IsItemIDaTool(string eventTypeItemID)
+        public bool IsItemIDaTool(string itemID)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(itemID)) return false;
+
+            if (InventoryDatabaseVariable == null)
+            {
+                Debug.LogWarning("[GlobalInventoryManager] InventoryDatabaseVariable is null!");
+                return false;
+            }
+
+            var item = InventoryDatabaseVariable.CreateItem(itemID);
+            if (item == null) return false;
+
+            // Check if the item is a BaseTool
+            return item is BaseTool;
         }
-        public bool IsItemIDaConsumableEffectItem(string eventTypeItemID)
+        public bool IsItemIDaConsumableEffectItem(string itemID)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(itemID)) return false;
+
+            if (InventoryDatabaseVariable == null)
+            {
+                Debug.LogWarning("[GlobalInventoryManager] InventoryDatabaseVariable is null!");
+                return false;
+            }
+
+            var item = InventoryDatabaseVariable.CreateItem(itemID);
+            if (item == null) return false;
+
+            // Check if the item is a ConsumableEffectItem
+            return item is ConsumableEffectItem;
         }
     }
 }

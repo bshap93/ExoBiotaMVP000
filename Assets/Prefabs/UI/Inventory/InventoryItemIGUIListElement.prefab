@@ -3394,6 +3394,8 @@ MonoBehaviour:
   hotbarButton: {fileID: 3671562387111441539}
   slotsIGUIController: {fileID: 0}
   placeObjectFeedbacks: {fileID: 579127819993988335}
+  addToHotbarText: +Hotbar
+  removeFromHotbarText: -Hotbar
 --- !u!114 &7238509064753280238
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7891,6 +7891,7 @@ GameObject:
   - component: {fileID: 4146534566586365169}
   - component: {fileID: 521993427592013052}
   - component: {fileID: 6400795958408464189}
+  - component: {fileID: 6354272816186690533}
   m_Layer: 3
   m_Name: FirstPersonPawnUCC
   m_TagString: FirstPersonPlayer
@@ -8001,6 +8002,12 @@ MonoBehaviour:
   pause: 0
   leftHandToggle: 0
   pickablePick: 0
+  hotbarFP1: 0
+  hotbarFP2: 0
+  hotbarFP3: 0
+  hotbarFP4: 0
+  hotbarFP5: 0
+  hotbarFP6: 0
 --- !u!114 &4984065210785632146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8122,6 +8129,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actor: {fileID: 4146534566586365169}
   cam: {fileID: 8672673151611072382}
+--- !u!114 &6354272816186690533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7160049955532058752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0a487d001f746188d84b96e9b1b1ec5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fpHudHotbars: {fileID: 0}
 --- !u!1 &7204873003017186859
 GameObject:
   m_ObjectHideFlags: 0
