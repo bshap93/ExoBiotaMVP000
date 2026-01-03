@@ -1295,8 +1295,8 @@ MonoBehaviour:
   expansionUpdateFrequency: 0.01
   expansionDuration: 5
   fadeInDuration: 1
-  activeLifetime: 5
-  fadeOutDuration: 5
+  activeLifetime: 8
+  fadeOutDuration: 2
   cleanupOptions: 1
   startupOptions: 0
   regenerate: 0
