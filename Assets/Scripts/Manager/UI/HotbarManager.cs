@@ -454,11 +454,15 @@ namespace Manager.UI
                 return;
             }
 
+            int indexInInventory;
             // Find the item in inventory and use it
-            var item = FindItemInInventory(hotbarData.itemID);
+            var item = FindItemInInventory(hotbarData.itemID, out indexInInventory);
             if (item != null)
             {
-                item.Use("Player1");
+                // item.Use("Player1");
+                MMInventoryEvent.Trigger(
+                    MMInventoryEventType.UseRequest, null, "PlayerMainInventory", item, 1,
+                    indexInInventory, "Player1");
 
                 // Update quantity
                 UpdateConsumableQuantityFromInventory(slotIndex);
@@ -500,15 +504,14 @@ namespace Manager.UI
                 return;
             }
 
+            int indexInInventory;
             // Find the item in inventory and equip it
-            var item = FindItemInInventory(hotbarData.itemID);
+            var item = FindItemInInventory(hotbarData.itemID, out indexInInventory);
             if (item != null && item.Equippable)
-            {
                 // Trigger equip through the inventory system
-                var playerInventory = inventoryManager.playerInventory;
-                var itemIndex = FindItemIndexInInventory(hotbarData.itemID);
-
-                if (itemIndex >= 0)
+                // var playerInventory = inventoryManager.playerInventory;
+                // var itemIndex = FindItemIndexInInventory(hotbarData.itemID);
+                if (indexInInventory >= 0)
                 {
                     MMInventoryEvent.Trigger(
                         MMInventoryEventType.EquipRequest,
@@ -516,7 +519,7 @@ namespace Manager.UI
                         item.TargetInventoryName,
                         item,
                         1,
-                        itemIndex,
+                        indexInInventory,
                         "Player1"
                     );
 
@@ -526,7 +529,6 @@ namespace Manager.UI
 
                     Debug.Log($"[HotbarManager] Equipped tool {hotbarData.itemID} from slot {slotIndex}.");
                 }
-            }
         }
 
         void UnequipCurrentTool()
@@ -535,17 +537,30 @@ namespace Manager.UI
             GlobalInventoryEvent.Trigger(
                 GlobalInventoryEventType.UnequipRightHandTool
             );
-
-            Debug.Log("[HotbarManager] Unequipped current tool (empty hands).");
         }
 
-        MyBaseItem FindItemInInventory(string itemID)
+        MyBaseItem FindItemInInventory(string itemID, out int indexInInventory)
         {
-            if (inventoryManager == null || inventoryManager.playerInventory == null) return null;
+            if (inventoryManager == null || inventoryManager.playerInventory == null)
+            {
+                indexInInventory = -1;
+                return null;
+            }
 
-            foreach (var item in inventoryManager.playerInventory.Content)
+            for (var i = 0; i < inventoryManager.playerInventory.Content.Length; i++)
+            {
+                var item = inventoryManager.playerInventory.Content[i];
                 if (item != null && item.ItemID == itemID)
+                {
+                    indexInInventory = i;
                     return item as MyBaseItem;
+                }
+            }
+
+            // // foreach (var item in inventoryManager.playerInventory.Content)
+            //     if (item != null && item.ItemID == itemID)
+            //         return item as MyBaseItem;
+            indexInInventory = -1;
 
             return null;
         }
@@ -653,18 +668,6 @@ namespace Manager.UI
                     return true;
 
             return false;
-        }
-
-        public void RemoveItemFromHotbar(string itemID)
-        {
-            if (string.IsNullOrEmpty(itemID)) return;
-
-            var isTool = inventoryManager.IsItemIDaTool(itemID);
-            var isConsumable = inventoryManager.IsItemIDaConsumableEffectItem(itemID);
-
-            if (isTool)
-                RemoveItemFromToolHotbar(itemID);
-            else if (isConsumable) RemoveItemFromConsumableHotbar(itemID);
         }
 
         [Serializable]

@@ -6,14 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="abdb78f9-9d96-46eb-81c0-ec3c0363e4ff" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ExoBiotaMVP003/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ExoBiotaMVP003/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CustomAssets/Fonts/genos_5.2.8/ttf/genos-latin-500-normal SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/CustomAssets/Fonts/genos_5.2.8/ttf/genos-latin-500-normal SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CustomAssets/NodeCanvas/FSM/GasEmittingCreature/GasEmittingCreature.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/CustomAssets/NodeCanvas/FSM/GasEmittingCreature/GasEmittingCreature.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MMData/InventoryEngine/EquippedItemInventory_Player1.inventory" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MMData/InventoryEngine/EquippedItemInventory_Player1.inventory" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MMData/InventoryEngine/InnerCoresInventory_Player1.inventory" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MMData/InventoryEngine/InnerCoresInventory_Player1.inventory" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/MMData/InventoryEngine/PlayerMainInventory_Player1.inventory" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MMData/InventoryEngine/PlayerMainInventory_Player1.inventory" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/Hotbars/ConsumableHotbarSlot.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/Hotbars/ConsumableHotbarSlot.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/Hotbars/FPHUDHotbars.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/Hotbars/FPHUDHotbars.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/Hotbars/HandHotbarSlot.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/Hotbars/HandHotbarSlot.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/Hotbars/HotbarSlot.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/Hotbars/HotbarSlot.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/Hotbars/ToolHotbarSlot.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/Hotbars/ToolHotbarSlot.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Core.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Core.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Inventory/ScriptableObjects/InventoryDatabase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/ScriptableObjects/InventoryDatabase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableAssets/InventoryEngine/StartingItems/InnerCoreitemsInventory.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableAssets/InventoryEngine/StartingItems/InnerCoreitemsInventory.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableAssets/InventoryEngine/StartingItems/PlayerMain01.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableAssets/InventoryEngine/StartingItems/PlayerMain01.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/UI/HotbarManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/UI/HotbarManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
