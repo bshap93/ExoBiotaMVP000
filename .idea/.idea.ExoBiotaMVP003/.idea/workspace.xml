@@ -6,6 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="abdb78f9-9d96-46eb-81c0-ec3c0363e4ff" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ExoBiotaMVP003/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ExoBiotaMVP003/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CustomAssets/Fonts/bacteria_12_v1.1/Bacteria 12 SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/CustomAssets/Fonts/bacteria_12_v1.1/Bacteria 12 SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MMData/InventoryEngine/EquippedItemInventory_Player1.inventory" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MMData/InventoryEngine/EquippedItemInventory_Player1.inventory" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MMData/InventoryEngine/PlayerMainInventory_Player1.inventory" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MMData/InventoryEngine/PlayerMainInventory_Player1.inventory" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/Biomass/BioStructure1_Wiggling.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/Biomass/BioStructure1_Wiggling.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Core.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Core.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Mine/Mine01.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Mine/Mine01.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/UI/HotbarManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/UI/HotbarManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SharedUI/Hotbar/FPHUDHotbars.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SharedUI/Hotbar/FPHUDHotbars.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SharedUI/Hotbar/FPToolHotbar.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SharedUI/Hotbar/FPToolHotbar.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SharedUI/Hotbar/HotbarInputHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SharedUI/Hotbar/HotbarInputHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SharedUI/IGUI/InventoryItemIGUIListElement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SharedUI/IGUI/InventoryItemIGUIListElement.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Linq;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
 using Helpers.Events.Inventory;
@@ -104,6 +105,7 @@ namespace Manager.UI
             else
             {
                 _fpConsumableHotbarItems = new ItemHotbarData[fpConsumableHotbarSize];
+                for (var i = 0; i < fpConsumableHotbarSize; i++) _fpConsumableHotbarItems[i] = new ItemHotbarData();
             }
 
             if (ES3.KeyExists("ToolHotbar", path))
@@ -115,12 +117,13 @@ namespace Manager.UI
             else
             {
                 _fpToolHotbarItems = new ItemHotbarData[fpToolHotbarSize];
+                for (var i = 0; i < fpToolHotbarSize; i++) _fpToolHotbarItems[i] = new ItemHotbarData();
             }
 
             _dirty = false;
 
-            // Notify UI to refresh
-            RefreshAllHotbarUI();
+            // Delay the sync and UI refresh to ensure inventory is loaded
+            StartCoroutine(SyncWithEquipmentAndRefresh());
         }
 
         public void Reset()
@@ -191,6 +194,65 @@ namespace Manager.UI
                     RemoveItemFromToolHotbar(eventType.ItemID);
                 else if (isConsumable)
                     RemoveItemFromConsumableHotbar(eventType.ItemID);
+            }
+        }
+
+        IEnumerator SyncWithEquipmentAndRefresh()
+        {
+            // Wait a frame to ensure inventory system is initialized
+            yield return null;
+
+            // Sync current tool index with what's actually equipped
+            SyncToolHotbarWithEquippedItem();
+
+            // Refresh UI
+            RefreshAllHotbarUI();
+
+            // Update tool hotbar selection to match current index
+            HotbarEvent.Trigger(HotbarEvent.HotbarEventType.SelectToolSlot, null, _currentToolHotbarIndex);
+        }
+
+        void SyncToolHotbarWithEquippedItem()
+        {
+            // Check what tool is currently equipped in the equipment inventory
+            var equipInv = MoreMountains.InventoryEngine.Inventory.FindInventory("EquippedItemInventory", "Player1");
+            if (equipInv == null || equipInv.Content == null || equipInv.Content.Length == 0)
+            {
+                // No equipment inventory or it's empty - stay on current index or default to empty hands
+                if (_currentToolHotbarIndex < 0 || _currentToolHotbarIndex >= fpToolHotbarSize)
+                    _currentToolHotbarIndex = 0; // Default to empty hands
+
+                return;
+            }
+
+            // Get the currently equipped item
+            var equippedItem = equipInv.Content[0] as MyBaseItem;
+            if (equippedItem == null)
+            {
+                // Nothing equipped - set to empty hands
+                _currentToolHotbarIndex = 0;
+                return;
+            }
+
+            // Check if it's a tool
+            if (inventoryManager == null) inventoryManager = GlobalInventoryManager.Instance;
+            if (inventoryManager != null && inventoryManager.IsItemIDaTool(equippedItem.ItemID))
+            {
+                // Find this tool in the hotbar
+                var slotIndex = GetToolSlotIndex(equippedItem.ItemID);
+                if (slotIndex >= 0)
+                {
+                    // Tool is in hotbar - set current index to match
+                    _currentToolHotbarIndex = slotIndex;
+                    Debug.Log(
+                        $"[HotbarManager] Synced current tool index to {slotIndex} for equipped tool {equippedItem.ItemName}");
+                }
+                else
+                {
+                    // Tool is equipped but not in hotbar - this shouldn't happen in normal flow
+                    // but handle it gracefully
+                    Debug.LogWarning($"[HotbarManager] Tool {equippedItem.ItemName} is equipped but not in hotbar");
+                }
             }
         }
 
@@ -422,6 +484,8 @@ namespace Manager.UI
             {
                 UnequipCurrentTool();
                 _currentToolHotbarIndex = 0;
+                MarkDirty();
+                ConditionalSave();
                 return;
             }
 
@@ -453,6 +517,8 @@ namespace Manager.UI
                     );
 
                     _currentToolHotbarIndex = slotIndex;
+                    MarkDirty();
+                    ConditionalSave();
 
                     Debug.Log($"[HotbarManager] Equipped tool {hotbarData.itemID} from slot {slotIndex}.");
                 }
@@ -468,36 +534,6 @@ namespace Manager.UI
 
             Debug.Log("[HotbarManager] Unequipped current tool (empty hands).");
         }
-
-        public bool IsItemInHotbar(string itemID)
-        {
-            if (string.IsNullOrEmpty(itemID)) return false;
-
-            // Check consumable hotbar
-            for (var i = 0; i < _fpConsumableHotbarItems.Length; i++)
-                if (_fpConsumableHotbarItems[i] != null && _fpConsumableHotbarItems[i].itemID == itemID)
-                    return true;
-
-            // Check tool hotbar (skip slot 0 which is empty hands)
-            for (var i = 1; i < _fpToolHotbarItems.Length; i++)
-                if (_fpToolHotbarItems[i] != null && _fpToolHotbarItems[i].itemID == itemID)
-                    return true;
-
-            return false;
-        }
-
-        public void RemoveItemFromHotbar(string itemID)
-        {
-            if (string.IsNullOrEmpty(itemID)) return;
-
-            var isTool = inventoryManager.IsItemIDaTool(itemID);
-            var isConsumable = inventoryManager.IsItemIDaConsumableEffectItem(itemID);
-
-            if (isTool)
-                RemoveItemFromToolHotbar(itemID);
-            else if (isConsumable) RemoveItemFromConsumableHotbar(itemID);
-        }
-
 
         MyBaseItem FindItemInInventory(string itemID)
         {
@@ -533,6 +569,98 @@ namespace Manager.UI
         {
             if (slotIndex < 0 || slotIndex >= _fpToolHotbarItems.Length) return null;
             return _fpToolHotbarItems[slotIndex];
+        }
+
+        public int GetToolSlotIndex(string itemID)
+        {
+            if (string.IsNullOrEmpty(itemID)) return -1;
+
+            // Check tool hotbar (skip slot 0 which is empty hands)
+            for (var i = 1; i < _fpToolHotbarItems.Length; i++)
+                if (_fpToolHotbarItems[i] != null && _fpToolHotbarItems[i].itemID == itemID)
+                    return i;
+
+            return -1;
+        }
+
+        public int GetFirstEmptyToolSlot()
+        {
+            // Skip slot 0 (empty hands) and find first empty tool slot
+            for (var i = 1; i < _fpToolHotbarItems.Length; i++)
+                if (_fpToolHotbarItems[i] == null || string.IsNullOrEmpty(_fpToolHotbarItems[i].itemID))
+                    return i;
+
+            return -1; // No empty slots
+        }
+
+        public void ReplaceToolInSlot(int slotIndex, string itemID, int inventoryIndex)
+        {
+            if (slotIndex < 1 || slotIndex >= _fpToolHotbarItems.Length)
+            {
+                Debug.LogWarning($"[HotbarManager] Invalid slot index {slotIndex} for replacing tool.");
+                return;
+            }
+
+            _fpToolHotbarItems[slotIndex] = new ItemHotbarData
+            {
+                itemID = itemID,
+                quantity = 1,
+                inventoryIndices = new[] { inventoryIndex }
+            };
+
+            MarkDirty();
+            ConditionalSave();
+
+            // Notify UI to update this slot
+            HotbarEvent.Trigger(HotbarEvent.HotbarEventType.ToolHotbarChanged, itemID, slotIndex);
+        }
+
+        public int GetCurrentToolSlotIndex()
+        {
+            return _currentToolHotbarIndex;
+        }
+
+        public void SetCurrentToolSlotIndex(int index)
+        {
+            if (index < 0 || index >= _fpToolHotbarItems.Length)
+            {
+                Debug.LogWarning($"[HotbarManager] Invalid tool slot index: {index}");
+                return;
+            }
+
+            _currentToolHotbarIndex = index;
+
+            // Notify UI to update selection
+            HotbarEvent.Trigger(HotbarEvent.HotbarEventType.SelectToolSlot, null, index);
+        }
+
+        public bool IsItemInHotbar(string itemID)
+        {
+            if (string.IsNullOrEmpty(itemID)) return false;
+
+            // Check consumable hotbar
+            for (var i = 0; i < _fpConsumableHotbarItems.Length; i++)
+                if (_fpConsumableHotbarItems[i] != null && _fpConsumableHotbarItems[i].itemID == itemID)
+                    return true;
+
+            // Check tool hotbar (skip slot 0 which is empty hands)
+            for (var i = 1; i < _fpToolHotbarItems.Length; i++)
+                if (_fpToolHotbarItems[i] != null && _fpToolHotbarItems[i].itemID == itemID)
+                    return true;
+
+            return false;
+        }
+
+        public void RemoveItemFromHotbar(string itemID)
+        {
+            if (string.IsNullOrEmpty(itemID)) return;
+
+            var isTool = inventoryManager.IsItemIDaTool(itemID);
+            var isConsumable = inventoryManager.IsItemIDaConsumableEffectItem(itemID);
+
+            if (isTool)
+                RemoveItemFromToolHotbar(itemID);
+            else if (isConsumable) RemoveItemFromConsumableHotbar(itemID);
         }
 
         [Serializable]

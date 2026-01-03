@@ -81,5 +81,10 @@ namespace SharedUI.Hotbar
                 if (fpHudToolHotbar != null) fpHudToolHotbar.HandleToolKeyPress(keyNumber - 3);
             }
         }
+
+        public void CycleToolHotbar(int direction)
+        {
+            if (fpHudToolHotbar != null) fpHudToolHotbar.CycleTools(direction);
+        }
     }
 }

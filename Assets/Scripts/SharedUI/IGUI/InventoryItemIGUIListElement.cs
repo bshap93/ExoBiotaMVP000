@@ -420,11 +420,56 @@ namespace SharedUI.IGUI
                 return;
             }
 
+            // Smart hotbar integration for right-hand tools
+            var inventoryManager = GlobalInventoryManager.Instance;
+            if (inventoryManager != null && inventoryManager.IsItemIDaTool(_item.ItemID))
+            {
+                var hotbarManager = HotbarManager.Instance;
+                if (hotbarManager != null) HandleSmartToolEquip(hotbarManager);
+            }
 
-            // This is the important bit: use the inventory + index, NOT item.Equip()
-            // _sourceInventory.EquipItem(_item, _sourceIndex);
+            // Trigger the actual equip
             MMInventoryEvent.Trigger(
                 MMInventoryEventType.EquipRequest, null, _item.TargetInventoryName, _item, 1, _sourceIndex, "Player1");
+        }
+
+        void HandleSmartToolEquip(HotbarManager hotbarManager)
+        {
+            var itemID = _item.ItemID;
+            var inventoryIndex = _sourceIndex;
+
+            // Case 1: Tool is already in the hotbar
+            var existingSlotIndex = hotbarManager.GetToolSlotIndex(itemID);
+            if (existingSlotIndex >= 0)
+            {
+                // Switch to that hotbar slot
+                hotbarManager.SetCurrentToolSlotIndex(existingSlotIndex);
+                Debug.Log(
+                    $"[SmartEquip] Tool {_item.ItemName} already in hotbar at slot {existingSlotIndex}, switching to it.");
+
+                return;
+            }
+
+            // Case 2: Tool is not in hotbar, check for empty slot
+            var emptySlotIndex = hotbarManager.GetFirstEmptyToolSlot();
+            if (emptySlotIndex >= 0)
+            {
+                // Add to empty slot
+                HotbarEvent.Trigger(HotbarEvent.HotbarEventType.AddToHotbar, itemID, inventoryIndex);
+                hotbarManager.SetCurrentToolSlotIndex(emptySlotIndex);
+                Debug.Log($"[SmartEquip] Added tool {_item.ItemName} to empty hotbar slot {emptySlotIndex}.");
+                return;
+            }
+
+            // Case 3: Hotbar is full, replace currently equipped tool
+            var currentSlotIndex = hotbarManager.GetCurrentToolSlotIndex();
+
+            // If current slot is 0 (empty hands), replace slot 1 instead
+            if (currentSlotIndex == 0) currentSlotIndex = 1;
+
+            // Replace the tool in the current slot
+            hotbarManager.ReplaceToolInSlot(currentSlotIndex, itemID, inventoryIndex);
+            Debug.Log($"[SmartEquip] Replaced tool in hotbar slot {currentSlotIndex} with {_item.ItemName}.");
         }
 
         void UnequipViaMM()

@@ -11,7 +11,13 @@ namespace SharedUI.Hotbar
     {
         [SerializeField] FPHUDHotbars fpHudHotbars;
 
+        [Header("Mouse Wheel Settings")] [SerializeField]
+        bool enableMouseWheelToolCycling = true;
+        [SerializeField] float scrollThreshold = 0.1f; // Minimum scroll amount to register
+        [SerializeField] float scrollCooldown = 0.2f; // Cooldown between scroll actions
+
         RewiredFirstPersonInputs _inputs;
+        float _lastScrollTime;
 
         void Start()
         {
@@ -30,6 +36,9 @@ namespace SharedUI.Hotbar
         {
             if (_inputs == null || fpHudHotbars == null) return;
 
+            // Handle mouse wheel tool cycling
+            if (enableMouseWheelToolCycling) HandleMouseWheelCycling();
+
             // Check each hotbar key
             if (_inputs.hotbarFP1)
                 fpHudHotbars.HandleHotbarKeyPress(1);
@@ -42,6 +51,23 @@ namespace SharedUI.Hotbar
             else if (_inputs.hotbarFP5)
                 fpHudHotbars.HandleHotbarKeyPress(5);
             else if (_inputs.hotbarFP6) fpHudHotbars.HandleHotbarKeyPress(6);
+        }
+
+        void HandleMouseWheelCycling()
+        {
+            var scrollDelta = _inputs.scrollBetweenTools;
+
+            // Check if enough time has passed since last scroll and scroll amount is significant
+            if (Mathf.Abs(scrollDelta) < scrollThreshold || Time.time - _lastScrollTime < scrollCooldown) return;
+
+            _lastScrollTime = Time.time;
+
+            if (scrollDelta > 0)
+                // Scroll up - next tool
+                fpHudHotbars.CycleToolHotbar(1);
+            else if (scrollDelta < 0)
+                // Scroll down - previous tool
+                fpHudHotbars.CycleToolHotbar(-1);
         }
     }
 }

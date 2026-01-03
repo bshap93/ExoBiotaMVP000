@@ -234,5 +234,23 @@ namespace SharedUI.Hotbar
         {
             return _currentSelectedIndex;
         }
+
+        public void CycleTools(int direction)
+        {
+            // direction: 1 = forward (scroll up), -1 = backward (scroll down)
+
+            // Calculate new index with wrapping
+            var newIndex = _currentSelectedIndex + direction;
+
+            // Wrap around
+            if (newIndex < 0)
+                newIndex = hotbarSize - 1; // Wrap to last slot
+            else if (newIndex >= hotbarSize) newIndex = 0; // Wrap to first slot (empty hands)
+
+            Debug.Log($"[FPToolHotbar] Cycling from slot {_currentSelectedIndex} to slot {newIndex}");
+
+            // Trigger equip for the new slot
+            HandleToolKeyPress(newIndex);
+        }
     }
 }
