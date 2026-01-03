@@ -74,6 +74,7 @@ namespace Manager
         public List<StatBasedDialogueNode> statBasedDialogueNodes = new();
 
         bool _contaminationMaxed;
+        Coroutine _decreaseContaminationRoutine;
 
 
         [Header("Current Max Stat")] bool _dirty;
@@ -148,6 +149,22 @@ namespace Manager
                 {
                     StopCoroutine(_restoreStaminaRoutine);
                     _restoreStaminaRoutine = null;
+                }
+            }
+
+            if (CurrentContamination > 0)
+            {
+                if (_decreaseContaminationRoutine == null)
+                    _decreaseContaminationRoutine = StartCoroutine(
+                        DecreaseContaminationOverTime(defaultPlayerStatsSheet.baseContaminationDecreasePerSecond)
+                    );
+            }
+            else
+            {
+                if (_decreaseContaminationRoutine != null)
+                {
+                    StopCoroutine(_decreaseContaminationRoutine);
+                    _decreaseContaminationRoutine = null;
                 }
             }
         }
@@ -603,6 +620,21 @@ namespace Manager
             }
 
             _restoreStaminaRoutine = null;
+        }
+
+        IEnumerator DecreaseContaminationOverTime(float decreaseRate)
+        {
+            while (CurrentContamination > 0)
+            {
+                if (!_inGameTimePaused)
+                {
+                    CurrentContamination -= decreaseRate * Time.deltaTime;
+                    CurrentContamination = Mathf.Clamp(CurrentContamination, 0, CurrentMaxContamination);
+                    PlayerStatsSyncEvent.Trigger();
+                }
+
+                yield return null;
+            }
         }
 
         IEnumerator DrainHealthOverTime(float drainRate)
