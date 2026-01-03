@@ -34,7 +34,7 @@ namespace Manager.Status
 
         bool _dirty;
 
-        bool _isContaminationMaxed;
+        bool _wasContaminationMaxed;
 
         int _lastKnownMinutesElapsed;
         int _minutesPerInfection;
@@ -102,7 +102,7 @@ namespace Manager.Status
         {
             _savePath = GetSaveFilePath();
             ES3.Save("OngoingInfections", OngoingInfections, _savePath);
-            ES3.Save("IsContaminationMaxed", _isContaminationMaxed, _savePath);
+            ES3.Save("IsContaminationMaxed", _wasContaminationMaxed, _savePath);
             ES3.Save("MinutesUntilNextInfection", _minutesUntilNextInfection, _savePath);
             ES3.Save("MinutesPerInfection", _minutesPerInfection, _savePath);
             ES3.Save("LastKnownMinutesElapsed", _lastKnownMinutesElapsed, _savePath);
@@ -114,7 +114,7 @@ namespace Manager.Status
                 OngoingInfections = ES3.Load<List<OngoingInfection>>("OngoingInfections", _savePath);
 
             if (ES3.KeyExists("IsContaminationMaxed", _savePath))
-                _isContaminationMaxed = ES3.Load<bool>("IsContaminationMaxed", _savePath);
+                _wasContaminationMaxed = ES3.Load<bool>("IsContaminationMaxed", _savePath);
 
             if (ES3.KeyExists("MinutesUntilNextInfection", _savePath))
                 _minutesUntilNextInfection = ES3.Load<int>("MinutesUntilNextInfection", _savePath);
@@ -130,7 +130,7 @@ namespace Manager.Status
         public void Reset()
         {
             OngoingInfections.Clear();
-            _isContaminationMaxed = false;
+            _wasContaminationMaxed = false;
             _minutesUntilNextInfection = initialMinutesUntilNextInfection;
             _minutesPerInfection = initialMinutesUntilNextInfection;
             _lastKnownMinutesElapsed = 0;
@@ -169,8 +169,8 @@ namespace Manager.Status
         }
         public void OnMMEvent(InGameTimeUpdateEvent eventType)
         {
-            _isContaminationMaxed = PlayerMutableStatsManager.Instance.IsContaminationMaxed();
-            if (_isContaminationMaxed)
+            // _isContaminationMaxed = PlayerMutableStatsManager.Instance.IsContaminationMaxed();
+            if (_wasContaminationMaxed)
             {
                 OngoingInfection newInfection;
                 int minutesPassed;
@@ -189,6 +189,7 @@ namespace Manager.Status
                     newInfection = RollForNewInfection();
                     InfectionUIEvent.Trigger(
                         _minutesUntilNextInfection, _minutesPerInfection, newInfection);
+                    _wasContaminationMaxed = PlayerMutableStatsManager.Instance.IsContaminationMaxed();
                 }
                 else
                 {
@@ -202,12 +203,12 @@ namespace Manager.Status
             if (eventType.StatType == StatsStatusEvent.StatsStatusType.Contamination &&
                 eventType.Status == StatsStatusEvent.StatsStatus.IsMax)
             {
-                _isContaminationMaxed = eventType.Enabled;
+                _wasContaminationMaxed = eventType.Enabled;
             }
             else if (eventType.StatType == StatsStatusEvent.StatsStatusType.Contamination &&
                      eventType.Status == StatsStatusEvent.StatsStatus.IsMin)
             {
-                _isContaminationMaxed = false;
+                _wasContaminationMaxed = false;
                 Decontaminate();
             }
         }
