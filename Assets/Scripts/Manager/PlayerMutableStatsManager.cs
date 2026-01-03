@@ -654,46 +654,16 @@ namespace Manager
         }
 
 
-        IEnumerator WaitThenTriggerModal(string modalId, float waitSeconds)
-        {
-            yield return new WaitForSeconds(waitSeconds);
-            TriggerModalById(modalId);
-        }
-
-        public void TriggerModalById(string modalId)
-        {
-            // Find modal data by ID (case-insensitive match)
-            var args = modalArgs.Find(m => string.Equals(m.ID, modalId, StringComparison.OrdinalIgnoreCase));
-            if (args.ID == null)
-            {
-                Debug.LogWarning($"[ContaminationManager] No ModalArgs found for ID: {modalId}");
-                return;
-            }
-
-            // Build and trigger the AlertEvent
-            AlertEvent.Trigger(
-                AlertReason.ContaminationWarning,
-                args.description,
-                args.title,
-                AlertType.ChoiceModal,
-                alertImage: args.icon,
-                alertIcon: args.icon,
-                onConfirm: args.OnConfirm,
-                onCancel: args.OnCancel
-            );
-        }
-
-
         public float GetHealthFraction()
         {
             return CurrentHealth / BaseMaxHealth;
         }
 
-        public bool IsContaminationMaxed()
-        {
-            _contaminationMaxed = CurrentContamination >= CurrentMaxContamination;
-            return _contaminationMaxed;
-        }
+        // public bool IsContaminationMaxed()
+        // {
+        //     _contaminationMaxed = CurrentContamination >= CurrentMaxContamination;
+        //     return _contaminationMaxed;
+        // }
         float ProcessAttackDamage(EnemyAttack eventTypeAttack)
         {
             var damage = eventTypeAttack.rawDamage; // - (playerToughness * 0.5f);

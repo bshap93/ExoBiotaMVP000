@@ -41,6 +41,8 @@ namespace Manager.Status
 
         int _minutesUntilNextInfection;
 
+        bool _newInfectionDeveloping;
+
         string _savePath;
 
         public List<OngoingInfection> OngoingInfections { get; private set; } = new();
@@ -169,8 +171,14 @@ namespace Manager.Status
         }
         public void OnMMEvent(InGameTimeUpdateEvent eventType)
         {
-            _isContaminationMaxed = PlayerMutableStatsManager.Instance.IsContaminationMaxed();
+            // _isContaminationMaxed = PlayerMutableStatsManager.Instance.IsContaminationMaxed();
             if (_isContaminationMaxed)
+            {
+                Debug.Log("Contamination is maxed");
+                _newInfectionDeveloping = true;
+            }
+
+            if (_newInfectionDeveloping)
             {
                 OngoingInfection newInfection;
                 int minutesPassed;
@@ -186,9 +194,22 @@ namespace Manager.Status
                 _minutesUntilNextInfection -= minutesPassed; // actual time passed
                 if (_minutesUntilNextInfection <= 0)
                 {
-                    newInfection = RollForNewInfection();
-                    InfectionUIEvent.Trigger(
-                        _minutesUntilNextInfection, _minutesPerInfection, newInfection);
+                    _newInfectionDeveloping = false;
+                    if (_isContaminationMaxed)
+                    {
+                        newInfection = RollForNewInfection();
+                        InfectionUIEvent.Trigger(
+                            _minutesUntilNextInfection, _minutesPerInfection, newInfection);
+
+                        _newInfectionDeveloping = true;
+                    }
+                    else
+                    {
+                        // No new pre-infection if contamination is not maxed
+                        _minutesUntilNextInfection = _minutesPerInfection;
+                        InfectionUIEvent.Trigger(
+                            _minutesUntilNextInfection, _minutesPerInfection);
+                    }
                 }
                 else
                 {
@@ -362,6 +383,11 @@ namespace Manager.Status
 
             Debug.Log($"New infection created: {newInfection.infectionSiteID}");
             return newInfection;
+        }
+
+        public bool IsInfectionDeveloping()
+        {
+            return _newInfectionDeveloping;
         }
 
         [Serializable]
