@@ -15,7 +15,9 @@ namespace Helpers.Events.UI
             ToolHotbarChanged,
             SelectConsumableSlot,
             SelectToolSlot,
-            RefreshAllHotbars
+            RefreshAllHotbars,
+            HideHotbars,
+            ShowHotbars
         }
 
         public HotbarEventType EventType;
@@ -23,29 +25,16 @@ namespace Helpers.Events.UI
         public int IndexInInventory;
         public int SlotIndex;
 
-        /// <summary>
-        ///     Initializes a new hotbar event
-        /// </summary>
-        /// <param name="eventType">The type of hotbar event</param>
-        /// <param name="itemID">The item ID (can be null)</param>
-        /// <param name="indexOrSlot">Either the inventory index or the hotbar slot index depending on context</param>
-        public HotbarEvent(HotbarEventType eventType, string itemID, int indexOrSlot)
-        {
-            EventType = eventType;
-            ItemID = itemID;
-            IndexInInventory = indexOrSlot;
-            SlotIndex = indexOrSlot;
-        }
 
-        static HotbarEvent e;
+        static HotbarEvent _e;
 
-        public static void Trigger(HotbarEventType eventType, string itemID, int indexOrSlot)
+        public static void Trigger(HotbarEventType eventType, string itemID = "Any", int indexOrSlot = -1)
         {
-            e.EventType = eventType;
-            e.ItemID = itemID;
-            e.IndexInInventory = indexOrSlot;
-            e.SlotIndex = indexOrSlot;
-            MMEventManager.TriggerEvent(e);
+            _e.EventType = eventType;
+            _e.ItemID = itemID;
+            _e.IndexInInventory = indexOrSlot;
+            _e.SlotIndex = indexOrSlot;
+            MMEventManager.TriggerEvent(_e);
         }
     }
 }

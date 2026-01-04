@@ -487,7 +487,6 @@ MonoBehaviour:
   hotbarSize: 4
   emptySlot: {fileID: 6461879396159157095}
   toolSlots:
-  - {fileID: 6461879396159157095}
   - {fileID: 4354965961585740333}
   - {fileID: 1074131305365538573}
   - {fileID: 7950238081154709178}
@@ -812,6 +811,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fpHudToolHotbar: {fileID: 5339135666762732655}
   fpHudConsumableHotbar: {fileID: 600697827931794935}
+  canvasGroup: {fileID: 7998569512623758853}
 --- !u!1001 &1833464252444229195
 PrefabInstance:
   m_ObjectHideFlags: 0

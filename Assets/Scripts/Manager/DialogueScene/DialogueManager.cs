@@ -4,6 +4,7 @@ using Events;
 using FirstPersonPlayer.UI.LocationButtonBase.Test;
 using Helpers.Events;
 using Helpers.Events.Dialog;
+using Helpers.Events.UI;
 using Interfaces;
 using LevelConstruct.Interactable.ItemInteractables;
 using Manager.Global;
@@ -161,8 +162,9 @@ namespace Manager.DialogueScene
                 overlay.alpha = 0;
             }
 
-            ControlsHelpEvent.Trigger(ControlHelpEventType.Hide, 0);
+            HotbarEvent.Trigger(HotbarEvent.HotbarEventType.ShowHotbars);
 
+            ControlsHelpEvent.Trigger(ControlHelpEventType.Hide, 0);
         }
 
         public async void OpenNPCDialogue(NpcDefinition def, Transform camAnchor = null, bool autoClose = true,
@@ -207,6 +209,8 @@ namespace Manager.DialogueScene
                 avatarUIElement.blocksRaycasts = true;
                 avatarUIElement.interactable = true;
             }
+
+            HotbarEvent.Trigger(HotbarEvent.HotbarEventType.HideHotbars);
 
             // MyUIEvent.Trigger(UIType.Dialogue, UIActionType.Open);
 

@@ -23,7 +23,6 @@ namespace PhysicsHandlers.Triggers
         [ValueDropdown("GetNpcIdOptions")] [OnValueChanged("OnNpcIdChanged")]
         public string npcId;
         public string uniqueID;
-        [SerializeField] MMFeedbacks startDialogueFeedback;
         public bool startDisabled;
 
         bool _isDisabled;
@@ -66,7 +65,6 @@ namespace PhysicsHandlers.Triggers
                 TriggerColliderEvent.Trigger(
                     uniqueID, TriggerColliderEventType.SetTriggerable, false, TriggerColliderType.Dialogue);
 
-                startDialogueFeedback?.PlayFeedbacks();
                 MyUIEvent.Trigger(UIType.Any, UIActionType.Open);
                 
                 TriggerColliderEvent.Trigger(

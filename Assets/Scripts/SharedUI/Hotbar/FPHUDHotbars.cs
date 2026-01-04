@@ -1,6 +1,7 @@
 using Helpers.Events.UI;
 using MoreMountains.Tools;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SharedUI.Hotbar
 {
@@ -10,9 +11,14 @@ namespace SharedUI.Hotbar
         [SerializeField] FPToolHotbar fpHudToolHotbar;
         [SerializeField] FPConsumableHotbar fpHudConsumableHotbar;
 
+        [FormerlySerializedAs("_canvasGroup")] [SerializeField]
+        CanvasGroup canvasGroup;
+
         void Start()
         {
             ValidateReferences();
+            if (canvasGroup == null)
+                canvasGroup = GetComponent<CanvasGroup>();
         }
 
         void OnEnable()
@@ -49,6 +55,12 @@ namespace SharedUI.Hotbar
 
                 case HotbarEvent.HotbarEventType.RefreshAllHotbars:
                     RefreshAll();
+                    break;
+                case HotbarEvent.HotbarEventType.HideHotbars:
+                    if (canvasGroup != null) canvasGroup.alpha = 0f;
+                    break;
+                case HotbarEvent.HotbarEventType.ShowHotbars:
+                    if (canvasGroup != null) canvasGroup.alpha = 1f;
                     break;
             }
         }
