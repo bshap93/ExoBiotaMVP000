@@ -45,9 +45,9 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
 
         [SerializeField] bool doesNotImmediatelyNeedToMove;
         public float currentHealth;
+        public bool isStunned;
 
         public float currentStunDamage;
-        // public float stunThreshold;
 
         [SerializeField] protected HighlightEffect highlightEffect;
 

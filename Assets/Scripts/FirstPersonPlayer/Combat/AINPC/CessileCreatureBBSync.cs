@@ -17,18 +17,21 @@ namespace FirstPersonPlayer.Combat.AINPC
 
         void Start()
         {
-            _bb.SetVariableValue("maxHealth", _creatureController.maxHealth);
+            _bb.SetVariableValue("maxHealth", _creatureController.MaxHealth);
             _bb.SetVariableValue("detectionRadius", _creatureController.detectionRadius);
+            _bb.SetVariableValue("stunDamageTreshold", _creatureController.StunThreshold);
         }
 
         // Update is called once per frame
         void Update()
         {
             _bb.SetVariableValue("currentHealth", _creatureController.currentHealth);
+            _bb.SetVariableValue("currentStunDamage", _creatureController.currentStunDamage);
             _bb.SetVariableValue("isPuffingGas", _creatureController.IsPuffingGas);
 
             _bb.SetVariableValue("isDead", _creatureController.isDead);
             _bb.SetVariableValue("hazardActive", _creatureController.HazardActive);
+            _bb.SetVariableValue("isCurrentlyStunned", _creatureController.isStunned);
         }
     }
 }

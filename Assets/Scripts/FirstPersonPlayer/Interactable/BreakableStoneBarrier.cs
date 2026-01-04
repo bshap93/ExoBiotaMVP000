@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using FirstPersonPlayer.Combat.Player.ScriptableObjects;
 using FirstPersonPlayer.Tools.ToolPrefabScripts;
 using Helpers.Events;
 using HighlightPlus;
@@ -42,7 +43,8 @@ namespace FirstPersonPlayer.Interactable
             var attrMgr = AttributesManager.Instance;
             return attrMgr != null && attrMgr.Strength >= strengthNeededToBreak;
         }
-        public void ApplyHit(int toolPower, Vector3 hitPoint, Vector3 hitNormal, MeleeToolPrefab.HitType hitType)
+        public void ApplyHit(int toolPower, Vector3 hitPoint, Vector3 hitNormal, MeleeToolPrefab.HitType hitType,
+            PlayerToolAttack attack = null)
         {
             var attrMgr = AttributesManager.Instance;
             var root = destroyRoot != null ? destroyRoot : gameObject;

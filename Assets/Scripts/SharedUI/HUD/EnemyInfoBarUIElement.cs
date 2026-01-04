@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using Helpers.Events.Combat;
 using MoreMountains.Feedbacks;
@@ -12,12 +13,14 @@ namespace SharedUI.HUD
         [SerializeField] CanvasGroup canvasGroup;
         [SerializeField] TMP_Text enemyNameText;
         [SerializeField] MMProgressBar enemyHealthBar;
+        [SerializeField] MMProgressBar enemyStunDamageBar;
         [Header("Feedbacks")] [SerializeField] MMFeedbacks infoBarDeathFeedbacks;
         [SerializeField] MMFeedbacks hitEnemyFeedbacks;
         [SerializeField] MMFeedbacks criticalHitEnemyFeedbacks;
         [Header("Update")] [Tooltip("Minimum absolute change before we push a UI update")] [SerializeField]
         float epsilon = 0.001f;
         [SerializeField] float fadeInOnDamageDuration = 0.1f;
+        [SerializeField] float fadeInOnStunDamageDuration = 0.1f;
         [SerializeField] float fadeOutOnTimeoutDuration = 0.3f;
         [SerializeField] float visibleDurationAfterDamageDealt = 5f;
 
@@ -69,7 +72,11 @@ namespace SharedUI.HUD
             if (eventType.EventType == DamageEventType.DealtDamage)
             {
                 FadeIn(fadeInOnDamageDuration);
-                TryUpdateBar(ref eventType.LastHealth, eventType.CurrentHealth, 0f, eventType.MaxHealth);
+                if (eventType.TypeOfDamage == DamageType.Health)
+                    TryUpdateHealthBar(ref eventType.LastValue, eventType.CurrentValue, 0f, eventType.DefaultValue);
+                else if (eventType.TypeOfDamage == DamageType.Stun)
+                    TryUpdateStunBar(ref eventType.LastValue, eventType.CurrentValue);
+
                 hitEnemyFeedbacks?.PlayFeedbacks();
                 _timeSinceLastDamageDealt = 0f;
             }
@@ -77,7 +84,7 @@ namespace SharedUI.HUD
             if (eventType.EventType == DamageEventType.CriticalHitDamage)
             {
                 FadeIn(fadeInOnDamageDuration);
-                TryUpdateBar(ref eventType.LastHealth, eventType.CurrentHealth, 0f, eventType.MaxHealth);
+                TryUpdateHealthBar(ref eventType.LastValue, eventType.CurrentValue, 0f, eventType.DefaultValue);
                 criticalHitEnemyFeedbacks?.PlayFeedbacks();
                 _timeSinceLastDamageDealt = 0f;
             }
@@ -88,12 +95,16 @@ namespace SharedUI.HUD
                 ResetBar();
             }
         }
+        void TryUpdateStunBar(ref float eventTypeLastValue, float eventTypeCurrentValue)
+        {
+            throw new NotImplementedException();
+        }
 
         void ResetBar()
         {
         }
 
-        void TryUpdateBar(ref float last, float current, float min, float max)
+        void TryUpdateHealthBar(ref float last, float current, float min, float max)
         {
             if (enemyHealthBar == null) return;
             current = Mathf.Clamp(current, min, max);

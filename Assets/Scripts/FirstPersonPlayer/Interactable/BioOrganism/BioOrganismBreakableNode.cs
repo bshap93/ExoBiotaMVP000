@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using FirstPersonPlayer.Combat.Player.ScriptableObjects;
 using FirstPersonPlayer.Interface;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
 using FirstPersonPlayer.Tools.ToolPrefabScripts;
@@ -134,10 +135,87 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
         {
             return toolPower >= hardness;
         }
-        public void ApplyHit(int toolPower, Vector3 hitPoint, Vector3 hitNormal,
-            MeleeToolPrefab.HitType hitType = MeleeToolPrefab.HitType.Normal)
+
+
+        public void PlayHitFx(Vector3 hitPoint, Vector3 hitNormal)
         {
-            ApplyHatchetHit(toolPower, hitPoint, hitNormal, hitType);
+            onHitFeedbacks?.PlayFeedbacks(transform.position);
+
+            if (hitParticles)
+            {
+                var fx = Instantiate(hitParticles, hitPoint, Quaternion.LookRotation(hitNormal));
+                Destroy(fx, 2f);
+            }
+
+            // Highlight Plus Hit FX
+            if (_highlight != null) _highlight.HitFX(); // plays the configured hit effect
+        }
+        public void ApplyHit(int toolPower, Vector3 hitPoint, Vector3 hitNormal,
+            MeleeToolPrefab.HitType hitType = MeleeToolPrefab.HitType.Normal, PlayerToolAttack attack = null)
+        {
+            var attrMgr = AttributesManager.Instance;
+            // Prevent breaking if already broken
+            if (_isBroken)
+            {
+                Debug.LogWarning($"HatchetBreakable [{uniqueID}]: Already broken, ignoring hit");
+                return;
+            }
+
+            if (!CanBeDamagedBy(toolPower, 0))
+            {
+                PlayHitFx(hitPoint, hitNormal);
+                return;
+            }
+
+            var actualHitsToBreak = defaultHitsToBreak;
+
+            switch (attrMgr.Strength)
+            {
+                case 1:
+                    break;
+                default:
+                    // 4/5^(level-1) of the hits rounded up
+                    actualHitsToBreak = Mathf.RoundToInt(defaultHitsToBreak * Mathf.Pow(0.8f, attrMgr.Strength - 1));
+                    actualHitsToBreak = Mathf.Max(1, actualHitsToBreak);
+                    break;
+            }
+
+            _hitCount++;
+            PlayHitFx(hitPoint, hitNormal);
+
+            if (_hitCount < actualHitsToBreak) return;
+
+            _isBroken = true;
+
+            // break FX
+            onBreakFeedbacks?.PlayFeedbacks(transform.position);
+            if (breakParticles)
+            {
+                var fx2 = Instantiate(breakParticles, transform.position, Quaternion.identity);
+                Destroy(fx2, 3f);
+            }
+
+            if (!string.IsNullOrEmpty(uniqueID))
+                DestructableEvent.Trigger(DestructableEventType.Destroyed, uniqueID, transform);
+
+            var root = destroyRoot != null ? destroyRoot : gameObject;
+            if (destroyGameObject)
+            {
+                foreach (var col in root.GetComponentsInChildren<Collider>(true)) col.enabled = false;
+                foreach (var r in root.GetComponentsInChildren<Renderer>(true)) r.enabled = false;
+                if (rf != null)
+                    rf.Demolish();
+                else
+                    Destroy(root, 0.05f);
+            }
+            else
+            {
+                foreach (var col in root.GetComponentsInChildren<Collider>(true)) col.enabled = false;
+                foreach (var r in root.GetComponentsInChildren<Renderer>(true)) r.enabled = false;
+                enabled = false;
+            }
+
+            ControlsHelpEvent.Trigger(ControlHelpEventType.ShowUseThenHide, 54);
         }
         public List<string> HasToolForInteractionInInventory()
         {
@@ -450,22 +528,6 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
         }
 
 
-
-        public void PlayHitFx(Vector3 hitPoint, Vector3 hitNormal)
-        {
-            onHitFeedbacks?.PlayFeedbacks(transform.position);
-
-            if (hitParticles)
-            {
-                var fx = Instantiate(hitParticles, hitPoint, Quaternion.LookRotation(hitNormal));
-                Destroy(fx, 2f);
-            }
-
-            // Highlight Plus Hit FX
-            if (_highlight != null) _highlight.HitFX(); // plays the configured hit effect
-        }
-
-
         protected override string GetActionText(bool recognizableOnSight)
         {
             return "Clear Growth";
@@ -483,75 +545,7 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
 
             // Skip the incremental hits; just perform the full break logic
             _hitCount = defaultHitsToBreak;
-            ApplyHatchetHit(hardness, transform.position, transform.up, MeleeToolPrefab.HitType.Normal);
-        }
-
-
-        void ApplyHatchetHit(int toolPower, Vector3 hitPoint, Vector3 hitNormal, MeleeToolPrefab.HitType hitType)
-        {
-            var attrMgr = AttributesManager.Instance;
-            // Prevent breaking if already broken
-            if (_isBroken)
-            {
-                Debug.LogWarning($"HatchetBreakable [{uniqueID}]: Already broken, ignoring hit");
-                return;
-            }
-
-            if (!CanBeDamagedBy(toolPower, 0))
-            {
-                PlayHitFx(hitPoint, hitNormal);
-                return;
-            }
-
-            var actualHitsToBreak = defaultHitsToBreak;
-
-            switch (attrMgr.Strength)
-            {
-                case 1:
-                    break;
-                default:
-                    // 4/5^(level-1) of the hits rounded up
-                    actualHitsToBreak = Mathf.RoundToInt(defaultHitsToBreak * Mathf.Pow(0.8f, attrMgr.Strength - 1));
-                    actualHitsToBreak = Mathf.Max(1, actualHitsToBreak);
-                    break;
-            }
-
-            _hitCount++;
-            PlayHitFx(hitPoint, hitNormal);
-
-            if (_hitCount < actualHitsToBreak) return;
-
-            _isBroken = true;
-
-            // break FX
-            onBreakFeedbacks?.PlayFeedbacks(transform.position);
-            if (breakParticles)
-            {
-                var fx2 = Instantiate(breakParticles, transform.position, Quaternion.identity);
-                Destroy(fx2, 3f);
-            }
-
-            if (!string.IsNullOrEmpty(uniqueID))
-                DestructableEvent.Trigger(DestructableEventType.Destroyed, uniqueID, transform);
-
-            var root = destroyRoot != null ? destroyRoot : gameObject;
-            if (destroyGameObject)
-            {
-                foreach (var col in root.GetComponentsInChildren<Collider>(true)) col.enabled = false;
-                foreach (var r in root.GetComponentsInChildren<Renderer>(true)) r.enabled = false;
-                if (rf != null)
-                    rf.Demolish();
-                else
-                    Destroy(root, 0.05f);
-            }
-            else
-            {
-                foreach (var col in root.GetComponentsInChildren<Collider>(true)) col.enabled = false;
-                foreach (var r in root.GetComponentsInChildren<Renderer>(true)) r.enabled = false;
-                enabled = false;
-            }
-
-            ControlsHelpEvent.Trigger(ControlHelpEventType.ShowUseThenHide, 54);
+            ApplyHit(hardness, transform.position, transform.up);
         }
     }
 }

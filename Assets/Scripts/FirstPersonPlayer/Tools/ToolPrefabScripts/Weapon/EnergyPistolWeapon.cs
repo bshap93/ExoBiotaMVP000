@@ -45,7 +45,6 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
         [SerializeField] GameObject missSparksPrefab;
         [SerializeField] EnergyPistolMode initialPistolMode;
 
-
         [Header("Multi-Beam Settings")] [Tooltip("Number of beams to render (2 or 3 recommended)")] [SerializeField]
         int numberOfBeams = 3;
         [Tooltip("Vertical spacing between beams")] [SerializeField]
@@ -84,6 +83,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
         PistolToolObject pistolToolObject;
         [SerializeField] float delaySlideAnimation;
 
+        EnergyPistolMode _currentPistolMode;
+
         Vector3 _initialLocalPos;
         GameObject _muzzleFlashInstance;
         ParticleSystem[] _muzzleParticles;
@@ -118,6 +119,20 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
             }
         }
 
+        float EnergyCostPerBasicStunShot
+        {
+            get
+            {
+                var attrMgr = AttributesManager.Instance;
+                if (attrMgr == null) return attackProfile.basicStunAttack.baseEnergyCost;
+                var dexterity = attrMgr.Dexterity;
+                var reduction = attackProfile.dexterityReductionFactor * (dexterity - 1); // Example: 0.05
+                var finalCost = attackProfile.basicStunAttack.baseEnergyCost * (1f - reduction);
+
+                return Mathf.Max(0.1f, finalCost); // Ensure a minimum cost
+            }
+        }
+
         void Awake()
         {
             _initialLocalPos = physicalRoot.transform.localPosition;
@@ -137,14 +152,8 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
                     if (ps.isPlaying)
                         ps.Stop();
             }
-            // if (beamLineRenderer != null)
-            // {
-            //     beamLineRenderer.enabled = false;
-            //     beamLineRenderer.startColor = beamColor;
-            //     beamLineRenderer.endColor = beamColor;
-            //     beamLineRenderer.startWidth = 0.05f;
-            //     beamLineRenderer.endWidth = 0.02f;
-            // }
+
+            _currentPistolMode = initialPistolMode;
 
             // Setup persistent muzzle flash (Hovl style)
             if (muzzleFlashPrefab != null && muzzlePosition != null)
@@ -458,8 +467,17 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
                     SpawnHitFX(vfx, hit.point, hit.normal);
 
                     // Apply damage
-                    var attack = attackProfile?.basicAttack;
-                    if (attack != null) creatureController.ProcessAttackDamage(attack);
+                    if (_currentPistolMode == EnergyPistolMode.HeatRay)
+                    {
+                        var attack = attackProfile?.basicAttack;
+                        if (attack != null) creatureController.ProcessAttackDamage(attack);
+                    }
+                    else if (_currentPistolMode == EnergyPistolMode.Stun)
+                    {
+                        var attack = attackProfile?.basicStunAttack;
+                        if (attack != null) creatureController.ProcessAttackDamage(attack);
+                    }
+
 
                     nonLocalHitFeedbacks?.PlayFeedbacks();
                     Debug.Log($"Energy pistol hit enemy: {creatureController.name}");
@@ -468,7 +486,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
             // Hit breakable object
             else if (go.TryGetComponent<IBreakable>(out var breakable))
             {
-                breakable.ApplyHit(1, hit.point, hit.normal);
+                if (_currentPistolMode == EnergyPistolMode.HeatRay) breakable.ApplyHit(1, hit.point, hit.normal);
                 SpawnHitFX(hitSparksPrefab, hit.point, hit.normal);
                 nonLocalHitFeedbacks?.PlayFeedbacks();
             }

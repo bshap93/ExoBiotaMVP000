@@ -220,12 +220,11 @@ namespace Manager
                 "ScienceDockSpawn", "Mine01Dock", "MidFlightTestSpawn",
                 "EnterValleySpawn", "DockAshpoolMineSpawn",
                 // Mine01
-                "Mine01DoorSpawn", "CorePatchSpawn",
+                "Mine01DoorSpawn", "CorePatchSpawn", "BailoutFacilitySpawn",
                 // Bionics Lab
                 "BionicsLabSpawn",
 
                 // Choked Caverns
-                "ChokedCavernsDebugSpawn", "ElevatorStopChokedCaves",
                 // Ashpool Mine,
                 "AshpoolMineDoorSpawn"
             };

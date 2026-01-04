@@ -3435,6 +3435,7 @@ MonoBehaviour:
   muzzleFlashPrefab: {fileID: 2533489141059133825, guid: 6963c0daa3346c540be4a218690e38bb, type: 3}
   hitSparksPrefab: {fileID: 7264065572978307275, guid: ec1e4ecb868579e41b40ec884b9c9ef8, type: 3}
   missSparksPrefab: {fileID: 7264065572978307275, guid: ec1e4ecb868579e41b40ec884b9c9ef8, type: 3}
+  initialPistolMode: 0
   numberOfBeams: 4
   beamVerticalSpacing: 0.03
   beamVerticalOffset: -0.03
