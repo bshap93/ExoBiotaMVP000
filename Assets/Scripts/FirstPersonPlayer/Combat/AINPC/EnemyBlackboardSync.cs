@@ -19,7 +19,7 @@ namespace FirstPersonPlayer.Combat.AINPC
         {
             // Keep blackboard values synchronized
             _bb.SetVariableValue("currentHealth", _enemy.currentHealth);
-            _bb.SetVariableValue("maxHealth", _enemy.maxHealth);
+            _bb.SetVariableValue("maxHealth", _enemy.MaxHealth);
         }
     }
 }

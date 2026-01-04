@@ -93,8 +93,8 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
             movementLoopFeedbacks?.StopFeedbacks();
 
             EnemyDamageEvent.Trigger(
-                0f, currentHealth, maxHealth,
-                DamageEventType.Death, creatureType.creatureName);
+                0f, currentHealth, MaxHealth,
+                DamageEventType.Death, creatureType.creatureName, DamageType.None);
 
             deathFeedbacks?.PlayFeedbacks();
             if (deathParticlesPrefab != null)

@@ -45,7 +45,9 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
 
         [SerializeField] bool doesNotImmediatelyNeedToMove;
         public float currentHealth;
-        public float maxHealth;
+
+        public float currentStunDamage;
+        // public float stunThreshold;
 
         [SerializeField] protected HighlightEffect highlightEffect;
 
@@ -53,6 +55,9 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
 
         protected AnimancerState IdleState;
         protected AnimancerState MoveState;
+
+        public float MaxHealth => creatureType.maxHealth;
+        public float StunThreshold => creatureType.stunTreshold;
 
         protected virtual void Awake()
         {
@@ -96,6 +101,7 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
         {
             var attributeManager = AttributesManager.Instance;
             var damageAmount = playerAttack.rawDamage;
+            var stunAmount = playerAttack.rawStunDamage;
             var attackType = playerAttack.attackType;
 
             var isCriticalHit = Random.value <= playerAttack.critChance;
@@ -109,10 +115,12 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
                 if (isCriticalHit)
                 {
                     damageAmount *= playerAttack.critMultiplier;
+                    stunAmount *= playerAttack.critMultiplier;
                     critDamageFeedbacks?.PlayFeedbacks();
                 }
 
                 damageAmount *= playerStrengthMultiplier;
+                stunAmount *= playerStrengthMultiplier;
 
                 // Melee contamination
                 var contaminationAmt = creatureType.baseBlowbackContaminationAmt *
@@ -154,10 +162,12 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
                 if (isCriticalHit)
                 {
                     damageAmount *= playerAttack.critMultiplier;
+                    stunAmount *= playerAttack.critMultiplier;
                     critDamageFeedbacks?.PlayFeedbacks();
                 }
 
                 damageAmount *= playerDexterityMultiplier;
+                stunAmount *= playerDexterityMultiplier;
 
                 if (playerAttack.damageType == MeleeToolPrefab.HitType.Normal)
                 {
@@ -188,13 +198,18 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
                 : DamageEventType.DealtDamage;
 
             EnemyDamageEvent.Trigger(
-                currentHealth - damageAmount, currentHealth, maxHealth,
-                eventType, creatureType.creatureName);
+                currentHealth - damageAmount, currentHealth, creatureType.maxHealth,
+                eventType, creatureType.creatureName, DamageType.Health);
+
+            EnemyDamageEvent.Trigger(
+                currentStunDamage + stunAmount, currentStunDamage, creatureType.stunTreshold,
+                DamageEventType.DealtDamage, creatureType.creatureName, DamageType.Stun);
 
             // blackboard.SetVariableValue(blackboardWasHitKey, true);
             // Debug.Log("Fallback hit registered on " + creatureType.creatureName);
 
             currentHealth -= damageAmount;
+            currentStunDamage += stunAmount;
             highlightEffect.HitFX();
         }
 

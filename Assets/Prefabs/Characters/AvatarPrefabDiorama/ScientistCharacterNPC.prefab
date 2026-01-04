@@ -2868,8 +2868,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc2e98cd5ac3151438549704b09ebec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animancer: {fileID: 3455486204640928992}
-  idleClip: {fileID: 1827226128182048838, guid: 372c4fe3c6a405340875b4d838c76ebb, type: 3}
+  animancer: {fileID: 3455486204640928992}
   handGesture02: {fileID: 1827226128182048838, guid: db42e3267a5927942b5e3b638f2c49c4, type: 3}
   npcDefinition: {fileID: 11400000, guid: 1dda0b433ae9ac44db3e425e81a8d506, type: 2}
   dialogueSoundFeedbackPlayer: {fileID: 0}

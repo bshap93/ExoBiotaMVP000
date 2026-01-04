@@ -21,6 +21,7 @@ namespace FirstPersonPlayer.Combat.AINPC.ScriptableObjects
         [Header("Contamination Settings")] public float baseBlowbackContaminationAmt = 0.5f;
 
         public float maxHealth;
+        public float stunTreshold;
         public float rangedAttackShakeIntensity;
         public float rangedAttackShakeDuration;
         public float heavyRangedAttackShakeIntensity;

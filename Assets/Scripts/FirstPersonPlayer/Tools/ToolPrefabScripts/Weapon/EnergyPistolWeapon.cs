@@ -14,8 +14,14 @@ using UnityEngine.Serialization;
 
 namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
 {
-    public class RangedPistolWeapon : RangedToolPrefab
+    public class EnergyPistolWeapon : RangedToolPrefab
     {
+        public enum EnergyPistolMode
+        {
+            HeatRay,
+            Stun
+        }
+
         [Header("Pistol Components")] [SerializeField]
         GameObject physicalRoot;
         [SerializeField] GameObject slider;
@@ -37,6 +43,7 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts.Weapon
         [SerializeField] GameObject muzzleFlashPrefab;
         [SerializeField] GameObject hitSparksPrefab;
         [SerializeField] GameObject missSparksPrefab;
+        [SerializeField] EnergyPistolMode initialPistolMode;
 
 
         [Header("Multi-Beam Settings")] [Tooltip("Number of beams to render (2 or 3 recommended)")] [SerializeField]

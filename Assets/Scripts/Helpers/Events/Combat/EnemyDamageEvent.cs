@@ -14,6 +14,13 @@ namespace Helpers.Events.Combat
         Death
     }
 
+    public enum DamageType
+    {
+        Health,
+        Stun,
+        None
+    }
+
 
     public struct EnemyDamageEvent
     {
@@ -24,9 +31,10 @@ namespace Helpers.Events.Combat
         public float MaxHealth;
         public DamageEventType EventType;
         public string EnemyName;
+        public DamageType TypeOfDamage;
 
         public static void Trigger(float currentHealth, float lastHealth, float maxHealth, DamageEventType eventType,
-            string enemyName)
+            string enemyName, DamageType typeOfDamage)
         {
             _e.CurrentHealth = currentHealth;
             _e.MaxHealth = maxHealth;

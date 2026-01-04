@@ -29,7 +29,7 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
 
         [Header("Main Settings")] [SerializeField]
         bool destroyAfterDeath;
-        
+
 
         public float detectionRadius;
         [FormerlySerializedAs("lethalRadius")] public float contaminateRadius;
@@ -42,9 +42,6 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
 
         [Header("Death Effects")] [SerializeField]
         GameObject deathParticlesPrefab;
-
-        // public float currentHealth;
-        // public float maxHealth;
 
         public bool isDead;
         public string blackboardWasHitKey = "wasHit";
@@ -174,7 +171,10 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
                 CreatureStateEventType.SetNewCreatureState, uniqueID,
                 CreatureStateManager.CreatureState.ShouldBeDestroyed);
 
-            EnemyDamageEvent.Trigger(0f, currentHealth, maxHealth, DamageEventType.Death, creatureType.creatureName);
+            EnemyDamageEvent.Trigger(
+                0f, currentHealth, creatureType.maxHealth, DamageEventType.Death, creatureType.creatureName,
+                DamageType.None);
+
             blackboard.SetVariableValue("isDead", true);
             Debug.Log(creatureType.creatureName + " has died.");
 
