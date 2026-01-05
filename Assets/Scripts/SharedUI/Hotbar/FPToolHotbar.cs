@@ -119,8 +119,6 @@ namespace SharedUI.Hotbar
             if (toolArrayIndex >= 0 && toolArrayIndex < toolSlots.Length)
             {
                 slot = toolSlots[toolArrayIndex];
-                Debug.Log(
-                    $"[FPToolHotbar] Updating tool at dataIndex {dataIndex} -> toolSlots[{toolArrayIndex}] with itemID: {itemID ?? "null"}");
             }
             else
             {
