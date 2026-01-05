@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
-using FirstPersonPlayer.Tools.ItemObjectTypes.CompositeObjects;
 using Helpers.Events;
 using Helpers.Events.Inventory;
 using Helpers.Interfaces;
@@ -42,7 +41,7 @@ namespace Inventory
         public const string DirigibleInventoryName = "DirigibleInventory";
         public const string DirigibleScannerInventoryName = "DirigMainScannerInventory";
         public const string KeyTypeInventoryName = "KeyItemsInventory";
-        public const string InnerCoresInventoryName = "InnerCoresInventory";
+        public const string OuterCoresInventoryName = "OuterCoresInventory";
         public const string AmmoInventoryName = "AmmoInventory";
 
 
@@ -60,7 +59,8 @@ namespace Inventory
         public MoreMountains.InventoryEngine.Inventory equipmentInventory;
         public MoreMountains.InventoryEngine.Inventory backEquipmentInventory;
         public MoreMountains.InventoryEngine.Inventory keyItemInventory;
-        public MoreMountains.InventoryEngine.Inventory innerCoresInventory;
+        [FormerlySerializedAs("innerCoresInventory")]
+        public MoreMountains.InventoryEngine.Inventory outerCoresInventory;
         public MoreMountains.InventoryEngine.Inventory ammoInventory;
 
         [Header("Dirigible Inventory")] public MoreMountains.InventoryEngine.Inventory dirigibleInventory;
@@ -325,7 +325,7 @@ namespace Inventory
             PopulateInventory(backEquipmentInventory, backEquipmentStartingItems);
             PopulateInventory(dirigibleScannerSlot, dirigibleScannerStartingItems);
             PopulateInventory(keyItemInventory, keyItemStartingItems);
-            PopulateInventory(innerCoresInventory, innerCoresStartingItems);
+            PopulateInventory(outerCoresInventory, innerCoresStartingItems);
         }
 
         static void PopulateInventory(MoreMountains.InventoryEngine.Inventory inv,
@@ -355,7 +355,7 @@ namespace Inventory
             SaveOne(backEquipmentInventory);
             SaveOne(dirigibleScannerSlot);
             SaveOne(keyItemInventory);
-            SaveOne(innerCoresInventory);
+            SaveOne(outerCoresInventory);
         }
 
         public void ResetGlobalInventories()
@@ -367,7 +367,7 @@ namespace Inventory
             ResetOne(backEquipmentInventory);
             ResetOne(dirigibleScannerSlot);
             ResetOne(keyItemInventory);
-            ResetOne(innerCoresInventory);
+            ResetOne(outerCoresInventory);
         }
 
         public void LoadGlobalInventories()
@@ -379,7 +379,7 @@ namespace Inventory
             LoadOne(backEquipmentInventory);
             LoadOne(dirigibleScannerSlot);
             LoadOne(keyItemInventory);
-            LoadOne(innerCoresInventory);
+            LoadOne(outerCoresInventory);
         }
 
         static void SaveOne(MoreMountains.InventoryEngine.Inventory inv)
@@ -454,13 +454,13 @@ namespace Inventory
 
             return false;
         }
-        public int GetNumberOfInnerCoresInInventory(HarvestableInnerObject.InnerObjectValueGrade standardGrade)
+        public int GetNumberOfOuterCoresInInventory(OuterCoreItemObject.CoreObjectValueGrade standardGrade)
         {
             var total = 0;
-            foreach (var item in innerCoresInventory.Content)
+            foreach (var item in outerCoresInventory.Content)
             {
-                var innerCore = item as HarvestableInnerObject;
-                if (innerCore != null && innerCore.innerObjectValueGrade == standardGrade) total += item.Quantity;
+                var outerCore = item as OuterCoreItemObject;
+                if (outerCore != null && outerCore.coreObjectValueGrade == standardGrade) total += item.Quantity;
             }
 
             return total;

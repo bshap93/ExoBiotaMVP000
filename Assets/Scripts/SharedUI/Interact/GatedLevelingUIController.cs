@@ -12,11 +12,12 @@ using MoreMountains.Tools;
 using SharedUI.Progression;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SharedUI.Interact
 {
     public class GatedLevelingUIController : MonoBehaviour, MMEventListener<MyUIEvent>, MMEventListener<XPEvent>,
-        MMEventListener<AttrPendingBuyEvent>, MMEventListener<InnerCoreXPEvent>
+        MMEventListener<AttrPendingBuyEvent>, MMEventListener<OuterCoreXPEvent>
     {
         [Serializable]
         public enum MediStatType
@@ -25,7 +26,7 @@ namespace SharedUI.Interact
             Infected
         }
 
-        [SerializeField] InnerCoresDisplay innerCoresDisplay;
+        [FormerlySerializedAs("innerCoresDisplay")] [SerializeField] OuterCoresDisplay outerCoresDisplay;
 
         [SerializeField] MediStatType mediStatType = MediStatType.Standard;
 
@@ -104,14 +105,14 @@ namespace SharedUI.Interact
             this.MMEventStartListening<MyUIEvent>();
             this.MMEventStartListening<XPEvent>();
             this.MMEventStartListening<AttrPendingBuyEvent>();
-            this.MMEventStartListening<InnerCoreXPEvent>();
+            this.MMEventStartListening<OuterCoreXPEvent>();
         }
         void OnDisable()
         {
             this.MMEventStopListening<MyUIEvent>();
             this.MMEventStopListening<XPEvent>();
             this.MMEventStopListening<AttrPendingBuyEvent>();
-            this.MMEventStopListening<InnerCoreXPEvent>();
+            this.MMEventStopListening<OuterCoreXPEvent>();
         }
         public void OnMMEvent(AttrPendingBuyEvent eventType)
         {
@@ -249,17 +250,6 @@ namespace SharedUI.Interact
                 }
             }
         }
-        public void OnMMEvent(InnerCoreXPEvent eventType)
-        {
-            if (eventType.EventType == InnerCoreXPEventType.ConvertCoreToXP)
-            {
-                _currentUnusedXP = _currentUnusedXP +
-                                   AttributesManager.Instance.GetXPGainedForCoreGrade(eventType.CoreGrade);
-
-                _pendingNewUnusedXP = _currentUnusedXP;
-                RefreshAttrSetters();
-            }
-        }
         public void OnMMEvent(MyUIEvent eventType)
         {
             if (eventType.uiType == UIType.LevelingUIInfected && mediStatType == MediStatType.Infected)
@@ -274,6 +264,17 @@ namespace SharedUI.Interact
                 if (eventType.uiActionType == UIActionType.Open)
                     Show();
                 else if (eventType.uiActionType == UIActionType.Close) Hide();
+            }
+        }
+        public void OnMMEvent(OuterCoreXPEvent eventType)
+        {
+            if (eventType.EventType == InnerCoreXPEventType.ConvertCoreToXP)
+            {
+                _currentUnusedXP = _currentUnusedXP +
+                                   AttributesManager.Instance.GetXPGainedForCoreGrade(eventType.CoreGrade);
+
+                _pendingNewUnusedXP = _currentUnusedXP;
+                RefreshAttrSetters();
             }
         }
         public void OnMMEvent(XPEvent eventType)
@@ -317,7 +318,7 @@ namespace SharedUI.Interact
             totalUnusedXPText.text = _pendingNewUnusedXP.ToString();
 
             // Inner Cores Display
-            innerCoresDisplay.Refresh();
+            outerCoresDisplay.Refresh();
 
             RefreshAttrSetters();
 
@@ -443,7 +444,7 @@ namespace SharedUI.Interact
         }
         void Show()
         {
-            innerCoresDisplay.Refresh();
+            outerCoresDisplay.Refresh();
             Initialize();
             // show
             _canvasGroup.alpha = 1;

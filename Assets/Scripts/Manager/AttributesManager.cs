@@ -1,4 +1,4 @@
-﻿using FirstPersonPlayer.Tools.ItemObjectTypes.CompositeObjects;
+﻿using FirstPersonPlayer.Tools.ItemObjectTypes;
 using Helpers.Events;
 using Helpers.Events.Gated;
 using Helpers.Events.Progression;
@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Manager
 {
-    public class AttributesManager : MonoBehaviour, ICoreGameService, MMEventListener<InnerCoreXPEvent>,
+    public class AttributesManager : MonoBehaviour, ICoreGameService, MMEventListener<OuterCoreXPEvent>,
         MMEventListener<GatedLevelingEvent>
     {
         const float baseCost = 20f; // cost for first level
@@ -144,13 +144,13 @@ namespace Manager
         }
         void OnEnable()
         {
-            this.MMEventStartListening<InnerCoreXPEvent>();
+            this.MMEventStartListening<OuterCoreXPEvent>();
             this.MMEventStartListening<GatedLevelingEvent>();
         }
 
         void OnDisable()
         {
-            this.MMEventStopListening<InnerCoreXPEvent>();
+            this.MMEventStopListening<OuterCoreXPEvent>();
             this.MMEventStopListening<GatedLevelingEvent>();
         }
         public void Save()
@@ -272,7 +272,7 @@ namespace Manager
                 MarkDirty();
             }
         }
-        public void OnMMEvent(InnerCoreXPEvent eventType)
+        public void OnMMEvent(OuterCoreXPEvent eventType)
         {
             if (eventType.EventType == InnerCoreXPEventType.ConvertCoreToXP)
                 ConvertCoreToXP(eventType.CoreGrade);
@@ -288,28 +288,28 @@ namespace Manager
         }
 
         void ConvertCoreToXP(
-            HarvestableInnerObject.InnerObjectValueGrade coreGrade)
+            OuterCoreItemObject.CoreObjectValueGrade coreGrade)
         {
             // remove one core from inventory
-            InventoryHelperCommands.RemoveInnerCore(coreGrade);
+            InventoryHelperCommands.RemoveOuterCore(coreGrade);
 
             // add the XP
             var amount = 0;
             switch (coreGrade)
             {
-                case HarvestableInnerObject.InnerObjectValueGrade.StandardGrade:
+                case OuterCoreItemObject.CoreObjectValueGrade.StandardGrade:
                     amount = 10;
                     break;
-                case HarvestableInnerObject.InnerObjectValueGrade.Radiant:
+                case OuterCoreItemObject.CoreObjectValueGrade.Radiant:
                     amount = 20;
                     break;
-                case HarvestableInnerObject.InnerObjectValueGrade.Stellar:
+                case OuterCoreItemObject.CoreObjectValueGrade.Stellar:
                     amount = 30;
                     break;
-                case HarvestableInnerObject.InnerObjectValueGrade.Unreasonable:
+                case OuterCoreItemObject.CoreObjectValueGrade.Unreasonable:
                     amount = 50;
                     break;
-                case HarvestableInnerObject.InnerObjectValueGrade.MiscExotic:
+                case OuterCoreItemObject.CoreObjectValueGrade.MiscExotic:
                     amount = 0;
                     break;
             }
@@ -325,19 +325,19 @@ namespace Manager
         // {
         //     
         // }
-        public int GetXPGainedForCoreGrade(HarvestableInnerObject.InnerObjectValueGrade eventTypeCoreGrade)
+        public int GetXPGainedForCoreGrade(OuterCoreItemObject.CoreObjectValueGrade eventTypeCoreGrade)
         {
             switch (eventTypeCoreGrade)
             {
-                case HarvestableInnerObject.InnerObjectValueGrade.StandardGrade:
+                case OuterCoreItemObject.CoreObjectValueGrade.StandardGrade:
                     return 10;
-                case HarvestableInnerObject.InnerObjectValueGrade.Radiant:
+                case OuterCoreItemObject.CoreObjectValueGrade.Radiant:
                     return 20;
-                case HarvestableInnerObject.InnerObjectValueGrade.Stellar:
+                case OuterCoreItemObject.CoreObjectValueGrade.Stellar:
                     return 30;
-                case HarvestableInnerObject.InnerObjectValueGrade.Unreasonable:
+                case OuterCoreItemObject.CoreObjectValueGrade.Unreasonable:
                     return 50;
-                case HarvestableInnerObject.InnerObjectValueGrade.MiscExotic:
+                case OuterCoreItemObject.CoreObjectValueGrade.MiscExotic:
                     return 0;
                 default:
                     return 0;

@@ -1,4 +1,4 @@
-﻿using FirstPersonPlayer.Tools.ItemObjectTypes.CompositeObjects;
+﻿using FirstPersonPlayer.Tools.ItemObjectTypes;
 using Helpers.Events;
 using Inventory;
 using MoreMountains.InventoryEngine;
@@ -69,7 +69,7 @@ namespace Helpers.StaticHelpers
             AlertEvent.Trigger(AlertReason.ItemsRemoved, $"Removed {removed} x {itemId}", itemId);
         }
 
-        public static void RemoveInnerCore(HarvestableInnerObject.InnerObjectValueGrade grade)
+        public static void RemoveOuterCore(OuterCoreItemObject.CoreObjectValueGrade grade)
         {
             var amount = 1;
             var removed = 0;
@@ -77,21 +77,21 @@ namespace Helpers.StaticHelpers
             var inv = GlobalInventoryManager.Instance;
             if (inv == null) return;
 
-            var innerCoresInventoryContent = inv.innerCoresInventory.Content;
+            var outerCoresInventoryContent = inv.outerCoresInventory.Content;
 
-            for (var i = 0; i < innerCoresInventoryContent.Length; i++)
+            for (var i = 0; i < outerCoresInventoryContent.Length; i++)
             {
                 if (removed >= amount) break;
-                var item = innerCoresInventoryContent[i];
+                var item = outerCoresInventoryContent[i];
                 if (item == null) continue;
 
-                var innerCore = item as HarvestableInnerObject;
-                if (innerCore == null) continue;
-                if (innerCore.innerObjectValueGrade != grade) continue;
+                var outerCore = item as OuterCoreItemObject;
+                if (outerCore == null) continue;
+                if (outerCore.coreObjectValueGrade != grade) continue;
 
                 MMInventoryEvent.Trigger(
                     MMInventoryEventType.Destroy, null,
-                    GlobalInventoryManager.InnerCoresInventoryName, item, 1, i, inv.playerId);
+                    GlobalInventoryManager.OuterCoresInventoryName, item, 1, i, inv.playerId);
 
                 removed++;
             }

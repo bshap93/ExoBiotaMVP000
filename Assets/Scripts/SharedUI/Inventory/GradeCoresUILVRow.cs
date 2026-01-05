@@ -1,4 +1,4 @@
-using FirstPersonPlayer.Tools.ItemObjectTypes.CompositeObjects;
+using FirstPersonPlayer.Tools.ItemObjectTypes;
 using Helpers.Events;
 using Michsky.MUIP;
 using MoreMountains.Feedbacks;
@@ -21,13 +21,13 @@ namespace SharedUI.Inventory
         MMFeedbacks onIncreaseQuantityFeedbacks;
         [SerializeField] MMFeedbacks onDecreaseQuantityFeedbacks;
         public ButtonManager convertToXPButton;
-        [SerializeField] HarvestableInnerObject.InnerObjectValueGrade coreGrade;
 
 
         int _currentQuantity;
+        OuterCoreItemObject.CoreObjectValueGrade _coreGrade;
 
 
-        public void Initialize(HarvestableInnerObject.InnerObjectValueGrade grade, int quantity)
+        public void Initialize(OuterCoreItemObject.CoreObjectValueGrade grade, int quantity)
         {
             if (quantity > _currentQuantity) onIncreaseQuantityFeedbacks?.PlayFeedbacks();
             else if (quantity < _currentQuantity) onDecreaseQuantityFeedbacks?.PlayFeedbacks();
@@ -44,7 +44,7 @@ namespace SharedUI.Inventory
 
         void ConvertToXP()
         {
-            InnerCoreXPEvent.Trigger(InnerCoreXPEventType.ConvertCoreToXP, coreGrade);
+            OuterCoreXPEvent.Trigger(InnerCoreXPEventType.ConvertCoreToXP, _coreGrade);
         }
     }
 }

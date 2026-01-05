@@ -1,4 +1,4 @@
-﻿using FirstPersonPlayer.Tools.ItemObjectTypes.CompositeObjects;
+﻿using FirstPersonPlayer.Tools.ItemObjectTypes;
 using Helpers.Events;
 using Inventory;
 using MoreMountains.InventoryEngine;
@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace FirstPersonPlayer.UI.InventoryListView
 {
-    public class InnerCoresDisplay : MonoBehaviour, MMEventListener<MMInventoryEvent>,
+    public class OuterCoresDisplay : MonoBehaviour, MMEventListener<MMInventoryEvent>,
         MMEventListener<LoadedManagerEvent>
     {
         [SerializeField] GradeCoresUILVRow standardCoreRow;
@@ -45,7 +45,7 @@ namespace FirstPersonPlayer.UI.InventoryListView
 
         public void OnMMEvent(MMInventoryEvent eventType)
         {
-            if (eventType.TargetInventoryName != GlobalInventoryManager.InnerCoresInventoryName) return;
+            if (eventType.TargetInventoryName != GlobalInventoryManager.OuterCoresInventoryName) return;
             if (eventType.InventoryEventType == MMInventoryEventType.ContentChanged)
                 Refresh();
         }
@@ -58,25 +58,25 @@ namespace FirstPersonPlayer.UI.InventoryListView
         public void Refresh()
         {
             var globalInventoryManager = GlobalInventoryManager.Instance;
-            var numStandard = globalInventoryManager.GetNumberOfInnerCoresInInventory(
-                HarvestableInnerObject.InnerObjectValueGrade.StandardGrade);
+            var numStandard = globalInventoryManager.GetNumberOfOuterCoresInInventory(
+                OuterCoreItemObject.CoreObjectValueGrade.StandardGrade);
 
-            var numRadiant = globalInventoryManager.GetNumberOfInnerCoresInInventory(
-                HarvestableInnerObject.InnerObjectValueGrade.Radiant);
+            var numRadiant = globalInventoryManager.GetNumberOfOuterCoresInInventory(
+                OuterCoreItemObject.CoreObjectValueGrade.Radiant);
 
-            var numStellar = globalInventoryManager.GetNumberOfInnerCoresInInventory(
-                HarvestableInnerObject.InnerObjectValueGrade.Stellar);
+            var numStellar = globalInventoryManager.GetNumberOfOuterCoresInInventory(
+                OuterCoreItemObject.CoreObjectValueGrade.Stellar);
 
-            var numUnreasonable = globalInventoryManager.GetNumberOfInnerCoresInInventory(
-                HarvestableInnerObject.InnerObjectValueGrade.Unreasonable);
+            var numUnreasonable = globalInventoryManager.GetNumberOfOuterCoresInInventory(
+                OuterCoreItemObject.CoreObjectValueGrade.Unreasonable);
 
             // var numExotic = globalInventoryManager.GetNumberOfInnerCoresInInventory(
             //     HarvestableInnerObject.InnerObjectValueGrade.MiscExotic);
 
-            standardCoreRow.Initialize(HarvestableInnerObject.InnerObjectValueGrade.StandardGrade, numStandard);
-            radiantCoreRow.Initialize(HarvestableInnerObject.InnerObjectValueGrade.Radiant, numRadiant);
-            stellarCoreRow.Initialize(HarvestableInnerObject.InnerObjectValueGrade.Stellar, numStellar);
-            unreasonableCoreRow.Initialize(HarvestableInnerObject.InnerObjectValueGrade.Unreasonable, numUnreasonable);
+            standardCoreRow.Initialize(OuterCoreItemObject.CoreObjectValueGrade.StandardGrade, numStandard);
+            radiantCoreRow.Initialize(OuterCoreItemObject.CoreObjectValueGrade.Radiant, numRadiant);
+            stellarCoreRow.Initialize(OuterCoreItemObject.CoreObjectValueGrade.Stellar, numStellar);
+            unreasonableCoreRow.Initialize(OuterCoreItemObject.CoreObjectValueGrade.Unreasonable, numUnreasonable);
 
             if (condensedView)
             {

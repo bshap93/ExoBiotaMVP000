@@ -1,4 +1,4 @@
-﻿using FirstPersonPlayer.Tools.ItemObjectTypes.CompositeObjects;
+﻿using FirstPersonPlayer.Tools.ItemObjectTypes;
 using MoreMountains.Tools;
 
 namespace Helpers.Events
@@ -8,13 +8,13 @@ namespace Helpers.Events
         ConvertCoreToXP
     }
 
-    public struct InnerCoreXPEvent
+    public struct OuterCoreXPEvent
     {
-        static InnerCoreXPEvent _e;
-        public HarvestableInnerObject.InnerObjectValueGrade CoreGrade;
+        static OuterCoreXPEvent _e;
+        public OuterCoreItemObject.CoreObjectValueGrade CoreGrade;
         public InnerCoreXPEventType EventType;
         public static void Trigger(InnerCoreXPEventType eventType,
-            HarvestableInnerObject.InnerObjectValueGrade coreGrade)
+            OuterCoreItemObject.CoreObjectValueGrade coreGrade)
         {
             _e.EventType = eventType;
             _e.CoreGrade = coreGrade;
