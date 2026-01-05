@@ -56,17 +56,17 @@ namespace SharedUI.Hotbar
 
         void ValidateSetup()
         {
-            Debug.Log("=== FPToolHotbar Setup Validation ===");
-            Debug.Log($"hotbarSize: {hotbarSize}");
-            Debug.Log($"emptySlot assigned: {emptySlot != null}");
-            Debug.Log($"toolSlots.Length: {toolSlots?.Length ?? 0}");
+            // Debug.Log("=== FPToolHotbar Setup Validation ===");
+            // Debug.Log($"hotbarSize: {hotbarSize}");
+            // Debug.Log($"emptySlot assigned: {emptySlot != null}");
+            // Debug.Log($"toolSlots.Length: {toolSlots?.Length ?? 0}");
 
-            if (toolSlots != null)
-                for (var i = 0; i < toolSlots.Length; i++)
-                    if (toolSlots[i] != null)
-                        Debug.Log($"toolSlots[{i}] = {toolSlots[i].gameObject.name} (Key {i + 4})");
-                    else
-                        Debug.LogError($"toolSlots[{i}] is NULL! Assign it in inspector!");
+            // if (toolSlots != null)
+            //     for (var i = 0; i < toolSlots.Length; i++)
+            //         if (toolSlots[i] != null)
+            //             Debug.Log($"toolSlots[{i}] = {toolSlots[i].gameObject.name} (Key {i + 4})");
+            //         else
+            //             Debug.LogError($"toolSlots[{i}] is NULL! Assign it in inspector!");
 
             // Check if emptySlot is accidentally in toolSlots
             if (emptySlot != null && toolSlots != null)
@@ -77,7 +77,7 @@ namespace SharedUI.Hotbar
                             "The emptySlot should be separate from toolSlots array. " +
                             "Remove it from toolSlots!");
 
-            Debug.Log("=== End Validation ===");
+            // Debug.Log("=== End Validation ===");
         }
 
         void ValidateSlots()

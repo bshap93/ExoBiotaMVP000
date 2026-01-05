@@ -180,26 +180,7 @@ namespace FirstPersonPlayer.Interactable
 
 #endif
 
-        public void SetHoloScreenTint(Color newColor, int index = 2)
-        {
-            var rendererVar = holoScreenMesh.GetComponent<MeshRenderer>();
-            var mats = rendererVar.materials;
-
-            var newMat = new Material(mats[index]); // clone instance-safe
-            newMat.SetColor(BaseColor, newColor);
-
-            //  enhance emissive glow
-            // if (newMat.HasProperty("_EmissionColor"))
-            // {
-            //     newMat.EnableKeyword("_EMISSION");
-            //     newMat.SetColor("_EmissionColor", newColor * 1.5f);
-            // }
-
-            mats[index] = newMat;
-            rendererVar.materials = mats;
-        }
-
-        public void PerformObjectiveAction()
+        void PerformObjectiveAction()
         {
             var objective = attachedObjective;
             var objectiveAction = objectiveActionType;

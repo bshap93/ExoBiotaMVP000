@@ -6,9 +6,12 @@ using FirstPersonPlayer.Interface;
 using FirstPersonPlayer.ScriptableObjects;
 using Helpers.Events;
 using Inventory;
+using LevelConstruct.Highlighting;
 using Manager;
+using Manager.SceneManagers;
 using MoreMountains.Feedbacks;
 using MoreMountains.InventoryEngine;
+using MoreMountains.Tools;
 using NewScript;
 using SharedUI.Interface;
 using Sirenix.OdinInspector;
@@ -19,7 +22,8 @@ using UnityEditor;
 
 namespace FirstPersonPlayer.Interactable.BioOrganism
 {
-    public class BioOrganismSampleNode : BioOrganismBase, IInteractable, IFleshyObject
+    public class BioOrganismSampleNode : BioOrganismBase, IInteractable, IFleshyObject,
+        MMEventListener<LoadedManagerEvent>
     {
 #if ODIN_INSPECTOR && UNITY_EDITOR
         [InlineButton(nameof(SyncSampleFromType), "Sync Sample From Type")]
@@ -36,7 +40,7 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
 
         [SerializeField] float interactionDistance = 2f;
 
-        [SerializeField] GameObject[] disableWhenDepleted;
+        // [SerializeField] GameObject[] disableWhenDepleted;
 
         [SerializeField] string actionTextIfNotToolEquipped = "Equip";
 #if UNITY_EDITOR
@@ -44,6 +48,7 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
 #endif
         public int actionIdIfNotToolEquipped;
 
+        [SerializeField] HighlightEffectController highlightEffectController;
         [SerializeField] MMFeedbacks jiggleFeedbacks;
 
         ObjectiveHelper _objectiveHelper;
@@ -54,12 +59,23 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
         // Advertise sampling capability to the manager:
         public override bool SupportsSampling => true;
         public override int DefaultSamplingAllowance => Mathf.Max(0, timesAllowedToSample);
-
-
         void Start()
         {
-            RefreshDepletionState();
             _objectiveHelper = GetComponent<ObjectiveHelper>();
+
+            // StartCoroutine(DelayedRefreshDepletionState());
+        }
+
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            this.MMEventStartListening();
+        }
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            this.MMEventStopListening();
         }
         public void MakeJiggle()
         {
@@ -101,14 +117,33 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
         {
             return interactionDistance;
         }
+        public void OnMMEvent(LoadedManagerEvent eventType)
+        {
+            if (eventType.ManagerType == ManagerType.All)
+                RefreshDepletionState();
+        }
+
+        // IEnumerator DelayedRefreshDepletionState()
+        // {
+        //     // Wait one frame to ensure manager has initialized and loaded
+        //     yield return null;
+        //
+        //     RefreshDepletionState();
+        // }
 
         void RefreshDepletionState()
         {
             var hasLeft = CanBeSampledViaManager();
-            if (disableWhenDepleted != null)
-                foreach (var go in disableWhenDepleted)
-                    if (go)
-                        go.SetActive(hasLeft);
+            // if (disableWhenDepleted != null)
+            //     foreach (var go in disableWhenDepleted)
+            //         if (go)
+            //             go.SetActive(hasLeft);
+
+            if (!hasLeft)
+            {
+                Debug.Log("Depleted showing yellow highlight");
+                highlightEffectController.SetSecondaryStateHighlightColor();
+            }
             // or: enable/disable collider, prompts, etc.
         }
 
@@ -214,14 +249,19 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
 
         public bool CanBeSampledViaManager()
         {
-            return BioOrganismManager.Instance.GetTimesLeft(SceneKey, UniqueID, DefaultSamplingAllowance) > 0;
+            var timesLeft = BioOrganismManager.Instance.GetTimesLeft(SceneKey, UniqueID, DefaultSamplingAllowance);
+            return timesLeft > 0;
         }
 
         bool ConsumeOneViaManager()
         {
             BioOrganismManager.Instance.ConsumeOne(SceneKey, UniqueID);
             // if depleted
-            if (BioOrganismManager.Instance.IsDepleted(SceneKey, UniqueID)) OnDepleted.Invoke();
+            if (BioOrganismManager.Instance.IsDepleted(SceneKey, UniqueID))
+            {
+                OnDepleted.Invoke();
+                highlightEffectController.SetSecondaryStateHighlightColor();
+            }
 
             return true;
         }

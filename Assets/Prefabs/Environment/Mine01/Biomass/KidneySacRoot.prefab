@@ -972,7 +972,8 @@ MonoBehaviour:
   interactionDistance: 2
   disableWhenDepleted: []
   actionTextIfNotToolEquipped: Equip
-  actionIdIfNotToolEquipped: 0
+  actionIdIfNotToolEquipped: 43
+  highlightEffectController: {fileID: 3952120344290315472}
   jiggleFeedbacks: {fileID: 5702694623664134816}
 --- !u!114 &3208798845271325927
 MonoBehaviour:

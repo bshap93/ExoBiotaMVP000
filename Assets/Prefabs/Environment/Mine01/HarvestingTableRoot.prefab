@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b27f98c651c22b94bae8ce7b31b06021, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionDistance: 3
   harvestingTableId: 34ce23c9-32af-49ee-bd26-7a14d404e732
 --- !u!64 &7838850095491293416
 MeshCollider:
@@ -424,9 +425,9 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 3.5
   m_Center: {x: 0, y: 0, z: 0}

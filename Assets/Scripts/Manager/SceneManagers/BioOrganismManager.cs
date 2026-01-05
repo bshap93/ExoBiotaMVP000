@@ -5,7 +5,7 @@ using Helpers.Interfaces;
 using MoreMountains.Tools;
 using UnityEngine;
 
-namespace Manager
+namespace Manager.SceneManagers
 {
     public class BioOrganismManager : MonoBehaviour, MMEventListener<BioOrganismEvent>, ICoreGameService
     {

@@ -1125,7 +1125,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1741,7 +1741,8 @@ MonoBehaviour:
   interactionDistance: 2
   disableWhenDepleted: []
   actionTextIfNotToolEquipped: Equip
-  actionIdIfNotToolEquipped: 0
+  actionIdIfNotToolEquipped: 43
+  highlightEffectController: {fileID: 4105542858736521883}
   jiggleFeedbacks: {fileID: 4828851960782638665}
 --- !u!114 &6848784860334294948
 MonoBehaviour:
