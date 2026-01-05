@@ -5,40 +5,37 @@ using Utilities.Interface;
 
 namespace FirstPersonPlayer.Interactable
 {
+    [DisallowMultipleComponent]
     public class HarvestingTableInteractable : MonoBehaviour, IRequiresUniqueID, IInteractable
     {
+        [SerializeField] float interactionDistance = 3f;
         public string harvestingTableId;
         public void Interact()
         {
-            throw new NotImplementedException();
         }
         public void OnInteractionStart()
         {
-            throw new NotImplementedException();
         }
         public void OnInteractionEnd(string param)
         {
-            throw new NotImplementedException();
         }
         public bool CanInteract()
         {
-            throw new NotImplementedException();
+            return true;
         }
         public bool IsInteractable()
         {
-            throw new NotImplementedException();
+            return true;
         }
         public void OnFocus()
         {
-            throw new NotImplementedException();
         }
         public void OnUnfocus()
         {
-            throw new NotImplementedException();
         }
         public float GetInteractionDistance()
         {
-            throw new NotImplementedException();
+            return interactionDistance;
         }
 
         public string UniqueID => harvestingTableId;
