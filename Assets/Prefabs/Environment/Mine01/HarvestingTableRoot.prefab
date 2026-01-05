@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1257693412078284717
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8755823880697403610}
+  m_Layer: 20
+  m_Name: CoreSlot01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8755823880697403610
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257693412078284717}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.70548403, y: 0.046019264, z: 0.04603532, w: 0.7057303}
+  m_LocalPosition: {x: 0.077030174, y: -0.5636324, z: 0.9105929}
+  m_LocalScale: {x: 0.7271294, y: 0.5065112, z: 0.7232135}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 7535099645269842751}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2531589503962539123
 GameObject:
   m_ObjectHideFlags: 0
@@ -28,13 +59,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2531589503962539123}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.000000059604638, y: 0.0000000074505797, z: 0.054429114, w: 0.99851763}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7535099645269842751}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 6.24}
 --- !u!33 &6539798809484789641
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -101,7 +132,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionDistance: 3
-  harvestingTableId: 34ce23c9-32af-49ee-bd26-7a14d404e732
+  harvestingTableId: c6847e5f-5419-410e-bcbd-2f4c01b1803c
+  icon: {fileID: 21300000, guid: 71c6e1f927c600f40ae29c7e65581156, type: 3}
+  shortBlurb: A mechanized table used as a 'core' harvesting workstation.
+  actionId: 43
 --- !u!64 &7838850095491293416
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -124,6 +158,37 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 5688993058717580094, guid: 5416ac975e756a84d9cd580a54c2a07b, type: 3}
+--- !u!1 &7842655873447593158
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1616481254832861244}
+  m_Layer: 20
+  m_Name: CoreSlot02
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1616481254832861244
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7842655873447593158}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.70548403, y: 0.046019264, z: 0.04603532, w: 0.7057303}
+  m_LocalPosition: {x: -0.05029601, y: 0.4991725, z: 0.91063833}
+  m_LocalScale: {x: 0.7271294, y: 0.5065112, z: 0.7232135}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 7535099645269842751}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8963301297842703410
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,12 +217,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8963301297842703410}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.70548403, y: -0.046019264, z: -0.04603532, w: 0.7057303}
+  m_LocalRotation: {x: -0.70548415, y: -0.046017345, z: -0.04603341, w: 0.70573044}
   m_LocalPosition: {x: -1.5110016, y: 0.07800001, z: -2.725998}
   m_LocalScale: {x: 0.5500564, y: 0.55313885, z: 0.7897161}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1061169799361123745}
+  - {fileID: 8755823880697403610}
+  - {fileID: 1616481254832861244}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: -7.464}
 --- !u!114 &4259121576140504076
@@ -219,7 +286,7 @@ MonoBehaviour:
   overlayTextureScrolling: {x: 0, y: 0}
   overlayVisibility: 0
   outline: 1
-  outlineColor: {r: 0.1882353, g: 0.8, b: 0.6784314, a: 1}
+  outlineColor: {r: 0.014813383, g: 0.67295593, b: 0.061269637, a: 1}
   outlineColorStyle: 0
   outlineGradient:
     serializedVersion: 2
@@ -403,7 +470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0986de822ecb4835bfb249feaeb7996f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetID: a7c1fb51-b17a-4580-9c2d-f47e996b5e8f
+  targetID: 8c566b32-fc10-4244-85da-e627fdcccd8d
   seeThroughDuration: 5
   onScanned:
     m_PersistentCalls:

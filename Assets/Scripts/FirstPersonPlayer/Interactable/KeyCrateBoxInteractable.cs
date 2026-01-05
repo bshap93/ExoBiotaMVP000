@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using Dirigible.Input;
 using Events;
 using FirstPersonPlayer.Interface;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
@@ -28,7 +26,7 @@ namespace FirstPersonPlayer.Interactable
         [SerializeField] HighlightEffectController effectController;
 
 #if UNITY_EDITOR
-        [ValueDropdown(nameof(GetAllRewiredActions))]
+        [ValueDropdown("@AllRewiredActions.GetAllRewiredActions()")]
 #endif
         public int actionId;
         [Header("Items inside the crate box")] [SerializeField]
@@ -172,13 +170,7 @@ namespace FirstPersonPlayer.Interactable
         {
             return string.IsNullOrEmpty(uniqueID);
         }
-#if UNITY_EDITOR
-        public IEnumerable<ValueDropdownItem<int>> GetAllRewiredActions()
-        {
-            return AllRewiredActions.GetAllRewiredActions();
-        }
 
-#endif
 
         void PerformObjectiveAction()
         {

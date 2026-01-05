@@ -3,6 +3,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Digger.Modules.Core.Sources;
+using Dirigible.Input;
 using FirstPersonPlayer.Interface;
 using FirstPersonPlayer.Tools;
 using FirstPersonPlayer.Tools.ToolPrefabScripts;
@@ -10,7 +11,6 @@ using FirstPersonPlayer.UI;
 using Helpers.Events;
 using LevelConstruct.Interactable.ItemInteractables.ItemPicker;
 using MoreMountains.Tools;
-using SharedUI;
 using SharedUI.Interface;
 using Sirenix.OdinInspector;
 using Unity.Cinemachine;
@@ -29,54 +29,21 @@ namespace FirstPersonPlayer.Interactable
         public LayerMask obstacleLayer; // New: layers that block interaction (e.g., walls, rocks)
         public float controlHelpReminderDuration = 2f; // Duration to show control help reminder
 
-        GameObject _currentlyHoveredObject;
 
         [FormerlySerializedAs("RightHandEquipment")] [SerializeField]
         PlayerEquipment rightHandEquipment;
         [SerializeField] PlayerEquipment leftHandEquipment;
-        public PlayerEquipment RightHandEquipment => rightHandEquipment;
-
-        public PlayerEquipment LeftHandEquipment => leftHandEquipment;
-
-        public static PlayerInteraction Instance { get; private set; }
 
         public PlayerPropPickup propPickup;
-
-        bool _holdingItem;
-
-        void OnEnable()
-        {
-            this.MMEventStartListening();
-        }
-
-        void OnDisable()
-        {
-            this.MMEventStopListening();
-
-            // End hover if we're currently hovering something
-            if (_currentlyHoveredObject != null)
-            {
-                var hoverable = _currentlyHoveredObject.GetComponent<IHoverable>();
-                hoverable?.OnHoverEnd(_currentlyHoveredObject);
-                _currentlyHoveredObject = null;
-            }
-        }
-
-        void Awake()
-        {
-            if (Instance != null && Instance != this)
-                Destroy(gameObject);
-            else
-                Instance = this;
-        }
 
 
         [SerializeField] RewiredFirstPersonInputs rewiredInput;
 
         public CinemachineCamera playerCamera; // Reference to the player’s camera
 
-        [FormerlySerializedAs("LightReminderActionId")] [FormerlySerializedAs("ActionId")]
-#if UNITY_EDITORj
+        [FormerlySerializedAs("LightReminderActionId")]
+        [FormerlySerializedAs("ActionId")]
+#if UNITY_EDITOR
         [ValueDropdown(nameof(GetAllRewiredActions))]
 #endif
         public int lightReminderActionId;
@@ -87,6 +54,23 @@ namespace FirstPersonPlayer.Interactable
 
 
         public TerrainLayerDetector forwardTerrainLayerDetector;
+
+        GameObject _currentlyHoveredObject;
+
+        bool _holdingItem;
+        public PlayerEquipment RightHandEquipment => rightHandEquipment;
+
+        public PlayerEquipment LeftHandEquipment => leftHandEquipment;
+
+        public static PlayerInteraction Instance { get; private set; }
+
+        void Awake()
+        {
+            if (Instance != null && Instance != this)
+                Destroy(gameObject);
+            else
+                Instance = this;
+        }
 
 
         void Start()
@@ -126,6 +110,43 @@ namespace FirstPersonPlayer.Interactable
                     ControlsHelpEvent.Trigger(
                         ControlHelpEventType.Hide, 67, "UnblockAllNewRequests");
             }
+        }
+
+        void OnEnable()
+        {
+            this.MMEventStartListening();
+        }
+
+        void OnDisable()
+        {
+            this.MMEventStopListening();
+
+            // End hover if we're currently hovering something
+            if (_currentlyHoveredObject != null)
+            {
+                var hoverable = _currentlyHoveredObject.GetComponent<IHoverable>();
+                hoverable?.OnHoverEnd(_currentlyHoveredObject);
+                _currentlyHoveredObject = null;
+            }
+        }
+
+// #if UNITY_EDITOR
+//         // This will be called from the parent ScriptableObject
+//         IEnumerable<ValueDropdownItem<int>> GetAllRewiredActions()
+//         {
+//             var parent = ControlsPromptSchemeSet._currentContextSO;
+//             if (parent == null || parent.inputManagerPrefab == null) yield break;
+//
+//             var data = parent.inputManagerPrefab.userData;
+//             if (data == null) yield break;
+//
+//             foreach (var action in data.GetActions_Copy())
+//                 yield return new ValueDropdownItem<int>(action.name, action.id);
+//         }
+// #endif
+        public void OnMMEvent(PlayerInteractionEvent eventType)
+        {
+            if (eventType.EventType == PlayerInteractionEventType.Interacted) PerformInteraction();
         }
         void PerformPickablePick()
         {
@@ -350,22 +371,11 @@ namespace FirstPersonPlayer.Interactable
         }
 
 #if UNITY_EDITOR
-        // This will be called from the parent ScriptableObject
-        IEnumerable<ValueDropdownItem<int>> GetAllRewiredActions()
+        public static IEnumerable<ValueDropdownItem<int>> GetAllRewiredActions()
         {
-            var parent = ControlsPromptSchemeSet._currentContextSO;
-            if (parent == null || parent.inputManagerPrefab == null) yield break;
-
-            var data = parent.inputManagerPrefab.userData;
-            if (data == null) yield break;
-
-            foreach (var action in data.GetActions_Copy())
-                yield return new ValueDropdownItem<int>(action.name, action.id);
+            return AllRewiredActions.GetAllRewiredActions();
         }
+
 #endif
-        public void OnMMEvent(PlayerInteractionEvent eventType)
-        {
-            if (eventType.EventType == PlayerInteractionEventType.Interacted) PerformInteraction();
-        }
     }
 }

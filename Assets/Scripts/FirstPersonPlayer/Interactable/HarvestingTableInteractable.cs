@@ -2,6 +2,7 @@ using System;
 using FirstPersonPlayer.Interface;
 using Helpers.Events;
 using SharedUI.Interface;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using Utilities.Interface;
 
@@ -16,6 +17,9 @@ namespace FirstPersonPlayer.Interactable
         [SerializeField] Sprite icon;
         [SerializeField] string shortBlurb;
 
+#if UNITY_EDITOR
+        [ValueDropdown("@AllRewiredActions.GetAllRewiredActions()")]
+#endif
         public int actionId;
 
         SceneObjectData _data;
@@ -50,14 +54,16 @@ namespace FirstPersonPlayer.Interactable
         }
         public bool OnHoverStay(GameObject go)
         {
-            throw new NotImplementedException();
+            return true;
         }
         public bool OnHoverEnd(GameObject go)
         {
-            throw new NotImplementedException();
+            BillboardEvent.Trigger(_data, BillboardEventType.Hide);
+            return true;
         }
         public void Interact()
         {
+            Debug.Log("Starting interaction");
         }
         public void OnInteractionStart()
         {
