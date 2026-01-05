@@ -7,75 +7,78 @@ using Objectives.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ObjectiveHelper : MonoBehaviour, MMEventListener<ObjectiveEvent>
+namespace NewScript
 {
-    public ObjectiveObject associatedObjective;
-    ObjectiveHelperType _helperType;
-
-    ItemPicker _itemPicker;
-
-    void Start()
+    public class ObjectiveHelper : MonoBehaviour, MMEventListener<ObjectiveEvent>
     {
-        if (_helperType == ObjectiveHelperType.ItemPicker)
-            // Try to get ItemPicker component
-            _itemPicker = GetComponent<ItemPicker>();
-    }
+        public ObjectiveObject associatedObjective;
+        ObjectiveHelperType _helperType;
 
-    void OnEnable()
-    {
-        this.MMEventStartListening();
-    }
+        ItemPicker _itemPicker;
 
-    void OnDisable()
-    {
-        this.MMEventStopListening();
-    }
-
-    public void OnMMEvent(ObjectiveEvent eventType)
-    {
-        if (eventType.type == ObjectiveEventType.ObjectiveActivated)
-            if (eventType.objectiveId == associatedObjective.objectiveId)
-                if (eventType.locationObject != null)
-                    if (eventType.locationObject.associatedPOIUniqueId != null)
-                    {
-                        var sceneName = SceneManager.GetActiveScene().name;
-                        GamePOIEvent.Trigger(
-                            eventType.locationObject.associatedPOIUniqueId,
-                            GamePOIEventType.MarkPOIAsTrackedByObjective,
-                            sceneName);
-                    }
-    }
-
-    public void CompleteObjective()
-    {
-        if (associatedObjective == null)
+        void Start()
         {
-            Debug.LogWarning("No associated objective to complete.");
-            return;
+            if (_helperType == ObjectiveHelperType.ItemPicker)
+                // Try to get ItemPicker component
+                _itemPicker = GetComponent<ItemPicker>();
         }
 
-        ObjectiveEvent.Trigger(
-            associatedObjective.objectiveId, ObjectiveEventType.ObjectiveCompleted
-        );
-    }
-
-    public void ProgressObjectiveByN(int n)
-    {
-        if (associatedObjective == null)
+        void OnEnable()
         {
-            Debug.LogWarning("No associated objective to progress.");
-            return;
+            this.MMEventStartListening();
         }
 
-        ObjectiveEvent.Trigger(
-            associatedObjective.objectiveId, ObjectiveEventType.ObjectiveProgressMade,
-            NotifyType.Regular, n);
-    }
+        void OnDisable()
+        {
+            this.MMEventStopListening();
+        }
 
-    [Serializable]
-    enum ObjectiveHelperType
-    {
-        ItemPicker,
-        SampleableOrganism
+        public void OnMMEvent(ObjectiveEvent eventType)
+        {
+            if (eventType.type == ObjectiveEventType.ObjectiveActivated)
+                if (eventType.objectiveId == associatedObjective.objectiveId)
+                    if (eventType.locationObject != null)
+                        if (eventType.locationObject.associatedPOIUniqueId != null)
+                        {
+                            var sceneName = SceneManager.GetActiveScene().name;
+                            GamePOIEvent.Trigger(
+                                eventType.locationObject.associatedPOIUniqueId,
+                                GamePOIEventType.MarkPOIAsTrackedByObjective,
+                                sceneName);
+                        }
+        }
+
+        public void CompleteObjective()
+        {
+            if (associatedObjective == null)
+            {
+                Debug.LogWarning("No associated objective to complete.");
+                return;
+            }
+
+            ObjectiveEvent.Trigger(
+                associatedObjective.objectiveId, ObjectiveEventType.ObjectiveCompleted
+            );
+        }
+
+        public void ProgressObjectiveByN(int n)
+        {
+            if (associatedObjective == null)
+            {
+                Debug.LogWarning("No associated objective to progress.");
+                return;
+            }
+
+            ObjectiveEvent.Trigger(
+                associatedObjective.objectiveId, ObjectiveEventType.ObjectiveProgressMade,
+                NotifyType.Regular, n);
+        }
+
+        [Serializable]
+        enum ObjectiveHelperType
+        {
+            ItemPicker,
+            SampleableOrganism
+        }
     }
 }

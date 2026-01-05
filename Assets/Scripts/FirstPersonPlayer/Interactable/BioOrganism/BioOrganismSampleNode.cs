@@ -9,6 +9,7 @@ using Inventory;
 using Manager;
 using MoreMountains.Feedbacks;
 using MoreMountains.InventoryEngine;
+using NewScript;
 using SharedUI.Interface;
 using Sirenix.OdinInspector;
 using UnityEngine;

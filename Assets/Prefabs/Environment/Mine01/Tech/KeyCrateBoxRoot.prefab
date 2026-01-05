@@ -329,10 +329,12 @@ MonoBehaviour:
   interactionDistance: 3.5
   icon: {fileID: 21300000, guid: 448b3f6a0f6b65a47a00bfedc7d35ad5, type: 3}
   effectController: {fileID: 5896223540349541909}
+  actionId: 0
   hasOtherItems: 0
   items: []
   givesMoney: 0
   moneyAmount: 0
+  actionText: Receive Key Data
   getKeyItemFeedback: {fileID: 7763302592819017404}
   alreadyGotKeyFeedback: {fileID: 1547173794285796397}
   holoScreenMesh: {fileID: 2910117826969201628}
@@ -1054,7 +1056,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 888380afc233049ce9e618f9f36c8ba8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profile: {fileID: 11400000, guid: 4e21cec84a8101841a98277251d6699f, type: 2}
+  profile: {fileID: 11400000, guid: 5895cacb716c43b4c9d2670d07ebec27, type: 2}
   profileSync: 1
   camerasLayerMask:
     serializedVersion: 2
