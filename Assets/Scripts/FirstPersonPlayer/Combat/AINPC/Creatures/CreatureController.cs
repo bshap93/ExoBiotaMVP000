@@ -210,6 +210,15 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
 
             currentHealth -= damageAmount;
             currentStunDamage += stunAmount;
+
+            // Check if creature is now stunned
+            if (!isStunned && currentStunDamage >= StunThreshold)
+            {
+                isStunned = true;
+                blackboard.SetVariableValue("isStunned", true);
+                Debug.Log(creatureType.creatureName + " is now stunned!");
+            }
+
             highlightEffect.HitFX();
         }
 
@@ -250,6 +259,15 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
                     CreatureStateManager.CreatureState.ShouldBeDestroyed);
             }
         }
+
+        public void ResetStunState()
+        {
+            isStunned = false;
+            currentStunDamage = 0f;
+            blackboard.SetVariableValue("isStunned", false);
+            Debug.Log(creatureType.creatureName + " stun state reset");
+        }
+
 
         public CreatureEffectsAndFeedbacks GetEffectsAndFeedbacks()
         {

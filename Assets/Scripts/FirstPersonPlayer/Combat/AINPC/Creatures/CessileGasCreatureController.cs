@@ -17,7 +17,7 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
 {
     [RequireComponent(typeof(AssignPlayerToBT))]
     [RequireComponent(typeof(CessileCreatureBBSync))]
-    public class CessileGasCreatureController : CreatureController, IRequiresUniqueID, IDamageable, IBillboardable,
+    public class CessileGasCreatureController : CreatureController, IDamageable, IBillboardable,
         IHoverable
     {
         [Header("Scene References")] [Tooltip("InteractiveSmoke child that renders & times the gas cloud.")]
@@ -44,6 +44,7 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
         GameObject deathParticlesPrefab;
 
         public bool isDead;
+        public bool isCurrentlyStunned;
         public string blackboardWasHitKey = "wasHit";
 
         [SerializeField] float attackStartupTime = 0.35f; // wind-up before it hits

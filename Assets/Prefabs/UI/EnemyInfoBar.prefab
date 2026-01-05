@@ -69,7 +69,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 8751843894092217305}
   enemyNameText: {fileID: 4816778054740487673}
   enemyHealthBar: {fileID: 3250942807016099409}
-  enemyStunDamageBar: {fileID: 0}
+  enemyStunDamageBar: {fileID: 6455108435831955799}
   infoBarDeathFeedbacks: {fileID: 0}
   hitEnemyFeedbacks: {fileID: 1686104863619050499}
   criticalHitEnemyFeedbacks: {fileID: 0}

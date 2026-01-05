@@ -34,14 +34,7 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
         [SerializeField] EnemyHitbox hitBoxColliderMouth;
 
         [SerializeField] NavMeshAgent navMeshAgent;
-        // [SerializeField] HighlightEffect highlightEffect;
 
-        // [Header("Feedbacks")] [SerializeField] MMFeedbacks meleeHitFeedbacksBasic;
-        // [SerializeField] MMFeedbacks meleeHitFeedbacksHeavy;
-        // [SerializeField] MMFeedbacks critDamageFeedbacks;
-
-        // [SerializeField] MMFeedbacks rangedHitFeedbacksBasic;
-        // [SerializeField] MMFeedbacks rangedHitFeedbacksHeavy;
 
         [SerializeField] GameObject deathParticlesPrefab;
         // [SerializeField] MMFeedbacks deathFeedbacks;

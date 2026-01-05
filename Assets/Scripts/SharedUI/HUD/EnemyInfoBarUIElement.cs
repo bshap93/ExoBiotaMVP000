@@ -1,4 +1,3 @@
-using System;
 using DG.Tweening;
 using Helpers.Events.Combat;
 using MoreMountains.Feedbacks;
@@ -75,7 +74,7 @@ namespace SharedUI.HUD
                 if (eventType.TypeOfDamage == DamageType.Health)
                     TryUpdateHealthBar(ref eventType.LastValue, eventType.CurrentValue, 0f, eventType.DefaultValue);
                 else if (eventType.TypeOfDamage == DamageType.Stun)
-                    TryUpdateStunBar(ref eventType.LastValue, eventType.CurrentValue);
+                    TryUpdateStunBar(ref eventType.LastValue, eventType.CurrentValue, eventType.DefaultValue);
 
                 hitEnemyFeedbacks?.PlayFeedbacks();
                 _timeSinceLastDamageDealt = 0f;
@@ -95,9 +94,18 @@ namespace SharedUI.HUD
                 ResetBar();
             }
         }
-        void TryUpdateStunBar(ref float eventTypeLastValue, float eventTypeCurrentValue)
+        void TryUpdateStunBar(ref float eventTypeLastValue, float eventTypeCurrentValue, float stunThreshold)
         {
-            throw new NotImplementedException();
+            if (enemyStunDamageBar == null) return;
+
+            // Stun bar increases from 0, so we don't clamp to min
+            // Only push an update when the source value actually changed
+            if (float.IsNaN(eventTypeLastValue) || Mathf.Abs(eventTypeCurrentValue - eventTypeLastValue) > epsilon)
+            {
+                // Smooth animated update (MMProgressBar handles the tween)
+                enemyStunDamageBar.UpdateBar(eventTypeCurrentValue, 0f, stunThreshold);
+                eventTypeLastValue = eventTypeCurrentValue;
+            }
         }
 
         void ResetBar()
