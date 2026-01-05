@@ -4,11 +4,8 @@ namespace SharedUI.Interface
 {
     public interface IExaminable
     {
-        public void StartExamining();
-        public void StopExamining();
-        
         public void OnFinishExamining();
 
-        public bool ExaminableWithRuntimeTool(IRuntimeTool  tool);
+        public bool ExaminableWithRuntimeTool(IRuntimeTool tool);
     }
 }

@@ -19,8 +19,6 @@ namespace SharedUI
         [SerializeField] Image mainIcon;
         [SerializeField] TextMeshProUGUI nameText;
         [SerializeField] TextMeshProUGUI blurbText;
-        [SerializeField] Image actionIcon;
-        [SerializeField] TextMeshProUGUI actionText;
 
         BillboardState _billboardState;
 
@@ -118,8 +116,8 @@ namespace SharedUI
             mainIcon.sprite = source.Icon;
             nameText.text = source.Name;
             blurbText.text = source.ShortBlurb;
-            actionIcon.sprite = source.ActionIcon;
-            actionText.text = source.ActionText;
+            // actionIcon.sprite = source.ActionIcon;
+            // actionText.text = source.ActionText;
 
             gameObject.SetActive(true);
         }

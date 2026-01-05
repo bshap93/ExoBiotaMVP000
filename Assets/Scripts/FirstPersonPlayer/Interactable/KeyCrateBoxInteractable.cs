@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
+using Dirigible.Input;
 using Events;
 using FirstPersonPlayer.Interface;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
+using Helpers.Events;
 using Inventory;
 using LevelConstruct.Highlighting;
 using Manager;
@@ -24,6 +27,10 @@ namespace FirstPersonPlayer.Interactable
         [SerializeField] Sprite icon;
         [SerializeField] HighlightEffectController effectController;
 
+#if UNITY_EDITOR
+        [ValueDropdown(nameof(GetAllRewiredActions))]
+#endif
+        public int actionId;
         [Header("Items inside the crate box")] [SerializeField]
         bool hasOtherItems;
         [ShowIf("hasOtherItems")] [SerializeField]
@@ -33,15 +40,20 @@ namespace FirstPersonPlayer.Interactable
         [ShowIf("givesMoney")] [SerializeField]
         int moneyAmount;
 
+        public string actionText = "Receive Key Data";
+
+
         [Header("Feedbacks")] [SerializeField] MMFeedbacks getKeyItemFeedback;
         [SerializeField] MMFeedbacks alreadyGotKeyFeedback;
 
         [SerializeField] GameObject holoScreenMesh;
         [SerializeField] int screenlayer09Index = 5;
-        
-        [Header("Objective Options")]
-        [SerializeField] InteractableObjectiveModifier.ObjectiveActionType objectiveActionType;
+
+        [Header("Objective Options")] [SerializeField]
+        InteractableObjectiveModifier.ObjectiveActionType objectiveActionType;
         [SerializeField] ObjectiveObject attachedObjective;
+
+        SceneObjectData _data;
 
         bool _hasBeenOpened;
 
@@ -66,10 +78,22 @@ namespace FirstPersonPlayer.Interactable
         }
         public string GetActionText()
         {
-            return "Open";
+            return actionText;
         }
         public bool OnHoverStart(GameObject go)
         {
+            _data = new SceneObjectData(
+                GetName(), GetIcon(), "Contains a virtual key.", GetActionIcon(), GetActionText());
+
+            if (actionId != 0)
+                ControlsHelpEvent.Trigger(
+                    ControlHelpEventType.Show, actionId, additionalInfoText:
+                    string.IsNullOrEmpty(actionText) ? null : actionText);
+
+            _data.Id = uniqueID;
+
+            BillboardEvent.Trigger(_data, BillboardEventType.Show);
+
             if (hasOtherItems) throw new NotImplementedException();
             return true;
         }
@@ -80,6 +104,14 @@ namespace FirstPersonPlayer.Interactable
         }
         public bool OnHoverEnd(GameObject go)
         {
+            if (_data == null)
+                _data = SceneObjectData.Empty();
+
+            BillboardEvent.Trigger(_data, BillboardEventType.Hide);
+            if (actionId != 0)
+                ControlsHelpEvent.Trigger(
+                    ControlHelpEventType.Hide, actionId, string.IsNullOrEmpty(actionText) ? null : actionText);
+
             if (hasOtherItems) throw new NotImplementedException();
             return true;
         }
@@ -93,7 +125,7 @@ namespace FirstPersonPlayer.Interactable
                     keyItem.TargetInventoryName, keyItem, 1, 0, GlobalInventoryManager.Instance.playerId);
 
                 getKeyItemFeedback?.PlayFeedbacks();
-                
+
                 PerformObjectiveAction();
             }
             else
@@ -104,7 +136,7 @@ namespace FirstPersonPlayer.Interactable
             // TODO: Add other items to inventory if hasOtherItems is true.
 
             _hasBeenOpened = true;
-            
+
             effectController.SetSecondaryStateHighlightColor();
         }
         public void OnInteractionStart()
@@ -126,7 +158,6 @@ namespace FirstPersonPlayer.Interactable
         }
         public void OnUnfocus()
         {
-            throw new NotImplementedException();
         }
         public float GetInteractionDistance()
         {
@@ -141,6 +172,13 @@ namespace FirstPersonPlayer.Interactable
         {
             return string.IsNullOrEmpty(uniqueID);
         }
+#if UNITY_EDITOR
+        public IEnumerable<ValueDropdownItem<int>> GetAllRewiredActions()
+        {
+            return AllRewiredActions.GetAllRewiredActions();
+        }
+
+#endif
 
         public void SetHoloScreenTint(Color newColor, int index = 2)
         {
@@ -165,11 +203,8 @@ namespace FirstPersonPlayer.Interactable
         {
             var objective = attachedObjective;
             var objectiveAction = objectiveActionType;
-            if (objective == null)
-            {
-                return;
-            }
-            
+            if (objective == null) return;
+
             switch (objectiveAction)
             {
                 case InteractableObjectiveModifier.ObjectiveActionType.Add:
@@ -182,13 +217,13 @@ namespace FirstPersonPlayer.Interactable
                     ObjectiveEvent.Trigger(objective.objectiveId, ObjectiveEventType.ObjectiveCompleted);
                     break;
                 case InteractableObjectiveModifier.ObjectiveActionType.Deactivate:
-                    ObjectiveEvent.Trigger(objective.objectiveId, ObjectiveEventType.ObjectiveDeactivated) ;
+                    ObjectiveEvent.Trigger(objective.objectiveId, ObjectiveEventType.ObjectiveDeactivated);
                     break;
                 case InteractableObjectiveModifier.ObjectiveActionType.Delete:
                     ObjectiveEvent.Trigger(objective.objectiveId, ObjectiveEventType.ObjectiveDeleted);
                     break;
                 default:
-                    throw new System.ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException();
             }
         }
     }

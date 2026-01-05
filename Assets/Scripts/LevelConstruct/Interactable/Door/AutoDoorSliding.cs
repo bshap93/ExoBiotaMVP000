@@ -1,10 +1,12 @@
+using System;
 using DG.Tweening;
 using MoreMountains.Feedbacks;
 using UnityEngine;
+using Utilities.Interface;
 
 namespace LevelConstruct.Interactable.Door
 {
-    public class AutoDoorSliding : MonoBehaviour
+    public class AutoDoorSliding : MonoBehaviour, IRequiresUniqueID
     {
         [SerializeField] GameObject rightDoor;
         [SerializeField] GameObject leftDoor;
@@ -14,20 +16,24 @@ namespace LevelConstruct.Interactable.Door
         [SerializeField] Vector3 leftDoorClosedPosition;
         [SerializeField] float openCloseDuration = 1f;
         [SerializeField] MMFeedbacks doorOpenFeedbacks;
+        [SerializeField] MMFeedbacks doorCloseFeedbacks;
 
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+        [SerializeField] string uniqueID;
+
+        public string UniqueID => uniqueID;
+        public void SetUniqueID()
         {
+            uniqueID = Guid.NewGuid().ToString();
         }
-
-        // Update is called once per frame
-        void Update()
+        public bool IsUniqueIDEmpty()
         {
+            return string.IsNullOrEmpty(uniqueID);
         }
 
         public void OpenDoor()
         {
             // DoTween
+            doorOpenFeedbacks?.PlayFeedbacks();
             rightDoor.transform.DOLocalMoveX(rightDoorOpenPosition.x, openCloseDuration);
             leftDoor.transform.DOLocalMoveX(leftDoorOpenPosition.x, openCloseDuration);
         }
@@ -35,6 +41,7 @@ namespace LevelConstruct.Interactable.Door
         public void CloseDoor()
         {
             // DoTween
+            doorCloseFeedbacks?.PlayFeedbacks();
             rightDoor.transform.DOMove(rightDoorClosedPosition, openCloseDuration);
             leftDoor.transform.DOMove(leftDoorClosedPosition, openCloseDuration);
         }
