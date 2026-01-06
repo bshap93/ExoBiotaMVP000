@@ -49,7 +49,6 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
         protected AnimancerState HitState;
 
         public bool IsAttacking { get; private set; }
-        public bool IsPlayingCustomAnimation { get; private set; } // Add this
 
 
         void Update()
@@ -111,12 +110,6 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
         //     _hitTween = buildTween(transform);
         // }
 
-        public void PlayAnimationClip(AnimationClip clip)
-        {
-            IsPlayingCustomAnimation = true;
-            var state = animancerComponent.Play(clip);
-            state.Events(this).OnEnd = () => { IsPlayingCustomAnimation = false; };
-        }
 
         public void StartAttack()
         {

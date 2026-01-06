@@ -55,6 +55,7 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
 
         protected AnimancerState IdleState;
         protected AnimancerState MoveState;
+        public bool IsPlayingCustomAnimation { get; private set; }
 
         public float MaxHealth => creatureType.maxHealth;
         public float StunThreshold => creatureType.stunTreshold;
@@ -228,6 +229,12 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
             _hitTween = buildTween(transform);
         }
 
+        public void PlayAnimationClip(AnimationClip clip)
+        {
+            IsPlayingCustomAnimation = true;
+            var state = animancerComponent.Play(clip);
+            state.Events(this).OnEnd = () => { IsPlayingCustomAnimation = false; };
+        }
         protected virtual IEnumerator InitializeAfterCreatureStateManager()
         {
             yield return null;
