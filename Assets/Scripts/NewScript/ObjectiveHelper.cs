@@ -1,5 +1,5 @@
 using System;
-using Events;
+using Helpers.Events;
 using Helpers.Events.ManagerEvents;
 using MoreMountains.InventoryEngine;
 using MoreMountains.Tools;
@@ -70,7 +70,7 @@ namespace NewScript
             }
 
             ObjectiveEvent.Trigger(
-                associatedObjective.objectiveId, ObjectiveEventType.ObjectiveProgressMade,
+                associatedObjective.objectiveId, ObjectiveEventType.IncrementObjectiveProgress,
                 NotifyType.Regular, n);
         }
 

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Events;
+using Helpers.Events;
 using Michsky.MUIP;
 using MoreMountains.Tools;
 using Objectives;
@@ -12,22 +12,22 @@ namespace SharedUI.IGUI
     public class ObjectivesIGUIController : MonoBehaviour, MMEventListener<ObjectiveEvent>
     {
         [FormerlySerializedAs("objectivesDropdown")] [SerializeField]
-        private CustomDropdown objectivesTypeDropdown;
+        CustomDropdown objectivesTypeDropdown;
 
-        [SerializeField] private Transform listTransform;
+        [SerializeField] Transform listTransform;
 
         // 0 = Active, 1 = Completed, 2 = All (match your dropdown options)
-        [SerializeField] private int _filterIndex;
+        [SerializeField] int _filterIndex;
 
-        [SerializeField] private GameObject objectiveListItemPrefab;
+        [SerializeField] GameObject objectiveListItemPrefab;
 
-        private void OnEnable()
+        void OnEnable()
         {
             this.MMEventStartListening();
             Refresh();
         }
 
-        private void OnDisable()
+        void OnDisable()
         {
             this.MMEventStopListening();
         }
@@ -72,12 +72,13 @@ namespace SharedUI.IGUI
         }
 
         // 0 = Active, 1 = Completed, 2 = Inactive, 3 = All (ADDED ONLY)
-        private static IEnumerable<ObjectiveObject> EnumerateByFilter(ObjectivesManager mgr, int filterIndex)
+        static IEnumerable<ObjectiveObject> EnumerateByFilter(ObjectivesManager mgr, int filterIndex)
         {
             if (filterIndex == 0)
             {
                 foreach (var id in mgr.GetActiveObjectives())
                     yield return mgr.GetObjectiveById(id);
+
                 yield break;
             }
 
@@ -85,6 +86,7 @@ namespace SharedUI.IGUI
             {
                 foreach (var id in mgr.GetCompletedObjectives())
                     yield return mgr.GetObjectiveById(id);
+
                 yield break;
             }
 
@@ -92,6 +94,7 @@ namespace SharedUI.IGUI
             {
                 foreach (var id in mgr.GetInactiveObjectives())
                     yield return mgr.GetObjectiveById(id);
+
                 yield break;
             }
 
@@ -100,9 +103,11 @@ namespace SharedUI.IGUI
             foreach (var id in mgr.GetActiveObjectives())
                 if (seen.Add(id))
                     yield return mgr.GetObjectiveById(id);
+
             foreach (var id in mgr.GetInactiveObjectives())
                 if (seen.Add(id))
                     yield return mgr.GetObjectiveById(id);
+
             foreach (var id in mgr.GetCompletedObjectives())
                 if (seen.Add(id))
                     yield return mgr.GetObjectiveById(id);

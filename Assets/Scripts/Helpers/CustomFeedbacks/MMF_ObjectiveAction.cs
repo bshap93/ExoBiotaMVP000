@@ -1,4 +1,4 @@
-﻿using Events;
+﻿using Helpers.Events;
 using MoreMountains.Feedbacks;
 using Objectives.ScriptableObjects;
 using UnityEngine;
@@ -39,7 +39,7 @@ namespace Helpers.CustomFeedbacks
                     break;
                 case ObjectiveAction.IncrementObjective:
                     ObjectiveEvent.Trigger(
-                        objectiveObject.objectiveId, ObjectiveEventType.ObjectiveProgressMade,
+                        objectiveObject.objectiveId, ObjectiveEventType.IncrementObjectiveProgress,
                         progressMade: progressToAdd);
 
                     break;

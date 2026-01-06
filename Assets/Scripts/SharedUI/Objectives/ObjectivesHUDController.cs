@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Events;
 using Helpers.Events;
 using MoreMountains.Tools;
 using Objectives;
@@ -67,7 +66,7 @@ namespace SharedUI.Objectives
                 e.type == ObjectiveEventType.ObjectiveDeactivated ||
                 e.type == ObjectiveEventType.ObjectiveCompleted ||
                 e.type == ObjectiveEventType.ObjectiveAdded || e.type == ObjectiveEventType.Refresh ||
-                e.type == ObjectiveEventType.ObjectiveProgressMade)
+                e.type == ObjectiveEventType.IncrementObjectiveProgress)
                 Refresh();
             // else if (e.type == ObjectiveEventType.ObjectiveProgressMade)
             // {

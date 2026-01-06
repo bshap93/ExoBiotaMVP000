@@ -2,13 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Events;
 using FirstPersonPlayer.Interactable;
 using FirstPersonPlayer.Tools.Animation;
 using FirstPersonPlayer.Tools.Interface;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
 using FirstPersonPlayer.UI;
 using Helpers.AnimancerHelper;
+using Helpers.Events;
 using Helpers.ScriptableObjects.Animation;
 using Inventory;
 using MoreMountains.Feedbacks;
@@ -119,7 +119,6 @@ namespace FirstPersonPlayer.Tools
                     }
             }
         }
-
 
 
         void OnEnable()
@@ -342,7 +341,6 @@ namespace FirstPersonPlayer.Tools
                     animancerRightArmController.currentToolAnimationSet = tool.toolAnimationSet;
                     animancerRightArmController.UpdateAnimationSet();
                 }
-
             }
 
             // var go = Instantiate(tool.FPToolPrefab, primaryToolAnchor, false);
@@ -356,7 +354,6 @@ namespace FirstPersonPlayer.Tools
 
 
             CurrentToolSo = tool;
-
 
 
             CurrentRuntimeTool.Initialize(this);
@@ -409,9 +406,7 @@ namespace FirstPersonPlayer.Tools
                     animancerRightArmController.gameObject.SetActive(false);
                     animancerRightArmController.currentToolAnimationSet = null;
                 }
-
             }
-
 
 
             CurrentToolSo = null;

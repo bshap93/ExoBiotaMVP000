@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Dirigible.Input;
-using Events;
 using FirstPersonPlayer.Interface;
 using FirstPersonPlayer.Tools.Interface;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
@@ -194,14 +193,6 @@ namespace LevelConstruct.Interactable.ItemInteractables.ItemPicker
         public string GetActionText()
         {
             return string.IsNullOrEmpty(actionText) ? DefaultActionText : actionText;
-        }
-
-        public void StartExamining()
-        {
-        }
-
-        public void StopExamining()
-        {
         }
 
         public void OnFinishExamining()
@@ -422,6 +413,14 @@ namespace LevelConstruct.Interactable.ItemInteractables.ItemPicker
                 Destroy(gameObject);
         }
 
+        public void StartExamining()
+        {
+        }
+
+        public void StopExamining()
+        {
+        }
+
         public void OnInteractionEnd()
         {
             onItemPicked?.Invoke();
@@ -611,7 +610,7 @@ namespace LevelConstruct.Interactable.ItemInteractables.ItemPicker
 
             if (objectiveOnPick != null && incrementObjectiveOnPick)
                 ObjectiveEvent.Trigger(
-                    objectiveOnPick.objectiveId, ObjectiveEventType.ObjectiveProgressMade, progressMade: 1);
+                    objectiveOnPick.objectiveId, ObjectiveEventType.IncrementObjectiveProgress, progressMade: 1);
             else if (objectiveOnPick != null)
                 ObjectiveEvent.Trigger(objectiveOnPick.objectiveId, ObjectiveEventType.ObjectiveCompleted);
 
@@ -708,7 +707,7 @@ namespace LevelConstruct.Interactable.ItemInteractables.ItemPicker
 
             if (objectiveOnPick != null && incrementObjectiveOnPick)
                 ObjectiveEvent.Trigger(
-                    objectiveOnPick.objectiveId, ObjectiveEventType.ObjectiveProgressMade, progressMade: 1);
+                    objectiveOnPick.objectiveId, ObjectiveEventType.IncrementObjectiveProgress, progressMade: 1);
             else if (objectiveOnPick != null)
                 ObjectiveEvent.Trigger(objectiveOnPick.objectiveId, ObjectiveEventType.ObjectiveCompleted);
 

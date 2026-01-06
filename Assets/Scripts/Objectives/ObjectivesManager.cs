@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Domains.Player.Scripts;
-using Events;
 using Helpers.Events;
 using Helpers.Events.ManagerEvents;
 using Helpers.Interfaces;
@@ -218,7 +217,7 @@ namespace Objectives
                 if (eventType.type == ObjectiveEventType.ObjectiveActivated)
                     SetObjectiveActive(eventType.objectiveId, false);
 
-                if (eventType.type == ObjectiveEventType.ObjectiveProgressMade)
+                if (eventType.type == ObjectiveEventType.IncrementObjectiveProgress)
                     AdvanceObjectiveProgress(
                         eventType.objectiveId, eventType.progressMadeByN,
                         eventType.progressMadeByF, eventType.miscProgressInfo);

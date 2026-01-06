@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Events;
+using Helpers.Events;
 using MoreMountains.Tools;
 using Objectives;
 using UnityEngine;
@@ -23,9 +23,9 @@ namespace SharedUI.Objectives
         public Color CompletedObjectiveTextColor;
         public int numCompletedObjectivesToShow;
 
-        private ObjectivesManager objectivesManager;
+        ObjectivesManager objectivesManager;
 
-        private void Start()
+        void Start()
         {
             objectivesManager = FindFirstObjectByType<ObjectivesManager>();
 
@@ -33,12 +33,12 @@ namespace SharedUI.Objectives
             RefreshCompletedObjectivesList();
         }
 
-        private void OnEnable()
+        void OnEnable()
         {
             this.MMEventStartListening();
         }
 
-        private void OnDisable()
+        void OnDisable()
         {
             this.MMEventStopListening();
         }
@@ -48,14 +48,15 @@ namespace SharedUI.Objectives
             if (eventType.type == ObjectiveEventType.ObjectiveActivated)
                 StartCoroutine(DelayedRefresh(() => RefreshActiveObjectivesList()));
             else if (eventType.type == ObjectiveEventType.ObjectiveCompleted)
-                StartCoroutine(DelayedRefresh(() =>
-                {
-                    RefreshCompletedObjectivesList();
-                    RefreshActiveObjectivesList();
-                }));
+                StartCoroutine(
+                    DelayedRefresh(() =>
+                    {
+                        RefreshCompletedObjectivesList();
+                        RefreshActiveObjectivesList();
+                    }));
         }
 
-        private IEnumerator DelayedRefresh(Action refreshAction)
+        IEnumerator DelayedRefresh(Action refreshAction)
         {
             yield return null; // Wait one frame
             refreshAction();

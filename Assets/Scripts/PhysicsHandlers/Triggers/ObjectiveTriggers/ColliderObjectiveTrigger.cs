@@ -1,4 +1,4 @@
-using Events;
+using Helpers.Events;
 using Helpers.Events.Triggering;
 using Manager;
 using Objectives.ScriptableObjects;

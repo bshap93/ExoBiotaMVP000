@@ -1,4 +1,4 @@
-using Events;
+using Helpers.Events;
 using Helpers.Events.Gated;
 using Helpers.Events.Status;
 using MoreMountains.Tools;

@@ -3,7 +3,7 @@ using MoreMountains.Tools;
 using Objectives.ScriptableObjects;
 using UnityEngine.Serialization;
 
-namespace Events
+namespace Helpers.Events
 {
     [Serializable]
     public enum ObjectiveEventType
@@ -15,7 +15,7 @@ namespace Events
         ObjectiveDeactivated,
         ObjectiveAdded,
         Refresh,
-        ObjectiveProgressMade,
+        IncrementObjectiveProgress,
         ObjectiveDeleted
     }
 

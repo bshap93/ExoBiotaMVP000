@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Events;
+using Helpers.Events;
 using MoreMountains.Tools;
 using UnityEngine;
 
@@ -19,11 +19,11 @@ namespace Objectives.UI
         [Tooltip("Prefab that contains the UI for a single objective toast")]
         public ObjectiveDisplayItem DisplayPrefab;
 
-        private readonly Dictionary<string, ObjectiveDisplayItem> _activeToasts = new();
-        private WaitForSeconds _displayWfs;
-        private bool _listening;
+        readonly Dictionary<string, ObjectiveDisplayItem> _activeToasts = new();
+        WaitForSeconds _displayWfs;
+        bool _listening;
 
-        private IEnumerator Start()
+        IEnumerator Start()
         {
             // Delay to avoid the manager's initial re-broadcast flooding the UI
             yield return new WaitForSeconds(IgnoreEarlyObjectiveEventsSeconds);
@@ -32,7 +32,7 @@ namespace Objectives.UI
             if (_displayWfs == null) _displayWfs = new WaitForSeconds(DisplayDuration);
         }
 
-        private void OnDisable()
+        void OnDisable()
         {
             if (_listening)
             {
@@ -41,7 +41,7 @@ namespace Objectives.UI
             }
         }
 
-        private void OnValidate()
+        void OnValidate()
         {
             _displayWfs = new WaitForSeconds(DisplayDuration);
         }
@@ -84,7 +84,7 @@ namespace Objectives.UI
             }
         }
 
-        private IEnumerator FadeOutAndDestroy(string key, ObjectiveDisplayItem item, CanvasGroup cg)
+        IEnumerator FadeOutAndDestroy(string key, ObjectiveDisplayItem item, CanvasGroup cg)
         {
             yield return _displayWfs;
             if (cg) yield return MMFade.FadeCanvasGroup(cg, FadeDuration, 0);

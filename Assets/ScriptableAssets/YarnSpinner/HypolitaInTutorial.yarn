@@ -117,13 +117,14 @@ title: HypolitaGivesFurtherInstructionAfterFacility
 ---
 Hypolita: Ok, go and use the Door Access Panel's switch to access that door. The door will automatically unlock and open for you, now you have key access.
 -> Will do.
+<<trigger_gesture ScientistHypolita HandsMidUpPointByPoint>>
 Hypolita: My scanners show life-signs just on the other side of the door. It's definitely a couple of Urchins. That's the layman's name anyway. They're immobile,
+<<trigger_gesture  ScientitstHypolita ConcedingAPoint>>
 Hypolita: but they spew a corrosive gas that has a knack for getting through our best hazard suits, so don't stay close to them for too long. Go ahead and use your 
-Hypolita: heat pistol to neutralize them. Again, don't feel the need to rush back to an EquiBap tank every time you are conaminated and
 <<trigger_gesture ScientistHypolita HandsDownSayingOK>>
-Hypolita: minor infections can be kept from woresening with a salve.
-<<add_objective KillTheTwoContaminantUrchins>>
-<<activate_objective KillTheTwoContaminantUrchins>>
+Hypolita: heat pistol to neutralize them. Again, don't feel the need to rush back to an EquiBap tank every time you are conaminated. Minor infections can be kept from woresening with a antiexobiotic salve.
+<<add_objective StunTheTwoUrchins>>
+<<activate_objective StunTheTwoUrchins>>
 ===
 
 title: HypolitaGivesInstructionsCorePatch

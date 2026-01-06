@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Dirigible.Input;
-using Events;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
 using FirstPersonPlayer.Tools.ItemObjectTypes.CompositeObjects;
 using Gameplay.Events;
@@ -36,7 +35,6 @@ namespace LevelConstruct.Interactable.ItemInteractables
             Dissolved,
             Picked
         }
-
 
 
         [Header("Objective Progression")] [SerializeField]
@@ -203,7 +201,7 @@ namespace LevelConstruct.Interactable.ItemInteractables
                     if (objectiveProgressOnCatalyst != null)
                         ObjectiveEvent.Trigger(
                             objectiveProgressOnCatalyst.objectiveId,
-                            ObjectiveEventType.ObjectiveProgressMade,
+                            ObjectiveEventType.IncrementObjectiveProgress,
                             NotifyType.Regular, 1);
 
 
@@ -225,7 +223,7 @@ namespace LevelConstruct.Interactable.ItemInteractables
                     if (objectiveProgressOnSolvent != null)
                         ObjectiveEvent.Trigger(
                             objectiveProgressOnSolvent.objectiveId,
-                            ObjectiveEventType.ObjectiveProgressMade,
+                            ObjectiveEventType.IncrementObjectiveProgress,
                             NotifyType.Regular, 1);
 
                     // Dissolve visual effects
@@ -415,7 +413,7 @@ namespace LevelConstruct.Interactable.ItemInteractables
                 AdvanceState(HarvestableState.HadCatalystApplied);
                 if (objectiveProgressOnCatalyst != null)
                     ObjectiveEvent.Trigger(
-                        objectiveProgressOnCatalyst.objectiveId, ObjectiveEventType.ObjectiveProgressMade,
+                        objectiveProgressOnCatalyst.objectiveId, ObjectiveEventType.IncrementObjectiveProgress,
                         NotifyType.Regular, 1);
 
                 catalystAppliedFeedback.PlayFeedbacks();
@@ -432,7 +430,7 @@ namespace LevelConstruct.Interactable.ItemInteractables
 
                 if (objectiveProgressOnSolvent != null)
                     ObjectiveEvent.Trigger(
-                        objectiveProgressOnSolvent.objectiveId, ObjectiveEventType.ObjectiveProgressMade,
+                        objectiveProgressOnSolvent.objectiveId, ObjectiveEventType.IncrementObjectiveProgress,
                         NotifyType.Regular, 1);
 
                 dissolver.FindMaterials();

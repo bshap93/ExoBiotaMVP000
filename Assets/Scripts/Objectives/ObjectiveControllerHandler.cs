@@ -1,5 +1,5 @@
 using CompassNavigatorPro;
-using Events;
+using Helpers.Events;
 using MoreMountains.Tools;
 using UnityEngine;
 using UnityEngine.Events;

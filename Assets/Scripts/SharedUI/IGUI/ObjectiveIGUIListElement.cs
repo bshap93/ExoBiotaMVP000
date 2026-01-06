@@ -1,4 +1,4 @@
-using Events;
+using Helpers.Events;
 using Michsky.MUIP;
 using Objectives;
 using Objectives.ScriptableObjects;
