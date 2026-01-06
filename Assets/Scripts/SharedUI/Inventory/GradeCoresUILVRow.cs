@@ -21,10 +21,10 @@ namespace SharedUI.Inventory
         MMFeedbacks onIncreaseQuantityFeedbacks;
         [SerializeField] MMFeedbacks onDecreaseQuantityFeedbacks;
         public ButtonManager convertToXPButton;
+        [SerializeField] OuterCoreItemObject.CoreObjectValueGrade _coreGrade;
 
 
         int _currentQuantity;
-        OuterCoreItemObject.CoreObjectValueGrade _coreGrade;
 
 
         public void Initialize(OuterCoreItemObject.CoreObjectValueGrade grade, int quantity)
