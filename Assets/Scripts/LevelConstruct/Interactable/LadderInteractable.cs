@@ -61,7 +61,7 @@ namespace LevelConstruct.Interactable
         }
         public string ShortBlurb()
         {
-            return "Interact to climb the ladder.";
+            return actionMessage;
         }
         public Sprite GetActionIcon()
         {

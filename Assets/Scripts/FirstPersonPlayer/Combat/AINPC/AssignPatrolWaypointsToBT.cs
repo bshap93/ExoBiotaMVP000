@@ -25,6 +25,7 @@ namespace FirstPersonPlayer.Combat.AINPC
                 blackboard = GetComponent<Blackboard>();
 
             blackboard.SetVariableValue("patrolWaypoints", patrolWaypoints);
+            blackboard.SetVariableValue("numWaypoints", patrolWaypoints.Count);
         }
     }
 }

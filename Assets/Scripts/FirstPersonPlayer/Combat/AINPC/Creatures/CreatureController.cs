@@ -55,7 +55,7 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
 
         protected AnimancerState IdleState;
         protected AnimancerState MoveState;
-        public bool IsPlayingCustomAnimation { get; private set; }
+        public bool IsPlayingCustomAnimation { get; set; }
 
         public float MaxHealth => creatureType.maxHealth;
         public float StunThreshold => creatureType.stunTreshold;
@@ -232,7 +232,7 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
         public void PlayAnimationClip(AnimationClip clip)
         {
             IsPlayingCustomAnimation = true;
-            var state = animancerComponent.Play(clip);
+            var state = animancerComponent.Play(clip, 0.2f);
             state.Events(this).OnEnd = () => { IsPlayingCustomAnimation = false; };
         }
         protected virtual IEnumerator InitializeAfterCreatureStateManager()

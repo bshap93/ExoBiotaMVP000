@@ -53,23 +53,30 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
 
         void Update()
         {
-            if (IsAttacking || IsPlayingCustomAnimation) return;
+            if (IsAttacking) return; // Only attacks block everything
 
             var speed = navMeshAgent.velocity.magnitude;
 
             if (speed < 0.1f)
             {
-                if (!IdleState.IsPlaying) animancerComponent.Play(IdleState);
+                // Idle should NOT interrupt custom animations
+                if (!IsPlayingCustomAnimation && !IdleState.IsPlaying)
+                    animancerComponent.Play(IdleState, 0.2f);
             }
             else
             {
-                if (!MoveState.IsPlaying) animancerComponent.Play(MoveState);
+                // Move SHOULD interrupt custom animations
+                if (!MoveState.IsPlaying)
+                {
+                    animancerComponent.Play(MoveState, 0.2f);
+                    IsPlayingCustomAnimation = false; // Reset the flag when interrupted
+                }
             }
 
             if (currentHealth <= 0f && !isDead)
             {
                 isDead = true;
-                DeathState = animancerComponent.Play(creatureType.animationSet.deathAnimation);
+                DeathState = animancerComponent.Play(creatureType.animationSet.deathAnimation, 0.1f);
                 DeathState.Events(this).OnEnd = () => { Destroy(gameObject); };
 
                 OnDeath();
@@ -99,7 +106,7 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
         }
         public void PlayHitAnimation(AnimationClip value)
         {
-            HitState = animancerComponent.Play(value);
+            HitState = animancerComponent.Play(value, 0.05f);
 
             HitState.Events(this).OnEnd = () => { };
         }
@@ -116,13 +123,11 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
             if (IsAttacking) return;
 
             IsAttacking = true;
+            IsPlayingCustomAnimation = false;
+
 
             hitBoxColliderMouth.Activate();
-
-
-            AttackState = animancerComponent.Play(creatureType.animationSet.attackAnimation);
-
-
+            AttackState = animancerComponent.Play(creatureType.animationSet.attackAnimation, 0.05f);
             AttackState.Events(this).OnEnd = () => { FinishAttack(); };
         }
 
