@@ -1,5 +1,6 @@
 using DG.Tweening;
 using Helpers.Events.Combat;
+using Helpers.Events.UI;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
 using TMPro;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace SharedUI.HUD
 {
-    public class EnemyInfoBarUIElement : MonoBehaviour, MMEventListener<EnemyDamageEvent>
+    public class EnemyInfoBarUIElement : MonoBehaviour, MMEventListener<EnemyDamageEvent>, MMEventListener<HotbarEvent>
     {
         [SerializeField] CanvasGroup canvasGroup;
         [SerializeField] TMP_Text enemyNameText;
@@ -55,12 +56,14 @@ namespace SharedUI.HUD
         }
         void OnEnable()
         {
-            this.MMEventStartListening();
+            this.MMEventStartListening<EnemyDamageEvent>();
+            this.MMEventStartListening<HotbarEvent>();
         }
 
         void OnDisable()
         {
-            this.MMEventStopListening();
+            this.MMEventStopListening<EnemyDamageEvent>();
+            this.MMEventStopListening<HotbarEvent>();
         }
         public void OnMMEvent(EnemyDamageEvent eventType)
         {
@@ -93,6 +96,10 @@ namespace SharedUI.HUD
                 FadeOut(fadeOutOnTimeoutDuration);
                 ResetBar();
             }
+        }
+        public void OnMMEvent(HotbarEvent eventType)
+        {
+            if (eventType.EventType == HotbarEvent.HotbarEventType.HideHotbars) FadeOut(fadeOutOnTimeoutDuration);
         }
         void TryUpdateStunBar(ref float eventTypeLastValue, float eventTypeCurrentValue, float stunThreshold)
         {

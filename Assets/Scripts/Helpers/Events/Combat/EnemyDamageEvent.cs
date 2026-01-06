@@ -11,7 +11,9 @@ namespace Helpers.Events.Combat
         Missed,
         Healed,
         Blocked,
-        Death
+        Death,
+        ShowUI,
+        HideUI
     }
 
     public enum DamageType
