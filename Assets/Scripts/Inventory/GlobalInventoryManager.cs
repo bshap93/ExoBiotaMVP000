@@ -75,7 +75,8 @@ namespace Inventory
         public DefaultInventoryDefinition backEquipmentStartingItems;
         public DefaultInventoryDefinition dirigibleScannerStartingItems;
         public DefaultInventoryDefinition keyItemStartingItems;
-        public DefaultInventoryDefinition innerCoresStartingItems;
+        [FormerlySerializedAs("innerCoresStartingItems")]
+        public DefaultInventoryDefinition outerCoresStartingItems;
         public DefaultInventoryDefinition ammoStartingItems;
 
         [FormerlySerializedAs("intitialPlayerFPMaxWeight")] [Header("Initial Weight Limits")] [SerializeField]
@@ -325,7 +326,7 @@ namespace Inventory
             PopulateInventory(backEquipmentInventory, backEquipmentStartingItems);
             PopulateInventory(dirigibleScannerSlot, dirigibleScannerStartingItems);
             PopulateInventory(keyItemInventory, keyItemStartingItems);
-            PopulateInventory(outerCoresInventory, innerCoresStartingItems);
+            PopulateInventory(outerCoresInventory, outerCoresStartingItems);
         }
 
         static void PopulateInventory(MoreMountains.InventoryEngine.Inventory inv,

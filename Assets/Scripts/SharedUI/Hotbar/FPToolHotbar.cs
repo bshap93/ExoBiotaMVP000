@@ -182,18 +182,12 @@ namespace SharedUI.Hotbar
 
             // Refresh empty hand slot (data index 0, key 3)
             if (emptySlot != null)
-            {
                 emptySlot.SetEmptyHandSlot();
-                Debug.Log("[FPToolHotbar] Refreshed empty hand slot");
-            }
             else
-            {
                 Debug.LogError("[FPToolHotbar] emptySlot is null! Assign it in the inspector.");
-            }
 
             // Refresh tool slots
             // toolSlots[i] corresponds to data index (i+1) and key (i+4)
-            Debug.Log($"[FPToolHotbar] Refreshing {toolSlots.Length} tool slots");
             for (var i = 0; i < toolSlots.Length; i++)
             {
                 var dataIndex = i + 1; // +1 because data index 0 is empty hand
@@ -202,8 +196,6 @@ namespace SharedUI.Hotbar
                 var hotbarData = hotbarManager.GetToolAtSlot(dataIndex);
                 var itemID = hotbarData?.itemID;
 
-                Debug.Log(
-                    $"[FPToolHotbar] Slot {i}: dataIndex={dataIndex}, key={keyNumber}, itemID={itemID ?? "empty"}");
 
                 UpdateSlot(dataIndex, itemID);
             }

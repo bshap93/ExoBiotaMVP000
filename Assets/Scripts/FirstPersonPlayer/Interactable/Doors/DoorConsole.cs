@@ -51,7 +51,6 @@ namespace FirstPersonPlayer.Interactable.Doors
             {
                 lockedDoor.isLocked = false;
                 switchFeedbacks?.PlayFeedbacks();
-                Debug.Log(lockedDoor.keyID);
                 return true;
             }
 

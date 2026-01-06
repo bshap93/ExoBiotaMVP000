@@ -1,5 +1,4 @@
 using System;
-using MoreMountains.InventoryEngine;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -38,9 +37,6 @@ namespace FirstPersonPlayer.Tools.ItemObjectTypes
 
         public float dissolveSpeed = 2.0f;
 
-        // For testing purposed, we just do 1 to 1 rather than loot tables
-        public InventoryItem innerCoreItem;
-        public GameObject innerCoreObjectPicker;
 
         [Header("Sorting")] public int corePriorityLevel;
     }

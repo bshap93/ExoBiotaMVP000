@@ -6,23 +6,47 @@
   <component name="ChangeListManager">
     <list default="true" id="abdb78f9-9d96-46eb-81c0-ec3c0363e4ff" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ExoBiotaMVP003/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ExoBiotaMVP003/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CustomAssets/Terrains/Mine01Terrain.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/CustomAssets/Terrains/Mine01Terrain.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/BasicCoreStandard.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Items/BasicCoreStandard.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/BasicCoreVariant03.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Items/BasicCoreVariant03.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/BasicCoreVariation01.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Items/BasicCoreVariation01.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/CoreItemObject.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Items/CoreItemObject.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/BasicInnerCoreStandard.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/BasicInnerCoreStandard.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/Chemicals.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/CoreItemObject.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/CoreItemObject.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/DiffuseCatalystCanister 1.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/DiffuseCatalystCanister 1.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/DiffuseCatalystCanister.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/DiffuseCatalystCanister.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/DiffuseSmallSolventCanister.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/DiffuseSmallSolventCanister.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/Keys.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/PotentCatalystCanister.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/PotentCatalystCanister.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/PotentSolventCanister.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/PotentSolventCanister.asset.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/RadiantCoreStandard.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Items/RadiantCoreStandard.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/RadiantInnerCoreStandard.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/RadiantInnerCoreStandard.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/SmallCatalystCanister 1.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/SmallCatalystCanister 1.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/SmallCatalystCanister.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/SmallCatalystCanister.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/StellarInnerCoreStandard.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/StellarInnerCoreStandard.asset.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/StellarOuterCore.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Items/StellarOuterCore.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/Weapons.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Core.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Core.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Tools/ItemObjectTypes/CompositeObjects/HarvestableInnerObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Tools/ItemObjectTypes/CompositeObjects/HarvestableInnerObject.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Mine/Mine01.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Mine/Mine01.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableAssets/InventoryEngine/StartingItems/InnerCoreitemsInventory.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableAssets/InventoryEngine/StartingItems/InnerCoreitemsInventory.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableAssets/UIHelpers/GatedPickableInteractionDetails/StellarCoreInteractions/StellarSolventInteraction.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableAssets/UIHelpers/GatedPickableInteractionDetails/StellarCoreInteractions/StellarSolventInteraction.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Interactable/Doors/DoorConsole.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Interactable/Doors/DoorConsole.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Tools/ItemObjectTypes/CompositeObjects/HarvestableInnerObject.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Tools/ItemObjectTypes/CompositeObjects/HarvestableInnerObject.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Tools/ItemObjectTypes/OuterCoreItemObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Tools/ItemObjectTypes/OuterCoreItemObject.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/UI/InventoryListView/InnerCoresDisplay.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/UI/InventoryListView/OuterCoresDisplay.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/UI/InventoryListView/InnerCoresDisplay.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/UI/InventoryListView/OuterCoresDisplay.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Helpers/Events/XPEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Helpers/Events/XPEvent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Helpers/StaticHelpers/InventoryHelperCommands.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Helpers/StaticHelpers/InventoryHelperCommands.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Inventory/GlobalInventoryManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/GlobalInventoryManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/AttributesManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/AttributesManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SharedUI/Interact/GatedLevelingUIController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SharedUI/Interact/GatedLevelingUIController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SharedUI/Inventory/GradeCoresUILVRow.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SharedUI/Inventory/GradeCoresUILVRow.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SharedUI/Hotbar/FPToolHotbar.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SharedUI/Hotbar/FPToolHotbar.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,7 +232,7 @@
       <workItem from="1767297377435" duration="15341000" />
       <workItem from="1767370939085" duration="3648000" />
       <workItem from="1767557824778" duration="18102000" />
-      <workItem from="1767629698654" duration="19405000" />
+      <workItem from="1767629698654" duration="22921000" />
     </task>
     <servers />
   </component>
