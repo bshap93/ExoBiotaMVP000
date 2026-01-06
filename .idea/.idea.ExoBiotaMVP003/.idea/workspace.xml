@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="abdb78f9-9d96-46eb-81c0-ec3c0363e4ff" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ExoBiotaMVP003/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ExoBiotaMVP003/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/LevelConstruct/Interactable/LadderInteractable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/LevelConstruct/Interactable/LadderInteractable.cs" afterDir="false" />
-    </list>
+    <list default="true" id="abdb78f9-9d96-46eb-81c0-ec3c0363e4ff" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -193,7 +190,7 @@
       <workItem from="1767297377435" duration="15341000" />
       <workItem from="1767370939085" duration="3648000" />
       <workItem from="1767557824778" duration="18102000" />
-      <workItem from="1767629698654" duration="44904000" />
+      <workItem from="1767629698654" duration="46171000" />
     </task>
     <servers />
   </component>
