@@ -29,8 +29,6 @@ namespace LevelConstruct.Interactable
 
         [SerializeField] float interactionDistance = 2f;
 
-        [SerializeField] float triggerCooldown = 6f;
-        [SerializeField] bool askOnTrigger = true;
         CharacterActor _characterActor;
         bool _initialized;
         float _lastTriggerTime;
@@ -40,20 +38,9 @@ namespace LevelConstruct.Interactable
         protected SceneObjectData Data;
 
 
-        void OnTriggerEnter(Collider other)
-        {
-            if (!askOnTrigger)
-                return;
-
-            if (Time.time - _lastTriggerTime < triggerCooldown)
-                return;
-
-            _lastTriggerTime = Time.time;
-            InitiateClimb();
-        }
         public string GetName()
         {
-            return "Ladder";
+            return "Access Ladder";
         }
         public Sprite GetIcon()
         {
@@ -113,7 +100,18 @@ namespace LevelConstruct.Interactable
 
         public void Interact()
         {
-            InitiateClimb();
+            Initialize();
+            if (_teleportPlayer == null)
+            {
+                Debug.LogError("LadderInteractable: No TeleportPlayer component found.");
+                return;
+            }
+
+            climbLadderFeedbacks?.PlayFeedbacks();
+
+            _teleportPlayer.Teleport(_characterActor);
+            MyUIEvent.Trigger(UIType.Any, UIActionType.Close);
+            // InitiateClimb();
         }
         public void OnInteractionStart()
         {
@@ -155,9 +153,6 @@ namespace LevelConstruct.Interactable
         {
             return string.IsNullOrEmpty(uniqueID);
         }
-        public void OnInteractionEnd()
-        {
-        }
 #if UNITY_EDITOR
         public IEnumerable<ValueDropdownItem<int>> GetAllRewiredActions()
         {
@@ -172,20 +167,7 @@ namespace LevelConstruct.Interactable
                 actionTitle,
                 AlertType.ChoiceModal,
                 0f,
-                onConfirm: () =>
-                {
-                    Initialize();
-                    if (_teleportPlayer == null)
-                    {
-                        Debug.LogError("LadderInteractable: No TeleportPlayer component found.");
-                        return;
-                    }
-
-                    climbLadderFeedbacks?.PlayFeedbacks();
-
-                    _teleportPlayer.Teleport(_characterActor);
-                    MyUIEvent.Trigger(UIType.Any, UIActionType.Close);
-                },
+                onConfirm: () => { },
                 onCancel: () => { }
             );
         }
