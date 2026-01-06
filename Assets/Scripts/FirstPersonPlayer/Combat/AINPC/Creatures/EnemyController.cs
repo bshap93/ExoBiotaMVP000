@@ -62,6 +62,8 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
                 // Idle should NOT interrupt custom animations
                 if (!IsPlayingCustomAnimation && !IdleState.IsPlaying)
                     animancerComponent.Play(IdleState, 0.2f);
+
+                movementLoopFeedbacks?.StopFeedbacks();
             }
             else
             {
@@ -69,6 +71,7 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
                 if (!MoveState.IsPlaying)
                 {
                     animancerComponent.Play(MoveState, 0.2f);
+                    movementLoopFeedbacks?.PlayFeedbacks();
                     IsPlayingCustomAnimation = false; // Reset the flag when interrupted
                 }
             }

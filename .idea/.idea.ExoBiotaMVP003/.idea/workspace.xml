@@ -5,20 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="abdb78f9-9d96-46eb-81c0-ec3c0363e4ff" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ExoBiotaMVP003/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ExoBiotaMVP003/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/CustomAssets/Fonts/genos_5.2.8/ttf/genos-latin-500-normal SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/CustomAssets/Fonts/genos_5.2.8/ttf/genos-latin-500-normal SDF.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/CustomAssets/NodeCanvas/BehaviorTree/HealthyTrumpetSlugBehaviorTree.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/CustomAssets/NodeCanvas/BehaviorTree/HealthyTrumpetSlugBehaviorTree.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/Inventory/BillboardUI.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/Inventory/BillboardUI.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/HeatPistolObject.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Items/HeatPistolObject.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Items/StunPistolObject.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Items/StunPistolObject.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Core.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Core.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Mine/Mine01.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Mine/Mine01.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableAssets/UIHelpers/ReticleStates/IRuntimeToolState.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableAssets/UIHelpers/ReticleStates/IRuntimeToolState.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableAssets/UIHelpers/ReticleStates/IRuntimeToolStateUnuseable.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableAssets/UIHelpers/ReticleStates/IRuntimeToolStateUnuseable.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/AssignPatrolWaypointsToBT.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/AssignPatrolWaypointsToBT.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/Creatures/CreatureController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/Creatures/CreatureController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/Creatures/EnemyController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/Creatures/EnemyController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/LevelConstruct/Interactable/LadderInteractable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/LevelConstruct/Interactable/LadderInteractable.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -205,7 +194,7 @@
       <workItem from="1767297377435" duration="15341000" />
       <workItem from="1767370939085" duration="3648000" />
       <workItem from="1767557824778" duration="18102000" />
-      <workItem from="1767629698654" duration="40856000" />
+      <workItem from="1767629698654" duration="42715000" />
     </task>
     <servers />
   </component>
