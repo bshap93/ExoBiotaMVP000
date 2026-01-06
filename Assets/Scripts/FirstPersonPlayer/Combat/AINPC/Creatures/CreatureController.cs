@@ -49,6 +49,7 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
 
         public float currentStunDamage;
 
+
         [SerializeField] protected HighlightEffect highlightEffect;
 
         Tween _hitTween;

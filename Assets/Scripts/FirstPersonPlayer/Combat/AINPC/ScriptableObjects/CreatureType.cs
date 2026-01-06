@@ -17,6 +17,7 @@ namespace FirstPersonPlayer.Combat.AINPC.ScriptableObjects
         [Header("Camera Shake Settings")] public float meleeAttackShakeIntensity = 0.12f;
         public float heavyMeleeAttackShakeIntensity = 0.15f;
         public float meleeAttackShakeDuration = 0.3f;
+        public float stunCooldownTime = 5f;
 
         [Header("Contamination Settings")] public float baseBlowbackContaminationAmt = 0.5f;
 
