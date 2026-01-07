@@ -53,7 +53,7 @@ namespace NewScript
         public void Emerge()
         {
             emergeFeedbacks?.PlayFeedbacks();
-            childObject.transform.DOLocalMove(Vector3.zero, 2f).SetEase(Ease.InExpo);
+            childObject.transform.DOLocalMove(Vector3.zero, 1f).SetEase(Ease.InExpo);
         }
     }
 }
