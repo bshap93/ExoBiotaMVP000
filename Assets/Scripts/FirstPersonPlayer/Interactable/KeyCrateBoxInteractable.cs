@@ -8,6 +8,7 @@ using LevelConstruct.Highlighting;
 using Manager;
 using MoreMountains.Feedbacks;
 using MoreMountains.InventoryEngine;
+using NewScript;
 using Objectives.ScriptableObjects;
 using SharedUI.Interface;
 using Sirenix.OdinInspector;
