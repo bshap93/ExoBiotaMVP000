@@ -56,6 +56,8 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
 
         protected AnimancerState IdleState;
         protected AnimancerState MoveState;
+
+        public float StunDuration => creatureType.stunCooldownTime;
         public bool IsPlayingCustomAnimation { get; set; }
 
         public float MaxHealth => creatureType.maxHealth;

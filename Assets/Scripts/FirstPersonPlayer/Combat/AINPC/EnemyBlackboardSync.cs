@@ -21,6 +21,7 @@ namespace FirstPersonPlayer.Combat.AINPC
             _bb.SetVariableValue("currentHealth", _enemy.currentHealth);
             _bb.SetVariableValue("maxHealth", _enemy.MaxHealth);
             _bb.SetVariableValue("stunDamage", _enemy.currentStunDamage);
+            _bb.SetVariableValue("stunDuration", _enemy.StunDuration);
         }
     }
 }

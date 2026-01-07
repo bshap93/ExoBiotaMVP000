@@ -1,4 +1,5 @@
 using FirstPersonPlayer.Combat.AINPC.Creatures;
+using MoreMountains.Feedbacks;
 using NodeCanvas.Framework;
 using ParadoxNotion.Design;
 using UnityEngine;
@@ -9,7 +10,9 @@ namespace FirstPersonPlayer.Combat.AINPC
     [Description("Play an Animation Clip in the stead of the default idle clip.")]
     public class CreaturePlayAnimationClip : ActionTask
     {
-        public readonly BBParameter<AnimationClip> CooldownAfterGasPuff;
+        public readonly BBParameter<AnimationClip> AnimationClip;
+        public readonly BBParameter<MMFeedbacks> Feedback;
+
 
         CreatureController _creatureController;
         //Use for initialization. This is called only once in the lifetime of the task.
@@ -25,7 +28,11 @@ namespace FirstPersonPlayer.Combat.AINPC
         //EndAction can be called from anywhere.
         protected override void OnExecute()
         {
-            _creatureController.PlayAnimationClip(CooldownAfterGasPuff.value);
+            Feedback.value?.PlayFeedbacks();
+
+            _creatureController.PlayAnimationClip(AnimationClip.value);
+
+
             EndAction(true);
         }
 
