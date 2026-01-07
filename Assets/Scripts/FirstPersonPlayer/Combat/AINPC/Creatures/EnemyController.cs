@@ -89,6 +89,7 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
 
         public virtual void OnDeath()
         {
+            ResetStunState();
             navMeshAgent.isStopped = true;
             CreatureStateEvent.Trigger(
                 CreatureStateEventType.SetNewCreatureState, uniqueID,

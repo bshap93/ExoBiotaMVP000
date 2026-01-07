@@ -47,18 +47,10 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
 
         protected virtual void OnEnable()
         {
-            // if (!trigger) return;
-            // trigger.OnObjectHighlightStart += OnHoverStart;
-            // trigger.OnObjectHighlightStay += OnHoverStay;
-            // trigger.OnObjectHighlightEnd += OnHoverEnd;
         }
 
         protected virtual void OnDisable()
         {
-            // if (!trigger) return;
-            // trigger.OnObjectHighlightStart -= OnHoverStart;
-            // trigger.OnObjectHighlightStay -= OnHoverStay;
-            // trigger.OnObjectHighlightEnd -= OnHoverEnd;
         }
 
         // ===== IBillboardable common helpers =====

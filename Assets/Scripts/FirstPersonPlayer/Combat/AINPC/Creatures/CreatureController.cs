@@ -22,6 +22,13 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
     [DisallowMultipleComponent]
     public abstract class CreatureController : MonoBehaviour, IRequiresUniqueID
     {
+        public enum CreatureState
+        {
+            Normal,
+            Stunned,
+            Dead
+        }
+
         public string uniqueID;
 
         [SerializeField] protected Blackboard blackboard;
@@ -35,9 +42,6 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
         [SerializeField] protected MMFeedbacks meleeHitFeedbacksHeavy;
         [SerializeField] protected MMFeedbacks rangedHitFeedbacksBasic;
         [SerializeField] protected MMFeedbacks rangedHitFeedbacksHeavy;
-
-
-        // CreatureStateManager.CreatureState _currentCreatureState;
 
         [SerializeField] protected float secondsBeforeSettingShouldBeDestroyed = 5f;
 
@@ -54,8 +58,20 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
 
         Tween _hitTween;
 
+        Coroutine _stunDecayCoroutine;
+
         protected AnimancerState IdleState;
         protected AnimancerState MoveState;
+
+        public CreatureState CurrentCreatureState
+        {
+            get
+            {
+                if (currentHealth <= 0f) return CreatureState.Dead;
+                if (isStunned) return CreatureState.Stunned;
+                return CreatureState.Normal;
+            }
+        }
 
         public float StunDuration => creatureType.stunCooldownTime;
         public bool IsPlayingCustomAnimation { get; set; }
@@ -215,15 +231,77 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
             currentHealth -= damageAmount;
             currentStunDamage += stunAmount;
 
+            if (currentStunDamage >= StunThreshold) currentStunDamage = StunThreshold;
+
             // Check if creature is now stunned
             if (!isStunned && currentStunDamage >= StunThreshold)
             {
                 isStunned = true;
                 blackboard.SetVariableValue("isStunned", true);
+                blackboard.SetVariableValue("wasStunnedAtThreshold", true);
                 Debug.Log(creatureType.creatureName + " is now stunned!");
+
+                // Start the stun decay coroutine
+                if (_stunDecayCoroutine != null) StopCoroutine(_stunDecayCoroutine);
+
+                _stunDecayCoroutine = StartCoroutine(StunDecayCoroutine());
+            }
+            else if (isStunned)
+            {
+                // If already stunned and hit again, stun damage increases (capped), extending stun duration
+                Debug.Log(creatureType.creatureName + " stun duration extended!");
             }
 
             highlightEffect.HitFX();
+        }
+
+        IEnumerator StunDecayCoroutine()
+        {
+            Debug.Log(creatureType.creatureName + " stun decay started");
+
+            // Calculate decay rate: stun threshold should decay to 0 over the stun cooldown time
+            var decayRate = StunThreshold / creatureType.stunCooldownTime;
+
+            var timeSinceLastUpdate = 0f;
+            var uiUpdateInterval = 0.5f; // Only update UI every 0.1 seconds
+
+            while (currentStunDamage > 0f)
+            {
+                yield return null; // Still run every frame
+
+                // Decrease damage every frame (smooth)
+                currentStunDamage -= decayRate * Time.deltaTime;
+
+                blackboard.SetVariableValue("stunDamage", currentStunDamage);
+
+                // Accumulate time
+                timeSinceLastUpdate += Time.deltaTime;
+
+                // Only trigger event periodically OR when reaching zero
+                if (timeSinceLastUpdate >= uiUpdateInterval || currentStunDamage <= 0f)
+                {
+                    EnemyDamageEvent.Trigger(
+                        currentStunDamage, currentStunDamage + decayRate * Time.deltaTime, StunThreshold,
+                        DamageEventType.DealtDamage, creatureType.creatureName, DamageType.Stun);
+
+
+                    timeSinceLastUpdate = 0f;
+                }
+            }
+
+            while (currentStunDamage > 0f)
+            {
+                yield return null;
+
+
+                // Clamp to prevent going below zero
+                if (currentStunDamage < 0f) currentStunDamage = 0f;
+            }
+
+            // Stun damage has reached zero, unstun the creature
+            if (isStunned) isStunned = false;
+            // blackboard.SetVariableValue("isStunned", false);
+            _stunDecayCoroutine = null;
         }
 
         public void PlayHitTween(Func<Transform, Tween> buildTween, bool killPrevious = true)
@@ -272,10 +350,17 @@ namespace FirstPersonPlayer.Combat.AINPC.Creatures
 
         public void ResetStunState()
         {
+            // Stop the decay coroutine if it's running
+            if (_stunDecayCoroutine != null)
+            {
+                StopCoroutine(_stunDecayCoroutine);
+                _stunDecayCoroutine = null;
+            }
+
             isStunned = false;
             currentStunDamage = 0f;
             blackboard.SetVariableValue("isStunned", false);
-            Debug.Log(creatureType.creatureName + " stun state reset");
+            Debug.Log(creatureType.creatureName + " stun state reset (manually)");
         }
 
 
