@@ -251,12 +251,8 @@ namespace Manager.UI
                     Debug.Log(
                         $"[HotbarManager] Synced current tool index to {slotIndex} for equipped tool {equippedItem.ItemName}");
                 }
-                else
-                {
-                    // Tool is equipped but not in hotbar - this shouldn't happen in normal flow
-                    // but handle it gracefully
-                    Debug.LogWarning($"[HotbarManager] Tool {equippedItem.ItemName} is equipped but not in hotbar");
-                }
+                // Tool is equipped but not in hotbar - this shouldn't happen in normal flow
+                // but handle it gracefully
             }
         }
 

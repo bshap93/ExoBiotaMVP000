@@ -8142,6 +8142,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fpHudHotbars: {fileID: 0}
+  enableMouseWheelToolCycling: 1
+  scrollThreshold: 0.1
+  scrollCooldown: 0.2
 --- !u!1 &7204873003017186859
 GameObject:
   m_ObjectHideFlags: 0

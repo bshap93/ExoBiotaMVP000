@@ -83,7 +83,20 @@ namespace FirstPersonPlayer.Interactable.BioOrganism
 
         // ===== Hover pipeline (shared) =====
 
-        public abstract bool OnHoverStart(GameObject go);
+        public virtual bool OnHoverStart(GameObject go)
+        {
+            data = new SceneObjectData(
+                GetName(), GetIcon(), ShortBlurb(), ExaminationManager.Instance.iconRepository.bioOrganismIcon,
+                GetActionText());
+
+            BillboardEvent.Trigger(data, BillboardEventType.Show);
+            if (actionId != 0)
+                ControlsHelpEvent.Trigger(
+                    ControlHelpEventType.Show, actionId, string.IsNullOrEmpty(actionText) ? null : actionText,
+                    ExaminationManager.Instance.iconRepository.bioOrganismIcon);
+
+            return true;
+        }
 
         public virtual bool OnHoverStay(GameObject go)
         {

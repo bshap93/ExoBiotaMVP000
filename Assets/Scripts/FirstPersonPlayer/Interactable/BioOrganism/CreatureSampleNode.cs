@@ -1,17 +1,46 @@
 using System;
+using FirstPersonPlayer.Combat.AINPC.Creatures;
+using FirstPersonPlayer.Interface;
+using SharedUI.Interface;
 using UnityEngine;
 
 namespace FirstPersonPlayer.Interactable.BioOrganism
 {
-    public class CreatureSampleNode : BioOrganismBase
+    public class CreatureSampleNode : BioOrganismBase, IInteractable
     {
-        public override bool OnHoverStart(GameObject go)
+        [SerializeField] CreatureController creatureController;
+
+        public void Interact()
+        {
+            Debug.Log("Interact");
+        }
+        public void OnInteractionStart()
+        {
+        }
+        public void OnInteractionEnd(string param)
+        {
+        }
+        public bool CanInteract()
+        {
+            return creatureController.CurrentCreatureState != CreatureController.CreatureState.Normal;
+        }
+        public bool IsInteractable()
+        {
+            return true;
+        }
+        public void OnFocus()
+        {
+        }
+        public void OnUnfocus()
+        {
+        }
+        public float GetInteractionDistance()
         {
             throw new NotImplementedException();
         }
         protected override string GetActionText(bool recognizableOnSight)
         {
-            throw new NotImplementedException();
+            return recognizableOnSight ? actionText : "Examine";
         }
     }
 }
