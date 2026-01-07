@@ -2507,7 +2507,7 @@ MonoBehaviour:
   onItemPicked:
     m_PersistentCalls:
       m_Calls: []
-  objectiveOnPick: {fileID: -6230890593003044794, guid: 2dbfb6c449091d04d8eddcc24055c10f, type: 2}
+  objectiveOnPick: {fileID: 11400000, guid: 0e185df99db5bb545b7e3ba254b99a05, type: 2}
   incrementObjectiveOnPick: 1
   inventoryItem: {fileID: 11400000, guid: 39d228236c7e17c40badfd44bcfdf6aa, type: 2}
   examinableObjectData:

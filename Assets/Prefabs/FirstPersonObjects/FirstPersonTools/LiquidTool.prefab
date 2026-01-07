@@ -1389,6 +1389,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   targetDuration: 3
+  secondaryStateHighlightColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!54 &9036134847918955299
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1471,6 +1472,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 196865
   showHighlights: 1
+  toolIsUsedOnRelease: 0
   detectableType: 1
   mainGunObject: {fileID: 0}
   equippedFeedbacks: {fileID: 2651281044234031831}
@@ -2336,7 +2338,7 @@ PrefabInstance:
     - target: {fileID: 7569503658196812541, guid: 91c2bbdb78b94ef42a5ef9c4860e9447, type: 3}
       propertyPath: managedReferences[2956590402216657090].GameObjectToInstantiate
       value: 
-      objectReference: {fileID: 8007369982305464528, guid: 4ae5d2ab9b8c5444498df728275352c8, type: 3}
+      objectReference: {fileID: 3522668002627831982, guid: dc34a5f3a37ee3245832b39916e92c47, type: 3}
     - target: {fileID: 7569503658196812541, guid: 91c2bbdb78b94ef42a5ef9c4860e9447, type: 3}
       propertyPath: managedReferences[2956590402216657090].RandomizedPositionMax.x
       value: 1

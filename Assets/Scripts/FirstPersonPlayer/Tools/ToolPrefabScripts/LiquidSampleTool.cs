@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using FirstPersonPlayer.Interactable.BioOrganism;
-using FirstPersonPlayer.Tools.Animation;
 using FirstPersonPlayer.Tools.Interface;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
 using Helpers.AnimancerHelper;
@@ -20,7 +19,6 @@ using UnityEngine;
 
 namespace FirstPersonPlayer.Tools.ToolPrefabScripts
 {
-    [RequireComponent(typeof(ToolBob))]
     [RequireComponent(typeof(ToolObjectController))]
     public class LiquidSampleTool : MonoBehaviour, IRuntimeTool, IToolAnimationControl
     {

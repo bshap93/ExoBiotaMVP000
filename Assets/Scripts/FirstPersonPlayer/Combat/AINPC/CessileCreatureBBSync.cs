@@ -26,12 +26,12 @@ namespace FirstPersonPlayer.Combat.AINPC
         void Update()
         {
             _bb.SetVariableValue("currentHealth", _creatureController.currentHealth);
-            _bb.SetVariableValue("currentStunDamage", _creatureController.currentStunDamage);
+            _bb.SetVariableValue("stunDamage", _creatureController.currentStunDamage);
             _bb.SetVariableValue("isPuffingGas", _creatureController.IsPuffingGas);
 
             _bb.SetVariableValue("isDead", _creatureController.isDead);
             _bb.SetVariableValue("hazardActive", _creatureController.HazardActive);
-            _bb.SetVariableValue("isCurrentlyStunned", _creatureController.isStunned);
+            _bb.SetVariableValue("isStunned", _creatureController.isStunned);
         }
     }
 }

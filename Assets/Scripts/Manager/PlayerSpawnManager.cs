@@ -217,7 +217,7 @@ namespace Manager
             return new[]
             {
                 // Overworld
-                "ScienceDockSpawn", "Mine01Dock", "MidFlightTestSpawn",
+                "ScienceDockSpawn", "Mine01Dock", "MidFlightTestSpawn", "TestFPSpawn",
                 "EnterValleySpawn", "DockAshpoolMineSpawn",
                 // Mine01
                 "Mine01DoorSpawn", "CorePatchSpawn", "BailoutFacilitySpawn", "UndergroundSpawnMine01",

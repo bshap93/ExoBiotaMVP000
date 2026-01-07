@@ -708,7 +708,7 @@ MonoBehaviour:
         Owner: {fileID: 7140286537603900279}
         DebugActive: 0
         Mode: 2
-        AnimateScaleTarget: {fileID: 376918871535727039}
+        AnimateScaleTarget: {fileID: 388864020187144268}
         MovementMode: 0
         AnimateScaleDuration: 0.2
         AnimatePositionSpeed: 1
@@ -970,7 +970,6 @@ MonoBehaviour:
   baseBlowbackContaminationAmt: 0.5
   timesAllowedToSample: 1
   interactionDistance: 2
-  disableWhenDepleted: []
   actionTextIfNotToolEquipped: Equip
   actionIdIfNotToolEquipped: 43
   highlightEffectController: {fileID: 3952120344290315472}
@@ -987,7 +986,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ea20d09cbaa1484e9b4fee98fbfc36c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  associatedObjective: {fileID: 11400000, guid: e880b4538d0f0e742b2ed53ac3e79f52, type: 2}
+  associatedObjective: {fileID: 11400000, guid: e75c0b51510c5994f93ec960387cc54b, type: 2}
 --- !u!114 &1216830867353452721
 MonoBehaviour:
   m_ObjectHideFlags: 0

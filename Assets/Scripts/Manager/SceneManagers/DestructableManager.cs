@@ -29,6 +29,8 @@ namespace Manager.SceneManagers
         // Per-scene shard for modularity
         readonly Dictionary<string, HashSet<string>> _destroyedByScene = new(StringComparer.Ordinal);
 
+        readonly HashSet<string> _emerged = new();
+
         bool _dirty;
         string _savePath;
         public static DestructableManager Instance { get; private set; }

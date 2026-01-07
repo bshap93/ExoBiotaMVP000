@@ -699,7 +699,7 @@ MonoBehaviour:
         Owner: {fileID: 4139884655643844920}
         DebugActive: 0
         Mode: 2
-        AnimateScaleTarget: {fileID: 4174755577230211287}
+        AnimateScaleTarget: {fileID: 3220535104885689190}
         MovementMode: 0
         AnimateScaleDuration: 0.2
         AnimatePositionSpeed: 1
@@ -1739,7 +1739,6 @@ MonoBehaviour:
   baseBlowbackContaminationAmt: 0.5
   timesAllowedToSample: 1
   interactionDistance: 2
-  disableWhenDepleted: []
   actionTextIfNotToolEquipped: Equip
   actionIdIfNotToolEquipped: 43
   highlightEffectController: {fileID: 4105542858736521883}

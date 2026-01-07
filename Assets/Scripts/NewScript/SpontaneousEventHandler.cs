@@ -5,98 +5,101 @@ using Helpers.Events.Machinery;
 using MoreMountains.Tools;
 using UnityEngine;
 
-public class SpontaneousEventHandler : MonoBehaviour,
-    MMEventListener<SpontaneousTriggerEvent>
+namespace NewScript
 {
-    void OnEnable()
+    public class SpontaneousEventHandler : MonoBehaviour,
+        MMEventListener<SpontaneousTriggerEvent>
     {
-        this.MMEventStartListening();
-    }
-    void OnDisable()
-    {
-        this.MMEventStopListening();
-    }
-    public void OnMMEvent(SpontaneousTriggerEvent e)
-    {
-        if (string.IsNullOrEmpty(e.StringParameter))
-            return;
-
-        // Expected format: "ElevatorEvent:SetNextFloor"
-        var parts = e.StringParameter.Split(':');
-        if (parts.Length != 2)
+        void OnEnable()
         {
-            Debug.LogWarning($"[SpontaneousEventHandler] Invalid event string: {e.StringParameter}");
-            return;
+            this.MMEventStartListening();
+        }
+        void OnDisable()
+        {
+            this.MMEventStopListening();
+        }
+        public void OnMMEvent(SpontaneousTriggerEvent e)
+        {
+            if (string.IsNullOrEmpty(e.StringParameter))
+                return;
+
+            // Expected format: "ElevatorEvent:SetNextFloor"
+            var parts = e.StringParameter.Split(':');
+            if (parts.Length != 2)
+            {
+                Debug.LogWarning($"[SpontaneousEventHandler] Invalid event string: {e.StringParameter}");
+                return;
+            }
+
+            var eventFamily = parts[0];
+            var eventName = parts[1];
+
+            switch (eventFamily)
+            {
+                case "ElevatorEvent":
+                    HandleElevatorEvent(eventName, e);
+                    break;
+                case "ItemPickerEvent":
+                    HandleItemPickerEvent(eventName, e);
+                    break;
+                case "ControlsHelpEvent":
+                    HandleControlsHelpEvent(eventName, e);
+                    break;
+
+                // future-proofing
+                // case "DoorEvent":
+                // case "PowerGridEvent":
+            }
         }
 
-        var eventFamily = parts[0];
-        var eventName = parts[1];
-
-        switch (eventFamily)
+        void HandleControlsHelpEvent(string eventTypeName, SpontaneousTriggerEvent e)
         {
-            case "ElevatorEvent":
-                HandleElevatorEvent(eventName, e);
-                break;
-            case "ItemPickerEvent":
-                HandleItemPickerEvent(eventName, e);
-                break;
-            case "ControlsHelpEvent":
-                HandleControlsHelpEvent(eventName, e);
-                break;
+            if (!Enum.TryParse(eventTypeName, out ControlHelpEventType controlsHelpEventType))
+            {
+                Debug.LogWarning(
+                    $"[SpontaneousEventHandler] Unknown ControlsHelpEventType: {eventTypeName}");
 
-            // future-proofing
-            // case "DoorEvent":
-            // case "PowerGridEvent":
-        }
-    }
+                return;
+            }
 
-    void HandleControlsHelpEvent(string eventTypeName, SpontaneousTriggerEvent e)
-    {
-        if (!Enum.TryParse(eventTypeName, out ControlHelpEventType controlsHelpEventType))
-        {
-            Debug.LogWarning(
-                $"[SpontaneousEventHandler] Unknown ControlsHelpEventType: {eventTypeName}");
 
-            return;
+            ControlsHelpEvent.Trigger(
+                controlsHelpEventType,
+                e.IntParameter
+            );
         }
 
-
-        ControlsHelpEvent.Trigger(
-            controlsHelpEventType,
-            e.IntParameter
-        );
-    }
-
-    void HandleElevatorEvent(string eventName, SpontaneousTriggerEvent e)
-    {
-        if (!Enum.TryParse(eventName, out ElevatorEventType elevatorEventType))
+        void HandleElevatorEvent(string eventName, SpontaneousTriggerEvent e)
         {
-            Debug.LogWarning(
-                $"[SpontaneousEventHandler] Unknown ElevatorEventType: {eventName}");
+            if (!Enum.TryParse(eventName, out ElevatorEventType elevatorEventType))
+            {
+                Debug.LogWarning(
+                    $"[SpontaneousEventHandler] Unknown ElevatorEventType: {eventName}");
 
-            return;
+                return;
+            }
+
+            ElevatorEvent.Trigger(
+                e.UniqueID,
+                elevatorEventType,
+                e.IntParameter
+            );
         }
 
-        ElevatorEvent.Trigger(
-            e.UniqueID,
-            elevatorEventType,
-            e.IntParameter
-        );
-    }
-
-    void HandleItemPickerEvent(string eventName, SpontaneousTriggerEvent e)
-    {
-        if (!Enum.TryParse(eventName, out ItemPickerEvent.ItemPickerEventType itemPickerEventType))
+        void HandleItemPickerEvent(string eventName, SpontaneousTriggerEvent e)
         {
-            Debug.LogWarning(
-                $"[SpontaneousEventHandler] Unknown ItemPickerEventType: {eventName}");
+            if (!Enum.TryParse(eventName, out ItemPickerEvent.ItemPickerEventType itemPickerEventType))
+            {
+                Debug.LogWarning(
+                    $"[SpontaneousEventHandler] Unknown ItemPickerEventType: {eventName}");
 
-            return;
+                return;
+            }
+
+            ItemPickerEvent.Trigger(
+                itemPickerEventType,
+                e.UniqueID
+            );
         }
-
-        ItemPickerEvent.Trigger(
-            itemPickerEventType,
-            e.UniqueID
-        );
     }
 }
