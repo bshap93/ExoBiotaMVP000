@@ -1,5 +1,4 @@
 using FirstPersonPlayer.Interactable.BioOrganism.Creatures;
-using MoreMountains.Feedbacks;
 using NodeCanvas.Framework;
 using ParadoxNotion.Design;
 using UnityEngine;
@@ -11,7 +10,7 @@ namespace FirstPersonPlayer.Combat.AINPC
     public class CreaturePlayAnimationClip : ActionTask
     {
         public readonly BBParameter<AnimationClip> AnimationClip;
-        public readonly BBParameter<MMFeedbacks> Feedback;
+        // public readonly BBParameter<MMFeedbacks> Feedback;
 
 
         CreatureController _creatureController;
@@ -28,7 +27,7 @@ namespace FirstPersonPlayer.Combat.AINPC
         //EndAction can be called from anywhere.
         protected override void OnExecute()
         {
-            Feedback.value?.PlayFeedbacks();
+            // Feedback.value?.PlayFeedbacks();
 
             _creatureController.PlayAnimationClip(AnimationClip.value);
 

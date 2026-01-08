@@ -20,6 +20,7 @@ namespace FirstPersonPlayer.Combat.AINPC
         {
             if (blackboard == null)
                 blackboard = GetComponent<Blackboard>();
+            
 
             blackboard.SetVariableValue(
                 "wasHitAnimationClip", _enemyController.creatureType.animationSet.getHitAnimation);

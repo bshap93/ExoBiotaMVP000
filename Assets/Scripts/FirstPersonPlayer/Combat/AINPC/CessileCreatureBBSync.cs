@@ -19,7 +19,7 @@ namespace FirstPersonPlayer.Combat.AINPC
         {
             _bb.SetVariableValue("maxHealth", _creatureController.MaxHealth);
             _bb.SetVariableValue("detectionRadius", _creatureController.detectionRadius);
-            _bb.SetVariableValue("stunDamageTreshold", _creatureController.StunThreshold);
+            _bb.SetVariableValue("stunDamageThreshold", _creatureController.StunThreshold);
         }
 
         // Update is called once per frame

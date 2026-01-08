@@ -5,42 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="abdb78f9-9d96-46eb-81c0-ec3c0363e4ff" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/PlayMMFeedbackOfChoice.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/PlayMMFeedbackOfChoice.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ExoBiotaMVP003/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ExoBiotaMVP003/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ContaminationZone.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ContaminationZone.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/CustomAssets/NodeCanvas/BehaviorTree/HealthyTrumpetSlugBehaviorTree.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/CustomAssets/NodeCanvas/BehaviorTree/HealthyTrumpetSlugBehaviorTree.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/Biomass/AlternativeFSMPipeStalk.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/Biomass/AlternativeFSMPipeStalk.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/Creatures/AlienSlugModelReleaseSmoke.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/Creatures/AlienSlugModelReleaseSmoke.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/Creatures/GasEmittingCessileUrchin.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Environment/Mine01/Creatures/GasEmittingCessileUrchin.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Mine/Mine01.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Mine/Mine01.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Mine/Mine01/NavMesh-Terrain.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Mine/Mine01/NavMesh-Terrain.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableAssets/Character/CreatureType/SlugEnemy01.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableAssets/Character/CreatureType/SlugEnemy01.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/ActionTasks/CreatureMouthMeleeAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/ActionTasks/CreatureMouthMeleeAttack.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/ActionTasks/ReleaseGas.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/ActionTasks/ReleaseGas.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/ActionTasks/TakeHitTask.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/ActionTasks/TakeHitTask.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/AssignWasHitParameters.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/AssignWasHitParameters.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/CessileCreatureBBSync.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/CessileCreatureBBSync.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/CreaturePlayAnimationClip.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/CreaturePlayAnimationClip.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/Creatures.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Interactable/BioOrganism/Creatures.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/Creatures/CessileGasCreatureController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Interactable/BioOrganism/Creatures/CessileGasCreatureController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/Creatures/CessileGasCreatureController.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Interactable/BioOrganism/Creatures/CessileGasCreatureController.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/Creatures/CreatureController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Interactable/BioOrganism/Creatures/CreatureController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/Creatures/CreatureController.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Interactable/BioOrganism/Creatures/CreatureController.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/Creatures/EnemyController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Interactable/BioOrganism/Creatures/EnemyController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/Creatures/EnemyController.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Interactable/BioOrganism/Creatures/EnemyController.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/Creatures/OverworldFlier.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Interactable/BioOrganism/Creatures/OverworldFlier.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/Creatures/OverworldFlier.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Interactable/BioOrganism/Creatures/OverworldFlier.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/Creatures/SmallFlyingEnemyController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Interactable/BioOrganism/Creatures/SmallFlyingEnemyController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/Creatures/SmallFlyingEnemyController.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Interactable/BioOrganism/Creatures/SmallFlyingEnemyController.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/EnemyBlackboardSync.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/EnemyBlackboardSync.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/EnemyHitbox.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/EnemyHitbox.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/FPNPCs/AlienNPC/AlienNPCController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/FPNPCs/AlienNPC/AlienNPCController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Interactable/BioOrganism/BioOrganismGasEmitterNode.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Interactable/BioOrganism/BioOrganismGasEmitterNode.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Interactable/BioOrganism/CreatureSampleNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Interactable/BioOrganism/CreatureSampleNode.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Tools/ToolPrefabScripts/HatchetToolPrefab.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Tools/ToolPrefabScripts/HatchetToolPrefab.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Tools/ToolPrefabScripts/PickaxeToolPrefab.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Tools/ToolPrefabScripts/PickaxeToolPrefab.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Tools/ToolPrefabScripts/Weapon/AdvancedEnergyPistol.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Tools/ToolPrefabScripts/Weapon/AdvancedEnergyPistol.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Tools/ToolPrefabScripts/Weapon/EnergyPistolWeapon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Tools/ToolPrefabScripts/Weapon/EnergyPistolWeapon.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Tools/ToolPrefabScripts/Weapon/RangedPistolWeapon02.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Tools/ToolPrefabScripts/Weapon/RangedPistolWeapon02.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,6 +79,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/BootLoader.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Dirigible/HighlightTriggers/DockHighlightTrigger.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/EditorScripts/SpawnInfoEditor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Combat/AINPC/PlayMMFeedbackOfChoice.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/InputHandling/MyNormalMovement.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Interactable/BioOrganism/BioOrganismBreakableNode.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Interactable/BioOrganism/BioOrganismNode.cs" root0="FORCE_HIGHLIGHTING" />
@@ -127,7 +102,6 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Utilities/Static/SpawnSystem.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Utilities/TerrainLayerDetector.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Settings/UniversalRenderPipelineGlobalSettings.asset" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.collections@010f14fa5e2c/Unity.Collections/UnsafeQueue.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@cdea37cdf817/Runtime/TMP/TMP_FontAsset.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@cdea37cdf817/Runtime/UGUI/EventSystem/InputModules/StandaloneInputModule.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.visualscripting@b4d700247d4b/Runtime/VisualScripting.Flow/Framework/Control/Break.cs" root0="SKIP_HIGHLIGHTING" />
@@ -198,13 +172,15 @@
       <option name="MIXED_MODE_DEBUG" value="0" />
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" useMixedMode="false">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" useMixedMode="false" ignored-value-for-modified-check="50092">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="50092" />
       <option name="projectPathOnTarget" />
       <option name="runtimes">
-        <list />
+        <list>
+          <MonoRuntime />
+        </list>
       </option>
       <option name="selectedOptions">
         <list />
@@ -231,7 +207,7 @@
       <workItem from="1767557824778" duration="18102000" />
       <workItem from="1767629698654" duration="51144000" />
       <workItem from="1767798472878" duration="19439000" />
-      <workItem from="1767836313170" duration="13862000" />
+      <workItem from="1767836313170" duration="15731000" />
     </task>
     <servers />
   </component>
@@ -264,32 +240,6 @@
           <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
           <option name="timeStamp" value="3" />
         </breakpoint>
-        <line-breakpoint type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Tools/ToolPrefabScripts/HatchetToolPrefab.cs</url>
-          <line>270</line>
-          <properties documentPath="C:\Users\Benja\Dev\UnityProjects\ExoBiotaMVP\ExoBiotaMVP003\Assets\Scripts\FirstPersonPlayer\Tools\ToolPrefabScripts\HatchetToolPrefab.cs" containingFunctionPresentation="Method 'ApplyHit'">
-            <startOffsets>
-              <option value="9862" />
-            </startOffsets>
-            <endOffsets>
-              <option value="9905" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Tools/ToolPrefabScripts/HatchetToolPrefab.cs</url>
-          <line>306</line>
-          <properties documentPath="C:\Users\Benja\Dev\UnityProjects\ExoBiotaMVP\ExoBiotaMVP003\Assets\Scripts\FirstPersonPlayer\Tools\ToolPrefabScripts\HatchetToolPrefab.cs" containingFunctionPresentation="Method 'ApplyHit'">
-            <startOffsets>
-              <option value="11204" />
-            </startOffsets>
-            <endOffsets>
-              <option value="11252" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/LevelConstruct/Interactable/ItemInteractables/ItemPicker/ItemPicker.cs</url>
           <line>289</line>
@@ -315,6 +265,19 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/FirstPersonPlayer/Interactable/BioOrganism/Creatures/CreatureController.cs</url>
+          <line>315</line>
+          <properties documentPath="C:\Users\Benja\Dev\UnityProjects\ExoBiotaMVP\ExoBiotaMVP003\Assets\Scripts\FirstPersonPlayer\Interactable\BioOrganism\Creatures\CreatureController.cs" containingFunctionPresentation="Method 'PlayAnimationClip'">
+            <startOffsets>
+              <option value="12642" />
+            </startOffsets>
+            <endOffsets>
+              <option value="12690" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

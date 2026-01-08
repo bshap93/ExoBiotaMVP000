@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.18170603, y: 0.18170603, z: 0.18170603}
+  m_LocalScale: {x: 0.20312917, y: 0.20312917, z: 0.20312917}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1094331213664762068}
@@ -57,7 +57,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -75,6 +75,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 167e97079a7b37a47aa818aae6cda982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  contaminationPerSecond: 1
+  startsActive: 1
+  activeDuration: 5
+  enterFeedbacks: {fileID: 0}
+  exitFeedbacks: {fileID: 0}
+  activationFeedbacks: {fileID: 0}
+  deactivationFeedbacks: {fileID: 0}
 --- !u!1001 &3927485128880639602
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -94,6 +101,10 @@ PrefabInstance:
     - target: {fileID: 790512458728592226, guid: ec6513bb95ad1bf4c88a97860cb2b85f, type: 3}
       propertyPath: albedo.r
       value: 0.5824927
+      objectReference: {fileID: 0}
+    - target: {fileID: 790512458728592226, guid: ec6513bb95ad1bf4c88a97860cb2b85f, type: 3}
+      propertyPath: cleanupOptions
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 790512458728592226, guid: ec6513bb95ad1bf4c88a97860cb2b85f, type: 3}
       propertyPath: mainLightTint.b
