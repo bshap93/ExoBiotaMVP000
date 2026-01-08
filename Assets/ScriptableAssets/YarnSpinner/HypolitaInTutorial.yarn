@@ -163,6 +163,12 @@ Hypolita: Then, proceed past the groupings of biomass toward the ladder at the b
 
 title: HypolitaGivesInstructionsCombatTutorial
 ---
-Hypolita: Go ahead and take care of that Limacoid with your shock baton. Equip it and get in swinging range.
-Hypolita: If you're feeling unsure, take a look at the tablet I left in the ladder room to the right.
+<<trigger_gesture ScientistHypolita LayingItAllOut>>
+Hypolita: There's a Limacoid in the next chamber. You've seen earth slugs, no? This is like that but bigger and with more biting and spewing.
+Hypolita: Be careful to avoid its bite and noxious spewing of contaminated gas.
+<<trigger_gesture ScientistHypolita ShakeHead>>
+Hypolita: I'm not fond of this part of the training. I would much rather you just stun it, but the guidelines of this training leave it to you.
+Hypolita: My old stunner will stun the beast without trouble. Your hatchet will serve you if you choose to kill it.
+Hypolita: Any questions?
+-> No, doctor.
 ===
