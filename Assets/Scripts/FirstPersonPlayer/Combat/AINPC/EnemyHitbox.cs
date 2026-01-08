@@ -1,5 +1,5 @@
-﻿using FirstPersonPlayer.Combat.AINPC.Creatures;
-using FirstPersonPlayer.Combat.AINPC.ScriptableObjects;
+﻿using FirstPersonPlayer.Combat.AINPC.ScriptableObjects;
+using FirstPersonPlayer.Interactable.BioOrganism.Creatures;
 using UnityEngine;
 
 namespace FirstPersonPlayer.Combat.AINPC

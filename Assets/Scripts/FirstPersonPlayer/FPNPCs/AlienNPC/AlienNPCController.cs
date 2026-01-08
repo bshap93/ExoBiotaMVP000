@@ -1,4 +1,4 @@
-﻿using FirstPersonPlayer.Combat.AINPC.Creatures;
+﻿using FirstPersonPlayer.Interactable.BioOrganism.Creatures;
 using FirstPersonPlayer.Interface;
 using Helpers.Events;
 using Helpers.Events.Dialog;

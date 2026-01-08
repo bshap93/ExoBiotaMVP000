@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
-namespace FirstPersonPlayer.Combat.AINPC.Creatures
+namespace FirstPersonPlayer.Interactable.BioOrganism.Creatures
 {
     [RequireComponent(typeof(Blackboard))]
     [RequireComponent(typeof(AnimancerComponent))]

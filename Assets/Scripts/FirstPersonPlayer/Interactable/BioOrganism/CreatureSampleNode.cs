@@ -1,7 +1,6 @@
 using System;
-using FirstPersonPlayer.Combat.AINPC.Creatures;
+using FirstPersonPlayer.Interactable.BioOrganism.Creatures;
 using FirstPersonPlayer.Interface;
-using SharedUI.Interface;
 using UnityEngine;
 
 namespace FirstPersonPlayer.Interactable.BioOrganism

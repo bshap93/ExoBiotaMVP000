@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections;
 using DG.Tweening;
-using FirstPersonPlayer.Combat.AINPC.Creatures;
 using FirstPersonPlayer.Combat.Player.ScriptableObjects;
 using FirstPersonPlayer.Interactable;
+using FirstPersonPlayer.Interactable.BioOrganism.Creatures;
 using FirstPersonPlayer.Tools.ItemObjectTypes;
 using Helpers.AnimancerHelper;
 using Helpers.Events;

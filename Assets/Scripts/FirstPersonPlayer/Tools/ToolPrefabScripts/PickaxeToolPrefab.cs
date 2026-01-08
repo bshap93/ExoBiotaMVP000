@@ -2,8 +2,8 @@
 using System.Linq;
 using Domains.Gameplay.Mining.Scripts;
 using Feedbacks.Interface;
-using FirstPersonPlayer.Combat.AINPC.Creatures;
 using FirstPersonPlayer.Interactable;
+using FirstPersonPlayer.Interactable.BioOrganism.Creatures;
 using FirstPersonPlayer.Tools.Interface;
 using Helpers.Events;
 using Helpers.Events.Status;

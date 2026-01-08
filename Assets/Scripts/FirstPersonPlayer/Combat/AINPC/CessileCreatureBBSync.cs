@@ -1,4 +1,4 @@
-using FirstPersonPlayer.Combat.AINPC.Creatures;
+using FirstPersonPlayer.Interactable.BioOrganism.Creatures;
 using NodeCanvas.Framework;
 using UnityEngine;
 

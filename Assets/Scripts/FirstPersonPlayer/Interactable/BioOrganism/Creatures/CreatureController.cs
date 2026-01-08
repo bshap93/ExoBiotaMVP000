@@ -17,7 +17,7 @@ using UnityEngine;
 using Utilities.Interface;
 using Random = UnityEngine.Random;
 
-namespace FirstPersonPlayer.Combat.AINPC.Creatures
+namespace FirstPersonPlayer.Interactable.BioOrganism.Creatures
 {
     [DisallowMultipleComponent]
     public abstract class CreatureController : MonoBehaviour, IRequiresUniqueID

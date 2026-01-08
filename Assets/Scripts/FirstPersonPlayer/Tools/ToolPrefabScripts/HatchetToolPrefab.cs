@@ -1,6 +1,6 @@
 using Feedbacks.Interface;
-using FirstPersonPlayer.Combat.AINPC.Creatures;
 using FirstPersonPlayer.Interactable;
+using FirstPersonPlayer.Interactable.BioOrganism.Creatures;
 using FirstPersonPlayer.Minable;
 using FirstPersonPlayer.Tools.Interface;
 using Helpers.Events;
@@ -231,13 +231,10 @@ namespace FirstPersonPlayer.Tools.ToolPrefabScripts
             {
                 // hardness/HP handled inside component
                 breakable.ApplyHit(hatchetPower, hit.point, hit.normal, hitType);
-                
-                if (go.CompareTag("MiscRigidOrganism"))
-                {
-                    hitRigidOrganismFeedbacks?.PlayFeedbacks();
-                }
 
-                
+                if (go.CompareTag("MiscRigidOrganism")) hitRigidOrganismFeedbacks?.PlayFeedbacks();
+
+
                 // SpawnFxForConnectingHit(hit.point, hit.normal);
                 // PlayerStatsEvent.Trigger(
                 //     PlayerStatsEvent.PlayerStat.CurrentStamina, PlayerStatsEvent.PlayerStatChangeType.Decrease,

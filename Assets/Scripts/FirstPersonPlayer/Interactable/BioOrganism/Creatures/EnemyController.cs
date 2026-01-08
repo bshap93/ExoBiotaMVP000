@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Animancer;
 using DG.Tweening;
+using FirstPersonPlayer.Combat.AINPC;
 using FirstPersonPlayer.Combat.AINPC.ScriptableObjects;
 using Helpers.Events.Combat;
 using Helpers.Events.NPCs;
@@ -10,7 +11,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Utilities.Interface;
 
-namespace FirstPersonPlayer.Combat.AINPC.Creatures
+namespace FirstPersonPlayer.Interactable.BioOrganism.Creatures
 {
     [RequireComponent(typeof(AssignPlayerToBT))]
     [RequireComponent(typeof(EnemyBlackboardSync))]

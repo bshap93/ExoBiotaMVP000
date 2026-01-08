@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Animancer;
 using DG.Tweening;
+using FirstPersonPlayer.Combat.AINPC;
 using Helpers.Events;
 using Helpers.Events.Combat;
 using Helpers.Events.NPCs;
@@ -13,7 +14,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Utilities.Interface;
 
-namespace FirstPersonPlayer.Combat.AINPC.Creatures
+namespace FirstPersonPlayer.Interactable.BioOrganism.Creatures
 {
     [RequireComponent(typeof(AssignPlayerToBT))]
     [RequireComponent(typeof(CessileCreatureBBSync))]

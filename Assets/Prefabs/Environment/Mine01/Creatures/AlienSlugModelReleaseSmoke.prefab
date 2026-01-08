@@ -1,0 +1,182 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7323556292533169501
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3341910127711482596}
+  - component: {fileID: 7470618724724006731}
+  - component: {fileID: 4452719730635463157}
+  - component: {fileID: 2498553457372035764}
+  m_Layer: 20
+  m_Name: ContaminationZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3341910127711482596
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7323556292533169501}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.18170603, y: 0.18170603, z: 0.18170603}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1094331213664762068}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &7470618724724006731
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7323556292533169501}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!135 &4452719730635463157
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7323556292533169501}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.7
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2498553457372035764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7323556292533169501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 167e97079a7b37a47aa818aae6cda982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1001 &3927485128880639602
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 790512458728592226, guid: ec6513bb95ad1bf4c88a97860cb2b85f, type: 3}
+      propertyPath: albedo.b
+      value: 0.9308176
+      objectReference: {fileID: 0}
+    - target: {fileID: 790512458728592226, guid: ec6513bb95ad1bf4c88a97860cb2b85f, type: 3}
+      propertyPath: albedo.g
+      value: 0.6283065
+      objectReference: {fileID: 0}
+    - target: {fileID: 790512458728592226, guid: ec6513bb95ad1bf4c88a97860cb2b85f, type: 3}
+      propertyPath: albedo.r
+      value: 0.5824927
+      objectReference: {fileID: 0}
+    - target: {fileID: 790512458728592226, guid: ec6513bb95ad1bf4c88a97860cb2b85f, type: 3}
+      propertyPath: mainLightTint.b
+      value: 0.9811321
+      objectReference: {fileID: 0}
+    - target: {fileID: 790512458728592226, guid: ec6513bb95ad1bf4c88a97860cb2b85f, type: 3}
+      propertyPath: mainLightTint.g
+      value: 0.7990981
+      objectReference: {fileID: 0}
+    - target: {fileID: 790512458728592226, guid: ec6513bb95ad1bf4c88a97860cb2b85f, type: 3}
+      propertyPath: mainLightTint.r
+      value: 0.9139841
+      objectReference: {fileID: 0}
+    - target: {fileID: 790512458728592226, guid: ec6513bb95ad1bf4c88a97860cb2b85f, type: 3}
+      propertyPath: ambientColorTint.b
+      value: 0.99371064
+      objectReference: {fileID: 0}
+    - target: {fileID: 790512458728592226, guid: ec6513bb95ad1bf4c88a97860cb2b85f, type: 3}
+      propertyPath: ambientColorTint.g
+      value: 0.70934683
+      objectReference: {fileID: 0}
+    - target: {fileID: 790512458728592226, guid: ec6513bb95ad1bf4c88a97860cb2b85f, type: 3}
+      propertyPath: ambientColorTint.r
+      value: 0.9440913
+      objectReference: {fileID: 0}
+    - target: {fileID: 4156508659957069478, guid: ec6513bb95ad1bf4c88a97860cb2b85f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4156508659957069478, guid: ec6513bb95ad1bf4c88a97860cb2b85f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4156508659957069478, guid: ec6513bb95ad1bf4c88a97860cb2b85f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4156508659957069478, guid: ec6513bb95ad1bf4c88a97860cb2b85f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4156508659957069478, guid: ec6513bb95ad1bf4c88a97860cb2b85f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4156508659957069478, guid: ec6513bb95ad1bf4c88a97860cb2b85f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4156508659957069478, guid: ec6513bb95ad1bf4c88a97860cb2b85f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4156508659957069478, guid: ec6513bb95ad1bf4c88a97860cb2b85f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4156508659957069478, guid: ec6513bb95ad1bf4c88a97860cb2b85f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4156508659957069478, guid: ec6513bb95ad1bf4c88a97860cb2b85f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4176460494904078870, guid: ec6513bb95ad1bf4c88a97860cb2b85f, type: 3}
+      propertyPath: m_Name
+      value: AlienSlugModelReleaseSmoke
+      objectReference: {fileID: 0}
+    - target: {fileID: 4176460494904078870, guid: ec6513bb95ad1bf4c88a97860cb2b85f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4156508659957069478, guid: ec6513bb95ad1bf4c88a97860cb2b85f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3341910127711482596}
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ec6513bb95ad1bf4c88a97860cb2b85f, type: 3}
+--- !u!4 &1094331213664762068 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4156508659957069478, guid: ec6513bb95ad1bf4c88a97860cb2b85f, type: 3}
+  m_PrefabInstance: {fileID: 3927485128880639602}
+  m_PrefabAsset: {fileID: 0}

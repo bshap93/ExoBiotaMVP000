@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace FirstPersonPlayer.Combat.AINPC.Creatures
+namespace FirstPersonPlayer.Interactable.BioOrganism.Creatures
 {
     public class SmallFlyingEnemyController : EnemyController
     {
