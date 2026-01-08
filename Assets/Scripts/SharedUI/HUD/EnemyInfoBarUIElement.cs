@@ -23,6 +23,7 @@ namespace SharedUI.HUD
         [SerializeField] float fadeInOnStunDamageDuration = 0.1f;
         [SerializeField] float fadeOutOnTimeoutDuration = 0.3f;
         [SerializeField] float visibleDurationAfterDamageDealt = 5f;
+        [SerializeField] GameObject barVisual;
 
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -99,7 +100,8 @@ namespace SharedUI.HUD
         }
         public void OnMMEvent(HotbarEvent eventType)
         {
-            if (eventType.EventType == HotbarEvent.HotbarEventType.HideHotbars) FadeOut(fadeOutOnTimeoutDuration);
+            if (eventType.EventType == HotbarEvent.HotbarEventType.HideHotbars) barVisual.SetActive(false);
+            else if (eventType.EventType == HotbarEvent.HotbarEventType.ShowHotbars) barVisual.SetActive(true);
         }
         void TryUpdateStunBar(ref float eventTypeLastValue, float eventTypeCurrentValue, float stunThreshold)
         {

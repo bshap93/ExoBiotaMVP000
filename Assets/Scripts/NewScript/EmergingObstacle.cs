@@ -15,6 +15,8 @@ namespace NewScript
         [SerializeField] MMFeedbacks emergeFeedbacks;
         [SerializeField] Transform initialPosition;
 
+        bool _emerged;
+
         void Start()
         {
             if (initialPosition != null)
@@ -52,8 +54,11 @@ namespace NewScript
 
         public void Emerge()
         {
+            if (_emerged) return;
+            _emerged = true;
             emergeFeedbacks?.PlayFeedbacks();
-            childObject.transform.DOLocalMove(Vector3.zero, 1f).SetEase(Ease.InExpo);
+            if (childObject != null)
+                childObject.transform.DOLocalMove(Vector3.zero, 1f).SetEase(Ease.InExpo);
         }
     }
 }

@@ -48,6 +48,8 @@ Hypolita: I'm happy to explain their purpose if you need me to.
 -> I believe I am up to date on that front.
     <<trigger_gesture ScientistHypolita LayingItAllOut>>
     <<trigger_gesture ScientistHypolita HandsDownSayingOK>>
+    <<add_objective GetKeyAccessForMine01>>
+    <<activate_objective GetKeyAccessForMine01>>
     Hypolita: Ok, good. Now get my old Stunner Pistol and use the key terminal to authenticate yourself. Then proceed to the first door you passed on the way in.
 
 ===
