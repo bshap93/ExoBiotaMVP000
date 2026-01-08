@@ -181,6 +181,7 @@ Hypolita: Any questions?
 title: SecretsInUndergroundTutorial
 ---
 Hypolita: Keep your eyes peeled when roaming the tunnels for breakable walls, doors, and other detours. Right here is a wall.
+Hypolita: I happen to know there is a Magnium vein that runs through there. I can show you how to craft power cells later if you mine the ore behind the barrier.
 <<trigger_gesture ScientistHypolita LayingItAllOut>>
 Hypolita: Have a swing with your pickaxe, I left you something behind it when I set up this training.
 ===
