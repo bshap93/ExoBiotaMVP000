@@ -221,6 +221,7 @@ namespace Manager
                 "EnterValleySpawn", "DockAshpoolMineSpawn",
                 // Mine01
                 "Mine01DoorSpawn", "CorePatchSpawn", "BailoutFacilitySpawn", "UndergroundSpawnMine01",
+                "UndergroundSpawnMine02",
                 // Bionics Lab
                 "BionicsLabSpawn",
 

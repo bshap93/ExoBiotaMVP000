@@ -476,7 +476,9 @@ MonoBehaviour:
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"stunDamageThreshold":{"_value":1.0,"_name":"stunDamageThreshold","_id":"cd3b1064-e1df-4825-9982-b78d700e7d13","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"stunnedEffect":{"_value":5,"_name":"stunnedEffect","_id":"034ec797-a0ac-44d7-a709-4ae23dd0bea7","$type":"NodeCanvas.Framework.Variable`1[[UnityEngine.GameObject,
     UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},"toOperateObjective":{"_value":"StunTheTwoUrchins","_name":"toOperateObjective","_id":"04486190-2f2b-4921-97e8-94b9c3ffa0ec","$type":"NodeCanvas.Framework.Variable`1[[System.String,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}}}'
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"stunIdleSpeedMultiplier":{"_value":1.0,"_name":"stunIdleSpeedMultiplier","_id":"f2de2733-8496-49a3-b702-0450da1d282f","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"idle1":{"_value":6,"_name":"idle1","_id":"b85d2121-73c5-4716-a70c-b779241ab869","$type":"NodeCanvas.Framework.Variable`1[[UnityEngine.AnimationClip,
+    UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}}}'
   _objectReferences:
   - {fileID: 0}
   - {fileID: 1086225411445216126}
@@ -484,6 +486,7 @@ MonoBehaviour:
   - {fileID: 8534271401702930362}
   - {fileID: 3894367198166227559}
   - {fileID: 4907839639764811667}
+  - {fileID: 7400000, guid: 46ea392511502d844846ff68e3ea1332, type: 3}
   _serializedVariables:
   - _json: '{"_value":1.0,"_name":"currentHealth","_id":"94899efb-6f03-4cb6-8c5a-c66e1fbbd14c","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
       mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
@@ -561,6 +564,14 @@ MonoBehaviour:
   - _json: '{"_value":"StunTheTwoUrchins","_name":"toOperateObjective","_id":"04486190-2f2b-4921-97e8-94b9c3ffa0ec","$type":"NodeCanvas.Framework.Variable`1[[System.String,
       mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
     _references: []
+  - _json: '{"_value":1.0,"_name":"stunIdleSpeedMultiplier","_id":"f2de2733-8496-49a3-b702-0450da1d282f","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
+      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
+    _references: []
+  - _json: '{"_value":1,"_name":"idle1","_id":"b85d2121-73c5-4716-a70c-b779241ab869","$type":"NodeCanvas.Framework.Variable`1[[UnityEngine.AnimationClip,
+      UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}'
+    _references:
+    - {fileID: 0}
+    - {fileID: 7400000, guid: 46ea392511502d844846ff68e3ea1332, type: 3}
 --- !u!114 &948736716530846155
 MonoBehaviour:
   m_ObjectHideFlags: 0

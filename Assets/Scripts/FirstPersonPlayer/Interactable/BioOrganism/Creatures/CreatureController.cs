@@ -117,6 +117,15 @@ namespace FirstPersonPlayer.Interactable.BioOrganism.Creatures
         {
             return string.IsNullOrEmpty(uniqueID);
         }
+
+        public void SetIdleAnimationSpeed(float speed, AnimationClip value)
+        {
+            if (IdleState != null)
+            {
+                IdleState.Speed = speed;
+                IdleState.Clip = value;
+            }
+        }
         public void ProcessAttackDamage(PlayerToolAttack playerAttack)
         {
             var attributeManager = AttributesManager.Instance;

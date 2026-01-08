@@ -145,9 +145,12 @@ Hypolita: Any questions?
     <<trigger_gesture ScientistHypolita LayingItAllOut>>
     Hypolita: They are part of the cave's symbiotic system and because they are filled with fluid, they appear a dark red. The two types living in this cave are easy to spot.
     Hypolita: One looks like a pair of kidneys and the other looks a bit like a mushroom. Both red, and pulsating. Not to be confused with the organisms you just stunned, they
+    <<trigger_gesture ScientistHypolita HandsDownSayingOK>>
     Hypolita: are not going to spew contaminated waste in your face. These liquid sacs can leak contaminant but you can avoid exposure by being gentle.
     <<jump QuestionsAboutCorePatchTutorial>>
 -> No, doctor.
+<<trigger_gesture ScientistHypolita HandsDownSayingOK>>
+Hypolita: Ok, get the Core and samples.
 ===
 
 title: HypolitaGivesInstructionsCorePatch
@@ -173,4 +176,11 @@ Hypolita: I'm not fond of this part of the training. I would much rather you jus
 Hypolita: My old stunner will stun the beast without trouble. Your hatchet will serve you if you choose to kill it.
 Hypolita: Any questions?
 -> No, doctor.
+===
+
+title: SecretsInUndergroundTutorial
+---
+Hypolita: Keep your eyes peeled when roaming the tunnels for breakable walls, doors, and other detours. Right here is a wall.
+<<trigger_gesture ScientistHypolita LayingItAllOut>>
+Hypolita: Have a swing with your pickaxe, I left you something behind it when I set up this training.
 ===

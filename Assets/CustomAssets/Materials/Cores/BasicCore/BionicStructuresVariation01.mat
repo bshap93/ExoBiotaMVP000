@@ -193,7 +193,7 @@ Material:
     - _ZWriteControl: 0
     - __dirty: 0
     m_Colors:
-    - _AlbedoColor: {r: 1, g: 0, b: 0.74758244, a: 1}
+    - _AlbedoColor: {r: 0.74442095, g: 0.557375, b: 0.9685534, a: 1}
     - _Back_Color: {r: 4, g: 1.239216, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

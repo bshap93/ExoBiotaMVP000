@@ -34,6 +34,12 @@ namespace Objectives.ActionTasks
         //EndAction can be called from anywhere.
         protected override void OnExecute()
         {
+            if (ObjectiveID.value == null)
+            {
+                EndAction(true);
+                return;
+            }
+
             switch (OperationTypeParam.value)
             {
                 case OperationType.Increment:

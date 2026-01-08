@@ -15,6 +15,7 @@ public class ContaminationZone : MonoBehaviour
     [SerializeField] MMFeedbacks exitFeedbacks;
     [SerializeField] MMFeedbacks activationFeedbacks;
     [SerializeField] MMFeedbacks deactivationFeedbacks;
+    [SerializeField] GameObject parentObject;
 
     bool _isActive;
 
@@ -45,16 +46,19 @@ public class ContaminationZone : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (!_isActive) return;
         enterFeedbacks?.PlayFeedbacks();
     }
 
     void OnTriggerExit(Collider other)
     {
+        if (!_isActive) return;
         exitFeedbacks?.PlayFeedbacks();
     }
 
     void OnTriggerStay(Collider other)
     {
+        if (!_isActive) return;
         if (other.CompareTag("FirstPersonPlayer") || other.CompareTag("Player"))
             // Apply continuous contamination
             PlayerStatsEvent.Trigger(
