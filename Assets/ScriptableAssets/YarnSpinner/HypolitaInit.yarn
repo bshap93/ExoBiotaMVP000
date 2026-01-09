@@ -1,0 +1,12 @@
+title: HypolitaGreets
+---
+Hypolita: Wecome to my science outpost. Ben, I presume. Yes, the city office informed me you'd be coming this way.
+Hypolita: I have a little time to spare but I must get back to my work before too long.
+===
+
+title: PlayerAsksQuestionOfHypolita
+---
+Hypolita: How can I help you? 
+-> I come for proper training in the tunnels. I can pay. I understand you run these trainings.
+-> I come for information.
+===

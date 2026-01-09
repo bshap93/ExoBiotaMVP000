@@ -1,20 +1,17 @@
-﻿using Events;
+﻿using EditorScripts;
 using Helpers.Events;
 using Helpers.Events.UI;
 using Manager;
 using MoreMountains.Feedbacks;
 using Objectives.ScriptableObjects;
-using Overview.OverviewMode.ScriptableObjectDefinitions;
-using Structs;
 using UnityEngine;
 
 namespace FirstPersonPlayer.Interactable.Doors
 {
     public class InteractableMineExitDoor : InteractableDoor
     {
-        public DockDefinition dockDefinition;
-
         [SerializeField] MMFeedbacks denyEntryFeedbacks;
+        [SerializeField] SpawnInfoEditor spawnInfo;
 
         [SerializeField] ObjectiveObject objectiveIfActiveToComplete;
 
@@ -28,12 +25,11 @@ namespace FirstPersonPlayer.Interactable.Doors
                 onConfirm: () =>
                 {
                     SceneTransitionUIEvent.Trigger(SceneTransitionUIEventType.Show);
-                    var spawnInfo = dockDefinition.spawnInfo.ToSpawnInfo();
 
                     SpawnEvent.Trigger(
-                        SpawnEventType.ToDock, spawnInfo.SceneName, GameMode.Overview,
-                        spawnInfo.SpawnPointId,
-                        dockDefinition);
+                        SpawnEventType.ToDock, spawnInfo.SceneName, spawnInfo.Mode,
+                        spawnInfo.SpawnPointId
+                    );
 
                     if (objectiveIfActiveToComplete != null)
                         ObjectiveEvent.Trigger(

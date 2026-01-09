@@ -294,14 +294,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3083440450651206378}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.70707273, y: -0.0069488804, z: -0.006948882, w: -0.7070726}
+  m_LocalRotation: {x: -0.7070727, y: 0.0069480757, z: 0.0069480757, w: 0.7070727}
   m_LocalPosition: {x: -0.1055069, y: 0.042170107, z: -2.8936844}
   m_LocalScale: {x: 0.8291198, y: 0.8291197, z: 0.8291199}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6176236078293802944}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 1.126}
 --- !u!114 &2406307781072105225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,8 +314,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 888380afc233049ce9e618f9f36c8ba8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profile: {fileID: 11400000, guid: d0e24d0eaeb428c4a9d084e86278210b, type: 2}
-  profileSync: 0
+  profile: {fileID: 11400000, guid: 3804b4c944bd4fb4fbf3007f4ab38900, type: 2}
+  profileSync: 1
   camerasLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -361,7 +361,7 @@ MonoBehaviour:
   overlayTextureScrolling: {x: 0, y: 0}
   overlayVisibility: 0
   outline: 1
-  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  outlineColor: {r: 0, g: 1.3019693, b: 2.157068, a: 1}
   outlineColorStyle: 0
   outlineGradient:
     serializedVersion: 2
@@ -551,6 +551,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   targetDuration: 3
+  secondaryStateHighlightColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!135 &9091205543846702770
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -703,7 +704,7 @@ MonoBehaviour:
   revealPolicy: 0
   examinationPolicy: 1
   canBeAreaScannedType: 0
-  compassProPOI: {fileID: 0}
+  compassProPOI: {fileID: 7252318128968443234}
   locationObject: {fileID: 11400000, guid: e4ffe903ad699eb43a90e19bbb0e0bf8, type: 2}
 --- !u!1 &3170379663481466015
 GameObject:

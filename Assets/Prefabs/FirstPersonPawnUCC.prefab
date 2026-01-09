@@ -2369,10 +2369,10 @@ MonoBehaviour:
   cannotRunFeedbacks: {fileID: 7361642293195615526}
   animancerRightArmController: {fileID: 9152139957155839416}
   planarMovementParameters:
-    baseSpeedLimit: 4
-    canRun: 1
+    baseSpeedLimit: 5
+    canRun: 0
     runInputMode: 1
-    boostSpeedLimit: 6
+    boostSpeedLimit: 5
     stableGroundedAcceleration: 50
     stableGroundedDeceleration: 40
     stableGroundedAngleAccelerationBoost:
@@ -7891,7 +7891,7 @@ GameObject:
   - component: {fileID: 4146534566586365169}
   - component: {fileID: 521993427592013052}
   - component: {fileID: 6400795958408464189}
-  - component: {fileID: 6354272816186690533}
+  - component: {fileID: 6574998902501393717}
   m_Layer: 3
   m_Name: FirstPersonPawnUCC
   m_TagString: FirstPersonPlayer
@@ -8129,7 +8129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actor: {fileID: 4146534566586365169}
   cam: {fileID: 8672673151611072382}
---- !u!114 &6354272816186690533
+--- !u!114 &6574998902501393717
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

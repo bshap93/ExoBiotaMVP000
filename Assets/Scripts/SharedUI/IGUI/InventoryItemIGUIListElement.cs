@@ -217,21 +217,13 @@ namespace SharedUI.IGUI
             var indexInInventory = _sourceIndex;
 
             if (_isInHotbar)
-            {
                 // Remove from hotbar
                 HotbarEvent.Trigger(
                     HotbarEvent.HotbarEventType.RemoveFromHotbar, itemID, indexInInventory);
-
-                Debug.Log($"[InventoryItemIGUIListElement] Removed {_item.ItemName} from hotbar");
-            }
             else
-            {
                 // Add to hotbar
                 HotbarEvent.Trigger(
                     HotbarEvent.HotbarEventType.AddToHotbar, itemID, indexInInventory);
-
-                Debug.Log($"[InventoryItemIGUIListElement] Added {_item.ItemName} to hotbar");
-            }
 
             // Update button state after a short delay to allow the hotbar to update
             Invoke(nameof(UpdateHotbarButtonState), 0.1f);
