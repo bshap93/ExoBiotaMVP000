@@ -14,7 +14,6 @@ using UnityEngine.Serialization;
 
 namespace Dirigible.Interactable
 {
-    [RequireComponent(typeof(Collider))]
     public class DirigibleNonDockNPCInteractable : MonoBehaviour, IDirigibleInteractable
     {
         public DockLocationHotspotLookupEntry dockLocationHotspotLookupEntry;

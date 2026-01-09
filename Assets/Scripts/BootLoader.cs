@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using EditorScripts;
 using Helpers.ScriptableObjects;
+using LevelConstruct;
 using Manager;
 using Sirenix.OdinInspector;
 using Structs;
@@ -59,16 +60,21 @@ public class BootLoader : MonoBehaviour
         if (config.ForceReset)
             // actually perform the reset now so spawn selection sees a "fresh" state
         {
-            SaveManager.Instance.ResetGameSave(); // wipes managers/saves:contentReference[oaicite:5]{index=5}
+            SaveManager.Instance.ResetGameSave();
             SaveManager.Instance.SaveAll();
         }
-        // SaveManager.Instance.SaveAll(); // persist the clean state:contentReference[oaicite:6]{index=6}
-        // --- now decide where to spawn ---
 
+        // --- now decide where to spawn ---
 
         SpawnInfo info;
 
-        if (useOverrideSpawnInfo)
+        // If this is a bridge scene and we have pending bridge data, use that
+        if (isBridge && BridgeData.HasPendingSpawn)
+        {
+            info = BridgeData.ConsumeTarget();
+            Debug.Log($"[BootLoader] Bridge mode: Using BridgeData target {info.SceneName}");
+        }
+        else if (useOverrideSpawnInfo)
         {
             info = overrideSpawnInfo.ToSpawnInfo();
         }
@@ -77,9 +83,8 @@ public class BootLoader : MonoBehaviour
             // After a reset, PlayerSpawnManager will have written a default spawn.
             // So HasSave / LoadSlot will return that default spawn (good).
             if (!config.ForceReset &&
-                PlayerSpawnManager.Instance.HasSave()) // uses ES3 existence check:contentReference[oaicite:7]{index=7}
-                info = PlayerSpawnManager.Instance
-                    .LoadSlot(); // returns last (or default) spawn:contentReference[oaicite:8]{index=8}
+                PlayerSpawnManager.Instance.HasSave())
+                info = PlayerSpawnManager.Instance.LoadSlot();
             else
                 info = new SpawnInfo
                 {
@@ -90,11 +95,9 @@ public class BootLoader : MonoBehaviour
         }
 
         // prefer async/await style to mix nicely with the rest of Awake()
-        await SpawnSystem.LoadAndSpawnAsync(info); // see §2
-
+        await SpawnSystem.LoadAndSpawnAsync(info);
 
         SaveManager.Instance.LoadAll();
-
 
         // 5) tidy up – Boot scene no longer needed
         if (!isBridge)

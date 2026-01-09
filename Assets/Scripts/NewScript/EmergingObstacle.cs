@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using DG.Tweening;
 using Helpers.Events;
 using MoreMountains.Feedbacks;
@@ -14,6 +15,7 @@ namespace NewScript
         [SerializeField] GameObject childObject;
         [SerializeField] MMFeedbacks emergeFeedbacks;
         [SerializeField] Transform initialPosition;
+        [SerializeField] float duration = 1f;
 
         bool _emerged;
 
@@ -52,13 +54,17 @@ namespace NewScript
         {
         }
 
-        public void Emerge()
+        IEnumerator Emerge()
         {
-            if (_emerged) return;
+            if (_emerged) yield return null;
             _emerged = true;
             emergeFeedbacks?.PlayFeedbacks();
             if (childObject != null)
-                childObject.transform.DOLocalMove(Vector3.zero, 1f).SetEase(Ease.InExpo);
+            {
+                childObject.transform.DOLocalMove(Vector3.zero, duration).SetEase(Ease.InExpo);
+
+                yield return new WaitForSeconds(duration);
+            }
         }
     }
 }

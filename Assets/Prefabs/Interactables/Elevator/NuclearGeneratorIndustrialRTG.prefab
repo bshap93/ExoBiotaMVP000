@@ -1554,6 +1554,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   targetDuration: 3
+  secondaryStateHighlightColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &6636988185606151100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1569,6 +1570,7 @@ MonoBehaviour:
   operatingSprite: {fileID: 21300000, guid: c83f75cfc084bc54a97662ee3796e35e, type: 3}
   offSprite: {fileID: 21300000, guid: a29c87284a8bad1439708d9249c3666a, type: 3}
   brokenSprite: {fileID: 21300000, guid: 1333badfea706264bad28da964e37890, type: 3}
+  interactionDistance: 2
   sceneObjectData:
     ActionIcon: {fileID: 0}
     ActionText: 
@@ -1588,12 +1590,6 @@ MonoBehaviour:
   rotatingLightTurnMove: {fileID: 5958950007390446384}
   powerOnDecal: {fileID: 5990732911559208778}
   allLightsDependentOnGenerator:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

@@ -7,7 +7,8 @@ namespace PhysicsHandlers.Triggers
     {
         OnEnter,
         OnExit,
-        Both
+        Both,
+        Script
     }
 
     [Serializable]

@@ -4,7 +4,6 @@ using Helpers.Events.Dialog;
 using Helpers.Events.Triggering;
 using Manager;
 using Manager.DialogueScene;
-using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
 using Rewired;
 using Sirenix.OdinInspector;
@@ -25,10 +24,10 @@ namespace PhysicsHandlers.Triggers
         public string uniqueID;
         public bool startDisabled;
 
+        public string nextDialogueInitTriggerToEnable;
+
         bool _isDisabled;
         bool _isPlayerInTrigger;
-
-        public string nextDialogueInitTriggerToEnable;
 
         Player _player;
         TriggerColliderManager _triggerColliderManager;
@@ -45,6 +44,14 @@ namespace PhysicsHandlers.Triggers
 
             _isDisabled = startDisabled;
         }
+        void OnEnable()
+        {
+            this.MMEventStartListening();
+        }
+        void OnDisable()
+        {
+            this.MMEventStopListening();
+        }
 
         void OnTriggerEnter(Collider other)
         {
@@ -59,18 +66,7 @@ namespace PhysicsHandlers.Triggers
                 if (!other.CompareTag("Player") && !other.CompareTag("FirstPersonPlayer"))
                     return;
 
-                FirstPersonDialogueEvent.Trigger(
-                    FirstPersonDialogueEventType.StartDialogue, npcId, startNode);
-
-                TriggerColliderEvent.Trigger(
-                    uniqueID, TriggerColliderEventType.SetTriggerable, false, TriggerColliderType.Dialogue);
-
-                MyUIEvent.Trigger(UIType.Any, UIActionType.Open);
-                
-                TriggerColliderEvent.Trigger(
-                    nextDialogueInitTriggerToEnable, TriggerColliderEventType.SetTriggerable, true,
-                    TriggerColliderType.Dialogue);
-                
+                TriggerDialogueEvents();
             }
         }
         public string UniqueID => uniqueID;
@@ -82,7 +78,32 @@ namespace PhysicsHandlers.Triggers
         {
             return string.IsNullOrEmpty(uniqueID);
         }
+        public void OnMMEvent(TriggerColliderEvent eventType)
+        {
+            if (eventType.ColliderType != TriggerColliderType.Dialogue) return;
+            if (eventType.ColliderID != uniqueID) return;
 
+            switch (eventType.EventType)
+            {
+                case TriggerColliderEventType.SetTriggerable:
+                    _isDisabled = !eventType.IsTriggerable;
+                    break;
+            }
+        }
+        public void TriggerDialogueEvents()
+        {
+            FirstPersonDialogueEvent.Trigger(
+                FirstPersonDialogueEventType.StartDialogue, npcId, startNode);
+
+            TriggerColliderEvent.Trigger(
+                uniqueID, TriggerColliderEventType.SetTriggerable, false, TriggerColliderType.Dialogue);
+
+            MyUIEvent.Trigger(UIType.Any, UIActionType.Open);
+
+            TriggerColliderEvent.Trigger(
+                nextDialogueInitTriggerToEnable, TriggerColliderEventType.SetTriggerable, true,
+                TriggerColliderType.Dialogue);
+        }
 
 
         void OnNpcIdChanged()
@@ -119,26 +140,6 @@ namespace PhysicsHandlers.Triggers
             return nodes != null && nodes.Length > 0
                 ? nodes
                 : new[] { "No start nodes found" };
-        }
-        void OnEnable()
-        {
-            this.MMEventStartListening<TriggerColliderEvent>();
-        }
-        void OnDisable()
-        {
-            this.MMEventStopListening<TriggerColliderEvent>();
-        }
-        public void OnMMEvent(TriggerColliderEvent eventType)
-        {
-            if (eventType.ColliderType != TriggerColliderType.Dialogue) return;
-            if (eventType.ColliderID != uniqueID) return;
-
-            switch (eventType.EventType)
-            {
-                case TriggerColliderEventType.SetTriggerable:
-                    _isDisabled = !eventType.IsTriggerable;
-                    break;
-            }
         }
     }
 }
