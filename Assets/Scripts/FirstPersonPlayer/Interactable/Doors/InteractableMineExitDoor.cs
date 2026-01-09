@@ -1,19 +1,20 @@
-﻿using EditorScripts;
-using Helpers.Events;
+﻿using Helpers.Events;
 using Helpers.Events.UI;
 using Manager;
 using MoreMountains.Feedbacks;
-using Objectives.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace FirstPersonPlayer.Interactable.Doors
 {
     public class InteractableMineExitDoor : InteractableDoor
     {
         [SerializeField] MMFeedbacks denyEntryFeedbacks;
-        [SerializeField] SpawnInfoEditor spawnInfo;
+        // [SerializeField] SpawnInfoEditor spawnInfo;
 
-        [SerializeField] ObjectiveObject objectiveIfActiveToComplete;
+        // [SerializeField] ObjectiveObject objectiveIfActiveToComplete;
+
+        public string bridgeName;
 
         public override async void Interact()
         {
@@ -26,14 +27,15 @@ namespace FirstPersonPlayer.Interactable.Doors
                 {
                     SceneTransitionUIEvent.Trigger(SceneTransitionUIEventType.Show);
 
-                    SpawnEvent.Trigger(
-                        SpawnEventType.ToDock, spawnInfo.SceneName, spawnInfo.Mode,
-                        spawnInfo.SpawnPointId
-                    );
+                    SceneTransitionUIEvent.Trigger(SceneTransitionUIEventType.Show);
+                    SaveDataEvent.Trigger();
 
-                    if (objectiveIfActiveToComplete != null)
-                        ObjectiveEvent.Trigger(
-                            objectiveIfActiveToComplete.objectiveId, ObjectiveEventType.ObjectiveCompleted);
+                    // SpawnEvent.Trigger(
+                    //     SpawnEventType.ToMine, sceneToLoad, GameMode.FirstPerson,
+                    //     spawnPointId
+                    // );
+                    //
+                    SceneManager.LoadScene(bridgeName);
                 },
                 onCancel: () => { });
         }
